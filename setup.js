@@ -4,7 +4,7 @@ const db      = new sqlite3.Database('data/database.db')
 //* create table + validasi
 function createTable(){
   db.run(`create table if not exists Contacts(
-    id integer primarykey,
+    id integer primary key,
     name text,
     company text,
     telp_number text,
@@ -13,20 +13,20 @@ function createTable(){
     if(err){console.log(err,'create Contacts');}
   })
   db.run(`create table if not exists Groups(
-    id integer primarykey,
+    id integer primary key,
     name_of_group text
   )`,(err)=>{
     if(err){console.log(err,'create Groups');}
   })
   db.run(`create table if not exists Profile(
-    id integer primarykey,
+    id integer primary key,
     username text,
     password text
   )`,(err)=>{
     if(err){console.log(err,'create Profile');}
   })
   db.run(`create table if not exists Addresses(
-    id integer primarykey,
+    id integer primary key,
     street text,
     city text,
     zipcode integer

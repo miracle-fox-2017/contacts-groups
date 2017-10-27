@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Addresses Edit</title>
+  </head>
+  <body>
+    <h1>Addresses Edit</h1>
+    <form action="/addresses/edit/<%=data[0].id%>" method="post">
+      <input type="input" name="street" placeholder="street" value="<%=data[0].street%>">
+      <input type="input" name="city" placeholder="city" value="<%=data[0].city%>">
+      <input type="input" name="zipcode" placeholder="zipcode" value="<%=data[0].zipcode%>">
+      <input type="submit" value="submit">
+    </form>
+  </body>
+</html>

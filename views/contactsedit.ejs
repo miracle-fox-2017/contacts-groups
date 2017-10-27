@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Contacts Edit</title>
+  </head>
+  <body>
+    <h1>Contacts</h1>
+    <form action="/contacts/edit/<%=data[0].id%>" method="post">
+      <input type="input" name="name" placeholder="name" value="<%=data[0].name%>">
+      <input type="input" name="company" placeholder="company" value="<%=data[0].company%>">
+      <input type="input" name="telp_number" placeholder="Telp Number" value="<%=data[0].telp_number%>">
+      <input type="input" name="email" placeholder="Email" value="<%=data[0].email%>">
+      <input type="submit" value="submit" value="">
+    </form>
+  </body>
+</html>

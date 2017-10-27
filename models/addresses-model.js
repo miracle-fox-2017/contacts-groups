@@ -23,18 +23,21 @@ class AddressesModel {
 		let db = new sqlite3.Database(this.dbFile);
 		let sql = `INSERT INTO ${this.tablename} (street, city, zipcode) VALUES ("${data.street}", "${data.city}", ${+data.zipcode})`;
 		db.run(sql);
+		db.close();
 	}
 
 	updateDataById(data) {
 		let db = new sqlite3.Database(this.dbFile);
 		let sql = `UPDATE ${this.tablename} SET street = "${data.editItem.street}", city = "${data.editItem.city}", zipcode = ${+data.editItem.zipcode} WHERE id = ${data.id}`;
 		db.run(sql);
+		db.close();
 	}
 
 	deleteDataById(data) {
 		let db = new sqlite3.Database(this.dbFile);
 		let sql = `DELETE FROM ${this.tablename} WHERE id = ${data.id}`;
 		db.run(sql);
+		db.close();
 	}
 
 	getById(data, callback) {

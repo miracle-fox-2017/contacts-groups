@@ -42,7 +42,7 @@
 
 	<form method="post" action="<%= (typeof editItem != 'undefined') ? `/addresses/edit/${id}`  : '/addresses' %>">
 		<% if (typeof editItem != 'undefined') { %>
-			<h5>Editing <%= editItem.name %></h5>
+			<h5>Editing <%= editItem.street %></h5>
 		<% } %>
 		
 		<input type="hidden" id="id" name="id" value="<%= (typeof editItem != 'undefined') ? editItem.id  : '' %>">

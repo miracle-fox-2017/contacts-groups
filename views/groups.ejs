@@ -38,7 +38,7 @@
 
 	<form method="post" action="<%= (typeof editItem != 'undefined') ? `/groups/edit/${id}`  : '/groups' %>">
 		<% if (typeof editItem != 'undefined') { %>
-			<h5>Editing <%= editItem.name %></h5>
+			<h5>Editing <%= editItem.name_of_group %></h5>
 		<% } %>
 		
 		<input type="hidden" id="id" name="id" value="<%= (typeof editItem != 'undefined') ? editItem.id  : '' %>">

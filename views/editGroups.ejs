@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <%include ./partials/head%>
+    <title>Groups</title>
+  </head>
+  <body>
+    <%include ./partials/menu%>
+    <%include ./partials/contents%>
+    <!-- ------------START CONTENTS---------------- -->
+
+    <div class="tile is-ancestor">
+      <form action="/groups/edit/<%=dataGroups.id%>" method="post">
+          Name of Groups:<br>
+          <input class="input is-light" type="text" name="name_of_group" value="<%=dataGroups.name_of_group%>">
+          <br><br>
+          <div class="field is-grouped">
+            <p class="control">
+              <input class="button is-primary" type="submit" value="Edit">
+            </p>
+            <p class="control">
+              <a href="/groups" class="button is-light">
+                Batal
+              </a>
+            </p>
+          </div>
+        </form>
+    </div>
+    <!-- ------------END CONTENTS---------------- -->
+    <%include ./partials/footers%>
+  </body>
+</html>

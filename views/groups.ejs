@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <%include ./partials/head%>
+    <title>Groups</title>
+  </head>
+  <body>
+    <%include ./partials/menu%>
+    <%include ./partials/contents%>
+    <!-- ------------START CONTENTS---------------- -->
+
+    <div class="tile is-ancestor">
+      <div class="tile is-vertical is-8">
+        <div class="tile is-parent">
+          <!-- <article class="tile is-child notification is-primary"> -->
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Id</th>
+                  <th>Name Group</th>
+                  <th colspan="2">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <%rowsGroups.forEach(Groups =>{%>
+                  <tr>
+                    <th><%=Groups.id%></th>
+                    <td><%=Groups.name_of_group%></td>
+                    <td><a href="groups/edit/<%=Groups.id%>">
+                      <span class="icon has-text-success">
+                        <i class="fa fa-pencil-square-o"></i>
+                      </span>
+                    </a></td>
+                    <td><a href="groups/delete/<%=Groups.id%>">
+                      <span class="icon has-text-success">
+                        <i class="fa fa-trash"></i>
+                      </span>
+                    </a></td>
+                  </tr>
+                <%})%>
+              </tbody>
+              </table>
+          <!-- </article> -->
+        </div>
+      </div>
+      <form action="/groups" method="post">
+          Name of Groups:<br><br>
+          <input class="input is-light" type="text" name="name_of_group">
+          <br><br>
+          <div class="field is-grouped">
+            <input class="button is-primary" type="submit" value="Simpan">
+          </div>
+        </form>
+      </div>
+    <!-- ------------END CONTENTS---------------- -->
+    <%include ./partials/footers%>
+  </body>
+</html>

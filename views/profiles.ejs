@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <%include ./partials/head%>
+    <title>Profiles</title>
+  </head>
+  <body>
+    <%include ./partials/menu%>
+    <%include ./partials/contents%>
+    <!-- ------------START CONTENTS---------------- -->
+
+    <div class="tile is-ancestor">
+      <div class="tile is-vertical is-8">
+        <div class="tile is-parent">
+          <!-- <article class="tile is-child notification is-primary"> -->
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Id</th>
+                  <th>Username</th>
+                  <th>Password</th>
+                  <th colspan="2">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <%rowsProfiles.forEach(Profile =>{%>
+                  <tr>
+                    <th><%=Profile.id%></th>
+                    <td><%=Profile.username%></td>
+                    <td><%=Profile.password%></td>
+                    <td><a href="profiles/edit/<%=Profile.id%>">
+                      <span class="icon has-text-success">
+                        <i class="fa fa-pencil-square-o"></i>
+                      </span>
+                    </a></td>
+                    <td><a href="profiles/delete/<%=Profile.id%>">
+                      <span class="icon has-text-success">
+                        <i class="fa fa-trash"></i>
+                      </span>
+                    </a></td>
+                  </tr>
+                <%})%>
+              </tbody>
+              </table>
+          <!-- </article> -->
+        </div>
+      </div>
+          <form action="/profiles" method="post">
+            Username:<br>
+            <input class="input is-light" type="text" name="username">
+            <br>
+            Password:<br>
+            <input class="input is-light" type="text" name="password">
+            <br><br>
+            <div class="field is-grouped">
+              <input class="button is-primary" type="submit" value="Simpan">
+            </div>
+          </form>
+      </div>
+
+    <!-- ------------END CONTENTS---------------- -->
+    <%include ./partials/footers%>
+  </body>
+</html>

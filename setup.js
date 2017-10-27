@@ -7,5 +7,27 @@ db.serialize(function() {
   db.run("CREATE TABLE IF NOT EXISTS Profile (id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT UNIQUE, password TEXT)");
   db.run("CREATE TABLE IF NOT EXISTS Addresses (id INTEGER PRIMARY KEY AUTOINCREMENT, street TEXT, city TEXT, zipcode INTEGER UNIQUE)");
 });
+function ContactsToProfile() {
+  let query = "ALTER TABLE IF NOT EXISTS Profile ADD COLUMN ContactsId INTEGER REFERENCES Contacts('id')";
+  db.run(query,(err)=>{
+    if(!err){
+      console.log('Tabel berhasil di tambah');
+    } else {
+      console.log(err);
+    }
+  })
+}
+function setUniqueContactId() {
+  let query = "CREATE UNIQUE index contactsUnique on Profile(ContactsId);";
+  db.run(query,(err)=>{
+    if(!err){
+      console.log('Kolom di ContactsId berhasil di set Unique');
+    } else {
+      console.log(err);
+    }
+  })
+}
 
+// ContactsToProfile()
+// setUniqueContactId()
 db.close();

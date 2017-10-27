@@ -16,6 +16,20 @@
             <br>
             Password:<br>
             <input class="input is-light" type="text" name="password" value="<%=dataProfiles.password%>">
+            <br/><br/>
+            <div class="control">
+              <div class="select">
+                <select name="ContactsId">
+                    <%dataContacts.forEach(Contacts=>{%>
+                      <option value="<%=Contacts.id%>"
+                        <%if(dataProfiles.ContactsId === Contacts.id){ %>
+                            <%='selected'%>
+                        <%}%>
+                      ><%=Contacts.name%></option>
+                    <%})%>
+                </select>
+              </div>
+            </div>
             <br><br>
             <div class="field is-grouped">
               <p class="control">

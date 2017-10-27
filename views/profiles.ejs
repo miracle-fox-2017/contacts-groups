@@ -8,7 +8,12 @@
     <%include ./partials/menu%>
     <%include ./partials/contents%>
     <!-- ------------START CONTENTS---------------- -->
-
+    <% if(hasOwnProperty('error')){%>
+    <div class="notification is-danger">
+      <button class="delete"></button>
+      <strong>Please insert correct username and password</strong>
+    </div>
+  <% } %>
     <div class="tile is-ancestor">
       <div class="tile is-vertical is-8">
         <div class="tile is-parent">
@@ -17,15 +22,18 @@
               <thead>
                 <tr>
                   <th>Id</th>
+                  <th>Name</th>
                   <th>Username</th>
                   <th>Password</th>
                   <th colspan="2">Actions</th>
                 </tr>
               </thead>
               <tbody>
-                <%rowsProfiles.forEach(Profile =>{%>
+                <%rowsProfiles.forEach(Profile =>{
+                  if(Profile){%>
                   <tr>
                     <th><%=Profile.id%></th>
+                    <td><%=Profile.name%></td>
                     <td><%=Profile.username%></td>
                     <td><%=Profile.password%></td>
                     <td><a href="profiles/edit/<%=Profile.id%>">
@@ -39,7 +47,7 @@
                       </span>
                     </a></td>
                   </tr>
-                <%})%>
+                <%}})%>
               </tbody>
               </table>
           <!-- </article> -->
@@ -47,10 +55,20 @@
       </div>
           <form action="/profiles" method="post">
             Username:<br>
-            <input class="input is-light" type="text" name="username">
+            <input class="input is-light" type="text" name="username" required>
             <br>
             Password:<br>
-            <input class="input is-light" type="text" name="password">
+            <input class="input is-light" type="text" name="password" required>
+            <br/><br/>
+            <div class="control">
+              <div class="select">
+                <select name="ContactsId">
+                    <%dataContacts.forEach(Contacts=>{%>
+                      <option value="<%=Contacts.id%>"><%=Contacts.name%></option>
+                    <%})%>
+                </select>
+              </div>
+            </div>
             <br><br>
             <div class="field is-grouped">
               <input class="button is-primary" type="submit" value="Simpan">

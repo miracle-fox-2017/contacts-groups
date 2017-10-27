@@ -152,24 +152,30 @@ app.get('/addresses/delete/:id', (req, res)=>{
 
 // PROFILES
 app.get('/profiles', (req, res)=>{
-  let query = `SELECT * FROM Profile`
+  let query = `SELECT Profile.id, Profile.username, Profile.password, Contacts.name FROM Profile LEFT JOIN Contacts ON Profile.ContactsId = Contacts.id`
   db.all(query, (err, rows)=>{
     if(!err){
-      res.render('profiles', {rowsProfiles:rows})
+      let queryContacts = `SELECT * FROM Contacts`
+      db.all(queryContacts, (err, dataContacts)=>{
+          res.render('profiles', {rowsProfiles:rows, dataContacts:dataContacts})
+          // res.send(dataContacts)
+      })
     } else {
-      res.send(err)
+      res.render('profiles', {error :''})
       console.log(err);
     }
   })
 })
 
 app.post('/profiles', (req, res)=>{
-  let query = `INSERT INTO Profile (username, password) VALUES ('${req.body.username}','${req.body.password}')`
+  let query = `INSERT INTO Profile (username, password, ContactsId) VALUES ('${req.body.username}','${req.body.password}', '${req.body.ContactsId}')`
   db.run(query, (err)=>{
     if(!err){
       res.redirect('/profiles')
     } else  {
-      res.render('profiles')
+      res.render('profiles',{error :''})
+      // res.send(err)
+      // console.log(err);
     }
   })
 
@@ -179,7 +185,15 @@ app.get('/profiles/edit/:id', (req, res)=>{
   let query = `SELECT * FROM Profile WHERE id = '${req.params.id}'`
   db.get(query, (err, rows)=>{
     if(!err){
-      res.render('editProfile', {dataProfiles:rows})
+      let queryContacts = `SELECT * FROM Contacts`
+      db.all(queryContacts, (err, dataContacts)=>{
+        if(!err){
+          res.render('editProfile', {dataProfiles:rows, dataContacts:dataContacts})
+        } else {
+          res.render('editProfile',{error :''})
+          console.log(err);
+        }
+      })
     } else {
       res.send(err)
       console.log(err);
@@ -188,9 +202,15 @@ app.get('/profiles/edit/:id', (req, res)=>{
 })
 
 app.post('/profiles/edit/:id', (req, res)=>{
-  let query = `UPDATE Profile SET username = '${req.body.username}', password = '${req.body.password}' WHERE id = '${req.params.id}'`
-  db.run(query)
-  res.redirect('/profiles')
+  let query = `UPDATE Profile SET username = '${req.body.username}', password = '${req.body.password}', ContactsId = '${req.body.ContactsId}' WHERE id = '${req.params.id}'`
+  db.run(query,(err)=>{
+    if(!err){
+      res.redirect('/profiles')
+    } else {
+      res.render('profiles', {error:''})
+    }
+  })
+
 })
 
 app.get('/profiles/delete/:id', (req, res)=>{

@@ -6,10 +6,10 @@ const db = new sqlite3.Database('./database/database.db', err => {
 db.serialize(() => {
   db.run(`CREATE TABLE IF NOT EXISTS Contacts (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name VARCHAR(30) NOT NULL,
-    telp_number VARCHAR(14) NOT NULL,
-    email VARCHAR(30),
-    company VARCHAR(30)
+    name VARCHAR(255) NOT NULL,
+    telp_number VARCHAR(255) NOT NULL,
+    email VARCHAR(255),
+    company VARCHAR(255)
   )`, err => {
     if (err) throw err;
   });

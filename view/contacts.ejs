@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Contacts</title>
+  </head>
+  <body>
+    <h2>Add Contacts</h2>
+    <form action="/contacts" method="post">
+      <p>Name: <input type="text" name="name" placeholder="Your Name"/></p>
+      <p>Phone: <input type="number" name="phone" placeholder="Your Number"/></p>
+      <p>Email: <input type="email" name="email" placeholder="Your Email"/></p>
+      <p>Company: <input type="text" name="company" placeholder="Your Organization"></p>
+      <button>SUBMIT CONTACTS</button>
+    </form>
+
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Phone</th>
+          <th>Email</th>
+          <th>Company</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+        <% contacts.forEach(contact => { %>
+          <td><%= contact.id %></td>
+          <td><%= contact.name %></td>
+          <td><%= contact.telp_number %></td>
+          <td><%= contact.email %></td>
+          <td><%= contact.company %></td>
+        <% }) %>
+        </tr>
+      </tbody>
+    </table>
+  </body>
+</html>

@@ -1,0 +1,29 @@
+<html>
+
+<head>
+    <title>
+        Edit Address
+    </title>
+</head>
+
+<body>
+    <header>
+        <h3>
+            Edit Address
+        </h3>
+    </header>
+    <div class="edit-data">
+        <form action="/addresses/edit/<%= dataAddress.id%>" method="POST">
+            Street : <br>
+            <input type="text" name="street" value="<%= dataAddress.street%>" /> <br> City : <br>
+            <input type="text" name="city" value="<%= dataAddress.city%>" /> <br> Zipcode : <br>
+            <input type="text" name="zipcode" value="<%= dataAddress.zipcode%>" /> <br>
+            <br>
+
+            <input type="submit" value="Save">
+
+        </form>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,59 @@
+<html>
+
+<head>
+    <title>
+        Data Group
+    </title>
+</head>
+
+<body>
+    <header>
+        <h3>
+            Data Contact
+        </h3>
+    </header>
+
+    <a href="/">
+        Home
+    </a>
+
+    <div class="data-table">
+        <table>
+            <tr>
+                <th>
+                    ID
+                </th>
+                <th>
+                    Name
+                </th>
+                <th colspan="2">
+                    Action
+                </th>
+            </tr>
+            <% dataGroup.forEach((group)=>{%>
+                <tr>
+                    <td>
+                        <%= group.id%>
+                    </td>
+                    <td>
+                        <%= group.name_of_group%>
+                    </td>
+                    <td>
+                        <a href="/groups/edit/<%= group.id%>">
+                            Edit
+                        </a>
+                        <a href="/groups/delete/<%= group.id%>">
+                            Delete
+                        </a>
+                    </td>
+                    <%})%>
+
+                </tr>
+        </table>
+    </div>
+    <a href="/groups/add">
+        Add Group
+    </a>
+</body>
+
+</html>

@@ -1,0 +1,29 @@
+<html>
+
+<head>
+    <title>
+        Edit Profile
+    </title>
+</head>
+
+<body>
+    <header>
+        <h3>
+            Edit Data Profile
+        </h3>
+    </header>
+    <div class="edit-data">
+        <form action="/profiles/edit/<%= dataProfile.id%>" method="POST">
+            Username : <br>
+            <input type="text" name="username" value="<%= dataProfile.username%>" /> <br>
+            <br> Password : <br>
+            <input type="text" name="password" value="<%= dataProfile.password%>" /> <br>
+            <br>
+            <input type="submit" value="Save">
+        </form>
+
+
+    </div>
+</body>
+
+</html>

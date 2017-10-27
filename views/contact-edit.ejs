@@ -1,0 +1,30 @@
+<html>
+
+<head>
+    <title>
+        Edit Contact
+    </title>
+</head>
+
+<body>
+    <header>
+        <h3>
+            Edit Contact
+        </h3>
+    </header>
+    <div class="edit-data">
+        <form action="/contacts/edit/<%= dataContact.id%>" method="POST">
+            Name : <br>
+            <input type="text" name="name" value="<%= dataContact.name%>" /> <br> Company : <br>
+            <input type="text" name="company" value="<%= dataContact.company%>" /> <br> Telp Number : <br>
+            <input type="text" name="telp_number" value="<%= dataContact.telp_number%>" /> <br> Email : <br>
+            <input type="text" name="email" value="<%= dataContact.email%>" /> <br>
+            <br>
+
+            <input type="submit" value="Save">
+
+        </form>
+    </div>
+</body>
+
+</html>

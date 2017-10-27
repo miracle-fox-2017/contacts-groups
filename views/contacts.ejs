@@ -47,13 +47,13 @@
 			<h5>Editing <%= editItem.name %></h5>
 		<% } %>
 		
-		<input type="text" id="id" name="id" value="<%= (typeof editItem != 'undefined') ? editItem.id  : '' %>">
+		<input type="hidden" id="id" name="id" value="<%= (typeof editItem != 'undefined') ? editItem.id  : '' %>">
 		<input type="text" id="name" name="name"  placeholder="Nama" value="<%= (typeof editItem != 'undefined') ? editItem.name  : '' %>">
 		<input type="text" id="company" name="company"  placeholder="Company" value="<%= (typeof editItem != 'undefined') ? editItem.company  : '' %>">
 		<input type="tel" id="telp_number" name="telp_number"  placeholder="Nomor Telepon" value="<%= (typeof editItem != 'undefined') ? editItem.email  : '' %>">
 		<input type="email" id="email" name="email"  placeholder="email" value="<%= (typeof editItem != 'undefined') ? editItem.email  : '' %>">
 
-		<input type="submit" value="Tambah Kontak">
+		<input type="submit" value="Tambah">
 	</form>
 </body>
 </html>

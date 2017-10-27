@@ -3,9 +3,11 @@ const bodyParser = require('body-parser');
 const app = express();
 
 const ContactsModel = require('./models/contacts-model');
+const GroupsModel = require('./models/groups-model');
 
 // Model
 let contact = new ContactsModel('./database/database.db');
+let group = new GroupsModel('./database/database.db');
 
 // Setup body parser
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -48,6 +50,36 @@ app.post('/contacts/edit/:id', (req, res) => {
 app.get('/contacts/delete/:id', (req, res) => {
 	contact.deleteDataById({id: req.params.id});
 	res.redirect('/contacts/');
+});
+
+// Groups
+app.get('/groups', (req, res) => {
+	group.getAllData(function(rows) {
+		res.render('groups', { data: rows });
+	});
+});
+
+app.post('/groups', (req, res) => {
+	group.addData(req.body);
+	res.redirect('/groups');
+});
+
+app.get('/groups/edit/:id', (req, res) => {
+	group.getAllData(function(rows) {
+		group.getById({id: req.params.id}, (editedRows) =>{
+			res.render('groups', { id: req.params.id, data: rows, editItem: editedRows });
+		});
+	});	
+});
+
+app.post('/groups/edit/:id', (req, res) => {
+	group.updateDataById({id: req.params.id, editItem: req.body});
+	res.redirect('/groups/');
+});
+
+app.get('/groups/delete/:id', (req, res) => {
+	group.deleteDataById({id: req.params.id});
+	res.redirect('/groups/');
 });
 
 // Listening

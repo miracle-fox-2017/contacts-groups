@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Contact</title>
+</head>
+<style>
+	.contact-table{
+		width: 100%;
+	}
+</style>
+<body>
+	<% if (typeof data != 'undefined') { %>
+		<table class="contact-table" border="1">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>NAME</th>
+					<th>COMPANY</th>
+					<th>TELP</th>
+					<th>EMAIL</th>
+					<th>Action</th>
+				</tr>
+			</thead>
+
+			<tbody>
+				<% data.forEach((contact) => {%>
+					<tr>
+						<td><%= contact.id %></td>
+						<td><%= contact.name %></td>
+						<td><%= contact.company %></td>
+						<td><%= contact.telp_number %></td>
+						<td><%= contact.email %></td>
+						<td>
+							<a href="/contacts/edit/<%= contact.id %>">Edit</a>
+							<a href="/contacts/delete/<%= contact.id %>">Delete</a>
+						</td>
+					</tr>
+				<% }) %>
+			</tbody>
+		</table>
+	<br>
+	<% } %>
+
+	<form method="post" action="<%= (typeof editItem != 'undefined') ? `/contacts/edit/${id}`  : '/contacts' %>">
+		<% if (typeof editItem != 'undefined') { %>
+			<h5>Editing <%= editItem.name %></h5>
+		<% } %>
+		
+		<input type="text" id="id" name="id" value="<%= (typeof editItem != 'undefined') ? editItem.id  : '' %>">
+		<input type="text" id="name" name="name"  placeholder="Nama" value="<%= (typeof editItem != 'undefined') ? editItem.name  : '' %>">
+		<input type="text" id="company" name="company"  placeholder="Company" value="<%= (typeof editItem != 'undefined') ? editItem.company  : '' %>">
+		<input type="tel" id="telp_number" name="telp_number"  placeholder="Nomor Telepon" value="<%= (typeof editItem != 'undefined') ? editItem.email  : '' %>">
+		<input type="email" id="email" name="email"  placeholder="email" value="<%= (typeof editItem != 'undefined') ? editItem.email  : '' %>">
+
+		<input type="submit" value="Tambah Kontak">
+	</form>
+</body>
+</html>

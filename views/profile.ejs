@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Profile</title>
+</head>
+<style>
+	.profile-table{
+		width: 100%;
+	}
+</style>
+<body>
+	<% if (typeof data != 'undefined') { %>
+
+		<table class="profile-table" border="1">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>USERNAME</th>
+					<th>PASSWORD</th>
+					<th>ACTION</th>
+				</tr>
+			</thead>
+			
+			<tbody>
+				<% data.forEach((profile) => {%>
+					<tr>
+						<td><%= profile.id %></td>
+						<td><%= profile.username %></td>
+						<td><%= profile.password %></td>
+						<td>
+							<a href="/profiles/edit/<%= profile.id %>">Edit</a>
+							<a href="/profiles/delete/<%= profile.id %>">Delete</a>
+						</td>
+					</tr>
+				<% }) %>
+			</tbody>
+		</table>
+	<br>
+	<% } %>
+
+	<form method="post" action="<%= (typeof editItem != 'undefined') ? `/profiles/edit/${id}`  : '/profiles' %>">
+		<% if (typeof editItem != 'undefined') { %>
+			<h5>Editing <%= editItem.username %></h5>
+		<% } %>
+		
+		<input type="hidden" id="id" name="id" value="<%= (typeof editItem != 'undefined') ? editItem.id  : '' %>">
+		<input type="text" id="username" name="username" placeholder="Username" value="<%= (typeof editItem != 'undefined') ? editItem.username  : '' %>">
+		<input type="password" id="password" name="password"  placeholder="Password" value="<%= (typeof editItem != 'undefined') ? editItem.password  : '' %>">
+
+		<input type="submit" value="Tambah">
+	</form>
+</body>
+</html>

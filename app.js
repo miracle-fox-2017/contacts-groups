@@ -86,11 +86,15 @@ app.get('/contacts/delete/:id', function (req, res) {
 //Profile
 app.get('/profiles', function (req, res) {
     Profile.getData((data) => {
+
         res.render('profile', { dataProfile: data })
     })
 })
 app.get('/profiles/add', function (req, res) {
-    res.render('profile-add')
+    Contact.getData((data) => {
+        res.render('profile-add', { dataContact: data })
+    })
+
 })
 app.post('/profiles/add', function (req, res) {
     Profile.addData(req.body)
@@ -98,8 +102,11 @@ app.post('/profiles/add', function (req, res) {
 })
 
 app.get('/profiles/edit/:id', function (req, res) {
-    Profile.getDataById((data) => {
-        res.render('profile-edit', { dataProfile: data })
+    Profile.getDataById((dataProfile) => {
+        Contact.getData((dataContact) => {
+            res.render('profile-edit', { dataProfile: dataProfile, dataContact: dataContact })
+        })
+
     }, req.params.id)
 })
 app.post('/profiles/edit/:id', function (req, res) {

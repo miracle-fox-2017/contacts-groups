@@ -67,7 +67,33 @@ function createAddress() {
     }))
 }
 
+function alterTableProfile() {
+    let query = 'alter table profiles add idContact INTEGER references contacts (id)'
+    db.run(query, ((err) => {
+        if (err) {
+            console.log(err)
+        } else {
+            console.log("Table profiles succesfully altered!")
+        }
+    }))
+}
+
+function createUniqueProfile() {
+    let query = 'create unique index unique_column on profiles (idContact)'
+    db.run(query, ((err) => {
+        if (err) {
+            console.log(err)
+        } else {
+            console.log("Unique column added on table profiles!")
+        }
+    }))
+}
+
+
 createContact()
 createGroup()
 createProfile()
 createAddress()
+//alterTableProfile()
+createUniqueProfile()
+db.close()

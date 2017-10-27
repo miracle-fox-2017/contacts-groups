@@ -4,7 +4,7 @@ const db = new sqlite3.Database('db/data.db')
 class Profile {
 
     static getData(callback) {
-        let query = 'select * from  profiles'
+        let query = 'select p.id, p.username, p.password, c.name from  profiles p left join contacts c on p.idContact = c.id'
         db.all(query, function (err, rows) {
             if (err) {
                 callback(err)
@@ -15,7 +15,7 @@ class Profile {
     }
     static addData(newData) {
         //console.log(newData.name_of_group)
-        let query = `insert into profiles (username, password) values ('${newData.username}', '${newData.password}')`
+        let query = `insert into profiles (username, password, idContact) values ('${newData.username}', '${newData.password}', '${newData.idContact}')`
         db.run(query, function (err) {
             if (err) {
                 console.log(err)
@@ -24,7 +24,7 @@ class Profile {
     }
 
     static getDataById(callback, id) {
-        let query = `select * from profiles where id = ${id}`
+        let query = `select * from profiles  where id = ${id}`
         db.each(query, function (err, rows) {
             if (err) {
                 callback(err)

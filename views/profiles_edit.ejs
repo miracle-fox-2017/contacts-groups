@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Edit data di profiles</title>
+  </head>
+  <body>
+    <a href="/contacts">contacts</a> | <a href="/groups">groups</a> | <a href="/addresses">address</a> | <a href="/profiles">profile</a>
+    <h1>Profiles</h1>
+    <div>
+    <table>
+      <tr>
+        <th>id</th>
+        <th>username</th>
+        <th>password</th>
+      </tr>
+      <!-- tampilkan semua data address -->
+      <% rows.forEach (profile => { %>
+        <tr>
+          <td><%= profile.id %></td>
+          <td><%= profile.username %></td>
+          <td><%= profile.password %></td>
+          <td><a href="/profiles/edit/<%= profile.id %>">edit</a> | <a href="/profiles/delete/<%= profile.id %>">delete</a> </td>
+        </tr>
+      <% }) %>
+      
+    </table>
+  </div>
+  
+  <!-- disini tambah form untuk tambah profiles -->
+  <div>
+    <h2>Edit Profiles</h2>
+    <form class="" action="" method="post">
+      <input type="hidden" name="id" value="<%= rows[0].id %>">
+      Username:   <input type="text" name="username" value="<%= rows[0].username %>" placeholder="username"><br>
+      password: <input type="text" name="password" value="<%= rows[0].password %>" placeholder="password"><br>
+      <input type="submit" name="" value="KIRIM">
+    </form>
+  </div>
+  
+  </body>
+</html>
+

@@ -27,7 +27,7 @@ db.serialize(()=>{
                   id      INTEGER      PRIMARY KEY,
                   street  VARCHAR(50),
                   city    VARCHAR(50),
-                  zipcode VARCHAR(10)
+                  zipcode INTEGER
                   )`;
   
   //create table!!!              

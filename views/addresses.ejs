@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Menampilkan semua data addresses</title>
+  </head>
+  <body>
+    <a href="/contacts">contacts</a> | <a href="/groups">groups</a> | <a href="/addresses">address</a> | <a href="/profiles">profile</a>
+    <h1>Menampilkan semua data addresses</h1>
+    <div>
+    <table>
+      <tr>
+        <th>id</th>
+        <th>street</th>
+        <th>city</th>
+        <th>zipcode</th>
+      </tr>
+      <!-- tampilkan semua data contacts -->
+      <% rows.forEach (address => { %>
+        <tr>
+          <td><%= address.id %></td>
+          <td><%= address.street %></td>
+          <td><%= address.city %></td>
+          <td><%= address.zipcode %></td>
+          <td><a href="/addresses/edit/<%= address.id %>">edit</a> | <a href="/addresses/delete/<%= address.id %>">delete</a> </td>
+        </tr>
+      <% }) %>
+      
+    </table>
+  </div>
+  
+  <!-- disini tambah form untuk tambah contacts -->
+  <div>
+    <h2>Tambah Contacts</h2>
+    <form class="" action="" method="post">
+      street:   <input type="text" name="street" value="" placeholder="street"><br>
+      city: <input type="text" name="city" value="" placeholder="city"><br>
+      zipcode: <input type="text" name="zipcode" value="" placeholder="zipcode"><br>
+      <input type="submit" name="" value="KIRIM">
+    </form>
+  </div>
+  
+  </body>
+</html>
+

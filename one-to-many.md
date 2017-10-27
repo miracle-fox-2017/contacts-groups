@@ -13,7 +13,7 @@ Pada file setup.js tambahkan column relasi foreign key dan tentukan di tabel man
 2. Pada saat melakukan add di halaman address, tambahkanlah input fields berupa select-option(dropdown/combobox) yang isinya merupakan nama dari semua contact. Sehingga ketika user/client menekan tombol save, data contact akan ke-assign pada data address tersebut
 3. Pada saat melakukan edit di halaman address, data address harus ter-populate ke masing-masing input form-nya, termasuk selected dropdown-nya
 
-## Release 5
-- Buatlah routing baru "/addresses_with_contact" yang isinya menampilkan list dari addresses, kemudian tambahkan name dan company dari Contact yang sesuai (hint: JOIN)
+## Release 8
+- Buatlah routing baru "/addresses_with_contact" yang isinya menampilkan list dari addresses, kemudian tambahkan name dan company dari Contact yang sesuai dengan cara memanipulasi object di routing sebelum dikirimkan ke view menggunakan callback (untuk melatih "callback" kamu maka untuk kasus ini tidak boleh menggunakan JOIN)
 - Tambahkan link pada halaman Contact untuk memanggil routing yang baru kalian buat di atas
 

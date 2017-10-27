@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="stylesheet" href="style/css/common.css">
+    <title>Contact Page</title>
+</head>
+<body>
+<section>
+    <div class="header">Daftar Kontak</div>
+    <div class="content">
+        <%if(data.length === 0){%>
+            <div class="empty">Data Kosong!</div>
+        <%}else{%>
+            <table border="1">
+                <tr>
+                    <td>No</td>
+                    <td>Name</td>
+                    <td>Company</td>
+                    <td>Phone Number</td>
+                    <td>Email</td>
+                    <td>Action</td>
+                </tr>
+                <%data.map((value,i)=>{%>
+                <tr>
+                    <td><%=i + 1%></td>
+                    <td><%=value.name%></td>
+                    <td><%=value.company%></td>
+                    <td><%=value.phone%></td>
+                    <td><%=value.email%></td>
+                    <td>
+                        <a href="/contacts/edit/<%=value.id%>"><button type="button">Edit</button></a>
+                        <a href="/contacts/delete/<%=value.id%>"><button type="button">Hapus</button></a>
+                    </td>
+                </tr>
+                <%})%>
+            </table>
+        <%}%>
+    </div>
+</section>
+<section>
+    <div class="header">Kontak Baru</div>
+    <div class="content">
+        <form action="/contacts" method="post">
+            <table border="1">
+                <tr>
+                    <td>Name</td>
+                    <td><input type="text" name="name" placeholder="Type your name"></td>
+                </tr>
+                <tr>
+                    <td>Company</td>
+                    <td><input type="text" name="company" placeholder="Type your company"></td>
+                </tr>
+                <tr>
+                    <td>Phone Number</td>
+                    <td><input type="text" name="phone" placeholder="Type your phone number"></td>
+                </tr>
+                <tr>
+                    <td>Email</td>
+                    <td><input type="text" name="email" placeholder="Type your email"></td>
+                </tr>
+                <tr>
+                    <td colspan="2"><input type="submit" value="Create"></td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</section>
+</body>
+</html>

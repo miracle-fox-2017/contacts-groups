@@ -57,10 +57,46 @@ app.post('/contacts/edit/:id',(req,res)=>{
     res.redirect('../../contacts')
   })
 })
-
+//DELETE
 app.get('/contacts/delete/:id',(req,res)=>{
   db.all(`delete from Contacts where id=${req.params.id}`,(err)=>{
     res.redirect('../../contacts')
+  })
+})
+
+//* END CONTACTS *//
+//* START GROUPS *//
+//CREATE
+app.post('/groups',(req,res)=>{
+  db.run(`insert into Groups(name_of_group) values ('${req.body.name_of_group}')`,(err)=>{
+    if(!err){
+      res.redirect('groups')
+    }
+  })
+})
+//READ
+app.get('/groups',(req,res)=>{
+  db.all(`select * from Groups`,(err,data)=>{
+    if(!err){
+      res.render('groups',{data_Groups:data})
+    }
+  })
+})
+//UPDATE
+app.get('/groups/edit/:id',(req,res)=>{
+  db.all(`select * from Groups where id='${req.params.id}'`,(err,data)=>{
+    res.render('groups-edit',{data_Groups:data[0]})
+  })
+})
+app.post('/groups/edit/:id',(req,res)=>{
+  db.run(`update Groups set name_of_group = '${req.body.name_of_group}' where id = '${req.params.id}'`,(err)=>{
+    res.redirect('../../groups')
+  })
+})
+//DELETE
+app.get('/groups/delete/:id',(req,res)=>{
+  db.run(`delete from Groups where id='${req.params.id}'`,(err)=>{
+    res.redirect('../../groups')
   })
 })
 

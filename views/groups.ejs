@@ -23,37 +23,31 @@
 
   <div class="container" >
     <h4 class="title is-3" style="text-align:center;">EXPRESS CONTACTS - GROUPS</h4>
-    <p class="subtitle is-4" style="text-align:center;">all <strong>contact</strong> information | <span class="button tag is-success">add contact</span> </p>
+    <p class="subtitle is-4" style="text-align:center;">all <strong>Groups</strong> information | <span class="button tag is-success">add groups</span> </p>
     <table class="table">
     <thead>
 
         <tr>
           <th><abbr title="id"></abbr>ID</th>
-          <th>FULL NAME</th>
-          <th><abbr title="company">COMPANY</abbr></th>
-          <th><abbr title="telp number">PHONE NUMBER</abbr></th>
-          <th><abbr title="email">EMAIL</abbr></th>
+          <th>NAME OF GROUP</th>
           <th><abbr title="actions">ACTIONS</abbr></th>
         </tr>
 
     </thead>
     <tbody>
-      <%for(let i=0; i<data_Contacts.length; i++){%>
+      <%for(let i=0; i<data_Groups.length; i++){%>
       <tr>
-        <th><%=data_Contacts[i].id%></th>
-        <td><strong><a href="#." title="full name" class="is-success"><%=data_Contacts[i].name%></a></strong>
+        <th><%=data_Groups[i].id%></th>
+        <td><strong><a href="#." title="full name" class="is-success"><%=data_Groups[i].name_of_group%></a></strong>
         </td>
-        <td><%=data_Contacts[i].company%></td>
-        <td><%=data_Contacts[i].telp_number%></td>
-        <td><%=data_Contacts[i].email%></td>
         <td style="margin-left:-5px;">
-              <a class="button is-info is-outlined is-small" href='/contacts/edit/<%=data_Contacts[i].id%>'>
+              <a class="button is-info is-outlined is-small" href='/groups/edit/<%=data_Groups[i].id%>'>
               <span class="icon is-small">
                 <i class="fa fa-pencil"></i>
               </span>
               <span>Edit</span>
               </a>
-              <a onclick="myFunction()" class="button is-danger is-outlined is-small" href="/contacts/delete/<%=data_Contacts[i].id%>">
+              <a onclick="myFunction()" class="button is-danger is-outlined is-small" href="/groups/delete/<%=data_Groups[i].id%>">
               <span class="icon is-small">
                 <i class="fa fa-times"></i>
               </span>
@@ -65,26 +59,11 @@
     </tbody>
   </table>
   <hr>
-  <form action="/contacts" method="post">
+  <form action="/groups" method="post">
     <div class="field-body">
       <div class="field">
         <div class="control">
-          <input class="input" type="text" placeholder="name" name="name">
-        </div>
-      </div>
-      <div class="field">
-        <div class="control">
-          <input class="input" type="text" placeholder="company" name="company">
-        </div>
-      </div>
-      <div class="field">
-        <div class="control">
-          <input class="input" type="text" placeholder="telp number" name="telp_number">
-        </div>
-      </div>
-      <div class="field">
-        <div class="control">
-          <input class="input" type="text" placeholder="email" name="email">
+          <input class="input" type="text" placeholder="name_of_group" name="name_of_group">
         </div>
       </div>
       <div class="control">

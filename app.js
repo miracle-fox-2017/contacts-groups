@@ -99,9 +99,37 @@ app.get('/groups/delete/:id',(req,res)=>{
     res.redirect('../../groups')
   })
 })
-
-
-
+//* END GROUPS *//
+//* START ADDRESSES *//
+//CREATE
+app.post('/addresses',(req,res)=>{
+  db.run(`insert into Addresses(street,city,zipcode) values ('${req.body.street}','${req.body.city}','${req.body.zipcode}')`,(err)=>{
+    res.redirect('addresses')
+  })
+})
+//READ
+app.get('/addresses',(req,res)=>{
+  db.all(`select * from Addresses`,(err,data)=>{
+    res.render('addresses',{data_Addresses:data})
+  })
+})
+//UPDATE
+app.get('/addresses/edit/:id',(req,res)=>{
+  db.all(`select * from Addresses where id='${req.params.id}'`,(err,data)=>{
+    res.render('addresses-edit',{data_Addresses:data[0]})
+  })
+})
+app.post('/addresses/edit/:id',(req,res)=>{
+  db.run(`update Addresses set street='${req.body.street}', city='${req.body.city}', zipcode='${req.body.zipcode}' where id='${req.params.id}'`,(err)=>{
+    res.redirect('../../addresses')
+  })
+})
+//DELETE
+app.get('/addresses/delete/:id',(req,res)=>{
+  db.run(`delete from Addresses where id='${req.params.id}'`,(err)=>{
+    res.redirect('../../addresses')
+  })
+})
 
 
 app.listen(3000,(err)=>{

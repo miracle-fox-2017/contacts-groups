@@ -137,6 +137,34 @@ app.get('/addresses/delete/:id',(req,res)=>{
     res.redirect('../../addresses')
   })
 })
+//ADRESS WITH CONTACT
+app.get('/addresses_with_contact',(req,res)=>{
+  function getAddresses(cb){
+    let queryAddresses = `select * from Addresses`
+    db.all(queryAddresses,(err,data_Addresses)=>{
+      if(err){
+        cb(err)
+      }else{
+        cb(data_Addresses)
+      }
+    })
+  }
+  function getContacts(cb){
+    let queryContacts = `select * from Contacts`
+    db.all(queryContacts,(err,data_Contacts)=>{
+      if(err){
+        cb(err)
+      }else{
+        cb(data_Contacts)
+      }
+    })
+  }
+  getAddresses((data_Addresses)=>{
+    getContacts((data_Contacts)=>{
+      res.render('addresses_with_contact',{data_Addresses:data_Addresses, data_Contacts:data_Contacts})
+    })
+  })
+})
 //* END ADDRESSES *//
 //* START PROFILE *//
 //CREATE
@@ -164,7 +192,7 @@ app.get('/profile',(req,res)=>{
         if(err){
           console.log(err);
         }else{
-          res.render('profile',{pesanError:error,data_Profile:data_join, data_Contacts:data})
+          res.render('profile',{pesanError:error, data_Profile:data_join, data_Contacts:data})
         }
       })
     }

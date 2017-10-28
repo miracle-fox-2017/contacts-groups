@@ -72,7 +72,7 @@
 	<br>
 	<% } %>
 
-	<form method="post" action="<%= (typeof editItem != 'undefined') ? `/contacts/edit/${id}`  : '/contacts' %>">
+	<form method="post" onsubmit="return validateContactForm();" action="<%= (typeof editItem != 'undefined') ? `/contacts/edit/${id}`  : '/contacts' %>">
 		<% if (typeof editItem != 'undefined') { %>
 			<h5>Editing <%= editItem.name %></h5>
 		<% } %>
@@ -83,7 +83,17 @@
 		<input type="tel" id="telp_number" name="telp_number"  placeholder="Nomor Telepon" value="<%= (typeof editItem != 'undefined') ? editItem.email  : '' %>">
 		<input type="email" id="email" name="email"  placeholder="email" value="<%= (typeof editItem != 'undefined') ? editItem.email  : '' %>">
 
-		<input type="submit" value="Tambah">
+		<input type="submit" id="btnSubmit" value="Tambah">
 	</form>
+
+	<script>
+		function validateContactForm()  {
+			let fieldName = document.getElementById('name').value;
+			if (fieldName.length < 1) {
+				alert("Nama Harus diisi");
+				return false;
+			}
+		}
+	</script>
 </body>
 </html>

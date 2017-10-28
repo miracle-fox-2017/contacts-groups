@@ -40,7 +40,7 @@
 			color: wheat;
 		}
 	</style>
-
+	<% let currentContactIds = []; %>
 	<% if (typeof data != 'undefined') { %>
 
 		<table class="profile-table" border="1">
@@ -55,8 +55,10 @@
 			</thead>
 			
 			<tbody>
+				
 				<% data.forEach((profile) => {%>
 					<tr>
+						<% currentContactIds.push(profile.contacts_id); %>
 						<td><%= profile.id %></td>
 						<td><%= profile.username %></td>
 						<td><%= profile.password %></td>
@@ -71,8 +73,8 @@
 		</table>
 	<br>
 	<% } %>
-
-	<form method="post" action="<%= (typeof editItem != 'undefined') ? `/profiles/edit/${id}`  : '/profiles' %>">
+	
+	<form onsubmit="return validateProfileForm();" method="post" action="<%= (typeof editItem != 'undefined') ? `/profiles/edit/${id}`  : '/profiles' %>">
 		<% if (typeof editItem != 'undefined') { %>
 			<h5>Editing <%= editItem.username %></h5>
 		<% } %>
@@ -81,14 +83,39 @@
 		<input type="text" id="username" name="username" placeholder="Username" value="<%= (typeof editItem != 'undefined') ? editItem.username  : '' %>">
 		<input type="password" id="password" name="password"  placeholder="Password" value="<%= (typeof editItem != 'undefined') ? editItem.password  : '' %>">
 		
-		<select name="contac_name" id="contac_name">
+		<select name="contacts_id" id="contacts_id" data-exists-contactid="<%= currentContactIds.toString(); %>">
 			<option value=""></option>
-			<% data.forEach((profile) => {%>
-				<option value="<%= profile.contacts_id %>" <%= (typeof editItem != 'undefined' && editItem.id == profile.id) ? 'selected' : '' %>><%= profile.name %></option>
+			<% contacts.forEach((contact) => {%>
+				<option value="<%= contact.id %>" <%= (typeof editItem != 'undefined' && editItem.id == contact.id) ? 'selected' : '' %>><%= contact.name %></option>
 			<% }) %>
 		</select>
 
 		<input type="submit" value="Tambah">
 	</form>
+
+	<script>
+		function validateProfileForm() {
+			let usernameField = document.getElementById('username').value;
+			let contactNameDropdown = document.getElementById('contacts_id');
+			let arrExistingContactId = contactNameDropdown.getAttribute('data-exists-contactid').split(',');
+			let selectedOptions = contactNameDropdown.options[contactNameDropdown.selectedIndex].value;
+
+			if (usernameField.length < 1) {
+				alert('Username harus diisi');
+				// alert(contactNameDropdown.options[contactNameDropdown.selectedIndex].text);
+				// alert(contactNameDropdown.getAttribute('data-exists-name'));
+			
+				return false;
+			}
+
+			if (arrExistingContactId.indexOf(selectedOptions) != -1) {
+				alert('Pilih Contact yang lain');
+
+				return false;
+			}
+			
+			return true;
+		}
+	</script>
 </body>
 </html>

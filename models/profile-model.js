@@ -36,7 +36,7 @@ class ProfilesModel {
 
 	addData(data) {
 		let db = new sqlite3.Database(this.dbFile);
-		let sql = `INSERT INTO ${this.tablename} (username, password) VALUES ("${data.username}", "${data.password}")`;
+		let sql = `INSERT INTO ${this.tablename} (username, password, contacts_id) VALUES ("${data.username}", "${data.password}", ${+data.contacts_id})`;
 		db.run(sql);
 	}
 

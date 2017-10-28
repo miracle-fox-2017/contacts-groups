@@ -89,11 +89,16 @@ app.get('/groups/delete/:id', (req, res) => {
 // Profile
 app.get('/profiles', (req, res) => {
 	profile.getAllDataInnerJoin('Contacts', function(rows) {
-		res.render('profile', { data: rows });
+		
+		contact.getAllData((allcontacts) => {
+			res.render('profile', { data: rows, contacts: allcontacts });
+		});
+		
 	});
 });
 
 app.post('/profiles', (req, res) => {
+	console.log(req.body);
 	profile.addData(req.body);
 	res.redirect('/profiles');
 });

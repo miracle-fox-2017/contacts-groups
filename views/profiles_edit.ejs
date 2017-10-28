@@ -6,13 +6,15 @@
   </head>
   <body>
     <a href="/contacts">contacts</a> | <a href="/groups">groups</a> | <a href="/addresses">address</a> | <a href="/profiles">profile</a>
-    <h1>Profiles</h1>
+    <h1>Edit Profiles</h1>
     <div>
     <table>
       <tr>
         <th>id</th>
         <th>username</th>
         <th>password</th>
+        <th>Contacts</th>
+        <th>Action</th>
       </tr>
       <!-- tampilkan semua data address -->
       <% rows.forEach (profile => { %>
@@ -20,6 +22,7 @@
           <td><%= profile.id %></td>
           <td><%= profile.username %></td>
           <td><%= profile.password %></td>
+          <td><%= profile.name %></td>
           <td><a href="/profiles/edit/<%= profile.id %>">edit</a> | <a href="/profiles/delete/<%= profile.id %>">delete</a> </td>
         </tr>
       <% }) %>
@@ -34,7 +37,13 @@
       <input type="hidden" name="id" value="<%= rows[0].id %>">
       Username:   <input type="text" name="username" value="<%= rows[0].username %>" placeholder="username"><br>
       password: <input type="text" name="password" value="<%= rows[0].password %>" placeholder="password"><br>
-      <input type="submit" name="" value="KIRIM">
+      contacts: 
+      <select name="id_contacts">
+      <% contacts.forEach (contact => { %>
+        <option value="<%= contact.id %>" <% if(rows[0].cid == contact.id){ %> <%= 'selected' %> <% } %> ><%= contact.name %></option> 
+      <% }) %>
+      </select>
+      <br><input type="submit" name="" value="KIRIM">
     </form>
   </div>
   

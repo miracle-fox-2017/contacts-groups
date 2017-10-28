@@ -239,14 +239,17 @@ app.get('/addresses/delete/:id', function (req, res){
 })
 
 
-//////////////////// 3. PROFILES ///////////////////////////
+//////////////////// 4. PROFILES ///////////////////////////
+let showContacts     = `SELECT * FROM Contacts`;
+let showProfilesJoin = `SELECT
+                         Profile.id AS id, Profile.id_contacts, Profile.username, Profile.password,
+                         Contacts.id AS cid, Contacts.name
+                        FROM Profile 
+                        JOIN Contacts 
+                        ON Profile.id_contacts = Contacts.id`;
 
 //GET PROFILES
 app.get('/profiles', function (req, res) {
-  let showContacts = `SELECT * FROM Contacts`;
-  let showProfilesJoin = `SELECT * FROM Profile 
-                          JOIN Contacts 
-                          ON Profile.id_contacts = Contacts.id`;
   db.all(showContacts, (err, rows)=>{
     let contacts = rows;
     db.all(showProfilesJoin, (err, rows)=>{
@@ -255,24 +258,20 @@ app.get('/profiles', function (req, res) {
       // console.log('contacts',contacts);
       res.render('profiles',{"rows": rows, "contacts": contacts});
     })
+    
   })
-
   
 })
 
 //POST PROFILES
 app.post('/profiles', function (req, res) {
   //set query
-  console.log(req.body);
-  let showContacts = `SELECT * FROM Contacts`;
-  let showProfilesJoin = `SELECT * FROM Profile 
-                          JOIN Contacts 
-                          ON Profile.id_contacts = Contacts.id`;
+  // console.log(req.body);
   let query = `INSERT OR IGNORE INTO Profile
                (username, password, id_contacts)
                VALUES
                ("${req.body.username}", "${req.body.password}", "${req.body.id_contacts}");`
-  console.log(query);
+  
   //execute query
   db.run(query,()=>{
     db.all(showContacts, (err, rows)=>{
@@ -282,7 +281,6 @@ app.post('/profiles', function (req, res) {
       })
           
     })
-
     
   })
 
@@ -291,33 +289,48 @@ app.post('/profiles', function (req, res) {
 //GET PROFILES EDIT
 app.get('/profiles/edit/:id', function (req, res) {
   let id = req.params.id;
-  let showSpecificId = `SELECT * FROM Profile WHERE id=${id}`;
-  // let showSpecificId = `SELECT * FROM Profile 
-  //                         JOIN Contacts 
-  //                         ON Profile.id_contacts = Contacts.id
-  //                         WHERE Profile.id=${id}`;
+  // let showSpecificId = `SELECT * FROM Profile WHERE id=${id}`;
+  let showSpecificId = `SELECT Profile.id AS id, Profile.id_contacts, Profile.username, Profile.password, Contacts.id AS cid, Contacts.name FROM Profile 
+                          JOIN Contacts 
+                          ON Profile.id_contacts = Contacts.id
+                          WHERE Profile.id=${id}`;
   //execute query
-  db.all(showSpecificId, (err, rows)=>{
-    res.render('profiles_edit',{rows});
+  db.all(showContacts, (err, rows)=>{
+    let contacts = rows;
+    db.all(showSpecificId, (err, rows)=>{
+      res.render('profiles_edit',{"rows": rows, "contacts": contacts});
+    })
+        
   })
+  
 })
 
 //POST PROFILES EDIT
 app.post('/profiles/edit/:id', function (req, res){
   let id = req.params.id;
   // console.log(req.body);
-  let showSpecificId = `SELECT * FROM Profile WHERE id=${id}`;
+  let showSpecificId = `SELECT Profile.id AS id, Profile.id_contacts, Profile.username, Profile.password, Contacts.id AS cid, Contacts.name FROM Profile 
+                          JOIN Contacts 
+                          ON Profile.id_contacts = Contacts.id
+                          WHERE Profile.id=${id}`;
   
   let query = `UPDATE Profile SET
                 id = ${req.body.id},
                 username = "${req.body.username}",
-                password = "${req.body.password}"
+                password = "${req.body.password}",
+                id_contacts = "${req.body.id_contacts}"
               WHERE 
                 id = ${req.body.id}`;
-  //execute query
+                
+  // execute query
   db.run(query, ()=>{
-    db.all(showSpecificId, (err, rows)=>{
-      res.render('profiles_edit',{rows});
+    db.all(showContacts, (err, rows)=>{
+      let contacts = rows;
+      db.all(showSpecificId, (err, rows)=>{
+        // res.render('profiles',{"rows": rows, "contacts": contacts});
+        res.redirect('/profiles');
+      })
+          
     })
     
   })

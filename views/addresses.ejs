@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Addresses</title>
+  </head>
+  
+  <body>
+    <table>
+      <thead>
+        <tr>
+          <td>ID</td>
+          <td>Street</td>
+          <td>City</td>
+          <td>Zipcode</td>
+        </tr>
+      </thead>
+      <tbody>
+        <%addressesData.forEach( (address) => { %>
+          <tr>
+            <td> <%= address.ID %> </td>
+            <td> <%= address.street%> </td>
+            <td> <%= address.city %> </td>
+            <td> <%= address.zipcode%> </td>
+            <td> <a href="/addresses/edit/<%=address.ID%>">EDID</a></td>
+            <td> <a href="/addresses/delete/<%=address.ID%>">DELED</a></td>
+          </tr>
+          <%})%>
+      </tbody>
+    </table>
+    <form action="/addresses" method="post">
+      <table>
+        <thead>
+          <tr>
+            <td>Add New Group</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Street Name</td>
+            <td>:</td>
+            <td><input type="text" name="street"></td>
+          </tr>
+          <tr>
+            <td>City</td>
+            <td>:</td>
+            <td><input type="text" name="city"></td>
+          </tr>
+          <tr>
+            <td>Zip Code</td>
+            <td>:</td>
+            <td><input type="text" name="zipcode"></td>
+          </tr>
+          <tr>
+            <td colspan="3"><input type="submit" value="Add"></td>
+          </tr>
+        </tbody>
+      </table>
+    </form>
+  </body>
+</html>

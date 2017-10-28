@@ -2,21 +2,45 @@ const sqlite3   = require('sqlite3');
 const db        = new sqlite3.Database('./database/database.db');
 const tableName = `Contacts`;
 
+
+/*
+  variabel statement dan command untuk digunakan sebagai tempat penampungan di fungsi lain, statement digunakan untuk menyimpan query
+  command digunakan untuk membedakan beberapa perintah
+  properties digunakan untuk memasukkan data, jika ada penambahan kolom, cukup tambahkan di array properties, tidak perlu melakukan perubahan kode dibawahnya
+  fill digunakan untuk menyimpan value yang diterima, masing masing fungsi yang memerlukan sudah melakukan pemecahan object sendiri
+  columnNames digunakan untuk menyimpan nama kolom dalam tabel
+*/
+
 let statement = ``;
 let command = ``;
+let properties = ['name', `company`, 'telp_number', 'email'];
+let fill = ``;
+let columnNames = ``;
 
 /*
   function add
-  parameter : contact object
+  parameter : group object
   creating statement to be passed on to execute function
 */
 
-let add = (contactObj) =>
+let add = (Obj) =>
 {
+  for (let i = 0; i < properties.length - 1 ; i++)
+  {
+    columnNames += `${properties[i]}, `
+    fill += ` "${Obj[properties[i]]}", `
+  }
+  
+  columnNames += `${properties[properties.length - 1]}`;
+  fill += `"${Obj[properties[properties.length - 1]]}"`
+  
   command = `INSERT`;
-  statement = `INSERT INTO ${tableName} VALUES (
-        "${contactObj.name}", "${contactObj.company}", "${contactObj.telp_number}", "${contactObj.email}")`;
-  db.run(statement)
+  statement = `INSERT INTO ${tableName} (${columnNames}) VALUES (${fill})`;
+  
+  console.log(statement);
+  
+  db.run(statement);
+  resetAll();
 }
 
 /*
@@ -66,63 +90,40 @@ let select = (callback, column = `*`, id) =>
      }
    )
  }
+ resetAll();
 }
 
-let update = (contactObj) =>
+let update = (Obj) =>
 {
+  for (let i = 0; i < properties.length - 1 ; i++)
+  {
+    fill += `${properties[i]} = "${Obj[properties[i]]}", `
+  }
+  
+  fill += `${properties[properties.length - 1]} = "${Obj[properties[properties.length - 1]]}" WHERE ID = ${Obj.ID}`
+  
   command = `UPDATE`;
-  statement = `UPDATE ${tableName} SET name = "${contactObj.name}", company = "${contactObj.company}", telp_number = "${contactObj.telp_number}", email = "${contactObj.email}" WHERE ID = ${contactObj.ID}`;
-  console.log(`masuk update, statement nya ${a}`);
-  db.run(a);
+  statement = `UPDATE ${tableName} SET ${fill}`;
+  console.log(statement);
+  db.run(statement);
+  resetAll();
 }
 
 
 let deleteQuery = (id) =>
 {
   statement = `DELETE FROM ${tableName} WHERE ID = ${id}`;
-  db.run(statement)
+  db.run(statement);
+  resetAll();
 }
 
 
-// class Contacts
-// {
-//   constructor()
-//   {
-//     this.tableName = `Contacts`;
-//     this.command = ``;
-//     this.statement = ``;
-//   }
-//
-//   add(contactObj)
-//   {
-//     this.command = `INSERT`;
-//     this.statement = `INSERT INTO ${this.tableName} VALUES (
-//       "${contactObj.name}", "${contactObj.company}", "${contactObj.telp_number}", "${contactObj.email}")`;
-//     this.execute();
-//   }
-//
-//   select(callback, column = `*`)
-//   {
-//     let statement = `SELECT ${column} FROM ${this.tableName}`
-//     // this.statement = ;
-//     this.execute(statement, callback);
-//   }
-//
-//   execute(statement, callback)
-//   {
-//     db.all(statement, (err, rows) =>
-//       {
-//         if (err)
-//         {
-//           console.log(err);
-//         }
-//         callback(rows);
-//       }
-//     );
-//     // db.run(this.statement);
-//   }
-// }
-
-
+let resetAll = () =>
+{
+  statement = ``;
+  command = ``;
+  fill = ``;
+  columnNames = ``;
+}
 
 module.exports = {add, select, update, deleteQuery};

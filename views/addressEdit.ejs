@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Edit <%=addressData.name%></title>
+  </head>
+  <body>
+    <form action="/addresses/edit/<%=addressData.ID%>" method="post">
+      <table>
+        <thead>
+          <tr>
+            <td>Street Name</td>
+            <td>City</td>
+            <td>Zip Code</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td> <input type="hidden" name="ID" value="<%=addressesData.ID%>"> <input type="text" name="street" value="<%=addressesData.street%>"> </td>
+            <td> <input type="text" name="city value="<%=addressesData.city%>"> </td>
+            <td> <input type="text" name="zipcode" value="<%=addressesData.zipcode%>"> </td>
+            <td><input type="submit" value="Simpan Edit"></td>
+          </tr>
+        </tbody>
+      </table>
+    </form>
+  </body>
+</html>

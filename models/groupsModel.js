@@ -37,7 +37,10 @@ let add = (Obj) =>
   command = `INSERT`;
   statement = `INSERT INTO ${tableName} (${columnNames}) VALUES (${fill})`;
   
-  db.run(statement)
+  console.log(statement);
+  
+  db.run(statement);
+  resetAll();
 }
 
 /*
@@ -52,7 +55,6 @@ let select = (callback, column = `*`, id) =>
   statement = `SELECT ${column} FROM ${tableName}`
   if (id)
   {
-    console.log("masuk check idnya nih");
     command = `WHERE`
     statement += ` WHERE ID = ${id}`;
   }
@@ -88,6 +90,7 @@ let select = (callback, column = `*`, id) =>
      }
    )
  }
+ resetAll();
 }
 
 let update = (Obj) =>
@@ -103,13 +106,24 @@ let update = (Obj) =>
   statement = `UPDATE ${tableName} SET ${fill}`;
   console.log(statement);
   db.run(statement);
+  resetAll();
 }
 
 
 let deleteQuery = (id) =>
 {
   statement = `DELETE FROM ${tableName} WHERE ID = ${id}`;
-  db.run(statement)
+  db.run(statement);
+  resetAll();
+}
+
+
+let resetAll = () =>
+{
+  statement = ``;
+  command = ``;
+  fill = ``;
+  columnNames = ``;
 }
 
 module.exports = {add, select, update, deleteQuery};

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Edit <%=profileData.name%></title>
+  </head>
+  <body>
+    <form action="/profiles/edit/<%=profileData.ID%>" method="post">
+      <table>
+        <thead>
+          <tr>
+            <td>Username</td>
+            <td>Password</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><input type="hidden" name="ID" value="<%=profileData.ID%>"><input type="text" name="username" value="<%=profileData.username%>"></td>
+            <td><input type="text" name="username" value="<%=profileData.password%>"></td>
+            <td><input type="submit" value="Simpan Edit"></td>
+          </tr>
+        </tbody>
+      </table>
+    </form>
+  </body>
+</html>

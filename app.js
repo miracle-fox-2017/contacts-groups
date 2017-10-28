@@ -2,9 +2,12 @@
 // ================================================================================
 const express = require('express');
 const bodyParser = require('body-parser');
+const addresses = require('./models/addressModel');
 const contacts = require('./models/contactsModel')
 const groups = require('./models/groupsModel');
+const profiles = require('./models/profileModel');
 const app = express();
+
 
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
@@ -33,6 +36,13 @@ app.get('/contacts', (req, res) =>
         res.render('contacts', {contactsData})
       }
     );
+  }
+);
+
+app.post(`/contacts`, (req, res) =>
+  {
+    groups.add(req.body);
+    res.redirect(`/contacts`);
   }
 );
 
@@ -77,11 +87,11 @@ app.get('/groups', (req, res) =>
 app.post(`/groups`, (req, res) =>
   {
     groups.add(req.body);
-    res.redirect(`groups`);
+    res.redirect(`/groups`);
   }
-)
+);
 
-app.get('/group/edit/:id', (req, res) =>
+app.get('/groups/edit/:id', (req, res) =>
   {
     groups.select( (groupData) =>
       {
@@ -91,7 +101,7 @@ app.get('/group/edit/:id', (req, res) =>
   }
 );
 
-app.post('/group/edit/:id', (req, res) =>
+app.post('/groups/edit/:id', (req, res) =>
   {
     groups.update(req.body);
     res.redirect('/groups');
@@ -109,14 +119,21 @@ app.get('/groups/delete/:id', (req, res) =>
 // PROFILE ROUTER
 // ==================================================================
 
-app.get('/contacts', (req, res) =>
+app.get('/profiles', (req, res) =>
   {
-    contacts.select( (contactsData) =>
+    profiles.select( (profilesData) =>
       {
         // console.log(contactsData);
-        res.render('contacts', {contactsData})
+        res.render('profiles', {profilesData})
       }
     );
+  }
+);
+
+app.post(`/profiles`, (req, res) =>
+  {
+    profiles.add(req.body);
+    res.redirect(`/profiles`);
   }
 );
 
@@ -129,17 +146,17 @@ app.get('/contacts/edit/:id', (req, res) =>
   }
 );
 
-app.post('/contacts/edit/:id', (req, res) =>
+app.post('/profiles/edit/:id', (req, res) =>
   {
-    contacts.update(req.body);
-    res.redirect('/contacts');
+    profiles.update(req.body);
+    res.redirect('/profile');
   }
 )
 
-app.get('/contacts/delete/:id', (req, res) =>
+app.get('/profiles/delete/:id', (req, res) =>
   {
-    contacts.deleteQuery(req.params.id);
-    res.redirect('/contacts');
+    profiles.deleteQuery(req.params.id);
+    res.redirect('/profile');
   }
 )
 
@@ -147,37 +164,44 @@ app.get('/contacts/delete/:id', (req, res) =>
 // ADDRESSES ROUTER
 // =====================================================================
 
-app.get('/contacts', (req, res) =>
+app.get('/addresses', (req, res) =>
   {
-    contacts.select( (contactsData) =>
+    addresses.select( (addressesData) =>
       {
         // console.log(contactsData);
-        res.render('contacts', {contactsData})
+        res.render('addresses', {addressesData})
       }
     );
   }
 );
 
-app.get('/contacts/edit/:id', (req, res) =>
+app.post(`/addresses`, (req, res) =>
   {
-    contacts.select( (contactData) =>
+    addresses.add(req.body);
+    res.redirect(`addresses`);
+  }
+);
+
+app.get('/addresses/edit/:id', (req, res) =>
+  {
+    addresses.select( (addressData) =>
       {
-        res.render('contactEdit', {contactData})
+        res.render('addressesEdit', {addressData})
       },`*`,req.params.id);
   }
 );
 
-app.post('/contacts/edit/:id', (req, res) =>
+app.post('/addresses/edit/:id', (req, res) =>
   {
-    contacts.update(req.body);
-    res.redirect('/contacts');
+    addresses.update(req.body);
+    res.redirect('/addresses');
   }
 )
 
-app.get('/contacts/delete/:id', (req, res) =>
+app.get('/addresses/delete/:id', (req, res) =>
   {
-    contacts.deleteQuery(req.params.id);
-    res.redirect('/contacts');
+    addresses.deleteQuery(req.params.id);
+    res.redirect('/addresses');
   }
 )
 

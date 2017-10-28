@@ -12,7 +12,7 @@ db.serialize( () =>
     db.run(`CREATE TABLE IF NOT EXISTS Groups (
               ID INTEGER PRIMARY KEY,
               name_of_group varchar(25))`);
-    db.run(`CREATE TABLE IF NOT EXISTS Profile (
+    db.run(`CREATE TABLE IF NOT EXISTS Profiles (
               ID INTEGER PRIMARY KEY,
               username varchar(50),
               password varchar(50))`);

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Groups</title>
+    <style media="screen">
+      h2{
+        text-align: center;
+      }
+      table {
+      border-collapse: collapse;
+      width: 100%;
+      padding: 20px
+    }
+
+    th, td {
+      padding: 8px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+      }
+    form{
+      text-align: center;
+      padding: 20px
+    }
+    </style>
+  </head>
+  <body>
+    <div class="">
+      <h2>Groups</h2>
+    </div>
+    <table>
+      <thead>
+         <td>ID</td>
+         <td>Name Of Groups</td>
+         <td>Action</td>
+      </thead>
+      <tr>
+        <% group.forEach(dt =>{ %>
+
+        <td><%=dt.Id_grup%></td>
+        <td><%=dt.name_of_group%></td>
+        <td><a href="/groups/edit/<%=dt.Id_grup%>">Edit<a>
+        <a href="/groups/delete/<%=dt.Id_grup%>">Delete</a></td>
+      </tr>
+        <% })%>
+    </table>
+    <div>
+        <form class="" action="/groups" method="post">
+          <input type="text" name="nama" placeholder="Nama Groups">
+          <input type="submit" value="Submit">
+        </form>
+    </div>
+  </body>
+</html>

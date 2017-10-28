@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Addresses</title>
+    <style media="screen">
+      h2{
+        text-align: center;
+      }
+      table {
+      border-collapse: collapse;
+      width: 100%;
+      padding: 20px
+    }
+
+    th, td {
+      padding: 8px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+      }
+    form{
+      text-align: center;
+      padding: 20px
+    }
+    </style>
+  </head>
+  <body>
+    <div>
+      <h2>Address</h2>
+    </div>
+    <table>
+      <thead>
+         <td>ID</td>
+         <td>Streets</td>
+         <td>Cities</td>
+         <td>Zipcode</td>
+         <td>Actions</td>
+      </thead>
+      <tr>
+        <%address.forEach(dt =>{ %>
+
+        <td><%=dt.Id_address%></td>
+        <td><%=dt.Street%></td>
+        <td><%=dt.City%></td>
+        <td><%=dt.Zipcode%></td>
+        <td><a href="/address/edit/<%=dt.Id_address%>">Edit<a>
+        <a href="/address/delete/<%=dt.Id_address%>">Delete</a></td>
+      </tr>
+        <% })%>
+    </table>
+    <div>
+        <form class="" action="/address" method="post">
+          <input type="text" name="street" placeholder="Street">
+          <input type="text" name="city" placeholder="City">
+          <input type="text" name="zipcode" placeholder="Zip Code">
+          <input type="submit" value="Submit">
+        </form>
+    </div>
+  </body>
+</html>

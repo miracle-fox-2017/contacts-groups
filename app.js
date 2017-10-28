@@ -7,7 +7,8 @@ const {
   getContacts,
   postContacts,
   getEditContacts,
-  postEditContacts
+  postEditContacts,
+  deleteUserContacts
 } = require('./controller/controller');
 
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -21,6 +22,7 @@ app.get('/contacts', getContacts);
 app.post('/contacts', postContacts);
 app.get('/contacts/edit/:id', getEditContacts);
 app.post('/contacts/edit/:id', postEditContacts);
+app.get('/contacts/delete/:id', deleteUserContacts);
 
 app.listen('3000', () => {
   console.log(`App started on port 3000`);

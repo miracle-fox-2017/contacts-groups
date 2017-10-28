@@ -45,10 +45,19 @@ const postEditContacts = (req, res) => {
   });
 };
 
+const deleteUserContacts = (req, res) => {
+  const query = `DELETE FROM Contacts WHERE id IS ${req.params.id}`;
+  db.run(query, err => {
+    if (err) throw err;
+    res.redirect('/contacts');
+  });
+};
+
 module.exports = {
   getHome,
   getContacts,
   postContacts,
   getEditContacts,
-  postEditContacts
+  postEditContacts,
+  deleteUserContacts
 };

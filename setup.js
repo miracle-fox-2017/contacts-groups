@@ -66,3 +66,10 @@ db.run(`INSERT INTO Addresses (street, city, zipcode)
   VALUES ('Jl. Tanah Rata', 'Ambon', 4990)`)
   db.run(`INSERT INTO Addresses (street, city, zipcode)
    VALUES ('Jl. Buntu', 'Jakarta Selatan', 7690)`)
+
+
+
+   db.run(`INSERT INTO Profile (username, password)
+    VALUES ('azharieazharou', 'ABB12990')`)
+    db.run(`INSERT INTO Profile (username, password)
+     VALUES ('kubalahin', 'A2424da0')`)

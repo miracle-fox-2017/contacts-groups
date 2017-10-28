@@ -29,6 +29,10 @@ const addresses = require('./routers/addresses.js')
 app.use('/', addresses)
 
 
+const profile = require('./routers/profile.js')
+app.use('/', profile)
+
+
 
 
 app.listen(3000)

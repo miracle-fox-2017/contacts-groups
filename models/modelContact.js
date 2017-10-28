@@ -50,6 +50,16 @@ class Contact {
             }
         })
     }
+
+    // static getDataContactAddress(callback, dataAddress) {
+    //     let arr = []
+    //     dataAddress.forEach((address) => {
+    //         Contact.getData((dataContact) => {
+
+    //         })
+
+    //     });
+    // }
 }
 
 module.exports = Contact

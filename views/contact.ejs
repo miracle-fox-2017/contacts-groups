@@ -15,7 +15,9 @@
     <a href="/">
         Home
     </a>
-
+    <a href="/addresses-with-contact">
+        Address With Contact
+    </a>
     <div class="data-table">
         <table>
             <tr>
@@ -34,9 +36,13 @@
                 <th>
                     Email
                 </th>
+                <th>
+                    Address
+                </th>
                 <th colspan="2">
                     Action
                 </th>
+
             </tr>
 
             <% dataContact.forEach((contact) =>{ %>
@@ -56,6 +62,9 @@
                     </td>
                     <td>
                         <%=contact.email %>
+                    </td>
+                    <td>
+                        <a href="/contacts/addresses/<%= contact.id%>"> Address </a>
                     </td>
                     <td>
                         <a href="/contacts/edit/<%= contact.id%>"> Edit</a>

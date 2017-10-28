@@ -23,6 +23,16 @@
             <input type="text" name="zipcode" /> <br>
             <br>
 
+            <select name="idContact">
+                        <% dataContact.forEach((contact)=>{ %>
+                <option value="<%= contact.id%>">
+                    <%= contact.name%>
+                </option>
+                <%})%>
+                </select>
+
+
+
             <input type="submit" value="Save">
         </form>
 

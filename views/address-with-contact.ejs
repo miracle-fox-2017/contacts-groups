@@ -11,8 +11,8 @@
         <h3>Data Address</h3>
     </header>
     <a href="/">
-        Home
-    </a>
+                Home
+            </a>
     <div class="main-table">
         <table>
             <tr>
@@ -21,6 +21,9 @@
                 <th>City</th>
                 <th>Zipcode</th>
                 <th>Contact Name</th>
+                <th>Company</th>
+                <th>Telp Number</th>
+                <th> Email</th>
                 <th colspan="2">Action</th>
             </tr>
             <% dataAddress.forEach((address)=>{ %>
@@ -38,14 +41,32 @@
                         <%= address.zipcode%>
                     </td>
                     <%if(address.idContact){
-                        dataContact.forEach((contact)=>{
-                            if(contact.id === address.idContact){%>
+                                dataContact.forEach((contact)=>{
+                                    if(contact.id === address.idContact){%>
                         <td>
                             <%= contact.name %>
+                        </td>
+                        <td>
+                            <%= contact.company %>
+                        </td>
+                        <td>
+                            <%= contact.telp_number %>
+                        </td>
+                        <td>
+                            <%= contact.email %>
                         </td>
                         <%}})%>
                             <% } else {%>
 
+                                <td>
+
+                                </td>
+                                <td>
+
+                                </td>
+                                <td>
+
+                                </td>
                                 <td>
 
                                 </td>
@@ -55,13 +76,13 @@
 
                                     <td>
                                         <a href="/addresses/edit/<%=address.id%>">
-                            Edit
-                           </a>
+                                    Edit
+                                   </a>
                                     </td>
                                     <td>
                                         <a href="/addresses/delete/<%=address.id%>">
-                                Delete
-                               </a>
+                                        Delete
+                                       </a>
                                     </td>
 
                 </tr>

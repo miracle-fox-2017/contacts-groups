@@ -1,0 +1,55 @@
+<html>
+
+<head>
+    <title>
+        Address with Contact
+    </title>
+</head>
+
+<body>
+    <a href="/">  
+            Home
+        </a>
+    <a href="/contacts">  
+            Contact
+        </a>
+    <header>
+        <h3>
+            Address with Contact
+        </h3>
+    </header>
+
+    <div class="main-table">
+        Name :
+        <%= dataContact.name%> <br>
+            <br>
+            <table>
+                <tr>
+                    <th>
+                        Address
+                    </th>
+
+                </tr>
+                <tr>
+
+                    <td>
+                        <ol>
+                            <% dataAddress.forEach((address)=>{ %>
+                                <li>
+                                    <%=address.street%>,
+                                        <%=address.city%>,
+                                            <%=address.zipcode%>
+                                </li>
+                                <% })%>
+                        </ol>
+
+                    </td>
+
+
+                </tr>
+
+            </table>
+    </div>
+</body>
+
+</html>

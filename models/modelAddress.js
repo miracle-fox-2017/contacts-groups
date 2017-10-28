@@ -14,7 +14,7 @@ class Address {
         })
     }
     static addData(newData) {
-        let query = `insert into addresses (street, city, zipcode) values ('${newData.street}', '${newData.city}', '${newData.zipcode}')`
+        let query = `insert into addresses (street, city, zipcode, idContact) values ('${newData.street}', '${newData.city}', '${newData.zipcode}', ${newData.idContact})`
         db.run(query, function (err) {
             if (err) {
                 console.log(err)
@@ -33,7 +33,7 @@ class Address {
     }
     static updateData(id, newData) {
         // console.log(id, newData)
-        let query = `update addresses set street = '${newData.street}', city = '${newData.city}', zipcode = ${newData.zipcode} where id = ${id}`
+        let query = `update addresses set street = '${newData.street}', city = '${newData.city}', zipcode = ${newData.zipcode}, idContact = ${newData.idContact} where id = ${id}`
         db.run(query, function (err) {
             if (err) {
                 console.log(err)
@@ -47,6 +47,18 @@ class Address {
                 console.log(err)
             }
         })
+    }
+
+    static getDataAddressContact(callback, idContact) {
+        let query = `select * from addresses where idContact = ${idContact}`
+        db.all(query, function (err, rows) {
+            if (err) {
+                callback(err)
+            } else {
+                callback(rows)
+            }
+        })
+
     }
 
 }

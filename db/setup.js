@@ -5,7 +5,7 @@ const db = new sqlite3.Database('data.db')
 function createContact() {
     let query = 'CREATE table if not exists contacts (' +
         'id integer primary key autoincrement,' +
-        'name text, ' +
+        'name text not null, ' +
         'company text,' +
         'telp_number varchar(13),' +
         'email varchar(100)' +
@@ -89,14 +89,22 @@ function createUniqueProfile() {
     }))
 }
 
-// function alterContactNotNull() {
-//     let query = 'alter table contacts rename name_temp '
-// }
+function alterTableAddress() {
+    let query = 'alter table addresses add idContact integer references contacts(id)'
+    db.run(query, ((err) => {
+        if (err) {
+            console.log(err)
+        } else {
+            console.log("Table addresses successfully altered!")
+        }
+    }))
+}
 
 createContact()
 createGroup()
 createProfile()
 createAddress()
-//alterTableProfile()
+alterTableProfile()
 createUniqueProfile()
+alterTableAddress()
 db.close()

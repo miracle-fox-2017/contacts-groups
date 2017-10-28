@@ -20,6 +20,19 @@
             <input type="text" name="zipcode" value="<%= dataAddress.zipcode%>" /> <br>
             <br>
 
+            <select name="idContact">
+                    <% dataContact.forEach((contact)=>{
+                        if(contact.id == dataAddress.idContact) {%>
+                        <option value="<%= contact.id%>" selected>
+                                    <%= contact.name%>            
+                        </option>
+                    <%} else {%>
+                   <option value="<%= contact.id%>">
+                        <%= contact.name%>    
+                   </option>
+                    <%}})%>
+                    
+                </select>
             <input type="submit" value="Save">
 
         </form>

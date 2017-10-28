@@ -141,12 +141,17 @@ app.get('/profiles/delete/:id', function (req, res) {
 
 //Addresses
 app.get('/addresses', function (req, res) {
-    Address.getData((data) => {
-        res.render('address', { dataAddress: data })
+    Address.getData((dataAddress) => {
+        Contact.getData((dataContact) => {
+            res.render('address', { dataAddress: dataAddress, dataContact: dataContact })
+        })
     })
 })
 app.get('/addresses/add', function (req, res) {
-    res.render('address-add')
+    Contact.getData((dataContact) => {
+        res.render('address-add', { dataContact: dataContact })
+    })
+
 })
 app.post('/addresses/add', function (req, res) {
     Address.addData(req.body)
@@ -154,7 +159,9 @@ app.post('/addresses/add', function (req, res) {
 })
 app.get('/addresses/edit/:id', function (req, res) {
     Address.getDataById((data) => {
-        res.render('address-edit', { dataAddress: data })
+        Contact.getData((dataContact) => {
+            res.render('address-edit', { dataAddress: data, dataContact: dataContact })
+        })
     }, req.params.id)
 })
 app.post('/addresses/edit/:id', function (req, res) {
@@ -166,6 +173,22 @@ app.get('/addresses/delete/:id', function (req, res) {
     res.redirect('../../addresses')
 })
 
+//Addresses with contact
+app.get('/contacts/addresses/:id', function (req, res) {
+    Contact.getDataById((data) => {
+        Address.getDataAddressContact((dataAddress) => {
+            res.render('address-contact', { dataContact: data, dataAddress: dataAddress })
+        }, data.id)
+    }, req.params.id)
+})
+
+app.get('/addresses-with-contact', function (req, res) {
+    Address.getData((dataAddress) => {
+        Contact.getData((dataContact) => {
+            res.render('address-with-contact', { dataAddress: dataAddress, dataContact: dataContact })
+        })
+    })
+})
 
 app.listen(3000, function (err) {
     console.log("haloooooo")

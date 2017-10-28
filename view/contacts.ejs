@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>
+            
+        </title>
+
+    </head>
+    <body>
+            <form class="" action="/contacts" method="post">
+                Name:<br>
+                <input type="text" name="name" >
+                <br>
+                Company:<br>
+                <input type="text" name="company" >
+                <br>
+                Nomer Telpon:<br>
+                <input type="text" name="telp_number" >
+                <br>
+                Email:<br>
+                <input type="text" name="email" >
+                <br>
+                <input type="submit" value="Submit">
+              </form> 
+        <table>
+            <thead></thead>
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Company</th>
+              <th>telp_number</th>
+              <th>email</th>
+            </tr>
+        </thead>
+            <tbody>
+
+            <tr>
+                <%rows.forEach(function(contact){%>
+
+              <td><%=contact.id%></td>
+              <td><%=contact.name%></td>
+              <td><%=contact.company%></td>
+              <td><%=contact.telp_number%></td>
+              <td><%=contact.email%></td>
+              <td> <a href="/contacts/edit/<%=contact.id %>"> Edit</a> </td>
+              <td> <a href="/contacts/delete/<%=contact.id %>"> Delete</a> </td>
+              
+            </tr>
+            <%})%>
+        </tbody>
+          </table>
+          <br>  
+    </body>
+</html>

@@ -38,6 +38,7 @@ function createTable(){
 
 // createTable()
 
+// release 3
 function contacts_profile(){
   let alterContact_Profile = `alter table Profile add column contact_id integer references Contacts(‘id’)`
   db.run(alterContact_Profile,(err)=>{
@@ -60,6 +61,7 @@ function createUNIQUE(){
 }
 // createUNIQUE()
 
+// release 6
 function address_profile(){
   let query = `alter table Addresses add column contact_id integer references Contacts('id')`
   db.run(query,(err)=>{
@@ -70,4 +72,23 @@ function address_profile(){
     }
   })
 }
-address_profile()
+// address_profile()
+
+// release 9
+function many_to_many(){
+  let query_many_to_many = `create table if not exists ConjContactGroup(
+    id integer primary key autoincrement,
+    id_contacts integer references Contacts('id'),
+    id_groups integer references Groups('id')
+  )`
+
+  db.run(query_many_to_many,(err)=>{
+    if(err){
+      console.log(err);
+    }else{
+      console.log('many_to_many created');
+    }
+  })
+}
+
+// many_to_many()

@@ -18,7 +18,15 @@ app.use(bodyParser.json())
 
 //* START INDEX *//
 app.get('/',(req,res)=>{
-  res.render('index')
+  db.all(`select * from Contacts`,(err,data_Contacts)=>{
+    db.all(`select * from Groups`,(err,data_Groups)=>{
+      db.all(`select * from Profile`,(err,data_Profile)=>{
+        db.all(`select * from Addresses`,(err,data_Addresses)=>{
+          res.render('index',{data_Contacts:data_Contacts,data_Groups:data_Groups,data_Profile:data_Profile,data_Addresses:data_Addresses})
+        })
+      })
+    })
+  })
 })
 
 //* START CONTACTS *//

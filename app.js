@@ -1,7 +1,7 @@
 const express = require ('express')
 const bodyParser = require('body-parser')
 const ContactsDB = require('./model')
-let contacts = new ContactsDB('./database.db')
+let contacts = new ContactsDB('database.db')
 const app = express()
 
 app.use(bodyParser.urlencoded({ extended: false}))

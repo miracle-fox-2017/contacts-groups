@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Contacts</title>
+  </head>
+  
+  <body>
+    <table>
+      <thead>
+        <tr>
+          <td>ID</td>
+          <td>Name</td>
+          <td>Company</td>
+          <td>Phone</td>
+          <td>Email</td>
+        </tr>
+      </thead>
+      <tbody>
+        <%contactsData.forEach( (contact) => { %>
+          <tr>
+            <td> <%= contact.ID %> </td>
+            <td> <%= contact.name %> </td>
+            <td> <%= contact.company %> </td>
+            <td> <%= contact.telp_number %> </td>
+            <td> <%= contact.email %> </td>
+            <td> <a href="/contacts/edit/<%=contact.ID%>">EDID</a></td>
+            <td> <a href="/contacts/delete/<%=contact.ID%>">DELED</a></td>
+          </tr>
+          <%})%>
+      </tbody>
+    </table>
+  </body>
+</html>

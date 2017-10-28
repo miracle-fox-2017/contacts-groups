@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Edit <%=contactData.name%></title>
+  </head>
+  <body>
+    <form action="/contacts/edit/<%=contactData.ID%>" method="post">
+      <table>
+        <thead>
+          <tr>
+            <td>Name</td>
+            <td>Company</td>
+            <td>Phone</td>
+            <td>Email</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><input type="hidden" name="ID" value="<%=contactData.ID%>"><input type="text" name="name" value="<%=contactData.name%>"></td>
+            <td><input type="text" name="company" value="<%=contactData.company%>"></td>
+            <td><input type="text" name="telp_number" value="<%=contactData.telp_number%>"></td>
+            <td><input type="text" name="email" value="<%=contactData.email%>"></td>
+            <td><input type="submit" value="Simpan Edit"></td>
+          </tr>
+        </tbody>
+      </table>
+    </form>
+  </body>
+</html>

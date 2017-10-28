@@ -9,14 +9,14 @@
   <body>
     <h2>Add Contacts</h2>
     <form action="/contacts" method="post">
-      <p>Name: <input type="text" name="name" placeholder="Your Name"/></p>
-      <p>Phone: <input type="number" name="phone" placeholder="Your Number"/></p>
+      <p>Name: <input type="text" name="name" placeholder="Your Name" required/></p>
+      <p>Phone: <input type="number" name="phone" placeholder="Your Number" required/></p>
       <p>Email: <input type="email" name="email" placeholder="Your Email"/></p>
       <p>Company: <input type="text" name="company" placeholder="Your Organization"></p>
       <button>SUBMIT CONTACTS</button>
     </form>
 
-    <table>
+    <table style="width: 100%">
       <thead>
         <tr>
           <th>ID</th>
@@ -28,15 +28,18 @@
         </tr>
       </thead>
       <tbody>
-        <tr>
         <% contacts.forEach(contact => { %>
-          <td><%= contact.id %></td>
-          <td><%= contact.name %></td>
-          <td><%= contact.telp_number %></td>
-          <td><%= contact.email %></td>
-          <td><%= contact.company %></td>
+          <tr>
+            <td align="center"><%= contact.id %></td>
+            <td align="center"><%= contact.name %></td>
+            <td align="center"><%= contact.telp_number %></td>
+            <td align="center"><%= contact.email %></td>
+            <td align="center"><%= contact.company %></td>
+            <td align="center">
+              <a href="/contacts/edit/<%= contact.id %>">edit</a>
+            </td>
+          </tr>
         <% }) %>
-        </tr>
       </tbody>
     </table>
   </body>

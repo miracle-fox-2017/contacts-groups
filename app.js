@@ -74,16 +74,24 @@ app.get('/groups', (req, res) =>
   }
 );
 
-app.get('/groups/edit/:id', (req, res) =>
+app.post(`/groups`, (req, res) =>
+  {
+    groups.add(req.body);
+    res.redirect(`groups`);
+  }
+)
+
+app.get('/group/edit/:id', (req, res) =>
   {
     groups.select( (groupData) =>
       {
+        // console.log(`di router, parameter idnya adalah ${req.params.id}`);
         res.render('groupEdit', {groupData})
       },`*`,req.params.id);
   }
 );
 
-app.post('/groups/edit/:id', (req, res) =>
+app.post('/group/edit/:id', (req, res) =>
   {
     groups.update(req.body);
     res.redirect('/groups');

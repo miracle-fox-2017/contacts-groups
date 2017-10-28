@@ -1,12 +1,13 @@
 const express = require('express')
 const router = express.Router()
 const Profile = require('../models/profile.js');
+const Contact = require('../models/contacts')
 
-//console.log(Address);
 router.get('/profile', (req, res) => {
   Profile.findAll(dataProfile =>{
-    //res.send(dataProfile)
-    res.render('profile/profile', {dataProfile:dataProfile})
+    Contact.findAll(dataContacts =>{
+      res.render('profile/profile', {dataProfile:dataProfile, dataContacts:dataContacts})
+    })
   })
 })
 
@@ -18,7 +19,9 @@ router.post('/profile', (req, res) => {
 
 router.get('/profile/edit/:id', (req, res) => {
   Profile.findById(req, dataProfile => {
-    res.render('profile/edit', {dataProfile:dataProfile})
+    Contact.findAll(dataContacts =>{
+      res.render('profile/edit', {dataProfile:dataProfile, dataContacts:dataContacts})
+    })
   })
 })
 
@@ -31,7 +34,8 @@ router.post('/profile/edit/:id', (req, res) => {
 //
 router.get('/profile/delete/:id', (req, res) => {
   Profile.destroy(req, dataProfile => {
-    res.redirect('/profile')
+      res.redirect('/profile')
+
   })
 })
 

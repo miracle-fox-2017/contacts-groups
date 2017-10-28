@@ -19,6 +19,8 @@
         <th>ID</th>
         <th>User Name</th>
         <th>Password</th>
+        <th>ContactsID</th>
+        <th>Name</th>
         <th>Option</th>
       </tr>
       </thead>
@@ -28,6 +30,8 @@
           <td><%=item.id%></td>
           <td><%=item.username%></td>
           <td><%=item.password%></td>
+          <td><%=item.ContactId%></td>
+          <td><%=item.name%></td>
 
           <td>
             <a href="/profile/edit/<%=item.id%>">Edit</a>
@@ -46,6 +50,14 @@
         <br>
         <input id="password" type="text" name="password" placeholder="password">
         <br>
+        <select class="box" name="ContactId">
+        <% for(let i = 0; i < dataContacts.length; i++) {%>
+        <option value="<%=dataContacts[i].id%>"><%=dataContacts[i].name%></option>
+        <%}%>
+        </select>
+
+
+
       </div>
       <div class="col-xs-4 col-md-2">
         <br>

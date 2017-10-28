@@ -6,7 +6,7 @@ db.serialize((err, rows)=>{
   //Contacts
   db.run(`CREATE TABLE IF NOT EXISTS Contacts (
     id INTEGER primary key  AUTOINCREMENT,
-    name TEXT,
+    name TEXT NOT NUll,
     company TEXT,
     telp_number TEXT,
     email TEXT
@@ -31,6 +31,7 @@ db.serialize((err, rows)=>{
     id INTEGER primary key AUTOINCREMENT,
     username varchar(20),
     password varchar(10)
+
   )`)
   if(err){
     console.log(err);
@@ -38,7 +39,7 @@ db.serialize((err, rows)=>{
     console.log('Table Profile had Create');
   }
   //
-  // // //Addresses
+  // //Addresses
   db.run(`CREATE TABLE IF NOT EXISTS Addresses (
     id INTEGER primary key AUTOINCREMENT,
     street varchar(20),
@@ -50,26 +51,51 @@ db.serialize((err, rows)=>{
   }else{
     console.log('Table Addresses had Create');
   }
-})
+//
+//
 
-//tambah record
-db.run (`INSERT INTO Contacts (name, company, telp_number, email) VALUES ('Jhon Doe', 'Hacktiv8', '081234567', 'jhondoe@rocketmail.com')`)
-db.run (`INSERT INTO Contacts (name, company, telp_number, email) VALUES ('Chandra Buwana', 'Hacktiv8', '0812250927367', 'chandra@rocketmail.com')`)
+  //
+  db.run(` ALTER TABLE Profile ADD COLUMN ContactId INTEGER REFERENCES Contacts('id')`)
+    if(err){
+      console.log(err);
+    }else{
+      console.log('jadi');
+    }
+  //
+  //
+    db.run(`CREATE UNIQUE INDEX ContactId ON Profile(ContactId)`, ()=>{
+      if(err){
+        console.log(err);
+      }else{
+        console.log('jadi unique');
+      }
+    })
 
-db.run (`INSERT INTO Groups (name_of_group) VALUES ('Hacktiv8')`)
-db.run (`INSERT INTO Groups (name_of_group) VALUES ('Hack Reacktor')`)
-db.run (`INSERT INTO Groups (name_of_group) VALUES ('Mozzila')`)
-
-db.run(`INSERT INTO Addresses (street, city, zipcode)
- VALUES ('Jl.Pondok Pinang', 'Jakarta Selatan', 12990)`)
- db.run(`INSERT INTO Addresses (street, city, zipcode)
-  VALUES ('Jl. Tanah Rata', 'Ambon', 4990)`)
-  db.run(`INSERT INTO Addresses (street, city, zipcode)
-   VALUES ('Jl. Buntu', 'Jakarta Selatan', 7690)`)
-
-
-
-   db.run(`INSERT INTO Profile (username, password)
-    VALUES ('azharieazharou', 'ABB12990')`)
-    db.run(`INSERT INTO Profile (username, password)
-     VALUES ('kubalahin', 'A2424da0')`)
+//
+ })
+//
+//
+// //
+// //
+// //
+// //tambah record
+// db.run (`INSERT INTO Contacts (name, company, telp_number, email) VALUES ('Jhon Doe', 'Hacktiv8', '081234567', 'jhondoe@rocketmail.com')`)
+// db.run (`INSERT INTO Contacts (name, company, telp_number, email) VALUES ('Chandra Buwana', 'Hacktiv8', '0812250927367', 'chandra@rocketmail.com')`)
+//
+// db.run (`INSERT INTO Groups (name_of_group) VALUES ('Hacktiv8')`)
+// db.run (`INSERT INTO Groups (name_of_group) VALUES ('Hack Reacktor')`)
+// db.run (`INSERT INTO Groups (name_of_group) VALUES ('Mozzila')`)
+//
+// db.run(`INSERT INTO Addresses (street, city, zipcode)
+//  VALUES ('Jl.Pondok Pinang', 'Jakarta Selatan', 12990)`)
+//  db.run(`INSERT INTO Addresses (street, city, zipcode)
+//   VALUES ('Jl. Tanah Rata', 'Ambon', 4990)`)
+//   db.run(`INSERT INTO Addresses (street, city, zipcode)
+//    VALUES ('Jl. Buntu', 'Jakarta Selatan', 7690)`)
+//
+// //
+// //
+//    db.run(`INSERT INTO Profile (username, password)
+//     VALUES ('azharieazharou', 'ABB12990')`)
+//     db.run(`INSERT INTO Profile (username, password)
+//      VALUES ('kubalahin', 'A2424da0')`)

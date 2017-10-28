@@ -59,3 +59,10 @@ db.run (`INSERT INTO Contacts (name, company, telp_number, email) VALUES ('Chand
 db.run (`INSERT INTO Groups (name_of_group) VALUES ('Hacktiv8')`)
 db.run (`INSERT INTO Groups (name_of_group) VALUES ('Hack Reacktor')`)
 db.run (`INSERT INTO Groups (name_of_group) VALUES ('Mozzila')`)
+
+db.run(`INSERT INTO Addresses (street, city, zipcode)
+ VALUES ('Jl.Pondok Pinang', 'Jakarta Selatan', 12990)`)
+ db.run(`INSERT INTO Addresses (street, city, zipcode)
+  VALUES ('Jl. Tanah Rata', 'Ambon', 4990)`)
+  db.run(`INSERT INTO Addresses (street, city, zipcode)
+   VALUES ('Jl. Buntu', 'Jakarta Selatan', 7690)`)

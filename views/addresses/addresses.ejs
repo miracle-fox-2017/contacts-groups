@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Groups</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  </head>
+  <body>
+
+    <h1>Addresses</h1>
+
+  <div class="container">
+    <table class="table">
+      <thead>
+        <tr>
+        <th>ID</th>
+        <th>Street</th>
+        <th>City</th>
+        <th>Zipcode</th>
+        <th>Option</th>
+      </tr>
+      </thead>
+      <tbody>
+        <%dataAddress.forEach((item)=>{%>
+          <tr>
+          <td><%=item.id%></td>
+          <td><%=item.street%></td>
+          <td><%=item.city%></td>
+          <td><%=item.zipcode%></td>
+
+
+          <td>
+            <a href="/addresses/edit/<%=item.id%>">Edit</a>
+            <a href="/addresses/delete/<%=item.id%>">Delete</a>
+          </td>
+        </tr>
+        <%})%>
+      </tbody>
+    </table>
+
+
+    <div class="container">
+    <h3>Add Group</h3>
+      <form class ="form" action="/addresses" method="POST">
+        <input id="street" type="text" name="street" placeholder="Street">
+        <br>
+        <input id="city" type="text" name="city" placeholder="city">
+        <br>
+        <input id="zipcode" type="text" name="zipcode" placeholder="Zipcode">
+        <br>
+      </div>
+      <div class="col-xs-4 col-md-2">
+        <br>
+        <input type="submit" value ="Submit">
+        </div>
+    </div>
+  </div>
+
+  </body>
+  <style>
+  table#t01 tr:nth-child(even) {
+  background-color: #eee;
+}
+table#t01 tr:nth-child(odd) {
+  background-color: #fff;
+}
+table#t01 th {
+  color: white;
+  background-color: black;
+}
+  </style>
+</html>

@@ -25,6 +25,10 @@ app.use('/', contacts)
 const groups = require('./routers/groups.js')
 app.use('/', groups)
 
+const addresses = require('./routers/addresses.js')
+app.use('/', addresses)
+
+
 
 
 app.listen(3000)

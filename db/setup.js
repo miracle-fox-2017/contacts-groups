@@ -100,6 +100,22 @@ function alterTableAddress() {
     }))
 }
 
+function createContactGroup() {
+    let query = 'create table if not exists contactgroups (' +
+        'id integer primary key autoincrement,' +
+        'idContact integer references contacts(id),' +
+        'idGroup integer references groups(id)' +
+    ')'
+
+    db.run(query, ((err) => {
+        if (err) {
+            console.log(err)
+        } else {
+            console.log("Table Contact Group successfully created!")
+        }
+    }))
+}
+
 createContact()
 createGroup()
 createProfile()
@@ -107,4 +123,5 @@ createAddress()
 alterTableProfile()
 createUniqueProfile()
 alterTableAddress()
+createContactGroup()
 db.close()

@@ -6,6 +6,7 @@ db.serialize(function() {
   db.run("CREATE TABLE IF NOT EXISTS Groups (id INTEGER PRIMARY KEY AUTOINCREMENT, name_of_group TEXT UNIQUE)");
   db.run("CREATE TABLE IF NOT EXISTS Profile (id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT UNIQUE, password TEXT)");
   db.run("CREATE TABLE IF NOT EXISTS Addresses (id INTEGER PRIMARY KEY AUTOINCREMENT, street TEXT, city TEXT, zipcode INTEGER UNIQUE)");
+  db.run("CREATE TABLE IF NOT EXISTS Contacts_Groups (id INTEGER PRIMARY KEY AUTOINCREMENT, ContactsId INTEGER REFERENCES Contacts('id'), GroupsId INTEGER REFERENCES Groups('id'))");
 });
 function ContactsToProfile() {
   let query = "ALTER TABLE Profile ADD COLUMN ContactsId INTEGER REFERENCES Contacts('id')";
@@ -18,7 +19,7 @@ function ContactsToProfile() {
   })
 }
 function setUniqueContactId() {
-  let query = "CREATE UNIQUE index contactsUnique on Profile(ContactsId);";
+  let query = "CREATE UNIQUE index contactsUnique on Profile(ContactsId)";
   db.run(query,(err)=>{
     if(!err){
       console.log('Kolom di ContactsId berhasil di set Unique');
@@ -37,6 +38,7 @@ function ContactsToAddresses() {
     }
   })
 }
+
 // ContactsToProfile()
 // setUniqueContactId()
 // ContactsToAddresses()

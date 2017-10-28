@@ -14,6 +14,7 @@ app.set('view engine', 'ejs');
 // 2. Groups
 // 3. Profile
 // 4. Addresses
+// 5. Contacts_Groups
 
 // HOME
 app.get('/', (req, res)=>{
@@ -25,8 +26,14 @@ app.get('/contacts', (req, res)=>{
   let query = `SELECT * FROM Contacts`
   db.all(query, (err, rows)=>{
     if(!err){
-      res.render('contacts', {rowsContacts:rows})
-
+      let queryGroups = `SELECT * FROM Groups`
+      db.all(queryGroups, (err, dataGroups)=>{
+        if(!err){
+          res.render('contacts', {rowsContacts:rows, dataGroups:dataGroups})
+        } else {
+          res.send(err)
+        }
+      })
     } else {
       res.send(err)
       console.log(err);
@@ -36,8 +43,30 @@ app.get('/contacts', (req, res)=>{
 
 app.post('/contacts', (req, res)=>{
   let query = `INSERT INTO Contacts (name, company, telp_number, email) VALUES ('${req.body.name}','${req.body.company}','${req.body.telp_number}','${req.body.email}')`
-  db.run(query)
-  res.redirect('/contacts')
+  db.run(query, (err)=>{
+    if(!err){
+        db.get(`SELECT last_insert_rowid()`,(err, idContact)=>{
+          if(!err){
+            for (let id in idContact) {
+              if (idContact.hasOwnProperty(id)) {
+                let queryConjuction = `INSERT INTO Contacts_Groups (ContactsId, GroupsId) VALUES ('${idContact[id]}','${req.body.GroupsId}')`
+                db.run(queryConjuction, (err)=>{
+                  if(!err){
+                    res.redirect('/contacts')
+                  } else {
+                    res.send(err)
+                  }
+                })
+              }
+            }
+          } else {
+            res.send(err)
+          }
+        })
+    } else {
+      res.send(err)
+    }
+  })
 })
 
 app.get('/contacts/edit/:id', (req, res)=>{
@@ -242,6 +271,18 @@ app.get('/profiles/delete/:id', (req, res)=>{
   res.redirect('/profiles')
 })
 
+//ADDRESSES WITH CONTACTS
+app.get('/addresses_with_contact', (req, res)=>{
+  let query = `SELECT Addresses.id, Addresses.street, Addresses.city, Addresses.zipcode, Contacts.name, Contacts.company FROM Addresses LEFT JOIN Contacts ON Addresses.ContactsId = Contacts.id`
+  db.all(query, (err, rows)=>{
+    if(!err){
+      res.render('addresses_with_contact', {rowsAddressesContacts:rows})
+    } else {
+      res.send(err)
+      console.log(err);
+    }
+  })
+})
 
 //RUNNING APP SERVER
 app.listen(3000,(err)=>{

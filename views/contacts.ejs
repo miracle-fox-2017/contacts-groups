@@ -26,25 +26,46 @@
             <td> <%= el.company %> </td>
             <td> <%= el.telp_number %> </td>
             <td> <%= el.email %> </td>
-            <td> <a href="/edit/<%=el.id%>">edit</a>
+            <td> <a href="/contacts/edit/<%=el.id%>">edit</a>
+            <td> <a href="/contacts/delete/<%=el.id%>">delete</a>
           </tr>
         <% i++ })%>
       </tr>
     </table>
-    <form action='/contacts' method="POST">
-      Name:<br>
-      <input type="text" name='nama' >
-      <br>
-      Company:<br>
-      <input type="text" name='company' >
-      <br>
-      Phone Number<br>
-      <input type="text" name='phoneNumber'>
-      <br>
-      Email<br>
-      <input type="email" name='email'>
-      <br>
-      <input type="submit" value="ADD"=>
-    </form>
+    <% if (isEdit === true) {%>
+      <p>editnya true bro</p>
+      <form action="/contacts/edit/<%=rows[0].id%>" method="post">
+        Name:<br>
+        <input type="text" name="name" value="<%=rows[0].name%>">
+        <br>
+        Company:<br>
+        <input type="text" name="company" value="<%=rows[0].company%>">
+        <br>
+        Phone Number<br>
+        <input type="text" name="phoneNumber" value="<%=rows[0].telp_number%>">
+        <br>
+        Email<br>
+        <input type="text" name="email" value="<%=rows[0].email%>">
+        <br><br>
+        <input type="submit" value="EDIT"=>
+      </form>
+    <% } %>
+    <% if (isEdit === false) {%>
+      <form action="/contacts" method="POST">
+        Name:<br>
+        <input type="text" name='name' >
+        <br>
+        Company:<br>
+        <input type="text" name='company' >
+        <br>
+        Phone Number<br>
+        <input type="text" name='phoneNumber'>
+        <br>
+        Email<br>
+        <input type="text" name='email'>
+        <br>
+        <input type="submit" value="ADD"=>
+      </form>
+   <% } %>
   </body>
 </html>

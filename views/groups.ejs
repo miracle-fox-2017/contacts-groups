@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>GROUPS</title>
+  </head>
+  <body>
+    <table>
+      <tr>
+        <th>No</th>
+        <th>Group</th>
+        <% let i = 1 %>
+      <% rows.forEach(function(el){%>
+          <tr>
+            <td> <%= i %> </td>
+            <td> <%= el.name_of_group %> </td>
+            <td> <a href="/groups/edit/<%=el.id%>">edit</a>
+            <td> <a href="/groups/delete/<%=el.id%>">delete</a>
+          </tr>
+        <% i++ })%>
+      </tr>
+    </table>
+    <% if (isEdit === false) {%>
+    <form action="/groups" method="post">
+      Name:<br>
+      <input type="text" name="name" >
+      <br>
+      <input type="submit" value="ADD"=>
+  </form>
+    <% } %>
+  <% if (isEdit === true) {%>
+  <form action="/groups/edit/<%=rows[0].id%>" method="post">
+    Name:<br>
+    <input type="text" name="name" value="<%=rows[0].name_of_group%>">
+    <br>
+    <input type="submit" value="EDIT"=>
+  </form>
+  <% } %>
+  </body>
+</html>

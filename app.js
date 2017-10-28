@@ -133,7 +133,7 @@ app.get('/groups/edit/:id', function (req, res) {
 //POST GROUPS EDIT
 app.post('/groups/edit/:id', function (req, res){
   let id = req.params.id;
-  console.log(req.body);
+  // console.log(req.body);
   let showSpecificId = `SELECT * FROM Groups WHERE id=${id}`;
   
   let query = `UPDATE Groups SET
@@ -206,7 +206,7 @@ app.get('/addresses/edit/:id', function (req, res) {
 //POST ADDRESSES EDIT
 app.post('/addresses/edit/:id', function (req, res){
   let id = req.params.id;
-  console.log(req.body);
+  // console.log(req.body);
   let showSpecificId = `SELECT * FROM Addresses WHERE id=${id}`;
   
   let query = `UPDATE Addresses SET
@@ -243,29 +243,46 @@ app.get('/addresses/delete/:id', function (req, res){
 
 //GET PROFILES
 app.get('/profiles', function (req, res) {
-  let showProfiles = `SELECT * FROM Profile`;
-  db.all(showProfiles, (err, rows)=>{
-    // console.log(rows);
-    res.render('profiles',{rows});
+  let showContacts = `SELECT * FROM Contacts`;
+  let showProfilesJoin = `SELECT * FROM Profile 
+                          JOIN Contacts 
+                          ON Profile.id_contacts = Contacts.id`;
+  db.all(showContacts, (err, rows)=>{
+    let contacts = rows;
+    db.all(showProfilesJoin, (err, rows)=>{
+      // console.log(rows);
+      // res.render('profiles',{rows});
+      // console.log('contacts',contacts);
+      res.render('profiles',{"rows": rows, "contacts": contacts});
+    })
   })
+
   
 })
 
 //POST PROFILES
 app.post('/profiles', function (req, res) {
   //set query
-  // console.log(req.body);
-  let showProfiles = `SELECT * FROM Profile`;
-  let query = `INSERT INTO Profile
-               (username, password)
+  console.log(req.body);
+  let showContacts = `SELECT * FROM Contacts`;
+  let showProfilesJoin = `SELECT * FROM Profile 
+                          JOIN Contacts 
+                          ON Profile.id_contacts = Contacts.id`;
+  let query = `INSERT OR IGNORE INTO Profile
+               (username, password, id_contacts)
                VALUES
-               ("${req.body.username}", "${req.body.password}");`
-  
+               ("${req.body.username}", "${req.body.password}", "${req.body.id_contacts}");`
+  console.log(query);
   //execute query
   db.run(query,()=>{
-    db.all(showProfiles, (err, rows)=>{
-      res.render('profiles',{rows});
+    db.all(showContacts, (err, rows)=>{
+      let contacts = rows;
+      db.all(showProfilesJoin, (err, rows)=>{
+        res.render('profiles',{"rows": rows, "contacts": contacts});
+      })
+          
     })
+
     
   })
 
@@ -275,6 +292,10 @@ app.post('/profiles', function (req, res) {
 app.get('/profiles/edit/:id', function (req, res) {
   let id = req.params.id;
   let showSpecificId = `SELECT * FROM Profile WHERE id=${id}`;
+  // let showSpecificId = `SELECT * FROM Profile 
+  //                         JOIN Contacts 
+  //                         ON Profile.id_contacts = Contacts.id
+  //                         WHERE Profile.id=${id}`;
   //execute query
   db.all(showSpecificId, (err, rows)=>{
     res.render('profiles_edit',{rows});
@@ -284,7 +305,7 @@ app.get('/profiles/edit/:id', function (req, res) {
 //POST PROFILES EDIT
 app.post('/profiles/edit/:id', function (req, res){
   let id = req.params.id;
-  console.log(req.body);
+  // console.log(req.body);
   let showSpecificId = `SELECT * FROM Profile WHERE id=${id}`;
   
   let query = `UPDATE Profile SET

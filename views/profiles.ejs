@@ -5,6 +5,7 @@
     <title>Menampilkan semua data profiles</title>
   </head>
   <body>
+    <%= contacts[0].id %>
     <a href="/contacts">contacts</a> | <a href="/groups">groups</a> | <a href="/addresses">address</a> | <a href="/profiles">profile</a>
     <h1>Menampilkan semua data profiles</h1>
     <div>
@@ -13,13 +14,16 @@
         <th>id</th>
         <th>username</th>
         <th>password</th>
+        <th>Contacts</th>
+        <th>Action</th>
       </tr>
-      <!-- tampilkan semua data profile -->
+      <!-- tampilkan semua data profile -->      
       <% rows.forEach (profile => { %>
         <tr>
           <td><%= profile.id %></td>
           <td><%= profile.username %></td>
           <td><%= profile.password %></td>
+          <td><%= profile.name %></td>
           <td><a href="/profiles/edit/<%= profile.id %>">edit</a> | <a href="/profiles/delete/<%= profile.id %>">delete</a> </td>
         </tr>
       <% }) %>
@@ -33,7 +37,13 @@
     <form class="" action="" method="post">
       username:   <input type="text" name="username" value="" placeholder="username"><br>
       password: <input type="text" name="password" value="" placeholder="password"><br>
-      <input type="submit" name="" value="KIRIM">
+      contacts: 
+      <select name="id_contacts">
+      <% contacts.forEach (contact => { %>
+        <option value="<%= contact.id %>"><%= contact.name %></option> 
+      <% }) %>
+      </select>
+      <br><input type="submit" name="" value="KIRIM">
     </form>
   </div>
   

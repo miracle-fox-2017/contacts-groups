@@ -33,18 +33,7 @@
                     <td><%=Contacts.company%></td>
                     <td><%=Contacts.telp_number%></td>
                     <td><%=Contacts.email%></td>
-                    <%let tampung = []
-                    dataConjuction.forEach(dataConjuctions=>{
-                        if(Contacts.id === dataConjuctions.ContactsId){%>
-                          <td><%=tampung.push('ooo')%></td>
-                        <%} else {%>
-                          <td><%=tampung.push(Contacts.name_of_group)%></td>
-                        <%}%>
-
-                    <%})%>
-                  <%=tampung%>
-
-
+                    <td><%=Contacts.name_of_group%></td>
                     <td><a href="contacts/edit/<%=Contacts.id%>">
                       <span class="icon has-text-success">
                         <i class="fa fa-pencil-square-o"></i>

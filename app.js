@@ -15,5 +15,5 @@ app.get('/contacts', getContacts);
 app.post('/contacts', postContacts);
 
 app.listen('3000', () => {
-  console.log(`App has started`);
+  console.log(`App started on port 3000`);
 });

@@ -4,8 +4,8 @@ const db = new sqlite3.Database('./database/database.db', err => {
 });
 
 const getHome = (req, res) => {
-    res.send('it works from model');
-    console.log(req.body);
+    res.send('hello from controller');
+    // console.log(req.body);
 };
 
 const getContacts = (req, res) => {

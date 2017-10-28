@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <% include ../partial/head.ejs %>
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="two-third column" style="margin-top: 10%; margin-bottom: 10%">
+          <h2><%= title %></h2>
+          <p>Express Contacts Groups</p>
+          <% include ../partial/menu.ejs %>
+          <table class="u-full-width">
+            <thead>
+              <tr>
+                <th>No</th>
+                <th>Id</th>
+                <th>Groups Name</th>
+                <th>Option</th>
+              </tr>
+            </thead>
+            <tbody>
+              <%groups.forEach((group,i) => {%>
+                <tr>
+                  <td><%=i+1%></td>
+                  <td><%=group.id%></td>
+                  <td><%=group.name_of_group%></td>
+                  <td>
+                    <a class="button" href="/groups/edit/<%=group.id%>">edit</a>
+                    <a class="button" href="/groups/delete/<%=group.id%>">delete</a>
+                  </td>
+                </tr>
+              <%})%>
+            </tbody>
+          </table>
+          <a class="button button-primary" href="/groups/add">+ Add Group</a>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

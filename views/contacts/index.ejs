@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+  <% include ../partial/head.ejs %>
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="two-third column" style="margin-top: 10%; margin-bottom: 10%">
+          <h2><%= title %></h2>
+          <p>Express Contacts Groups</p>
+          <% include ../partial/menu.ejs %>
+          <table class="u-full-width">
+            <thead>
+              <tr>
+                <th>No</th>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Company</th>
+                <th>Phone Number</th>
+                <th>Email</th>
+                <th>Option</th>
+              </tr>
+            </thead>
+            <tbody>
+              <%contacts.forEach((contact,i) => {%>
+                <tr>
+                  <td><%=i+1%></td>
+                  <td><%=contact.id%></td>
+                  <td><%=contact.name%></td>
+                  <td><%=contact.company%></td>
+                  <td><%=contact.telp_number%></td>
+                  <td><%=contact.email%></td>
+                  <td>
+                    <a class="button" href="/contacts/edit/<%=contact.id%>">edit</a>
+                    <a class="button" href="/contacts/delete/<%=contact.id%>">delete</a>
+                  </td>
+                </tr>
+              <%})%>
+            </tbody>
+          </table>
+          <a class="button button-primary" href="/contacts/add">+ Add Contact</a>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

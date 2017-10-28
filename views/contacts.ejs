@@ -65,26 +65,26 @@
     </tbody>
   </table>
   <hr>
-  <form action="/contacts" method="post">
+  <form action="/contacts" method="post" onSubmit="validasiContacts()">
     <div class="field-body">
       <div class="field">
         <div class="control">
-          <input class="input" type="text" placeholder="name" name="name">
+          <input class="input" id="nama" type="text" placeholder="name" name="name" required>
         </div>
       </div>
       <div class="field">
         <div class="control">
-          <input class="input" type="text" placeholder="company" name="company">
+          <input class="input" id="company" type="text" placeholder="company" name="company" required>
         </div>
       </div>
       <div class="field">
         <div class="control">
-          <input class="input" type="text" placeholder="telp number" name="telp_number">
+          <input class="input" id="telp_number"type="text" placeholder="telp number" name="telp_number" required>
         </div>
       </div>
       <div class="field">
         <div class="control">
-          <input class="input" type="text" placeholder="email" name="email">
+          <input class="input" id="email" type="text" placeholder="email" name="email" required>
         </div>
       </div>
       <div class="control">

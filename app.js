@@ -135,11 +135,21 @@ app.get('/addresses/delete/:id',(req,res)=>{
 //CREATE
 app.post('/profile',(req,res)=>{
   db.run(`insert into Profile(username,password,contact_id) values ('${req.body.username}','${req.body.password}','${req.body.name}')`,(err)=>{
-    res.redirect('profile')
+    if(!err){
+      res.redirect('profile')
+    }else{
+      res.redirect('profile/?error=true')
+    }
+    console.log(err);
   })
 })
 //READ
+
 app.get('/profile',(req,res)=>{
+  let error = ''
+	if(req.query.hasOwnProperty('error')){
+		error = "Your contact already have profile"
+	}
   let joinQuery = 'select Profile.id, Profile.username, Profile.password, Contacts.name from Profile LEFT JOIN Contacts ON Profile.contact_id = Contacts.id'
   db.all(joinQuery,(err,data_join)=>{
     if(!err){
@@ -147,7 +157,7 @@ app.get('/profile',(req,res)=>{
         if(err){
           console.log(err);
         }else{
-          res.render('profile',{data_Profile:data_join, data_Contacts:data})
+          res.render('profile',{pesanError:error,data_Profile:data_join, data_Contacts:data})
         }
       })
     }
@@ -158,7 +168,9 @@ app.get('/profile',(req,res)=>{
 app.get('/profile/edit/:id',(req,res)=>{
   db.all(`select * from Profile where id='${req.params.id}'`,(err,data_Profile)=>{
     db.all(`select * from Contacts`,(err,data_Contacts)=>{
-      res.render('profile-edit',{data_Profile:data_Profile[0],data_Contacts:data_Contacts})
+      if(!err){
+        res.render('profile-edit',{data_Profile:data_Profile[0],data_Contacts:data_Contacts})
+      }
     })
   })
 })

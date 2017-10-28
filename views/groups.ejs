@@ -11,21 +11,15 @@
         <tr>
           <td>ID</td>
           <td>Name</td>
-          <td>Company</td>
-          <td>Phone</td>
-          <td>Email</td>
         </tr>
       </thead>
       <tbody>
         <%groupsData.forEach( (group) => { %>
           <tr>
             <td> <%= group.ID %> </td>
-            <td> <%= group.name %> </td>
-            <td> <%= group.company %> </td>
-            <td> <%= group.telp_number %> </td>
-            <td> <%= group.email %> </td>
-            <td> <a href="/contacts/edit/<%=contact.ID%>">EDID</a></td>
-            <td> <a href="/contacts/delete/<%=contact.ID%>">DELED</a></td>
+            <td> <%= group.name_of_group%> </td>
+            <td> <a href="/contacts/edit/<%=group.ID%>">EDID</a></td>
+            <td> <a href="/contacts/delete/<%=group.ID%>">DELED</a></td>
           </tr>
           <%})%>
       </tbody>

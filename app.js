@@ -3,7 +3,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const contacts = require('./models/contactsModel')
-
+const groups = require('./models/groupsModel');
 const app = express();
 
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -12,6 +12,15 @@ app.use(bodyParser.json())
 app.set('views', './views')
 app.set('view engine', 'ejs');
 
+
+// HOME
+// ================================================================================
+
+app.get(`/`, (req, res) =>
+  {
+    res.render(`home`);
+  }
+);
 
 // Contacts Router
 // ==================================================================================
@@ -56,10 +65,10 @@ app.get('/contacts/delete/:id', (req, res) =>
 
 app.get('/groups', (req, res) =>
   {
-    contacts.select( (groupsData) =>
+    groups.select( (groupsData) =>
       {
         // console.log(contactsData);
-        res.render('groups', groupsData})
+        res.render('groups', {groupsData})
       }
     );
   }
@@ -67,7 +76,7 @@ app.get('/groups', (req, res) =>
 
 app.get('/groups/edit/:id', (req, res) =>
   {
-    contacts.select( (groupData) =>
+    groups.select( (groupData) =>
       {
         res.render('groupEdit', {groupData})
       },`*`,req.params.id);
@@ -76,14 +85,14 @@ app.get('/groups/edit/:id', (req, res) =>
 
 app.post('/groups/edit/:id', (req, res) =>
   {
-    contacts.update(req.body);
+    groups.update(req.body);
     res.redirect('/groups');
   }
 )
 
 app.get('/groups/delete/:id', (req, res) =>
   {
-    contacts.deleteQuery(req.params.id);
+    groups.deleteQuery(req.params.id);
     res.redirect('/groups');
   }
 )

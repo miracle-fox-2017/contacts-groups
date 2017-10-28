@@ -4,11 +4,11 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <link rel="stylesheet" href="/style/css/common.css">
-    <title>Groups Page</title>
+    <title>Address Page</title>
 </head>
 <body>
     <section class="other-page">
-        <div class="header">Daftar Group</div>
+        <div class="header">Daftar Alamat</div>
         <div class="content">
             <%if(data.length === 0){%>
                 <div class="empty">Data Kosong!</div>
@@ -16,16 +16,20 @@
                 <table border="1">
                     <tr>
                         <td>No</td>
-                        <td>Nama Group</td>
+                        <td>Jalan</td>
+                        <td>Kota</td>
+                        <td>Kodepos</td>
                         <td>Action</td>
                     </tr>
                     <%data.map((value,i)=>{%>
                     <tr>
                         <td><%=i + 1%></td>
-                        <td><%=value.name_of_group%></td>
+                        <td><%=value.street%></td>
+                        <td><%=value.city%></td>
+                        <td><%=value.zipcode%></td>
                         <td>
-                            <a href="/groups/edit/<%=value.id%>"><button type="button">Edit</button></a>
-                            <a href="/groups/delete/<%=value.id%>"><button type="button">Hapus</button></a>
+                            <a href="/addresses/edit/<%=value.id%>"><button type="button">Edit</button></a>
+                            <a href="/addresses/delete/<%=value.id%>"><button type="button">Hapus</button></a>
                         </td>
                     </tr>
                     <%})%>
@@ -34,13 +38,21 @@
         </div>
     </section>
     <section class="other-page">
-        <div class="header">Group Baru</div>
+        <div class="header">Alamat Baru</div>
         <div class="content">
-            <form action="/groups" method="post">
+            <form action="/addresses" method="post">
                 <table border="1">
                     <tr>
-                        <td>Name of Group</td>
-                        <td><input type="text" name="group" placeholder="Type your group name"></td>
+                        <td>Jalan</td>
+                        <td><input type="text" name="street" placeholder="Type your street name"></td>
+                    </tr>
+                    <tr>
+                        <td>Kota</td>
+                        <td><input type="text" name="city" placeholder="Type your city name"></td>
+                    </tr>
+                    <tr>
+                        <td>Kodepos</td>
+                        <td><input type="text" name="zipcode" placeholder="Type your zipcode"></td>
                     </tr>
                     <tr>
                         <td colspan="2"><input type="submit" value="Tambah"></td>

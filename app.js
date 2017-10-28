@@ -77,6 +77,7 @@ app.get("/contacts/delete/:id",(req,res)=>{ // Hapus Kontak
     });
 });
 
+// Group
 app.get("/groups",(req,res)=>{ // Halaman awal group
     db.all(`SELECT * FROM groups`,(err,data)=>{
         if(err){
@@ -126,6 +127,117 @@ app.get("/groups/delete/:id",(req,res)=>{ // Hapus group
                 WHERE id="${req.params.id}"`
             );
             res.redirect("/groups");
+        }
+    });
+});
+
+// Profile
+app.get("/profiles",(req,res)=>{ // Halaman awal profile
+    db.all(`SELECT * FROM profile`,(err,data)=>{
+        if(err){
+            throw err;
+        }else{
+            res.render("profile",{data:data});
+        }
+    });
+});
+app.post("/profiles",(req,res)=>{ // Tambah profile
+    const data=req.body;
+    db.run(
+        `INSERT INTO profile (username,password)
+        VALUES ("${data.username}","${data.password}")`
+    );
+    res.redirect("/profiles");
+});
+app.get("/profiles/edit/:id",(req,res)=>{ // Halaman edit group
+    db.all(`SELECT * FROM profile WHERE id="${req.params.id}"`,(err,data)=>{
+        if(err){
+            throw err;
+        }else if(data.length === 0){
+            res.redirect("/profiles");
+        }else{
+            res.render("edit-profile",{data:data});
+        }
+    });
+});
+app.post("/profiles/edit/:id",(req,res)=>{ // Edit group
+    const data=req.body;
+    db.run(
+        `UPDATE profile SET
+        username="${data.username}",
+        password="${data.password}"
+        WHERE id="${data.id}"`
+    );
+    res.redirect("/profiles");
+});
+app.get("/profiles/delete/:id",(req,res)=>{ // Hapus group
+    db.all(`SELECT * FROM profile WHERE id="${req.params.id}"`,(err,data)=>{
+        if(err){
+            throw err;
+        }else if(data.length === 0){
+            res.redirect("/profiles");
+        }else{
+            db.run(
+                `DELETE FROM profile
+                WHERE id="${req.params.id}"`
+            );
+            res.redirect("/profiles");
+        }
+    });
+});
+
+// Address
+app.get("/addresses",(req,res)=>{ // Halaman awal alamat
+    db.all(`SELECT * FROM address`,(err,data)=>{
+        if(err){
+            throw err;
+        }else{
+            res.render("address",{data:data});
+        }
+    });
+});
+app.post("/addresses",(req,res)=>{ // Tambah alamat
+    const data=req.body;
+    db.run(
+        `INSERT INTO address (street,city,zipcode)
+        VALUES ("${data.street}","${data.city}","${data.zipcode}")`
+    );
+    res.redirect("/addresses");
+});
+app.get("/addresses/edit/:id",(req,res)=>{ // Halaman edit alamat
+    db.all(`SELECT * FROM address WHERE id="${req.params.id}"`,(err,data)=>{
+        if(err){
+            throw err;
+        }else if(data.length === 0){
+            res.redirect("/addresses");
+        }else{
+            res.render("edit-address",{data:data});
+        }
+    });
+});
+app.post("/addresses/edit/:id",(req,res)=>{ // Edit alamat
+    const data=req.body;
+    db.run(
+        `UPDATE address SET
+        street="${data.street}",
+        city="${data.city}",
+        zipcode="${data.zipcode}"
+        WHERE id="${data.id}"`
+    );
+    res.redirect("/addresses");
+});
+app.get("/addresses/delete/:id",(req,res)=>{ // Hapus group
+    db.all(`SELECT * FROM address WHERE id="${req.params.id}"`,(err,data)=>{
+        if(err){
+            throw err;
+        }else if(data.length === 0){
+            res.redirect("/addresses");
+        }else{
+            db.run(
+                `DELETE FROM address
+                WHERE id="${req.params.id}"`
+            );
+            res.redirect("/addresses");
         }
     });
 });

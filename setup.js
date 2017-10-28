@@ -21,19 +21,19 @@ db.serialize(() => {
     if (err) throw err;
   });
 
-  db.run(`CREATE TABLE IF NOT EXISTS Profile (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    username VARCHAR(30) NOT NULL,
-    password VARCHAR(30) NOT NULL
-  )`, err => {
-    if (err) throw err;
-  });
-
   db.run(`CREATE TABLE IF NOT EXISTS Addresses (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     street VARCHAR(30) NOT NULL,
     city VARCHAR(30) NOT NULL,
     zipcode VARCHAR(30)
+  )`, err => {
+    if (err) throw err;
+  });
+  
+  db.run(`CREATE TABLE IF NOT EXISTS Profile (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    username VARCHAR(30) NOT NULL,
+    password VARCHAR(30) NOT NULL
   )`, err => {
     if (err) throw err;
   });

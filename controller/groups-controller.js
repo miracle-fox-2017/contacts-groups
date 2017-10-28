@@ -5,7 +5,6 @@ const db = new sqlite3.Database('./database/database.db', err => {
 
 const getGroups = (req, res) => {
   db.all(`SELECT * FROM Groups`, (err, rows) => {
-    // console.log(rows);
     if (err) throw err;
     res.render('groups', {groups: rows});
   });

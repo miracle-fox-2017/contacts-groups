@@ -37,7 +37,7 @@ Structure table:
   - attribute city ber-type string 
   - attribute zipcode ber-type integer
 
-- [] incomplete
+- [x] completed
 ## Release 1 - Basic Routing for Contacts dan Groups
 Buatlah sejumlah route berikut dan tampilkan melalui view engine ejs
 
@@ -54,7 +54,7 @@ Buatlah sejumlah route berikut dan tampilkan melalui view engine ejs
 |POST   | /groups/edit/:id        | Menerima data form untuk update group               |
 |GET    | /groups/delete/:id      | Menghapus data group berdasarkan id                 |
 
-- [] incomplete
+- [x] completed
 ## Release 2 - Basic Routing for Addresses dan Profiles
 Buatlah sejumlah route berikut dan tampilkan melalui view engine ejs
 

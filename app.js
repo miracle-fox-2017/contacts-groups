@@ -134,26 +134,36 @@ app.get('/addresses/delete/:id',(req,res)=>{
 //* START PROFILE *//
 //CREATE
 app.post('/profile',(req,res)=>{
-  db.run(`insert into Profile(username,password) values ('${req.body.username}','${req.body.password}')`,(err)=>{
+  db.run(`insert into Profile(username,password,contact_id) values ('${req.body.username}','${req.body.password}','${req.body.name}')`,(err)=>{
     res.redirect('profile')
   })
 })
 //READ
 app.get('/profile',(req,res)=>{
-  db.all(`select * from Profile`,(err,data)=>{
+  let joinQuery = 'select Profile.id, Profile.username, Profile.password, Contacts.name from Profile LEFT JOIN Contacts ON Profile.contact_id = Contacts.id'
+  db.all(joinQuery,(err,data_join)=>{
     if(!err){
-      res.render('profile',{data_Profile:data})
+      db.all(`select * from Contacts`,(err,data)=>{
+        if(err){
+          console.log(err);
+        }else{
+          res.render('profile',{data_Profile:data_join, data_Contacts:data})
+        }
+      })
     }
   })
+
 })
 //UPDATE
 app.get('/profile/edit/:id',(req,res)=>{
-  db.all(`select * from Profile where id='${req.params.id}'`,(err,data)=>{
-    res.render('profile-edit',{data_Profile:data[0]})
+  db.all(`select * from Profile where id='${req.params.id}'`,(err,data_Profile)=>{
+    db.all(`select * from Contacts`,(err,data_Contacts)=>{
+      res.render('profile-edit',{data_Profile:data_Profile[0],data_Contacts:data_Contacts})
+    })
   })
 })
 app.post('/profile/edit/:id',(req,res)=>{
-  db.run(`update Profile set username='${req.body.username}',password='${req.body.password}' where id='${req.params.id}'`,(err)=>{
+  db.run(`update Profile set username='${req.body.username}',password='${req.body.password}',contact_id='${req.body.name}' where id='${req.params.id}'`,(err)=>{
     res.redirect('../../profile')
   })
 })

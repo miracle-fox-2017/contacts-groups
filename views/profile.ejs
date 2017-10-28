@@ -29,6 +29,7 @@
 
         <tr>
           <th><abbr title="id"></abbr>ID</th>
+          <th><abbr title="password">CONTACT</abbr></th>
           <th>USER NAME</th>
           <th><abbr title="password">PASSWORD</abbr></th>
         </tr>
@@ -38,8 +39,8 @@
       <%for(let i=0; i<data_Profile.length; i++){%>
       <tr>
         <th><%=data_Profile[i].id%></th>
-        <td><strong><a href="#." title="full name" class="is-success"><%=data_Profile[i].username%></a></strong>
-        </td>
+        <td><strong><a href="#." title="full name" class="is-success"><%=data_Profile[i].name%></a></strong></td>
+        <td><%=data_Profile[i].username%></td>
         <td><%=data_Profile[i].password%></td>
         <td style="margin-left:-5px;">
               <a class="button is-info is-outlined is-small" href='/profile/edit/<%=data_Profile[i].id%>'>
@@ -71,6 +72,20 @@
         <div class="control">
           <input class="input" type="text" placeholder="password" name="password">
         </div>
+      </div>
+      <div class="field">
+        <p class="control has-icons-left">
+          <span class="select">
+            <select name="name">
+                    <% for(let i=0; i<data_Contacts.length; i++) {%>
+                    <option value="<%= data_Contacts[i].id %>"><%= data_Contacts[i].name %></option>
+                    <%}%>
+            </select>
+          </span>
+          <span class="icon is-small is-left">
+            <i class="fa fa-user"></i>
+          </span>
+        </p>
       </div>
       <div class="control">
         <button type="submit" class="button is-success">Submit</button>

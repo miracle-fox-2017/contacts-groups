@@ -43,7 +43,28 @@
           </span>
         </div>
       </div>
-
+      <div class="field">
+        <label class="label" style="text-align:left;">Contact</label>
+        <p class="control has-icons-left">
+          <span class="select is-medium is-fullwidth">
+            <select name="name">
+                    <% for(let i=0; i<data_Contacts.length; i++) {%>
+                      <%
+                        let selected = ''
+                        if(data_Profile.contact_id == data_Contacts[i].id){
+                          selected = "selected"
+                        }
+                      %>
+                    <option  value="<%= data_Contacts[i].id %>" <%=selected%> > <%= data_Contacts[i].name %></option>
+                    <%}%>
+            </select>
+          </span>
+          <span class="icon is-small is-left">
+            <i class="fa fa-user"></i>
+          </span>
+        </p>
+      </div>
+      <%=data_Profile.contact_id%>
           <div style="text-align: center; margin-top:33px;" class="control">
             <input class="button is-success is-outlined is-medium" type="submit" value="Submit input">
             <input class="button is-success is-outlined is-medium" type="reset" value="Reset input">

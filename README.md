@@ -56,7 +56,7 @@ Buatlah sejumlah route berikut dan tampilkan melalui view engine ejs
 
 - [] incomplete
 ## Release 2 - Basic Routing for Addresses dan Profiles
-Buatlah sejumlah route berikut dan tampilkan melalui view engine ejs<br />
+Buatlah sejumlah route berikut dan tampilkan melalui view engine ejs
 
 |METHOD | ROUTE                   | KETERANGAN                                          |
 |-------|:------------------------|:-----------------------------------------------------

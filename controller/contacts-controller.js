@@ -4,7 +4,6 @@ const db = new sqlite3.Database('./database/database.db', err => {
 });
 
 const getHome = (req, res) => {
-    // res.send('hello from controller');
     res.render('home');
 };
 
@@ -25,7 +24,7 @@ const postContacts = (req, res) => {
 };
 
 const getEditContacts = (req, res) => {
-  db.get(`SELECT * FROM Contacts WHERE id = '${req.params.id}'`, (err, row) => {
+  db.get(`SELECT * FROM Contacts WHERE id IS ${req.params.id}`, (err, row) => {
     if (err) throw err;
     res.render('contacts-edit', row);
   });
@@ -45,7 +44,7 @@ const postEditContacts = (req, res) => {
   });
 };
 
-const deleteUserContacts = (req, res) => {
+const deleteContacts = (req, res) => {
   const query = `DELETE FROM Contacts WHERE id IS ${req.params.id}`;
   db.run(query, err => {
     if (err) throw err;
@@ -59,5 +58,5 @@ module.exports = {
   postContacts,
   getEditContacts,
   postEditContacts,
-  deleteUserContacts
+  deleteContacts
 };

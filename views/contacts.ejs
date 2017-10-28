@@ -13,6 +13,7 @@
         <th>company</th>
         <th>Telp Number</th>
         <th>Email</th>
+        <th>Group Involved</th>
       </tr>
       <%for(var i = 0; i < data.length; i++) {%>
         <tr>
@@ -21,6 +22,7 @@
           <td><%=data[i].company%></td>
           <td><%=data[i].telp_number%></td>
           <td><%=data[i].email%></td>
+          <td><%=data[i].group%></td>
           <td><a href="/contacts/edit/<%=data[i].id%>">edit</a></td>
           <td><a href="/contacts/delete/<%=data[i].id%>">delete</a></td>
           <td><a href="/contacts/addresses/<%=data[i].id%>">addresses</a></td>

@@ -19,7 +19,18 @@ app.get('/', (req, res) => {
 
 app.get('/contacts', (req, res) => {
   db.all(`SELECT * FROM Contacts`, (err, contacts) => {
-    res.render('contacts', {data: contacts})
+    db.all(`SELECT Groups.name_of_group, ContactsGroups.ContactId, ContactsGroups.GroupId FROM ContactsGroups LEFT JOIN Groups ON ContactsGroups.GroupId = Groups.id`, (err, groups) => {
+      for(var i = 0; i < contacts.length; i++) {
+        var tampung = []
+        groups.forEach((elemen) => {
+          if(contacts[i].id == elemen.ContactId) {
+            tampung.push(elemen.name_of_group)
+          }
+        })
+        contacts[i].group = tampung.join(',')
+      }
+      res.render('contacts', {data: contacts})
+    })
   })
 })
 
@@ -62,9 +73,21 @@ app.post('/contacts/addresses/:id', (req, res) => {
 
 app.get('/groups', (req, res) => {
   db.all(`SELECT * FROM Groups`, (err, groups) => {
-    res.render('groups', {data: groups})
+    db.all(`SELECT ContactsGroups.ContactId, Contacts.name, ContactsGroups.GroupId FROM ContactsGroups LEFT JOIN Contacts ON ContactsGroups.ContactId = Contacts.id`, (err, contact) => {
+      for(var i = 0; i < groups.length; i++) {
+        var tampung = []
+        contact.forEach((elemen) => {
+          if(groups[i].id == elemen.GroupId) {
+            tampung.push(elemen.name)
+          }
+        })
+        groups[i].groups = tampung.join(',')
+      }
+      res.render('groups', {data: groups})
+    })
   })
 })
+
 
 app.post('/groups', (req, res) => {
   db.all(`INSERT INTO Groups (name_of_group) VALUES ('${req.body.name_of_group}')`)
@@ -84,6 +107,19 @@ app.post('/groups/edit/:id', (req, res) => {
 
 app.get('/groups/delete/:id', (req, res) => {
   db.all(`DELETE FROM Groups WHERE id = "${req.params.id}"`)
+  res.redirect('/groups')
+})
+
+app.get('/groups/assign_contacts/:id', (req, res) => {
+  db.all(`SELECT * FROM Contacts`, (err, contact) => {
+    db.all(`SELECT * FROM Groups WHERE id = '${req.params.id}'`, (err, group) => {
+      res.render('groupassigned', {contact: contact, group: group})
+    })
+  })
+})
+
+app.post('/groups/assign_contacts/:id', (req, res) => {
+  db.all(`INSERT INTO ContactsGroups (ContactId, GroupId) VALUES ("${req.body.ContactId}", "${req.params.id}")`)
   res.redirect('/groups')
 })
 

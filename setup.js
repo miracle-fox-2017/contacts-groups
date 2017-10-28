@@ -10,6 +10,8 @@ db.serialize(function() {
 
   db.run(`CREATE TABLE IF NOT EXISTS Addresses (id INTEGER PRIMARY KEY AUTOINCREMENT, street TEXT, city TEXT, zipcode TEXT)`)
 
+  db.run(`CREATE TABLE IF NOT EXISTS ContactsGroups (id INTEGER PRIMARY KEY AUTOINCREMENT, ContactId INTEGER REFERENCES Contacts (id), GroupId INTEGER REFERENCES Groups (id))`)
+
   // db.run(`ALTER TABLE Addresses ADD COLUMN ContactId INTEGER REFERENCES Contacts (id)`)
 
   // db.run(`ALTER TABLE Profile ADD COLUMN contactId INTEGER REFERENCES Contacts (id)`)

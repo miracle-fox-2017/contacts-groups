@@ -10,11 +10,13 @@
       <tr>
         <th>id</th>
         <th>Name Of Groups</th>
+        <th>Contacts Involved</th>
       </tr>
       <%for(var i = 0; i < data.length; i++) {%>
         <tr>
           <td><%=data[i].id%></td>
           <td><%=data[i].name_of_group%></td>
+          <td><%=data[i].groups%></td>
           <td><a href="/groups/edit/<%=data[i].id%>">edit</a></td>
           <td><a href="/groups/delete/<%=data[i].id%>">delete</a></td>
         </tr>

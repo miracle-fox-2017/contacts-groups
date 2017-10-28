@@ -1,22 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const Addresses = require('../models/addresses')
-
-function getdata(){
-  var faker = require('faker');
-
-  var randomStreet = faker.address.streetName(); // Rowan Nikolaus
-  var randomCity = faker.address.city(); // Kassandra.Haley@erich.biz
-  var randomZipcode = faker.address.zipCode(); // random contact card containing many properties
-
-  let obj = {
-    street:randomStreet,
-    city:randomCity,
-    zipcode:randomZipcode
-  }
-
-  return obj
-}
+const Contacts = require('../models/contacts')
 
 router.get('/', (req, res) => {
   Addresses.getAll(addressesData => {
@@ -25,7 +10,9 @@ router.get('/', (req, res) => {
 })
 
 router.get('/add', (req, res) => {
-  res.render('addresses/add', {title:'Add Address', dummy:getdata()})
+  Contacts.getAll(contactsData => {
+    res.render('addresses/add', {title:'Add Address', contacts:contactsData})
+  })
 })
 
 router.post('/add', (req, res) => {
@@ -35,7 +22,9 @@ router.post('/add', (req, res) => {
 
 router.get('/edit/:id', (req, res) => {
   Addresses.getOne(req.params.id, address => {
-    res.render('addresses/edit', {title:'Edit Address', address:address});
+    Contacts.getAll(contactsData => {
+      res.render('addresses/edit', {title:'Edit Address', address:address, contacts:contactsData});
+    })
   })
 })
 
@@ -45,6 +34,11 @@ router.post('/edit/:id', (req, res) => {
 })
 
 router.get('/delete/:id', (req, res) => {
+  Addresses.destroy(req.params.id)
+  res.redirect('/addresses')
+})
+
+router.get('/addresses_with_contact', (req, res) => {
   Addresses.destroy(req.params.id)
   res.redirect('/addresses')
 })

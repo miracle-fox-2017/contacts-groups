@@ -17,7 +17,7 @@
                 <th>City</th>
                 <th>Zipcode</th>
                 <th>Name</th>
-                <th>Option</th>
+                <th>Company</th>
               </tr>
             </thead>
             <tbody>
@@ -29,15 +29,11 @@
                   <td><%=address.city%></td>
                   <td><%=address.zipcode%></td>
                   <td><%=address.name%></td>
-                  <td>
-                    <a class="button" href="/addresses/edit/<%=address.id%>">edit</a>
-                    <a class="button" href="/addresses/delete/<%=address.id%>">delete</a>
-                  </td>
+                  <td><%=address.company%></td>
                 </tr>
               <%})%>
             </tbody>
           </table>
-          <a class="button button-primary" href="/addresses/add">+ Add Address</a>
         </div>
       </div>
     </div>

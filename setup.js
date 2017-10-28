@@ -43,6 +43,23 @@ function alterProfiles() {
   // })
 }
 
-alterProfiles()
+function alterAddresses() {
+  db.run('ALTER TABLE Addresses ADD contact_id INTEGER REFERENCES Contacts(id)', err => {
+    if(err){
+      console.log(err);
+    }
+  })
+}
+
+function tableContactsGroups() {
+  db.run('CREATE TABLE IF NOT EXISTS ContactsGroups(id INTEGER PRIMARY KEY AUTOINCREMENT,contact_id INTEGER REFERENCES Contacts(id),group_id INTEGER REFERENCES Groups(id))',err=>{
+    if(!err){
+      console.log('table ContactsGroups created..');
+    }
+  });
+}
 
 // createTable()
+// alterProfiles()
+// alterAddresses()
+tableContactsGroups()

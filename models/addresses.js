@@ -3,7 +3,7 @@ var db = new sqlite3.Database('./db/database.db');
 
 class Addresses {
   static getAll(callback) {
-    db.all('SELECT * FROM Addresses', (err, rows)=>{
+    db.all('SELECT Addresses.*, Contacts.Name FROM Addresses LEFT JOIN Contacts ON contact_id=Contacts.id', (err, rows)=>{
       callback(rows);
     })
   }
@@ -19,7 +19,7 @@ class Addresses {
   }
 
   static update(input, id) {
-    db.run(`UPDATE Addresses SET street='${input.street}', city='${input.city}', zipcode='${input.zipcode}' WHERE id='${id}'`)
+    db.run(`UPDATE Addresses SET street='${input.street}', city='${input.city}', zipcode='${input.zipcode}', contact_id='${input.contact_id}' WHERE id='${id}'`)
   }
 
   static destroy(id) {

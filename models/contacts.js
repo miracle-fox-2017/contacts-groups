@@ -13,6 +13,7 @@ class Contacts {
       callback('Please fill out all required fields!!')
     }else{
       db.run(`INSERT INTO Contacts (name,company,telp_number,email) VALUES ('${input.name}','${input.company}','${input.telp_number}','${input.email}')`)
+      callback(true)
     }
   }
 

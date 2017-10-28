@@ -16,7 +16,6 @@
                 <input class="u-full-width" placeholder="Password" name="password" type="password" value="<%= profile.password %>">
                 <label for="exampleRecipientInput">Select Contact :</label>
                 <select class="u-full-width" name="contact_id">
-                  <option>-contacts-</option>
                   <%contacts.forEach(contact => {%>
                     <%if(profile.contact_id == contact.id){%>
                       <option value="<%=contact.id%>" selected><%=contact.name%></option>

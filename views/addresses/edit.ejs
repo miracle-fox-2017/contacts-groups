@@ -14,6 +14,16 @@
                 <input class="u-full-width" placeholder="Street" name="street" type="text" value="<%= address.street %>">
                 <input class="u-full-width" placeholder="City" name="city" type="text" value="<%= address.city %>">
                 <input class="u-full-width" placeholder="Zipcode" name="zipcode" type="text" value="<%= address.zipcode %>">
+                <label>Select Contact :</label>
+                <select class="u-full-width" name="contact_id">
+                  <%contacts.forEach(contact => {%>
+                    <%if(address.contact_id == contact.id){%>
+                      <option value="<%=contact.id%>" selected><%=contact.name%></option>
+                    <%}else{%>
+                      <option value="<%=contact.id%>"><%=contact.name%></option>
+                    <%}%>
+                  <%})%>
+                </select>
               </div>
             </div>
             <input class="button-primary" value="Submit" type="submit">

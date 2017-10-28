@@ -8,6 +8,8 @@
           <h2><%= title %></h2>
           <p>Express Contacts Groups</p>
           <% include ../partial/menu.ejs %>
+          <span><b>Name :</b> <%=contact.name%></span><br>
+          <span><b>Company :</b> <%=contact.company%></span><br>
           <table class="u-full-width">
             <thead>
               <tr>
@@ -16,28 +18,20 @@
                 <th>Street</th>
                 <th>City</th>
                 <th>Zipcode</th>
-                <th>Name</th>
-                <th>Option</th>
               </tr>
             </thead>
             <tbody>
-              <%addresses.forEach((address,i) => {%>
+              <%contact.addresses.forEach((address,i) => {%>
                 <tr>
                   <td><%=i+1%></td>
                   <td><%=address.id%></td>
                   <td><%=address.street%></td>
                   <td><%=address.city%></td>
                   <td><%=address.zipcode%></td>
-                  <td><%=address.name%></td>
-                  <td>
-                    <a class="button" href="/addresses/edit/<%=address.id%>">edit</a>
-                    <a class="button" href="/addresses/delete/<%=address.id%>">delete</a>
-                  </td>
                 </tr>
               <%})%>
             </tbody>
           </table>
-          <a class="button button-primary" href="/addresses/add">+ Add Address</a>
         </div>
       </div>
     </div>

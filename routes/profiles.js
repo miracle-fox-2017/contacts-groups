@@ -20,11 +20,11 @@ router.get('/add', (req, res) => {
 })
 
 router.post('/add', (req, res) => {
-  Profiles.create(req.body,err => {
-    if(err){
-      addRender(req, res, err)
-    }else{
+  Profiles.create(req.body,report => {
+    if(report == true){
       res.redirect('/profiles')
+    }else{
+      addRender(req, res, report)
     }
   })
 })
@@ -42,11 +42,11 @@ router.get('/edit/:id', (req, res) => {
 })
 
 router.post('/edit/:id', (req, res) => {
-  Profiles.update(req.body, req.params.id, err => {
-    if(err){
-      editRender(req, res, err)
-    }else{
+  Profiles.update(req.body, req.params.id, report => {
+    if(report == true){
       res.redirect('/profiles')
+    }else{
+      editRender(req, res, report)
     }
   })
 })

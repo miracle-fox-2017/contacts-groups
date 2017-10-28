@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const Contacts = require('../models/contacts')
+const Addresses = require('../models/addresses')
 
 router.get('/', (req, res) => {
   Contacts.getAll(contactsData => {
@@ -17,11 +18,11 @@ router.get('/add', (req, res) => {
 })
 
 router.post('/add', (req, res) => {
-  Contacts.create(req.body, err => {
-    if(err){
-      addRender(req,res,err);
-    }else{
+  Contacts.create(req.body, report => {
+    if(report == true){
       res.redirect('/contacts')
+    }else{
+      addRender(req,res,report);
     }
   })
 })
@@ -40,6 +41,20 @@ router.post('/edit/:id', (req, res) => {
 router.get('/delete/:id', (req, res) => {
   Contacts.destroy(req.params.id)
   res.redirect('/contacts')
+})
+
+router.get('/addresses/:id', (req, res) => {
+  Contacts.getOne(req.params.id, contact => {
+    Addresses.getAll(addressesData => {
+      contact.addresses = []
+      addressesData.forEach(address => {
+        if(contact.id == address.contact_id){
+          contact.addresses.push(address)
+        }
+      })
+      res.render('contacts/addresses', {title:'Address Contact', contact:contact})
+    })
+  })
 })
 
 module.exports = router;

@@ -17,6 +17,7 @@
                 <th>Company</th>
                 <th>Phone Number</th>
                 <th>Email</th>
+                <th>Groups</th>
                 <th>Option</th>
               </tr>
             </thead>
@@ -29,7 +30,9 @@
                   <td><%=contact.company%></td>
                   <td><%=contact.telp_number%></td>
                   <td><%=contact.email%></td>
+                  <td><%=contact.groups%></td>
                   <td>
+                    <a class="button" href="/contacts/addresses/<%=contact.id%>">address</a>
                     <a class="button" href="/contacts/edit/<%=contact.id%>">edit</a>
                     <a class="button" href="/contacts/delete/<%=contact.id%>">delete</a>
                   </td>
@@ -38,6 +41,7 @@
             </tbody>
           </table>
           <a class="button button-primary" href="/contacts/add">+ Add Contact</a>
+          <a class="button button-primary" href="/addresses_with_contact">Addresses Detail</a>
         </div>
       </div>
     </div>

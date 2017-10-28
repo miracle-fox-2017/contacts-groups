@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Contact</title>
+	<title>Addresses</title>
 </head>
 <body>	
 	<div class="nav-wrapper">
@@ -13,29 +13,27 @@
 				<li style="display: inline-block; font-size: 30px;"><a href="/profiles" style=" text-decoration-line: none;"> Profile </a></li>
 			</ul>
 		</nav>
-	</div>		
-	<h2> Contacts </h2>
-	<div class="contacts">
-	<table width="100%" border="1">	
+	</div>	
+	<h2> Address </h2>
+	<div class="addresses">
+	<table width="50%" border="1">	
 		<thead align ="center">
 			  <tr>
     			 <th> ID </th>
-    			 <th> NAME </th>
-    			 <th> COMPANY </th>
-    			 <th> TELP_NUMBER </th>
-    			 <th> EMAIL </th>
+    			 <th> STREET </th>
+    			 <th> CITY </th>
+    			 <th> ZIPCODE </th>
   			  </tr>
 		</thead>
 		<tbody align ="center">	
 			<%for (let i = 0 ; i<data.length ;i++ ){%>
 			<tr>
 				<td> <%= data[i].id %> </td>
-				<td> <%= data[i].name %> </td>
-		  		<td> <%= data[i].company %>  </td>
-		  		<td> <%= data[i].telp_number %> </td>
-		  		<td> <%= data[i].email %> </td>
-		  		<td> <a href ="/contacts/edit/<%= data[i].id %>">Edit</a> </td>
-		  		<td> <a href ="/contacts/delete/<%= data[i].id %>">Delete</a> </td>
+				<td> <%= data[i].street %> </td>
+		  		<td> <%= data[i].city %>  </td>
+		  		<td> <%= data[i].zipcode %> </td>
+		  		<td> <a href ="/addresses/edit/<%= data[i].id %>">Edit</a> </td>
+		  		<td> <a href ="/addresses/delete/<%= data[i].id %>">Delete</a> </td>
 			<%}%>
 			</tr>
 		</tbody>	
@@ -44,10 +42,9 @@
 	<table>
 		<thead align ="center">
 			  <tr>
-    			 <th> NAME </th>
-    			 <th> COMPANY </th>
-    			 <th> TELP_NUMBER </th>
-    			 <th> EMAIL </th>
+    			 <th> STREET </th>
+    			 <th> CITY </th>
+    			 <th> ZIPCODE </th>
   			  </tr>
 		</thead>
 <% if(edited !== undefined) {%>
@@ -55,11 +52,10 @@
 	<h2> EDIT </h2>
 	<tbody align ="center">	
 		<tr>
-		<form action="/contacts/edit" method="post">
-			<td><input type="text" name="name" value="<%= data[edited].name %>"></td>
-			<td><input type="text" name="company" value="<%= data[edited].company %>"></td>
-			<td><input type="text" name="telp_number" value="<%= data[edited].telp_number %>"></td>
-			<td><input type="text" name="email" value="<%= data[edited].email %>"></td>
+		<form action="/addresses/edit" method="post">
+			<td><input type="text" name="street" value="<%= data[edited].street %>"></td>
+			<td><input type="text" name="city" value="<%= data[edited].city %>"></td>
+			<td><input type="text" name="zipcode" value="<%= data[edited].zipcode %>"></td>
 			<td><input type="submit" value="replace"></td>
 			<input type="hidden" name="id" value="<%= data[edited].id %>">
 		</form>	
@@ -71,11 +67,10 @@
 	<h2> ADD </h2>
 	<tbody align ="center">	
 		<tr>
-		<form action="/contacts" method="post">
-			<td><input type="text" name="name" ></td>
-			<td><input type="text" name="company"></td>
-			<td><input type="text" name="telp_number"></td>
-			<td><input type="text" name="email"></td>
+		<form action="/addresses" method="post">
+			<td><input type="text" name="street" ></td>
+			<td><input type="text" name="city"></td>
+			<td><input type="text" name="zipcode"></td>
 			<td><input type="submit" value="kirim"></td>
 		</form>		
 		</tr>

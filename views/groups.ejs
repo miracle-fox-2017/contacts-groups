@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Contact</title>
+	<title>Groups</title>
 </head>
-<body>	
+<body>
 	<div class="nav-wrapper">
 		<nav class="nav-menu" style="float: left; width: 100%">
 			<ul class="clearfix">
@@ -14,28 +14,22 @@
 			</ul>
 		</nav>
 	</div>		
-	<h2> Contacts </h2>
-	<div class="contacts">
-	<table width="100%" border="1">	
+	<h2> Groups </h2>
+	<div class="groups">
+	<table width="50%%" border="1">	
 		<thead align ="center">
 			  <tr>
     			 <th> ID </th>
-    			 <th> NAME </th>
-    			 <th> COMPANY </th>
-    			 <th> TELP_NUMBER </th>
-    			 <th> EMAIL </th>
+    			 <th> Group Name </th>
   			  </tr>
 		</thead>
 		<tbody align ="center">	
 			<%for (let i = 0 ; i<data.length ;i++ ){%>
 			<tr>
 				<td> <%= data[i].id %> </td>
-				<td> <%= data[i].name %> </td>
-		  		<td> <%= data[i].company %>  </td>
-		  		<td> <%= data[i].telp_number %> </td>
-		  		<td> <%= data[i].email %> </td>
-		  		<td> <a href ="/contacts/edit/<%= data[i].id %>">Edit</a> </td>
-		  		<td> <a href ="/contacts/delete/<%= data[i].id %>">Delete</a> </td>
+				<td> <%= data[i].name_of_group %> </td>
+		  		<td> <a href ="/groups/edit/<%= data[i].id %>">Edit</a> </td>
+		  		<td> <a href ="/groups/delete/<%= data[i].id %>">Delete</a> </td>
 			<%}%>
 			</tr>
 		</tbody>	
@@ -44,10 +38,7 @@
 	<table>
 		<thead align ="center">
 			  <tr>
-    			 <th> NAME </th>
-    			 <th> COMPANY </th>
-    			 <th> TELP_NUMBER </th>
-    			 <th> EMAIL </th>
+    			 <th> Group Name </th>
   			  </tr>
 		</thead>
 <% if(edited !== undefined) {%>
@@ -55,11 +46,8 @@
 	<h2> EDIT </h2>
 	<tbody align ="center">	
 		<tr>
-		<form action="/contacts/edit" method="post">
-			<td><input type="text" name="name" value="<%= data[edited].name %>"></td>
-			<td><input type="text" name="company" value="<%= data[edited].company %>"></td>
-			<td><input type="text" name="telp_number" value="<%= data[edited].telp_number %>"></td>
-			<td><input type="text" name="email" value="<%= data[edited].email %>"></td>
+		<form action="/groups/edit" method="post">
+			<td><input type="text" name="name_of_group" value="<%= data[edited].name_of_group %>"></td>
 			<td><input type="submit" value="replace"></td>
 			<input type="hidden" name="id" value="<%= data[edited].id %>">
 		</form>	
@@ -71,11 +59,8 @@
 	<h2> ADD </h2>
 	<tbody align ="center">	
 		<tr>
-		<form action="/contacts" method="post">
-			<td><input type="text" name="name" ></td>
-			<td><input type="text" name="company"></td>
-			<td><input type="text" name="telp_number"></td>
-			<td><input type="text" name="email"></td>
+		<form action="/groups" method="post">
+			<td><input type="text" name="name_of_group" ></td>
 			<td><input type="submit" value="kirim"></td>
 		</form>		
 		</tr>

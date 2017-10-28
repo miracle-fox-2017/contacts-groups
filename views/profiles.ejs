@@ -1,9 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Contact</title>
-</head>
-<body>	
+	<title>profiles</title>
+</headprofiles<body>
 	<div class="nav-wrapper">
 		<nav class="nav-menu" style="float: left; width: 100%">
 			<ul class="clearfix">
@@ -14,28 +13,24 @@
 			</ul>
 		</nav>
 	</div>		
-	<h2> Contacts </h2>
-	<div class="contacts">
-	<table width="100%" border="1">	
+	<h2> Profil </h2>
+	<div class="profiles">
+	<table width="50%" border="1">	
 		<thead align ="center">
-			  <tr>
-    			 <th> ID </th>
-    			 <th> NAME </th>
-    			 <th> COMPANY </th>
-    			 <th> TELP_NUMBER </th>
-    			 <th> EMAIL </th>
+			  <tr>		
+			  	 <th> ID </th>
+    			 <th> USERNAME </th>
+    			 <th> PASSWORD </th>
   			  </tr>
 		</thead>
 		<tbody align ="center">	
 			<%for (let i = 0 ; i<data.length ;i++ ){%>
 			<tr>
 				<td> <%= data[i].id %> </td>
-				<td> <%= data[i].name %> </td>
-		  		<td> <%= data[i].company %>  </td>
-		  		<td> <%= data[i].telp_number %> </td>
-		  		<td> <%= data[i].email %> </td>
-		  		<td> <a href ="/contacts/edit/<%= data[i].id %>">Edit</a> </td>
-		  		<td> <a href ="/contacts/delete/<%= data[i].id %>">Delete</a> </td>
+				<td> <%= data[i].username %> </td>
+		  		<td> <%= data[i].password %>  </td>
+		  		<td> <a href ="/profiles/edit/<%= data[i].id %>">Edit</a> </td>
+		  		<td> <a href ="/profiles/delete/<%= data[i].id %>">Delete</a> </td>
 			<%}%>
 			</tr>
 		</tbody>	
@@ -44,10 +39,8 @@
 	<table>
 		<thead align ="center">
 			  <tr>
-    			 <th> NAME </th>
-    			 <th> COMPANY </th>
-    			 <th> TELP_NUMBER </th>
-    			 <th> EMAIL </th>
+    			 <th> USERNAME </th>
+    			 <th> PASSWORD </th>
   			  </tr>
 		</thead>
 <% if(edited !== undefined) {%>
@@ -55,11 +48,9 @@
 	<h2> EDIT </h2>
 	<tbody align ="center">	
 		<tr>
-		<form action="/contacts/edit" method="post">
-			<td><input type="text" name="name" value="<%= data[edited].name %>"></td>
-			<td><input type="text" name="company" value="<%= data[edited].company %>"></td>
-			<td><input type="text" name="telp_number" value="<%= data[edited].telp_number %>"></td>
-			<td><input type="text" name="email" value="<%= data[edited].email %>"></td>
+		<form action="/profiles/edit" method="post">
+			<td><input type="text" name="username" value="<%= data[edited].username %>"></td>
+			<td><input type="text" name="password" value="<%= data[edited].password %>"></td>
 			<td><input type="submit" value="replace"></td>
 			<input type="hidden" name="id" value="<%= data[edited].id %>">
 		</form>	
@@ -71,11 +62,9 @@
 	<h2> ADD </h2>
 	<tbody align ="center">	
 		<tr>
-		<form action="/contacts" method="post">
-			<td><input type="text" name="name" ></td>
-			<td><input type="text" name="company"></td>
-			<td><input type="text" name="telp_number"></td>
-			<td><input type="text" name="email"></td>
+		<form action="/profiles" method="post">
+			<td><input type="text" name="username" ></td>
+			<td><input type="text" name="password"></td>
 			<td><input type="submit" value="kirim"></td>
 		</form>		
 		</tr>

@@ -18,6 +18,7 @@
                 <tr>
                   <th>Id</th>
                   <th>Name Group</th>
+                  <th>Assign</th>
                   <th colspan="2">Actions</th>
                 </tr>
               </thead>
@@ -26,6 +27,9 @@
                   <tr>
                     <th><%=Groups.id%></th>
                     <td><%=Groups.name_of_group%></td>
+                    <td><a href="groups/assign_contacts/<%=Groups.id%>" class="has-text-success">
+                        Assign Contacts
+                    </a></td>
                     <td><a href="groups/edit/<%=Groups.id%>">
                       <span class="icon has-text-success">
                         <i class="fa fa-pencil-square-o"></i>
@@ -45,7 +49,7 @@
       </div>
       <form action="/groups" method="post">
           Name of Groups:<br><br>
-          <input class="input is-light" type="text" name="name_of_group">
+          <input class="input is-light" type="text" name="name_of_group" required>
           <br><br>
           <div class="field is-grouped">
             <input class="button is-primary" type="submit" value="Simpan">

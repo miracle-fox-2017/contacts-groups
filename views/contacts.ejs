@@ -21,6 +21,7 @@
                   <th>Company</th>
                   <th>Telepon</th>
                   <th>Email</th>
+                  <th>Groups</th>
                   <th colspan="3">Actions</th>
                 </tr>
               </thead>
@@ -32,6 +33,18 @@
                     <td><%=Contacts.company%></td>
                     <td><%=Contacts.telp_number%></td>
                     <td><%=Contacts.email%></td>
+                    <%let tampung = []
+                    dataConjuction.forEach(dataConjuctions=>{
+                        if(Contacts.id === dataConjuctions.ContactsId){%>
+                          <td><%=tampung.push('ooo')%></td>
+                        <%} else {%>
+                          <td><%=tampung.push(Contacts.name_of_group)%></td>
+                        <%}%>
+
+                    <%})%>
+                  <%=tampung%>
+
+
                     <td><a href="contacts/edit/<%=Contacts.id%>">
                       <span class="icon has-text-success">
                         <i class="fa fa-pencil-square-o"></i>
@@ -51,17 +64,22 @@
         </div>
       </div>
           <form action="/contacts" method="post">
+            <%if(msgError){%>
+              <div class="notification is-danger">
+                <strong><%=msgError%></strong>
+              </div>
+            <%}%>
             Name:<br>
-            <input class="input is-light" type="text" name="name">
+            <input class="input is-light" type="text" name="name" required>
             <br>
             Company:<br>
-            <input class="input is-light" type="text" name="company">
+            <input class="input is-light" type="text" name="company" required>
             <br>
             Telepon:<br>
-            <input class="input is-light" type="text" name="telp_number">
+            <input class="input is-light" type="text" name="telp_number" required>
             <br>
             Email:<br>
-            <input class="input is-light" type="text" name="email">
+            <input class="input is-light" type="text" name="email" required>
             <br/><br/>
             <div class="control">
               <div class="select">

@@ -11,16 +11,16 @@
     <div class="tile is-ancestor">
       <form action="/contacts/edit/<%=dataContacts.id%>" method="post">
         Name:<br>
-        <input class="input is-light" type="text" name="name" value="<%=dataContacts.name%>">
+        <input class="input is-light" type="text" name="name" value="<%=dataContacts.name%>" required>
         <br>
         Company:<br>
-        <input class="input is-light" type="text" name="company" value="<%=dataContacts.company%>">
+        <input class="input is-light" type="text" name="company" value="<%=dataContacts.company%>" required>
         <br>
         Telepon:<br>
-        <input class="input is-light" type="text" name="telp_number" value="<%=dataContacts.telp_number%>">
+        <input class="input is-light" type="text" name="telp_number" value="<%=dataContacts.telp_number%>" required>
         <br>
         Email:<br>
-        <input class="input is-light" type="text" name="email" value="<%=dataContacts.email%>">
+        <input class="input is-light" type="text" name="email" value="<%=dataContacts.email%>" required>
         <br><br>
         <div class="field is-grouped">
           <p class="control">

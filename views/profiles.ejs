@@ -8,16 +8,12 @@
     <%include ./partials/menu%>
     <%include ./partials/contents%>
     <!-- ------------START CONTENTS---------------- -->
-    <% if(hasOwnProperty('error')){%>
-    <div class="notification is-danger">
-      <button class="delete"></button>
-      <strong>Please insert correct username and password</strong>
-    </div>
-  <% } %>
+
     <div class="tile is-ancestor">
       <div class="tile is-vertical is-8">
         <div class="tile is-parent">
           <!-- <article class="tile is-child notification is-primary"> -->
+
             <table class="table">
               <thead>
                 <tr>
@@ -29,8 +25,8 @@
                 </tr>
               </thead>
               <tbody>
-                <%rowsProfiles.forEach(Profile =>{
-                  if(Profile){%>
+                <%if(rowsProfiles){
+                rowsProfiles.forEach(Profile =>{%>
                   <tr>
                     <th><%=Profile.id%></th>
                     <td><%=Profile.name%></td>
@@ -47,13 +43,19 @@
                       </span>
                     </a></td>
                   </tr>
-                <%}})%>
+                <%})}%>
               </tbody>
               </table>
           <!-- </article> -->
         </div>
       </div>
+
           <form action="/profiles" method="post">
+            <%if(msgError){%>
+              <div class="notification is-danger">
+                <strong><%=msgError%></strong>
+              </div>
+            <%}%>
             Username:<br>
             <input class="input is-light" type="text" name="username" required>
             <br>
@@ -69,7 +71,10 @@
                 </select>
               </div>
             </div>
-            <br><br>
+            <br>
+
+
+            <br>
             <div class="field is-grouped">
               <input class="button is-primary" type="submit" value="Simpan">
             </div>

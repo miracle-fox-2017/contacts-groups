@@ -40,7 +40,7 @@
 			color: wheat;
 		}
 	</style>
-	<% console.log(data); %>
+
 	<% if (typeof data != 'undefined') { %>
 
 		<table class="profile-table" border="1">
@@ -80,6 +80,13 @@
 		<input type="hidden" id="id" name="id" value="<%= (typeof editItem != 'undefined') ? editItem.id  : '' %>">
 		<input type="text" id="username" name="username" placeholder="Username" value="<%= (typeof editItem != 'undefined') ? editItem.username  : '' %>">
 		<input type="password" id="password" name="password"  placeholder="Password" value="<%= (typeof editItem != 'undefined') ? editItem.password  : '' %>">
+		
+		<select name="contac_name" id="contac_name">
+			<option value=""></option>
+			<% data.forEach((profile) => {%>
+				<option value="<%= profile.contacts_id %>" <%= (typeof editItem != 'undefined' && editItem.id == profile.id) ? 'selected' : '' %>><%= profile.name %></option>
+			<% }) %>
+		</select>
 
 		<input type="submit" value="Tambah">
 	</form>

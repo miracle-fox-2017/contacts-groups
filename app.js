@@ -99,7 +99,7 @@ app.post('/profiles', (req, res) => {
 });
 
 app.get('/profiles/edit/:id', (req, res) => {
-	profile.getAllData(function(rows) {
+	profile.getAllDataInnerJoin('Contacts', function(rows) {
 		profile.getById({id: req.params.id}, (editedRows) =>{
 			res.render('profile', { id: req.params.id, data: rows, editItem: editedRows });
 		});

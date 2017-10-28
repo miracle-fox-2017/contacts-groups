@@ -10,6 +10,36 @@
 	}
 </style>
 <body>
+	<nav class="main-menu">
+		<ul>
+			<li><a href="/contacts">Contacts</a></li>
+			<li><a href="/groups">Groups</a></li>
+			<li><a href="/addresses">Addresses</a></li>
+			<li><a href="/profiles">Profiles</a></li>
+		</ul>
+	</nav>
+	<style>
+		.main-menu {
+			text-align: center;
+			background: crimson;
+		}
+
+		.main-menu ul li {
+			display: inline-block;
+			padding: 10px;
+		}
+
+		.main-menu ul li a {
+			text-decoration: none;
+			color: #fff;
+			font-style: bold;
+		}
+
+		.main-menu ul li a:hover {
+			font-style: normal;
+			color: wheat;
+		}
+	</style>
 	<% if (typeof data != 'undefined') { %>
 		<table class="adress-table" border="1">
 			<thead>

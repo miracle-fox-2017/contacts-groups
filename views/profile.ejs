@@ -10,12 +10,15 @@
         <th>id</th>
         <th>username</th>
         <th>password</th>
+        <th>contactId</th>
       </tr>
       <%for(var i = 0; i < data.length; i++) {%>
         <tr>
           <td><%=data[i].id%></td>
           <td><%=data[i].username%></td>
           <td><%=data[i].password%></td>
+          <td><%=data[i].contactId%></td>
+          <td><%=data[i].name%></td>
           <td><a href="/profiles/edit/<%=data[i].id%>">edit</a></td>
           <td><a href="/profiles/delete/<%=data[i].id%>">delete</a></td>
         </tr>
@@ -24,7 +27,14 @@
     <form action="/profiles" method="post">
       <input type="input" name="username" placeholder="username">
       <input type="input" name="password" placeholder="password">
+      <select name="contactId">
+        <option value="" selected disabled hidden>Choose here</option>
+        <%for(var i = 0; i < contactname.length; i++) {%>
+        <option value="<%=contactname[i].id%>"><%=contactname[i].name%> </option>
+        <%}%>
+      </select>
       <input type="submit" value="submit">
     </form>
+    <p><%=error%></p>
   </body>
 </html>

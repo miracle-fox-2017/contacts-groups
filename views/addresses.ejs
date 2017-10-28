@@ -11,6 +11,8 @@
         <th>street</th>
         <th>city</th>
         <th>zipcode</th>
+        <th>contact Id</th>
+        <th>name</th>
       </tr>
       <%for(var i = 0; i < data.length; i++){%>
         <tr>
@@ -18,6 +20,8 @@
           <td><%=data[i].street%></td>
           <td><%=data[i].city%></td>
           <td><%=data[i].zipcode%></td>
+          <td><%=data[i].ContactId%></td>
+          <td><%=data[i].name%></td>
           <td><a href="/addresses/edit/<%=data[i].id%>">edit</a></td>
           <td><a href="/addresses/delete/<%=data[i].id%>">delete</a></td>
         </tr>
@@ -27,6 +31,12 @@
       <input type="input" name="street" placeholder="street">
       <input type="input" name="city" placeholder="city">
       <input type="input" name="zipcode" placeholder="zipcode">
+        <select name="ContactId">
+          <option value="" selected disabled hidden>Choose here</option>
+          <%for(var i = 0; i < contact.length; i++) {%>
+            <option value="<%=contact[i].id%>"><%=contact[i].name%></option>
+          <%}%>
+        </select>
       <input type="submit" value="submit">
     </form>
   </body>

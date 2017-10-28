@@ -10,7 +10,17 @@
       <input type="input" name="street" placeholder="street" value="<%=data[0].street%>">
       <input type="input" name="city" placeholder="city" value="<%=data[0].city%>">
       <input type="input" name="zipcode" placeholder="zipcode" value="<%=data[0].zipcode%>">
+      <select name="ContactId">
+        <%for(var i = 0; i < contact.length; i++){%>
+          <%if(contact[i].id == data[0].ContactId){%>
+          <option value="<%=contact[i].id%>" selected><%=contact[i].name%></option>
+          <%} else {%>
+          <option value="<%=contact[i].id%>"><%=contact[i].name%></option>
+          <%}%>
+        <%}%>
+      </select>
       <input type="submit" value="submit">
     </form>
+    <p><%=contact[0].name%></p>
   </body>
 </html>

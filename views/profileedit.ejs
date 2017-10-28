@@ -9,7 +9,19 @@
     <form action="/profiles/edit/<%=data[0].id%>" method="post">
       <input type="input" name="username" placeholder="username" value="<%=data[0].username%>">
       <input type="input" name="password" placeholder="password" value="<%=data[0].password%>">
+      <select name="contactId">
+        <%for(var i = 0; i < contactname.length; i++){%>
+          <%if(contactname[i].id==data[0].contactId) {%>
+      <option value="<%=contactname[i].id%>" selected><%=contactname[i].name%></option>
+          <%} else {%>
+        <option value="<%=contactname[i].id%>"><%=contactname[i].name%></option>
+          <%}%>
+        <%}%>
+      </select>
       <input type="submit" value="submit">
     </form>
+    <p><%=error%></p>
+    <p>contactname<%=contactname[0].id%></p>
+    <p>data<%=data[0].contactId%></p>
   </body>
 </html>

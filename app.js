@@ -46,6 +46,19 @@ app.post('/contacts/edit/:id', (req, res) => {
   res.redirect('/contacts')
 })
 
+app.get('/contacts/addresses/:id', (req, res) => {
+  db.all(`SELECT * FROM Contacts WHERE id = "${req.params.id}"`, (err, contact) => {
+    db.all(`SELECT * FROM Addresses WHERE ContactId = ${req.params.id}`, (err, addresses) => {
+      res.render('contactaddress', {contact: contact, addresses: addresses})
+    })
+  })
+})
+
+app.post('/contacts/addresses/:id', (req, res) => {
+  db.all(`INSERT INTO Addresses (street, city, zipcode, ContactId) VALUES ('${req.body.street}', '${req.body.city}', '${req.body.zipcode}', '${req.params.id}')`)
+  res.redirect('/contacts')
+})
+
 
 app.get('/groups', (req, res) => {
   db.all(`SELECT * FROM Groups`, (err, groups) => {
@@ -75,14 +88,32 @@ app.get('/groups/delete/:id', (req, res) => {
 })
 
 app.get('/profiles', (req, res) => {
-  db.all(`SELECT * FROM Profile`, (err, profiles) => {
-    res.render('profile', {data:profiles})
+  db.all(`SELECT Profile.id, Profile.username, Profile.password, Profile.contactId, Contacts.name FROM Profile LEFT JOIN Contacts ON Profile.contactId = Contacts.id ORDER BY Profile.contactId`, (err, profiles) => {
+    db.all(`SELECT Contacts.id, Contacts.name FROM Contacts`, (err, contactname) => {
+      res.render('profile', {data:profiles, error: '', contactname: contactname})
+    })
   })
 })
 
 app.post('/profiles', (req, res) => {
-  db.all(`INSERT INTO Profile (username, password) VALUES ('${req.body.username}', '${req.body.password}')`)
-  res.redirect('profiles')
+
+  db.all(`INSERT INTO Profile (username, password, contactId) VALUES ('${req.body.username}', '${req.body.password}', '${req.body.contactId}')`, (err) => {
+    console.log(req.body);
+    if(err) {
+      db.all(`SELECT Profile.id, Profile.username, Profile.password, Profile.contactId, Contacts.name FROM Profile LEFT JOIN Contacts ON Profile.contactId = Contacts.id ORDER BY Profile.contactId`, (err, profiles) => {
+        // console.log('error');
+        db.all(`SELECT Contacts.id, Contacts.name FROM Contacts`, (err, contactname) => {
+          console.log(req.body);
+          res.render('profile', {data:profiles, error: 'Your contact already have profile', contactname: contactname})
+        })
+      })
+    }
+    else {
+      res.redirect('profiles')
+    }
+  })
+
+
 })
 
 app.get('/profiles/delete/:id', (req, res) => {
@@ -91,24 +122,30 @@ app.get('/profiles/delete/:id', (req, res) => {
 })
 
 app.get('/profiles/edit/:id', (req, res)=> {
-  db.all(`SELECT * FROM Profile WHERE id = "${req.params.id}"`, (err, profiles) => {
-    res.render('profileedit', {data: profiles})
+  db.all(`SELECT Profile.id, Profile.username, Profile.password, Profile.contactId, Contacts.name FROM Profile LEFT JOIN Contacts ON Profile.contactId = Contacts.id WHERE Profile.id = "${req.params.id}"`, (err, profiles) => {
+    db.all(`SELECT Contacts.id, Contacts.name FROM Contacts`, (err, contactname) => {
+      res.render('profileedit', {data: profiles, error: '', contactname: contactname})
+
+    })
   })
 })
 
 app.post('/profiles/edit/:id', (req, res) => {
-  db.all(`UPDATE Profile SET username = "${req.body.username}", password = "${req.body.password}" WHERE id = "${req.params.id}"`)
+  db.all(`UPDATE Profile SET username = "${req.body.username}", password = "${req.body.password}", contactId = "${req.body.contactId}" WHERE id = "${req.params.id}"`)
   res.redirect('/profiles')
 })
 
 app.get('/addresses', (req, res) => {
-  db.all(`SELECT * FROM Addresses`, (err, addresses) => {
-    res.render('addresses', {data: addresses})
+  db.all(`SELECT Addresses.id, Addresses.street, Addresses.city, Addresses.zipcode, Addresses.ContactId, Contacts.name FROM Addresses LEFT JOIN Contacts ON Addresses.ContactId = Contacts.id ORDER BY Addresses.contactId`, (err, addresses) => {
+    db.all(`SELECT Contacts.id, Contacts.name FROM Contacts`, (err, contact) => {
+      res.render('addresses', {data: addresses, contact: contact})
+    })
+    // res.send(addresses)
   })
 })
 
 app.post('/addresses', (req, res) => {
-  db.all(`INSERT INTO Addresses (street, city, zipcode) VALUES ('${req.body.street}', '${req.body.city}', '${req.body.zipcode}')`)
+  db.all(`INSERT INTO Addresses (street, city, zipcode, ContactId) VALUES ('${req.body.street}', '${req.body.city}', '${req.body.zipcode}', '${req.body.ContactId}')`)
   res.redirect('/addresses')
 })
 
@@ -118,13 +155,19 @@ app.get('/addresses/delete/:id', (req, res) => {
 })
 
 app.get('/addresses/edit/:id', (req, res) => {
-  db.all(`SELECT * FROM Addresses WHERE id = "${req.params.id}"`, (err, addresses) => {
-    res.render('addressesedit', {data: addresses})
+  db.all(`SELECT Addresses.id, Addresses.street, Addresses.city, Addresses.zipcode, Addresses.ContactId, Contacts.name FROM Addresses LEFT JOIN Contacts ON Addresses.ContactId = Contacts.id WHERE Addresses.id = "${req.params.id}"`, (err, addresses) => {
+    db.all(`SELECT Contacts.id, Contacts.name FROM Contacts`, (err, contact) => {
+      res.render('addressesedit', {data: addresses, contact: contact})
+    })
+
   })
 })
 
 app.post('/addresses/edit/:id', (req, res) => {
-  db.all(`UPDATE Addresses SET street = "${req.body.street}", city = "${req.body.city}", zipcode = "${req.body.zipcode}" WHERE id = "${req.params.id}"`)
+  db.all(`UPDATE Addresses SET street = "${req.body.street}", city = "${req.body.city}", zipcode = "${req.body.zipcode}", ContactId = "${req.body.ContactId}" WHERE id = "${req.params.id}"`, (err) => {
+    console.log(err)
+    console.log(req.body);
+  })
   res.redirect('/addresses')
 })
 

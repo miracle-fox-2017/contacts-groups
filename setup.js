@@ -9,6 +9,13 @@ db.serialize(function() {
   db.run(`CREATE TABLE IF NOT EXISTS Profile (id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT, password TEXT)`)
 
   db.run(`CREATE TABLE IF NOT EXISTS Addresses (id INTEGER PRIMARY KEY AUTOINCREMENT, street TEXT, city TEXT, zipcode TEXT)`)
+
+  // db.run(`ALTER TABLE Addresses ADD COLUMN ContactId INTEGER REFERENCES Contacts (id)`)
+
+  // db.run(`ALTER TABLE Profile ADD COLUMN contactId INTEGER REFERENCES Contacts (id)`)
+
+  // db.run(`CREATE UNIQUE INDEX UNIQUE_NAME ON Profile(contactId)`)
+
 })
 
 db.close()

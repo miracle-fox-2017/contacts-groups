@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Edit Profile</title>
+</head>
+
+<body>
+    <% include menu.ejs %>
+    <table>
+        <form action="/profile/edit/<%= rowsProfile[0].id %>" method="post">
+            <tr>
+                <td><input type="text" name="nama" placeholder="Isi Nama Groups" value="<%= rowsProfile[0].username %>"></td>
+            </tr>
+            <tr>
+                <td><input type="text" name="password" placeholder="Isi Password" value="<%= rowsProfile[0].password %>"></td>
+            </tr>
+            <tr>
+                <td><input type="submit" value="Simpan"></td>
+            </tr>
+        </form>
+    </table>
+</body>
+
+</html>

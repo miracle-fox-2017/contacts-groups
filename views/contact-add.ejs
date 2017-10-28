@@ -14,20 +14,20 @@
         </h3>
 
     </header>
+    <%= message%>
+        <div class="add-data">
+            <form action="/contacts/add" method="POST">
+                Name : <br>
+                <input type="text" name="name" /> <br> Company : <br>
+                <input type="text" name="company" /> <br> Telp Number : <br>
+                <input type="text" name="telp_number" /> <br> Email : <br>
+                <input type="text" name="email" /> <br>
+                <br>
 
-    <div class="add-data">
-        <form action="/contacts/add" method="POST">
-            Name : <br>
-            <input type="text" name="name" /> <br> Company : <br>
-            <input type="text" name="company" /> <br> Telp Number : <br>
-            <input type="text" name="telp_number" /> <br> Email : <br>
-            <input type="text" name="email" /> <br>
-            <br>
+                <input type="submit" value="Save">
+            </form>
 
-            <input type="submit" value="Save">
-        </form>
-
-    </div>
+        </div>
 </body>
 
 </html>

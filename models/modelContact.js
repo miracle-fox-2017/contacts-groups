@@ -14,7 +14,7 @@ class Contact {
         })
     }
     static addData(newData) {
-        console.log(newData)
+        //console.log(newData)
         let query = `insert into contacts (name, company, telp_number, email) values ('${newData.name}', '${newData.company}', '${newData.telp_number}', '${newData.email}')`
         db.run(query, function (err) {
             if (err) {

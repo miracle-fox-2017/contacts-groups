@@ -89,6 +89,9 @@ function createUniqueProfile() {
     }))
 }
 
+// function alterContactNotNull() {
+//     let query = 'alter table contacts rename name_temp '
+// }
 
 createContact()
 createGroup()

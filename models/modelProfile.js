@@ -13,12 +13,14 @@ class Profile {
             }
         })
     }
-    static addData(newData) {
-        //console.log(newData.name_of_group)
+    static addData(callback, newData) {
+    
         let query = `insert into profiles (username, password, idContact) values ('${newData.username}', '${newData.password}', '${newData.idContact}')`
         db.run(query, function (err) {
             if (err) {
-                console.log(err)
+                callback(err)
+            } else {
+                callback()
             }
         })
     }
@@ -34,12 +36,14 @@ class Profile {
         })
     }
 
-    static updateData(id, newData) {
+    static updateData(callback, id, newData) {
         // console.log(id, newData)
-        let query = `update profiles set username = '${newData.username}', password = '${newData.password}' where id = ${id}`
+        let query = `update profiles set username = '${newData.username}', password = '${newData.password}', idContact = '${newData.idContact}' where id = ${id}`
         db.run(query, function (err) {
             if (err) {
-                console.log(err)
+                callback(err)
+            } else {
+                callback()
             }
         })
     }

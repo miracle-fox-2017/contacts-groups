@@ -14,14 +14,14 @@
         </h3>
 
     </header>
-
-    <div class="add-data">
-        <form action="/profiles/add" method="POST">
-            Username : <br>
-            <input type="text" name="username" /> <br> Password : <br>
-            <input type="text" name="password" /> <br>
-            <br>
-            <select name="idContact">
+    <%= message%>
+        <div class="add-data">
+            <form action="/profiles/add" method="POST">
+                Username : <br>
+                <input type="text" name="username" /> <br> Password : <br>
+                <input type="text" name="password" /> <br>
+                <br>
+                <select name="idContact">
                 <% dataContact.forEach((contact)=>{ %>
                     <option value="<%=contact.id %>">
                         <%= contact.name %>
@@ -31,11 +31,11 @@
 
                
             </select> <br>
-            <br>
-            <input type="submit" value="Save">
-        </form>
+                <br>
+                <input type="submit" value="Save">
+            </form>
 
-    </div>
+        </div>
 </body>
 
 </html>

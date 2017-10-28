@@ -61,11 +61,16 @@ app.get('/contacts', function (req, res) {
 })
 
 app.get('/contacts/add', function (req, res) {
-    res.render('contact-add')
+    res.render('contact-add', { message: '' })
 })
 app.post('/contacts/add', function (req, res) {
-    Contact.addData(req.body)
-    res.redirect('../contacts')
+    if (req.body.name === '') {
+        res.render('contact-add', { message: "Name required!" })
+    } else {
+        Contact.addData(req.body)
+        res.redirect('../contacts')
+    }
+
 })
 
 app.get('/contacts/edit/:id', function (req, res) {
@@ -86,32 +91,48 @@ app.get('/contacts/delete/:id', function (req, res) {
 //Profile
 app.get('/profiles', function (req, res) {
     Profile.getData((data) => {
-
         res.render('profile', { dataProfile: data })
     })
 })
 app.get('/profiles/add', function (req, res) {
     Contact.getData((data) => {
-        res.render('profile-add', { dataContact: data })
+        res.render('profile-add', { dataContact: data, message: '' })
     })
 
 })
 app.post('/profiles/add', function (req, res) {
-    Profile.addData(req.body)
-    res.redirect('../profiles')
+    Profile.addData((err) => {
+        if (err) {
+            Contact.getData((data) => {
+                res.render('profile-add', { dataContact: data, message: 'Your contact already has profile' })
+            })
+        } else {
+            res.redirect('../profiles')
+        }
+    }, req.body)
+
 })
 
 app.get('/profiles/edit/:id', function (req, res) {
     Profile.getDataById((dataProfile) => {
         Contact.getData((dataContact) => {
-            res.render('profile-edit', { dataProfile: dataProfile, dataContact: dataContact })
+            res.render('profile-edit', { dataProfile: dataProfile, dataContact: dataContact, message: '' })
         })
 
     }, req.params.id)
 })
 app.post('/profiles/edit/:id', function (req, res) {
-    Profile.updateData(req.params.id, req.body)
-    res.redirect('../../profiles')
+    Profile.updateData((err) => {
+        if (err) {
+            Profile.getDataById((dataProfile) => {
+                Contact.getData((dataContact) => {
+                    res.render('profile-edit', { dataProfile: dataProfile, dataContact: dataContact, message: 'Your contact already has profile' })
+                })
+            }, req.params.id)
+        } else {
+            res.redirect('../../profiles')
+        }
+    }, req.params.id, req.body)
 })
 app.get('/profiles/delete/:id', function (req, res) {
     Profile.deleteData(req.params.id)

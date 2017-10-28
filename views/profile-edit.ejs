@@ -12,17 +12,17 @@
             Edit Data Profile
         </h3>
     </header>
-    <div class="edit-data">
-        <form action="/profiles/edit/<%= dataProfile.id%>" method="POST">
-            Username : <br>
-            <input type="text" name="username" value="<%= dataProfile.username%>" /> <br>
-            <br> Password : <br>
-            <input type="text" name="password" value="<%= dataProfile.password%>" /> <br>
-            <br>
+    <%= message%>
+        <div class="edit-data">
+            <form action="/profiles/edit/<%= dataProfile.id%>" method="POST">
+                Username : <br>
+                <input type="text" name="username" value="<%= dataProfile.username%>" /> <br>
+                <br> Password : <br>
+                <input type="text" name="password" value="<%= dataProfile.password%>" /> <br>
+                <br>
 
-            <select name="idContact"> 
-                <% dataContact.forEach((contact)=> {
-                    if(contact.id == dataProfile.idContact){%>
+                <select name="idContact"> 
+                <% dataContact.forEach((contact)=> { if(contact.id == dataProfile.idContact){%>
                     <option value="<%= contact.id%>" selected>
                             <%= contact.name%>
                     </option>
@@ -32,12 +32,12 @@
                         </option>
                     <%}})%> 
             </select> <br>
-            <br>
-            <input type="submit" value="Save">
-        </form>
+                <br>
+                <input type="submit" value="Save">
+            </form>
 
 
-    </div>
+        </div>
 </body>
 
 </html>

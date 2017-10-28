@@ -13,8 +13,8 @@ db.serialize(() => {
 	// Modif dari original Profile untuk tambah contacts_id unique FK
 	db.run(`CREATE TABLE IF NOT EXISTS Profile_temp (
 		id	INTEGER PRIMARY KEY AUTOINCREMENT,
-		username	INTEGER,
-		password	INTEGER,
+		username	VARCHAR(25),
+		password	VARCHAR(25),
 		contacts_id	INTEGER UNIQUE,
 		FOREIGN KEY (contacts_id) REFERENCES Contacts(id)
 	)`);

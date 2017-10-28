@@ -19,6 +19,21 @@ class ProfilesModel {
 		})
 	}
 
+	getAllDataInnerJoin(tableSource, callback) {
+		let db = new sqlite3.Database(this.dbFile);
+		let sql = `select ${this.tablename}.id, ${this.tablename}.username, ${this.tablename}.password, ${this.tablename}.contacts_id, ${tableSource}.name
+					from ${this.tablename}
+					inner join ${tableSource} ON ${this.tablename}.contacts_id =  ${tableSource}.id`;
+		db.all(sql, (err, rows) => {
+			if (err) {
+				throw err;
+			} 
+
+			callback(rows);
+			db.close();
+		})
+	}
+
 	addData(data) {
 		let db = new sqlite3.Database(this.dbFile);
 		let sql = `INSERT INTO ${this.tablename} (username, password) VALUES ("${data.username}", "${data.password}")`;

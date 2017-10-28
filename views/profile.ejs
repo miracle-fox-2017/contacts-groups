@@ -40,6 +40,7 @@
 			color: wheat;
 		}
 	</style>
+	<% console.log(data); %>
 	<% if (typeof data != 'undefined') { %>
 
 		<table class="profile-table" border="1">
@@ -48,6 +49,7 @@
 					<th>ID</th>
 					<th>USERNAME</th>
 					<th>PASSWORD</th>
+					<th>Contact Name</th>
 					<th>ACTION</th>
 				</tr>
 			</thead>
@@ -58,6 +60,7 @@
 						<td><%= profile.id %></td>
 						<td><%= profile.username %></td>
 						<td><%= profile.password %></td>
+						<td><%= profile.name %></td>
 						<td>
 							<a href="/profiles/edit/<%= profile.id %>">Edit</a>
 							<a href="/profiles/delete/<%= profile.id %>">Delete</a>

@@ -88,7 +88,7 @@ app.get('/groups/delete/:id', (req, res) => {
 
 // Profile
 app.get('/profiles', (req, res) => {
-	profile.getAllData(function(rows) {
+	profile.getAllDataInnerJoin('Contacts', function(rows) {
 		res.render('profile', { data: rows });
 	});
 });

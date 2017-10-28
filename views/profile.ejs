@@ -23,35 +23,32 @@
 
   <div class="container" >
     <h4 class="title is-3" style="text-align:center;">EXPRESS CONTACTS - GROUPS</h4>
-    <p class="subtitle is-4" style="text-align:center;">all <strong>Addresses</strong> information | <span class="button tag is-success">add address</span> </p>
+    <p class="subtitle is-4" style="text-align:center;">all <strong>Profile</strong> information | <span class="button tag is-success">add profile</span> </p>
     <table class="table">
     <thead>
 
         <tr>
           <th><abbr title="id"></abbr>ID</th>
-          <th>STREET</th>
-          <th><abbr title="company">CITY</abbr></th>
-          <th><abbr title="telp number">ZIPCODE</abbr></th>
-          <th><abbr title="actions">ACTIONS</abbr></th>
+          <th>USER NAME</th>
+          <th><abbr title="password">PASSWORD</abbr></th>
         </tr>
 
     </thead>
     <tbody>
-      <%for(let i=0; i<data_Addresses.length; i++){%>
+      <%for(let i=0; i<data_Profile.length; i++){%>
       <tr>
-        <th><%=data_Addresses[i].id%></th>
-        <td><strong><a href="#." title="full name" class="is-success"><%=data_Addresses[i].street%></a></strong>
+        <th><%=data_Profile[i].id%></th>
+        <td><strong><a href="#." title="full name" class="is-success"><%=data_Profile[i].username%></a></strong>
         </td>
-        <td><%=data_Addresses[i].city%></td>
-        <td><%=data_Addresses[i].zipcode%></td>
+        <td><%=data_Profile[i].password%></td>
         <td style="margin-left:-5px;">
-              <a class="button is-info is-outlined is-small" href='/addresses/edit/<%=data_Addresses[i].id%>'>
+              <a class="button is-info is-outlined is-small" href='/profile/edit/<%=data_Profile[i].id%>'>
               <span class="icon is-small">
                 <i class="fa fa-pencil"></i>
               </span>
               <span>Edit</span>
               </a>
-              <a onclick="myFunction()" class="button is-danger is-outlined is-small" href="/addresses/delete/<%=data_Addresses[i].id%>">
+              <a onclick="myFunction()" class="button is-danger is-outlined is-small" href="/profile/delete/<%=data_Profile[i].id%>">
               <span class="icon is-small">
                 <i class="fa fa-times"></i>
               </span>
@@ -63,21 +60,16 @@
     </tbody>
   </table>
   <hr>
-  <form action="/addresses" method="post">
+  <form action="/profile" method="post">
     <div class="field-body">
       <div class="field">
         <div class="control">
-          <input class="input" type="text" placeholder="street" name="street">
+          <input class="input" type="text" placeholder="username" name="username">
         </div>
       </div>
       <div class="field">
         <div class="control">
-          <input class="input" type="text" placeholder="city" name="city">
-        </div>
-      </div>
-      <div class="field">
-        <div class="control">
-          <input class="input" type="text" placeholder="zipcode" name="zipcode">
+          <input class="input" type="text" placeholder="password" name="password">
         </div>
       </div>
       <div class="control">

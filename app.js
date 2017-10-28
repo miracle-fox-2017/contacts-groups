@@ -130,6 +130,39 @@ app.get('/addresses/delete/:id',(req,res)=>{
     res.redirect('../../addresses')
   })
 })
+//* END ADDRESSES *//
+//* START PROFILE *//
+//CREATE
+app.post('/profile',(req,res)=>{
+  db.run(`insert into Profile(username,password) values ('${req.body.username}','${req.body.password}')`,(err)=>{
+    res.redirect('profile')
+  })
+})
+//READ
+app.get('/profile',(req,res)=>{
+  db.all(`select * from Profile`,(err,data)=>{
+    if(!err){
+      res.render('profile',{data_Profile:data})
+    }
+  })
+})
+//UPDATE
+app.get('/profile/edit/:id',(req,res)=>{
+  db.all(`select * from Profile where id='${req.params.id}'`,(err,data)=>{
+    res.render('profile-edit',{data_Profile:data[0]})
+  })
+})
+app.post('/profile/edit/:id',(req,res)=>{
+  db.run(`update Profile set username='${req.body.username}',password='${req.body.password}' where id='${req.params.id}'`,(err)=>{
+    res.redirect('../../profile')
+  })
+})
+//DELETE
+app.get('/profile/delete/:id',(req,res)=>{
+  db.run(`delete from profile where id='${req.params.id}'`,(err)=>{
+    res.redirect('../../profile')
+  })
+})
 
 
 app.listen(3000,(err)=>{

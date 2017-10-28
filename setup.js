@@ -36,4 +36,26 @@ function createTable(){
   console.log('>>> success create all table <<<');
 }
 
-createTable()
+// createTable()
+
+function contacts_profile(){
+  let alterContact_Profile = `alter table Profile add column contact_id integer references Contacts(‘id’)`
+  db.run(alterContact_Profile,(err)=>{
+    if(err){
+      console.log(err,'alter table contacts profile');
+    }
+  })
+}
+// contacts_profile()
+
+function createUNIQUE(){
+  let query = `create unique index contactUnique on Profile(contact_id)`
+  db.run(query,(err)=>{
+    if(err){
+      console.log(err,'create unique index contactUnique');
+    }else{
+      console.log('success create unique index contactUnique');
+    }
+  })
+}
+createUNIQUE()

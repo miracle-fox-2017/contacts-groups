@@ -15,19 +15,24 @@ app.set('view engine', 'ejs') // register the template engine
 //                       START ROUTE                           //
 /////////////////////////////////////////////////////////////////
 
+let msg = '';
+
 /////////////////////// 1. CONTACTS /////////////////////////////
 
 //GET CONTACTS
 app.get('/contacts', function (req, res) {
   let showContacts = `SELECT * FROM Contacts`;
   db.all(showContacts, (err, rows)=>{
-    res.render('contacts',{rows});
+    res.render('contacts',{"rows": rows, "msg": ''});
   })
   
 })
 
 //POST CONTACTS
 app.post('/contacts', function (req, res) {
+  //if name not empty
+  // console.log(req.body);
+
   //set query
   let showContacts = `SELECT * FROM Contacts`;
   let query = `INSERT INTO Contacts
@@ -35,13 +40,20 @@ app.post('/contacts', function (req, res) {
                VALUES
                ("${req.body.name}", "${req.body.company}", "${req.body.telp_number}", "${req.body.email}");`
   
-  //execute query
-  db.run(query,()=>{
-    db.all(showContacts, (err, rows)=>{
-      res.render('contacts',{rows});
+  if(req.body.name != ''){
+    //execute query
+    db.run(query,()=>{
+      db.all(showContacts, (err, rows)=>{
+        res.render('contacts',{"rows": rows, "msg": ''});
+      })
+      
     })
-    
-  })
+  } else {
+    msg = 'Name cannot empty';
+    db.all(showContacts, (err, rows)=>{
+      res.render('contacts',{"rows": rows, "msg": msg});
+    })
+  }
 
 })
 
@@ -256,7 +268,7 @@ app.get('/profiles', function (req, res) {
       // console.log(rows);
       // res.render('profiles',{rows});
       // console.log('contacts',contacts);
-      res.render('profiles',{"rows": rows, "contacts": contacts});
+      res.render('profiles',{"rows": rows, "contacts": contacts, "msg": ""});
     })
     
   })
@@ -266,22 +278,39 @@ app.get('/profiles', function (req, res) {
 //POST PROFILES
 app.post('/profiles', function (req, res) {
   //set query
-  // console.log(req.body);
+  console.log(req.body);
+  let qCheckId = `SELECT COUNT (*) FROM Profile WHERE id_contacts = ${req.body.id_contacts}`
   let query = `INSERT OR IGNORE INTO Profile
                (username, password, id_contacts)
                VALUES
                ("${req.body.username}", "${req.body.password}", "${req.body.id_contacts}");`
   
-  //execute query
-  db.run(query,()=>{
-    db.all(showContacts, (err, rows)=>{
-      let contacts = rows;
-      db.all(showProfilesJoin, (err, rows)=>{
-        res.render('profiles',{"rows": rows, "contacts": contacts});
-      })
-          
-    })
-    
+  db.all(qCheckId, (err, rows)=>{
+      console.log(rows[0]['COUNT (*)']);
+      let checkId = rows[0]['COUNT (*)'];
+      if(checkId == 0){
+          //execute query
+          db.run(query,()=>{
+            db.all(showContacts, (err, rows)=>{
+              let contacts = rows;
+              db.all(showProfilesJoin, (err, rows)=>{
+                res.render('profiles',{"rows": rows, "contacts": contacts, "msg": ""});
+              })
+                  
+            })
+            
+          })
+      } else {
+        db.all(showContacts, (err, rows)=>{
+          msg = "Your contact already have profile";
+          let contacts = rows;
+          db.all(showProfilesJoin, (err, rows)=>{
+            res.render('profiles',{"rows": rows, "contacts": contacts, "msg":msg});
+          })
+              
+        })
+      }
+  
   })
 
 })

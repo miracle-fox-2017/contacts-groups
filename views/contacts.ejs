@@ -34,11 +34,14 @@
   <!-- disini tambah form untuk tambah contacts -->
   <div>
     <h2>Tambah Contacts</h2>
-    <form class="" action="" method="post">
-      Nama:   <input type="text" name="name" value="" placeholder="nama"><br>
-      Company: <input type="text" name="company" value="" placeholder="company"><br>
-      Telp: <input type="text" name="telp_number" value="" placeholder="telp_number"><br>
-      Email: <input type="text" name="email" value="" placeholder="email"><br>
+    <% if(msg != ''){ %>
+      <%= msg %>
+    <% } %>
+    <form name="add" class="" action="" method="post">
+      name:   <input type="text" name="name" value="" placeholder="name" required><br>
+      company: <input type="text" name="company" value="" placeholder="company"><br>
+      telp_number: <input type="text" name="telp_number" value="" placeholder="telp_number"><br>
+      email: <input type="text" name="email" value="" placeholder="email"><br>
       <input type="submit" name="" value="KIRIM">
     </form>
   </div>

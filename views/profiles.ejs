@@ -33,8 +33,11 @@
   <!-- disini tambah form untuk tambah profile -->
   <div>
     <h2>Tambah Profile</h2>
+    <% if(msg != ''){ %>
+      <%= msg %>
+    <% } %>
     <form class="" action="" method="post">
-      username:   <input type="text" name="username" value="" placeholder="username"><br>
+      username: <input type="text" name="username" value="" placeholder="username"><br>
       password: <input type="text" name="password" value="" placeholder="password"><br>
       contacts: 
       <select name="id_contacts">

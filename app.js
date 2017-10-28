@@ -76,6 +76,7 @@ app.get("/contacts/delete/:id",(req,res)=>{ // Hapus Kontak
         }
     });
 });
+
 app.get("/groups",(req,res)=>{ // Halaman awal group
     db.all(`SELECT * FROM groups`,(err,data)=>{
         if(err){
@@ -92,6 +93,41 @@ app.post("/groups",(req,res)=>{ // Tambah group
         VALUES ("${data.group}")`
     );
     res.redirect("/groups");
+});
+app.get("/groups/edit/:id",(req,res)=>{ // Halaman edit group
+    db.all(`SELECT * FROM groups WHERE id="${req.params.id}"`,(err,data)=>{
+        if(err){
+            throw err;
+        }else if(data.length === 0){
+            res.redirect("/groups");
+        }else{
+            res.render("edit-group",{data:data});
+        }
+    });
+});
+app.post("/groups/edit/:id",(req,res)=>{ // Edit group
+    const data=req.body;
+    db.run(
+        `UPDATE groups SET
+        name_of_group="${data.group}"
+        WHERE id="${data.id}"`
+    );
+    res.redirect("/groups");
+});
+app.get("/groups/delete/:id",(req,res)=>{ // Hapus group
+    db.all(`SELECT * FROM groups WHERE id="${req.params.id}"`,(err,data)=>{
+        if(err){
+            throw err;
+        }else if(data.length === 0){
+            res.redirect("/groups");
+        }else{
+            db.run(
+                `DELETE FROM groups
+                WHERE id="${req.params.id}"`
+            );
+            res.redirect("/groups");
+        }
+    });
 });
 
 // Listen Port

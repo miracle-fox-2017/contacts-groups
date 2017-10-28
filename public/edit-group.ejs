@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="stylesheet" href="/style/css/common.css">
+    <title>Edit Group Page</title>
+</head>
+<body>
+    <section>
+        <div class="header">Edit Data Group</div>
+        <form action="/groups/edit/<%=data[0].id%>" method="post">
+            <input type="hidden" name="id" value="<%=data[0].id%>">
+            <table border="1">
+                <tr>
+                    <td>Name of Group</td>
+                </tr>
+                <tr>
+                    <td><input type="text" name="group" value="<%=data[0].name_of_group%>"></td>
+                </tr>
+                <tr>
+                    <td><input type="submit" value="Simpan"></td>
+                </tr>
+            </table>
+        </form>
+    </section>
+</body>
+</html>

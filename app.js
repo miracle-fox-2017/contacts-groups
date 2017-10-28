@@ -105,8 +105,10 @@ app.post('/profiles', (req, res) => {
 
 app.get('/profiles/edit/:id', (req, res) => {
 	profile.getAllDataInnerJoin('Contacts', function(rows) {
-		profile.getById({id: req.params.id}, (editedRows) =>{
-			res.render('profile', { id: req.params.id, data: rows, editItem: editedRows });
+		contact.getAllData((allcontacts) => {
+			profile.getById({id: req.params.id}, (editedRows) =>{
+				res.render('profile', { id: req.params.id, data: rows, editItem: editedRows, contacts: allcontacts});
+			});
 		});
 	});	
 });

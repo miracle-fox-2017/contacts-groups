@@ -95,24 +95,24 @@
 
 	<script>
 		function validateProfileForm() {
-			let usernameField = document.getElementById('username').value;
-			let contactNameDropdown = document.getElementById('contacts_id');
-			let arrExistingContactId = contactNameDropdown.getAttribute('data-exists-contactid').split(',');
-			let selectedOptions = contactNameDropdown.options[contactNameDropdown.selectedIndex].value;
+			// let usernameField = document.getElementById('username').value;
+			// let contactNameDropdown = document.getElementById('contacts_id');
+			// let arrExistingContactId = contactNameDropdown.getAttribute('data-exists-contactid').split(',');
+			// let selectedOptions = contactNameDropdown.options[contactNameDropdown.selectedIndex].value;
 
-			if (usernameField.length < 1) {
-				alert('Username harus diisi');
-				// alert(contactNameDropdown.options[contactNameDropdown.selectedIndex].text);
-				// alert(contactNameDropdown.getAttribute('data-exists-name'));
+			// if (usernameField.length < 1) {
+			// 	alert('Username harus diisi');
+			// 	// alert(contactNameDropdown.options[contactNameDropdown.selectedIndex].text);
+			// 	// alert(contactNameDropdown.getAttribute('data-exists-name'));
 			
-				return false;
-			}
+			// 	return false;
+			// }
 
-			if (arrExistingContactId.indexOf(selectedOptions) != -1) {
-				alert('Pilih Contact yang lain');
+			// if (arrExistingContactId.indexOf(selectedOptions) != -1) {
+			// 	alert('Pilih Contact yang lain');
 
-				return false;
-			}
+			// 	return false;
+			// }
 			
 			return true;
 		}

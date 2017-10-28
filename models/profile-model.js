@@ -15,8 +15,9 @@ class ProfilesModel {
 			} 
 
 			callback(rows);
-			db.close();
 		})
+
+		db.close();
 	}
 
 	getAllDataInnerJoin(tableSource, callback) {
@@ -30,26 +31,30 @@ class ProfilesModel {
 			} 
 
 			callback(rows);
-			db.close();
 		})
+
+		db.close();
 	}
 
 	addData(data) {
 		let db = new sqlite3.Database(this.dbFile);
 		let sql = `INSERT INTO ${this.tablename} (username, password, contacts_id) VALUES ("${data.username}", "${data.password}", ${+data.contacts_id})`;
 		db.run(sql);
+		db.close();
 	}
 
 	updateDataById(data) {
 		let db = new sqlite3.Database(this.dbFile);
 		let sql = `UPDATE ${this.tablename} SET username = "${data.editItem.username}", password = "${data.editItem.password}" WHERE id = ${data.id}`;
 		db.run(sql);
+		db.close();
 	}
 
 	deleteDataById(data) {
 		let db = new sqlite3.Database(this.dbFile);
 		let sql = `DELETE FROM ${this.tablename} WHERE id = ${data.id}`;
 		db.run(sql);
+		db.close();
 	}
 
 	getById(data, callback) {
@@ -61,8 +66,9 @@ class ProfilesModel {
 			} 
 
 			callback(rows);
-			db.close();
 		});
+		
+		db.close();
 	}
 }
 

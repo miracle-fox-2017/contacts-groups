@@ -103,26 +103,33 @@ app.get('/groups/delete/:id',(req,res)=>{
 //* START ADDRESSES *//
 //CREATE
 app.post('/addresses',(req,res)=>{
-  db.run(`insert into Addresses(street,city,zipcode) values ('${req.body.street}','${req.body.city}','${req.body.zipcode}')`,(err)=>{
+  db.run(`insert into Addresses(street,city,zipcode,contact_id) values ('${req.body.street}','${req.body.city}','${req.body.zipcode}','${req.body.name}')`,(err)=>{
     res.redirect('addresses')
   })
 })
 //READ
+let joinQuery = 'select Addresses.id, Addresses.street, Addresses.city, Addresses.zipcode, Contacts.name from Addresses LEFT JOIN Contacts ON Addresses.contact_id = Contacts.id'
+
 app.get('/addresses',(req,res)=>{
-  db.all(`select * from Addresses`,(err,data)=>{
-    res.render('addresses',{data_Addresses:data})
+  db.all(joinQuery,(err,data_join)=>{
+    db.all(`select * from Contacts`,(err,data_Contacts)=>{
+      res.render('addresses',{data_Addresses:data_join, data_Contacts:data_Contacts})
+    })
   })
 })
 //UPDATE
 app.get('/addresses/edit/:id',(req,res)=>{
   db.all(`select * from Addresses where id='${req.params.id}'`,(err,data)=>{
-    res.render('addresses-edit',{data_Addresses:data[0]})
+    db.all(`select * from Contacts`,(err,data_Contacts)=>{
+      res.render('addresses-edit',{data_Addresses:data[0], data_Contacts:data_Contacts})
+    })
   })
 })
 app.post('/addresses/edit/:id',(req,res)=>{
-  db.run(`update Addresses set street='${req.body.street}', city='${req.body.city}', zipcode='${req.body.zipcode}' where id='${req.params.id}'`,(err)=>{
+  db.run(`update Addresses set street='${req.body.street}',city='${req.body.city}',zipcode='${req.body.zipcode}',contact_id='${req.body.name}' where id='${req.params.id}'`,(err)=>{
     res.redirect('../../addresses')
   })
+  // res.send(req.params.id)
 })
 //DELETE
 app.get('/addresses/delete/:id',(req,res)=>{

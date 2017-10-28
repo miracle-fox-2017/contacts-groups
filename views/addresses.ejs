@@ -29,6 +29,7 @@
 
         <tr>
           <th><abbr title="id"></abbr>ID</th>
+          <th>CONTACT</th>
           <th>STREET</th>
           <th><abbr title="company">CITY</abbr></th>
           <th><abbr title="telp number">ZIPCODE</abbr></th>
@@ -40,8 +41,9 @@
       <%for(let i=0; i<data_Addresses.length; i++){%>
       <tr>
         <th><%=data_Addresses[i].id%></th>
-        <td><strong><a href="#." title="full name" class="is-success"><%=data_Addresses[i].street%></a></strong>
+        <td><strong><a href="#." title="full name" class="is-success"><%=data_Addresses[i].name%></a></strong>
         </td>
+        <td><%=data_Addresses[i].street%></td>
         <td><%=data_Addresses[i].city%></td>
         <td><%=data_Addresses[i].zipcode%></td>
         <td style="margin-left:-5px;">
@@ -65,20 +67,35 @@
   <hr>
   <form action="/addresses" method="post">
     <div class="field-body">
+
       <div class="field">
         <div class="control">
-          <input class="input" type="text" placeholder="street" name="street">
+          <input class="input" id="street" type="text" placeholder="street" name="street" required>
         </div>
       </div>
       <div class="field">
         <div class="control">
-          <input class="input" type="text" placeholder="city" name="city">
+          <input class="input" id="city" type="text" placeholder="city" name="city" required>
         </div>
       </div>
       <div class="field">
         <div class="control">
-          <input class="input" type="text" placeholder="zipcode" name="zipcode">
+          <input class="input" id="zipcode" type="text" placeholder="zipcode" name="zipcode" required>
         </div>
+      </div>
+      <div class="field">
+        <p class="control has-icons-left">
+          <span class="select">
+            <select id="name" name="name">
+                    <% for(let i=0; i<data_Contacts.length; i++) {%>
+                    <option value="<%=data_Contacts[i].id%>"><%=data_Contacts[i].name%></option>
+                    <%}%>
+            </select>
+          </span>
+          <span class="icon is-small is-left">
+            <i class="fa fa-user"></i>
+          </span>
+        </p>
       </div>
       <div class="control">
         <button type="submit" class="button is-success">Submit</button>

@@ -58,4 +58,16 @@ function createUNIQUE(){
     }
   })
 }
-createUNIQUE()
+// createUNIQUE()
+
+function address_profile(){
+  let query = `alter table Addresses add column contact_id integer references Contacts('id')`
+  db.run(query,(err)=>{
+    if(err){
+      console.log(err,'alter table addresses contacts');
+    }else{
+      console.log('table addresses contacts altered');
+    }
+  })
+}
+address_profile()

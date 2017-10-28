@@ -109,10 +109,18 @@ app.get('/groups/delete/:id', (req, res)=>{
 
 // ADDRESSES
 app.get('/addresses', (req, res)=>{
-  let query = `SELECT * FROM Addresses`
+  let query = `SELECT Addresses.id, Addresses.street, Addresses.city, Addresses.zipcode, Contacts.name FROM Addresses LEFT JOIN Contacts ON Addresses.ContactsId = Contacts.id`
   db.all(query, (err, rows)=>{
     if(!err){
-      res.render('addresses', {rowsAddresses:rows})
+      let queryContacts = `SELECT * FROM Contacts`
+      db.all(queryContacts, (err, dataContacts)=>{
+        if(!err){
+          res.render('addresses', {rowsAddresses:rows, dataContacts:dataContacts})
+        } else {
+          console.log(err);
+          res.send(err)
+        }
+      })
     } else {
       res.send(err)
       console.log(err);
@@ -121,7 +129,7 @@ app.get('/addresses', (req, res)=>{
 })
 
 app.post('/addresses', (req, res)=>{
-  let query = `INSERT INTO Addresses (street, city, zipcode) VALUES ('${req.body.street}','${req.body.city}','${req.body.zipcode}')`
+  let query = `INSERT INTO Addresses (street, city, zipcode, ContactsId) VALUES ('${req.body.street}','${req.body.city}','${req.body.zipcode}', '${req.body.ContactsId}')`
   db.run(query)
   res.redirect('/addresses')
 })
@@ -130,7 +138,16 @@ app.get('/addresses/edit/:id', (req, res)=>{
   let query = `SELECT * FROM Addresses WHERE id = '${req.params.id}'`
   db.get(query, (err, rows)=>{
     if(!err){
-      res.render('editAddresses', {dataAddresses:rows})
+      let queryContacts = `SELECT * FROM Contacts`
+      db.all(queryContacts, (err, dataContacts)=>{
+          if(!err){
+            res.render('editAddresses', {dataAddresses:rows,dataContacts:dataContacts})
+            // res.send(dataContacts)
+          } else {
+            res.send(err)
+          }
+      })
+
     } else {
       res.send(err)
       console.log(err);
@@ -139,9 +156,15 @@ app.get('/addresses/edit/:id', (req, res)=>{
 })
 
 app.post('/addresses/edit/:id', (req, res)=>{
-  let query = `UPDATE Addresses SET street = '${req.body.street}', city = '${req.body.city}',zipcode = '${req.body.zipcode}' WHERE id = '${req.params.id}'`
-  db.run(query)
-  res.redirect('/addresses')
+  let query = `UPDATE Addresses SET street = '${req.body.street}', city = '${req.body.city}',zipcode = '${req.body.zipcode}', ContactsId = '${req.body.ContactsId}' WHERE id = '${req.params.id}'`
+  db.run(query,(err)=>{
+    if(!err){
+      res.redirect('/addresses')
+    } else {
+      res.send(err)
+    }
+  })
+
 })
 
 app.get('/addresses/delete/:id', (req, res)=>{

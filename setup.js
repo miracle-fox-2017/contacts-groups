@@ -8,7 +8,7 @@ db.serialize(function() {
   db.run("CREATE TABLE IF NOT EXISTS Addresses (id INTEGER PRIMARY KEY AUTOINCREMENT, street TEXT, city TEXT, zipcode INTEGER UNIQUE)");
 });
 function ContactsToProfile() {
-  let query = "ALTER TABLE IF NOT EXISTS Profile ADD COLUMN ContactsId INTEGER REFERENCES Contacts('id')";
+  let query = "ALTER TABLE Profile ADD COLUMN ContactsId INTEGER REFERENCES Contacts('id')";
   db.run(query,(err)=>{
     if(!err){
       console.log('Tabel berhasil di tambah');
@@ -27,7 +27,17 @@ function setUniqueContactId() {
     }
   })
 }
-
+function ContactsToAddresses() {
+  let query = "ALTER TABLE Addresses ADD COLUMN ContactsId INTEGER REFERENCES Contacts('id')";
+  db.run(query,(err)=>{
+    if(!err){
+      console.log('Tabel berhasil di tambah ke Tabel Addresses');
+    } else {
+      console.log(err);
+    }
+  })
+}
 // ContactsToProfile()
 // setUniqueContactId()
+// ContactsToAddresses()
 db.close();

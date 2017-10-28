@@ -17,6 +17,7 @@
               <thead>
                 <tr>
                   <th>Id</th>
+                  <th>Name</th>
                   <th>Street</th>
                   <th>City</th>
                   <th>Zip Code</th>
@@ -27,6 +28,7 @@
                 <%rowsAddresses.forEach(Addresses =>{%>
                   <tr>
                     <th><%=Addresses.id%></th>
+                    <td><%=Addresses.name%></td>
                     <td><%=Addresses.street%></td>
                     <td><%=Addresses.city%></td>
                     <td><%=Addresses.zipcode%></td>
@@ -56,6 +58,16 @@
             <br>
             Zip Code:<br>
             <input class="input is-light" type="text" name="zipcode">
+            <br/><br/>
+            <div class="control">
+              <div class="select">
+                <select name="ContactsId">
+                    <%dataContacts.forEach(Contacts=>{%>
+                      <option value="<%=Contacts.id%>"><%=Contacts.name%></option>
+                    <%})%>
+                </select>
+              </div>
+            </div>
             <br><br>
             <div class="field is-grouped">
               <input class="button is-primary" type="submit" value="Simpan">

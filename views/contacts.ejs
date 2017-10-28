@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      table{
+        border: 1px solid black;
+      }
+
+    </style>
+    <meta charset="utf-8">
+    <title>CONTACTS</title>
+  </head>
+  <body>
+    <table>
+      <tr>
+        <th>No</th>
+        <th>Nama</th>
+        <th>Company</th>
+        <th>Phone Number</th>
+        <th>Email</th>
+        <% let i = 1 %>
+      <% rows.forEach(function(el){%>
+          <tr>
+            <td> <%= i %> </td>
+            <td> <%= el.name %> </td>
+            <td> <%= el.company %> </td>
+            <td> <%= el.telp_number %> </td>
+            <td> <%= el.email %> </td>
+            <td> <a href="/edit/<%=el.id%>">edit</a>
+          </tr>
+        <% i++ })%>
+      </tr>
+    </table>
+    <form action='/contacts' method="POST">
+      Name:<br>
+      <input type="text" name='nama' >
+      <br>
+      Company:<br>
+      <input type="text" name='company' >
+      <br>
+      Phone Number<br>
+      <input type="text" name='phoneNumber'>
+      <br>
+      Email<br>
+      <input type="email" name='email'>
+      <br>
+      <input type="submit" value="ADD"=>
+    </form>
+  </body>
+</html>

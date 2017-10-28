@@ -50,6 +50,7 @@
 					<th>USERNAME</th>
 					<th>PASSWORD</th>
 					<th>Contact Name</th>
+					<th>Contact ID</th>
 					<th>ACTION</th>
 				</tr>
 			</thead>
@@ -63,6 +64,7 @@
 						<td><%= profile.username %></td>
 						<td><%= profile.password %></td>
 						<td><%= profile.name %></td>
+						<td><%= profile.contacts_id %></td>
 						<td>
 							<a href="/profiles/edit/<%= profile.id %>">Edit</a>
 							<a href="/profiles/delete/<%= profile.id %>">Delete</a>
@@ -83,10 +85,11 @@
 		<input type="text" id="username" name="username" placeholder="Username" value="<%= (typeof editItem != 'undefined') ? editItem.username  : '' %>">
 		<input type="password" id="password" name="password"  placeholder="Password" value="<%= (typeof editItem != 'undefined') ? editItem.password  : '' %>">
 		
-		<select name="contacts_id" id="contacts_id" data-exists-contactid="<%= currentContactIds.toString(); %>">
+		
+		<select name="contacts_id" id="contacts_id" data-exists-contactid="<%= currentContactIds.toString(); %>" <%= (typeof editItem != 'undefined') ? 'disabled'  : '' %>>
 			<option value=""></option>
 			<% contacts.forEach((contact) => {%>
-				<option value="<%= contact.id %>" <%= (typeof editItem != 'undefined' && editItem.id == contact.id) ? 'selected' : '' %>><%= contact.name %></option>
+				<option value="<%= contact.id %>" <%= (typeof editItem != 'undefined' && contact.id == editItem.contacts_id) ? 'selected' : '' %>><%= contact.name %></option>
 			<% }) %>
 		</select>
 

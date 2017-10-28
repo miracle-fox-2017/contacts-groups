@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>PROFILE</title>
+  </head>
+  <body>
+    <table>
+      <tr>
+        <th>No</th>
+        <th>Username</th>
+        <th>Password</th>
+        <% let i = 1 %>
+      <% rows.forEach(function(el){%>
+          <tr>
+            <td> <%= i %> </td>
+            <td> <%= el.username %> </td>
+            <td> <%= el.password %> </td>
+            <td> <a href="/profile/edit/<%=el.id%>">edit</a>
+            <td> <a href="/profile/delete/<%=el.id%>">delete</a>
+          </tr>
+        <% i++ })%>
+      </tr>
+    </table>
+    <% if (isEdit === false) {%>
+    <form action="/profile" method="post">
+      username:<br>
+      <input type="text" name="username" >
+      <br>
+      password:<br>
+      <input type="text" name="password" >
+      <br>
+      <input type="submit" value="ADD"=>
+  </form>
+    <% } %>
+  <% if (isEdit === true) {%>
+  <form action="/profile/edit/<%=rows[0].id%>" method="post">
+    username:<br>
+    <input type="text" name="username" value="<%=rows[0].username%>">
+    <br>
+    password:<br>
+    <input type="text" name="password" value="<%=rows[0].password%>">
+    <br>
+    <input type="submit" value="EDIT"=>
+  </form>
+  <% } %>
+  </body>
+</html>

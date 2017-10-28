@@ -110,5 +110,102 @@ app.post('/groups/edit/:id', urlencodedParser, function(req,res){
               WHERE id = "${id}"`);
   res.redirect('/groups')
 })
+//PROFILE
+app.get('/profile',function(req,res){
+  db.all(`SELECT * FROM Profile`,function(err,rows){
+    if(err){
+      console.log(err)
+    }else{
+      res.render('profile',{rows:rows, isEdit:false})
+
+    }
+  })
+})
+//PROFILE ADD
+app.post('/profile', urlencodedParser, function(req,res){
+  let username = req.body.username
+  let password = req.body.password
+  db.all(`INSERT INTO Profile (username, password)
+          VALUES("${username}", "${password}")`)
+    res.redirect('/profile')
+})
+//PROFILE DELETE
+app.get('/profile/delete/:id', function(req,res){
+  let id = req.params.id
+  db.all(`DELETE FROM Profile
+          WHERE id = "${id}"`);
+  res.redirect('/profile')
+})
+//PROFILE EDIT
+app.get('/profile/edit/:id',function(req,res){
+  let isEdit = true;
+  db.all(`SELECT * FROM Profile where id = "${req.params.id}"`,function(err,rows){
+    if(err){
+      console.log(err)
+    }else{
+      res.render('profile',{rows:rows, isEdit:true})
+    }
+  })
+})
+app.post('/profile/edit/:id', urlencodedParser, function(req,res){
+  let id = req.params.id
+  let username = req.body.username
+  let password = req.body.password
+  db.all(`UPDATE Profile
+          SET username = "${username}",
+              password = "${password}"
+              WHERE id = "${id}"`);
+  res.redirect('/profile')
+})
+//ADDRESSES
+app.get('/addresses',function(req,res){
+  db.all(`SELECT * FROM Addresses`,function(err,rows){
+    if(err){
+      console.log(err)
+    }else{
+      res.render('addresses',{rows:rows, isEdit:false})
+
+    }
+  })
+})
+//ADDRESSES ADD
+app.post('/addresses', urlencodedParser, function(req,res){
+  let street = req.body.street
+  let city = req.body.city
+  let zipcode = req.body.zipcode
+  db.all(`INSERT INTO Addresses (street, city, zipcode)
+          VALUES("${street}", "${city}", "${zipcode}")`)
+    res.redirect('/addresses')
+})
+//ADDRESSES EDIT
+app.get('/addresses/edit/:id',function(req,res){
+  let isEdit = true;
+  db.all(`SELECT * FROM Addresses where id = "${req.params.id}"`,function(err,rows){
+    if(err){
+      console.log(err)
+    }else{
+      res.render('addresses',{rows:rows, isEdit:true})
+    }
+  })
+})
+app.post('/addresses/edit/:id', urlencodedParser, function(req,res){
+  let id = req.params.id
+  let street = req.body.street
+  let city = req.body.city
+  let zipcode = req.body.zipcode
+  db.all(`UPDATE Addresses
+          SET street = "${street}",
+              city = "${city}",
+              zipcode = "${zipcode}"
+              WHERE id = "${id}"`);
+  res.redirect('/addresses')
+})
+//ADDRESSES DELETE
+app.get('/addresses/delete/:id', function(req,res){
+  let id = req.params.id
+  db.all(`DELETE FROM Addresses
+          WHERE id = "${id}"`);
+  res.redirect('/addresses')
+})
 app.listen(3000,function(){
 })

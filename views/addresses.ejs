@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>ADDRESSES</title>
+  </head>
+  <body>
+    <table>
+      <tr>
+        <th>No</th>
+        <th>Street</th>
+        <th>City</th>
+        <th>Zipcode</th>
+        <% let i = 1 %>
+      <% rows.forEach(function(el){%>
+          <tr>
+            <td> <%= i %> </td>
+            <td> <%= el.street %> </td>
+            <td> <%= el.city %> </td>
+            <td> <%= el.zipcode %> </td>
+            <td> <a href="/addresses/edit/<%=el.id%>">edit</a>
+            <td> <a href="/addresses/delete/<%=el.id%>">delete</a>
+          </tr>
+        <% i++ })%>
+      </tr>
+    </table>
+    <% if (isEdit === false) {%>
+    <form action="/addresses" method="post">
+      Street:<br>
+      <input type="text" name="street" >
+      <br>
+      City:<br>
+      <input type="text" name="city" >
+      <br>
+      Zipcode:<br>
+      <input type="text" name="zipcode" >
+      <br>
+      <input type="submit" value="ADD"=>
+  </form>
+    <% } %>
+  <% if (isEdit === true) {%>
+    <form action="/addresses/edit/<%=rows[0].id%>" method="post">
+      Street:<br>
+      <input type="text" name="street" value = "<%=rows[0].street%>" >
+      <br>
+      City:<br>
+      <input type="text" name="city" value = "<%=rows[0].city%>">
+      <br>
+      Zipcode:<br>
+      <input type="text" name="zipcode" value = "<%=rows[0].zipcode%>">
+      <br>
+      <input type="submit" value="EDIT"=>
+    </form>
+  <% } %>
+  </body>
+</html>

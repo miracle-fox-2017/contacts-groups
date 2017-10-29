@@ -4,7 +4,7 @@
   <body>
     <div class="container">
       <div class="row">
-        <div class="two-third column" style="margin-top: 10%; margin-bottom: 10%">
+        <div class="two-fourth column" style="margin-top: 10%; margin-bottom: 10%">
           <h2><%= title %></h2>
           <p>Express Contacts Groups</p>
           <% include ../partial/menu.ejs %>
@@ -30,11 +30,11 @@
                   <td><%=contact.company%></td>
                   <td><%=contact.telp_number%></td>
                   <td><%=contact.email%></td>
-                  <td><%=contact.groups%></td>
+                  <td><%=contact.groups.join(', ')%></td>
                   <td>
-                    <a class="button" href="/contacts/addresses/<%=contact.id%>">address</a>
-                    <a class="button" href="/contacts/edit/<%=contact.id%>">edit</a>
-                    <a class="button" href="/contacts/delete/<%=contact.id%>">delete</a>
+                    <a href="/contacts/addresses/<%=contact.id%>"><code>Address</code></a>
+                    <a href="/contacts/edit/<%=contact.id%>"><code>Edit</code></a>
+                    <a href="/contacts/delete/<%=contact.id%>"><code>Delete</code></a>
                   </td>
                 </tr>
               <%})%>

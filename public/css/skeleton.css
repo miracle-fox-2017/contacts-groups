@@ -158,9 +158,10 @@ p {
 /* Links
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 a {
+  text-decoration: none;
   color: #1EAEDB; }
 a:hover {
-  color: #0FA0CE; }
+  color: #fff; }
 
 
 /* Buttons
@@ -314,6 +315,9 @@ code {
   background: #F1F1F1;
   border: 1px solid #E1E1E1;
   border-radius: 4px; }
+code:hover {
+  background: #1EAEDB;
+}
 pre > code {
   display: block;
   padding: 1rem 1.5rem;
@@ -416,3 +420,7 @@ there.
 
 /* Larger than Desktop HD */
 @media (min-width: 1200px) {}
+
+span {
+  font-size: 20px;
+}

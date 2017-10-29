@@ -16,6 +16,12 @@
                 <input class="u-full-width" placeholder="Company" name="company" type="text">
                 <input class="u-full-width" placeholder="Phone Number" name="telp_number" type="text">
                 <input class="u-full-width" placeholder="Email" name="email" type="email">
+                <label>Select Group :</label>
+                <select class="u-full-width" name="group_id">
+                  <%groups.forEach(group => {%>
+                    <option value="<%=group.id%>"><%=group.name_of_group%></option>
+                  <%})%>
+                </select>
               </div>
             </div>
             <input class="button-primary" value="Submit" type="submit">

@@ -30,8 +30,8 @@
                   <td><%=address.zipcode%></td>
                   <td><%=address.name%></td>
                   <td>
-                    <a class="button" href="/addresses/edit/<%=address.id%>">edit</a>
-                    <a class="button" href="/addresses/delete/<%=address.id%>">delete</a>
+                    <a href="/addresses/edit/<%=address.id%>"><code>Edit</code></a>
+                    <a href="/addresses/delete/<%=address.id%>"><code>Delete</code></a>
                   </td>
                 </tr>
               <%})%>

@@ -52,7 +52,10 @@ function alterAddresses() {
 }
 
 function tableContactsGroups() {
-  db.run('CREATE TABLE IF NOT EXISTS ContactsGroups(id INTEGER PRIMARY KEY AUTOINCREMENT,contact_id INTEGER REFERENCES Contacts(id),group_id INTEGER REFERENCES Groups(id))',err=>{
+  db.run(`CREATE TABLE IF NOT EXISTS ContactsGroups(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    contact_id INTEGER REFERENCES Contacts(id) ON DELETE CASCADE,
+    group_id INTEGER REFERENCES Groups(id) ON DELETE CASCADE)`,err=>{
     if(!err){
       console.log('table ContactsGroups created..');
     }

@@ -28,8 +28,8 @@
                   <td><%=profile.password%></td>
                   <td><%=profile.name%></td>
                   <td>
-                    <a class="button" href="/profiles/edit/<%=profile.id%>">edit</a>
-                    <a class="button" href="/profiles/delete/<%=profile.id%>">delete</a>
+                    <a href="/profiles/edit/<%=profile.id%>"><code>Edit</code></a>
+                    <a href="/profiles/delete/<%=profile.id%>"><code>Delete</code></a>
                   </td>
                 </tr>
               <%})%>

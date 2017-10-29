@@ -10,10 +10,11 @@ class Contacts {
 
   static create(input,callback) {
     if(!input.name){
-      callback('Please fill out all required fields!!')
+      callback('','Please fill out all required fields!!')
     }else{
-      db.run(`INSERT INTO Contacts (name,company,telp_number,email) VALUES ('${input.name}','${input.company}','${input.telp_number}','${input.email}')`)
-      callback(true)
+      db.run(`INSERT INTO Contacts (name,company,telp_number,email) VALUES ('${input.name}','${input.company}','${input.telp_number}','${input.email}')`,function (err){
+        callback(this.lastID,true)
+      })
     }
   }
 

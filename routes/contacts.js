@@ -2,15 +2,33 @@ const express = require('express')
 const router = express.Router()
 const Contacts = require('../models/contacts')
 const Addresses = require('../models/addresses')
+const Groups = require('../models/groups')
+const ContactsGroups = require('../models/contactsGroups')
 
 router.get('/', (req, res) => {
   Contacts.getAll(contactsData => {
-    res.render('contacts', {title:'Contacts', contacts:contactsData})
+    ContactsGroups.getAll(cgData => {
+      Groups.getAll(groupsData => {
+        contactsData.forEach(contact => {
+          contact.groups = []
+          cgData.forEach(cg => {
+            groupsData.forEach(group => {
+              if(contact.id == cg.contact_id && group.id == cg.group_id){
+                contact.groups.push(group.name_of_group)
+              }
+            })
+          })
+        })
+        res.render('contacts', {title:'Contacts', contacts:contactsData})
+      })
+    })
   })
 })
 
 function addRender(req,res,err){
-  res.render('contacts/add', {title:'Add Contact', err:err})
+  Groups.getAll(groupsData => {
+    res.render('contacts/add', {title:'Add Contact', groups:groupsData, err:err})
+  })
 }
 
 router.get('/add', (req, res) => {
@@ -18,9 +36,14 @@ router.get('/add', (req, res) => {
 })
 
 router.post('/add', (req, res) => {
-  Contacts.create(req.body, report => {
+  // console.log(req.body);
+  Contacts.create(req.body, (lastID,report)=> {
     if(report == true){
-      res.redirect('/contacts')
+      ContactsGroups.create(lastID,req.body.group_id,reportCg => {
+        if(reportCg == true){
+          res.redirect('/contacts')
+        }
+      })
     }else{
       addRender(req,res,report);
     }

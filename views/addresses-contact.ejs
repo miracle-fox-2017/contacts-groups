@@ -49,13 +49,16 @@
 					<th>STREET</th>
 					<th>CITY</th>
 					<th>ZIPCODE</th>
-					<th>NAME</th>
+					<th>CONTACT NAME</th>
+					<th>COMPANY</th>
+					<th>PHONE NUMBER</th>
+					<th>EMAIL</th>
 					<th>ACTION</th>
 				</tr>
 			</thead>
 
 			<tbody>
-				<% data.forEach((address) => {%>
+				<% joinedData.forEach((address) => {%>
 					<tr>
 						<% currentContactIds.push(address.contacts_id); %>
 						<td><%= address.id %></td>
@@ -63,6 +66,9 @@
 						<td><%= address.city %></td>
 						<td><%= address.zipcode %></td>
 						<th><%= address.name%></th>
+						<th><%= address.company%></th>
+						<th><%= address.telp_number%></th>
+						<th><%= address.email%></th>
 						<td>
 							<a href="/addresses/edit/<%= address.id %>">Edit</a>
 							<a href="/addresses/delete/<%= address.id %>">Delete</a>

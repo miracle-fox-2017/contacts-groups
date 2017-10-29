@@ -21,7 +21,7 @@ class AddressesModel {
 
 	getAllDataInnerJoin(tableSource, callback) {
 		let db = new sqlite3.Database(this.dbFile);
-		let sql = `select ${this.tablename}.id, ${this.tablename}.street, ${this.tablename}.city, ${this.tablename}.zipcode , ${this.tablename}.contacts_id, ${tableSource}.name
+		let sql = `select ${this.tablename}.id, ${this.tablename}.street, ${this.tablename}.city, ${this.tablename}.zipcode , ${this.tablename}.contacts_id, ${tableSource}.name, ${tableSource}.company
 					from ${this.tablename}
 					inner join ${tableSource} ON ${this.tablename}.contacts_id =  ${tableSource}.id`;
 		db.all(sql, (err, rows) => {

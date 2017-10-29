@@ -126,7 +126,7 @@ app.get('/profiles/delete/:id', (req, res) => {
 // Address
 app.get('/addresses', (req, res) => {
 	address.getAllDataInnerJoin('Contacts', function(rows) {
-		console.log(rows);
+
 		contact.getAllData((allcontacts) => {
 			res.render('addresses', { data: rows, contacts: allcontacts });
 		});
@@ -149,7 +149,6 @@ app.get('/addresses/edit/:id', (req, res) => {
 });
 
 app.post('/addresses/edit/:id', (req, res) => {
-	console.log({id: req.params.id, editItem: req.body});
 	address.updateDataById({id: req.params.id, editItem: req.body});
 	res.redirect('/addresses/');
 });
@@ -157,6 +156,41 @@ app.post('/addresses/edit/:id', (req, res) => {
 app.get('/addresses/delete/:id', (req, res) => {
 	address.deleteDataById({id: req.params.id});
 	res.redirect('/addresses/');
+});
+
+app.get('/addresses_with_contact', (req, res) => {
+	address.getAllData(function(rows) {
+
+		contact.getAllData((allcontacts) => {
+			let joinedData = [];
+
+			for (var i = 0; i < rows.length; i++) {
+				let obj = {};
+				obj.id = rows[i].id,
+				obj.street = rows[i].street,
+				obj.city = rows[i].city;
+				obj.zipcode = rows[i].zipcode;
+				obj.name = '';
+				obj.company = '';
+				obj.telp_number = '';
+				obj.email = '';
+
+				for (var j = 0; j < allcontacts.length; j++) {
+
+					if (rows[i].contacts_id === allcontacts[j].id) {
+						obj.name = allcontacts[j].name;
+						obj.company = allcontacts[j].company;
+						obj.telp_number = allcontacts[j].telp_number;
+						obj.email = allcontacts[j].email;
+					}
+				}
+
+				joinedData.push(obj);
+			}
+
+			res.render('addresses-contact', { data: rows, contacts: allcontacts, joinedData: joinedData});
+		});
+	});
 });
 
 // Listening

@@ -3,7 +3,7 @@ const Contact = require('../models/contacts')
 
 const router = express.Router()
 
-// define the home page route
+// define the contacts page route
 router.get('/', function(req, res) {
   Contact.findAll((err, rows) => {
     res.render('contacts/index',{error: err, dataContacts: rows})

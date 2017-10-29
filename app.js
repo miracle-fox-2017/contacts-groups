@@ -22,7 +22,7 @@ app.use('/', index)
 app.use('/contacts', contacts)
 app.use('/groups', groups)
 // app.use('/profiles', profiles)
-// app.use('/addresses', addresses)
+app.use('/addresses', addresses)
 
 // Port
 app.listen(3000, function () {

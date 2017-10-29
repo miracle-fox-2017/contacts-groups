@@ -8,9 +8,9 @@ class Contact {
     })
   }
 
-  static create(input, callback) {
+  static create(data, callback) {
     db.run(`INSERT INTO Contacts (name, company, telp_number, email) VALUES (
-      '${input.name}', '${input.company}', '${input.telp_number}', '${input.email}')`, (err) => {
+      '${data.name}', '${data.company}', '${data.telp_number}', '${data.email}')`, (err) => {
         callback(err)
       })
   }

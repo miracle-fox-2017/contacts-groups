@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<% console.log(rows) %>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Edit <%= rows.name_of_group %></title>
+  </head>
+  <body>
+    <table>
+      <tr>
+      <form class="" action="/groups/edit/ <%= rows.id %>" method="post">
+        <td>Group <input type="text" name="name_of_group" value="<%= rows.name_of_group %>"></td>
+        <td><input type="submit" value="Submit"></td>
+      </form>
+      </tr>
+    </table>
+  </body>
+</html>

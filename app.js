@@ -14,8 +14,11 @@ app.use(bodyParser.json())
 app.set('views', './views')//renderer
 app.set('view engine', 'ejs');
 
+
+// Contacts
+//====================================================================
 app.get('/contacts', function (req, res) {
-db.all(`SELECT * FROM Contacts`, function(err, rows)
+  db.all(`SELECT * FROM Contacts`, function(err, rows)
   {
     // console.log(rows);
     res.render('contacts', {rows})
@@ -47,6 +50,47 @@ app.get('/contacts/delete/:id', function (req, res) {
   });
   res.redirect('/contacts');
 })
+//====================================================================
+// End of Contacts
+
+// Groups
+//====================================================================
+app.get('/groups', function (req, res) {
+  db.all(`SELECT * FROM Groups`, function(err, rows)
+  {
+    // console.log(rows);
+    res.render('groups', {rows})
+  })
+})
+
+app.post('/groups', function (req, res) {
+  // console.log(req.body);
+  db.run(`INSERT INTO Groups (name_of_group) VALUES ('${req.body.name_of_group}')` );
+  res.redirect('/groups');
+})
+
+app.get('/groups/edit/:id', function (req, res) {
+  // console.log(req.params);
+  db.each(`SELECT * FROM Groups WHERE id = ${req.params.id}`, function(err, rows){
+    res.render('groupedit', {rows})
+  })
+})
+
+app.post('/groups/edit/:id', function (req, res){
+  // console.log('masuk UPDATE');
+  db.run(`UPDATE Groups SET name_of_group = '${req.body.name_of_group}' WHERE id = ${req.params.id}`);
+  res.redirect('/groups');
+})
+
+app.get('/groups/delete/:id', function (req, res) {
+  // console.log('masuk DELETE');
+  db.each(`DELETE FROM Groups WHERE id = ${req.params.id}`, function(err, rows){
+  });
+  res.redirect('/groups');
+})
+
+//====================================================================
+// End of Groups
 
 app.listen(3000, function () {
   console.log('Example app listening on port 3000!')

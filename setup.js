@@ -53,7 +53,7 @@ db.serialize(()=>{
   //set unique Profile          
   let renameProfile = `ALTER TABLE Profile RENAME TO old_table;`
   let crNewProfile = `
-                      CREATE TABLE Profile
+                      CREATE TABLE IF NOT EXISTS Profile
                       (
                         id       INTEGER     PRIMARY KEY,
                         username VARCHAR(50) NOT NULL UNIQUE,
@@ -61,11 +61,29 @@ db.serialize(()=>{
                         id_contacts INT  UNIQUE
                         CONSTRAINT id_contacts REFERENCES Contacts (id)
                       );`
-  let delOldTableProfile = `DROP TABLE old_table`
+  let delOldTableProfile = `DROP TABLE old_table`;
+  let copyDataFromOld = `INSERT INTO Profile SELECT * FROM old_table`;
   db.run(renameProfile);
   db.run(crNewProfile);
-  db.run(delOldTableProfile, ()=>{console.log('Profile updated');});
-       
+  db.run(copyDataFromOld, ()=>{console.log('Profile updated');});
+  db.run(delOldTableProfile);
+  // db.run(copyDataFromOld, ()=>{console.log('Profile updated');});
+  
+  
+  //release 6
+  //buat coloumn id_contacts di Addresses
+  let foreignAdresses = `ALTER TABLE Addresses
+                          ADD id_contacts INT
+                          REFERENCES Contacts (id)`;
+  
+  db.run(foreignAdresses, (err)=>{
+    // console.log(err);
+    console.log('coloumn id_contacts added to Addresses');
+  }); 
+  
+  
+  
+     
 })
 
 db.close();

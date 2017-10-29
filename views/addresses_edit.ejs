@@ -36,7 +36,13 @@
       Street:   <input type="text" name="street" value="<%= rows[0].street %>" placeholder="street"><br>
       City: <input type="text" name="city" value="<%= rows[0].city %>" placeholder="city"><br>
       Zipcode: <input type="text" name="zipcode" value="<%= rows[0].zipcode %>" placeholder="zipcode"><br>
-      <input type="submit" name="" value="KIRIM">
+      contacts: 
+      <select name="id_contacts">
+      <% contacts.forEach (contact => { %>
+        <option value="<%= contact.id %>" <% if(rows[0].cid == contact.id){ %> <%= 'selected' %> <% } %> ><%= contact.name %></option> 
+      <% }) %>
+      </select>
+      <br><input type="submit" name="" value="KIRIM">
     </form>
   </div>
   

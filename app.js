@@ -16,6 +16,7 @@ app.set('view engine', 'ejs') // register the template engine
 /////////////////////////////////////////////////////////////////
 
 let msg = '';
+let showContacts     = `SELECT * FROM Contacts`;
 
 /////////////////////// 1. CONTACTS /////////////////////////////
 
@@ -176,30 +177,39 @@ app.get('/groups/delete/:id', function (req, res){
 })
 
 //////////////////// 3. ADDRESSES ///////////////////////////
-
+let showAddressesJoin = `SELECT
+                         Addresses.id AS id, Addresses.id_contacts, Addresses.street, Addresses.city, Addresses.zipcode,
+                         Contacts.id AS cid, Contacts.name, Contacts.company, Contacts.telp_number, Contacts.email
+                        FROM Addresses 
+                        JOIN Contacts 
+                        ON Addresses.id_contacts = Contacts.id`;
+                        
 //GET ADDRESSES
 app.get('/addresses', function (req, res) {
-  let showAddresses = `SELECT * FROM Addresses`;
-  db.all(showAddresses, (err, rows)=>{
-    res.render('addresses',{rows});
+  // let showAddresses = `SELECT * FROM Addresses`;
+  db.all(showContacts, (err, rows)=>{
+    let contacts = rows;
+    db.all(showAddressesJoin, (err, rows)=>{
+      res.render('addresses',{"rows": rows, "contacts": contacts});
+    })
   })
+
   
 })
 
 //POST ADDRESSES
 app.post('/addresses', function (req, res) {
   //set query
-  let showAddresses = `SELECT * FROM Addresses`;
+  // console.log(req.body);
+  // let showAddresses = `SELECT * FROM Addresses`;
   let query = `INSERT INTO Addresses
-               (street, city, zipcode)
+               (street, city, zipcode, id_contacts)
                VALUES
-               ("${req.body.street}", "${req.body.city}", "${req.body.zipcode}");`
+               ("${req.body.street}", "${req.body.city}", "${req.body.zipcode}", "${req.body.id_contacts}");`
   
-  //execute query
-  db.run(query,()=>{
-    db.all(showAddresses, (err, rows)=>{
-      res.render('addresses',{rows});
-    })
+  // execute query
+  db.run(query, ()=>{
+    res.redirect('/addresses');
     
   })
 
@@ -208,11 +218,22 @@ app.post('/addresses', function (req, res) {
 //GET ADDRESSES EDIT
 app.get('/addresses/edit/:id', function (req, res) {
   let id = req.params.id;
-  let showSpecificId = `SELECT * FROM Addresses WHERE id=${id}`;
+  // let showSpecificId = `SELECT * FROM Addresses WHERE id=${id}`;
+  let showSpecificId = `SELECT
+                           Addresses.id AS id, Addresses.id_contacts, Addresses.street, Addresses.city, Addresses.zipcode,
+                           Contacts.id AS cid, Contacts.name, Contacts.company, Contacts.telp_number, Contacts.email
+                          FROM Addresses 
+                          JOIN Contacts 
+                          ON Addresses.id_contacts = Contacts.id
+                          WHERE Addresses.id=${id}`;
   //execute query
-  db.all(showSpecificId, (err, rows)=>{
-    res.render('addresses_edit',{rows});
+  db.all(showContacts, (err, rows)=>{
+    let contacts = rows;
+    db.all(showSpecificId, (err, rows)=>{
+      res.render('addresses_edit',{"rows": rows, "contacts": contacts});
+    })
   })
+
 })
 
 //POST ADDRESSES EDIT
@@ -220,19 +241,17 @@ app.post('/addresses/edit/:id', function (req, res){
   let id = req.params.id;
   // console.log(req.body);
   let showSpecificId = `SELECT * FROM Addresses WHERE id=${id}`;
-  
   let query = `UPDATE Addresses SET
                 id = ${req.body.id},
                 street = "${req.body.street}",
                 city = "${req.body.city}",
-                zipcode = ${req.body.zipcode}
+                zipcode = ${req.body.zipcode},
+                id_contacts = ${req.body.id_contacts}
               WHERE 
                 id = ${req.body.id}`;
   //execute query
   db.run(query, ()=>{
-    db.all(showSpecificId, (err, rows)=>{
-      res.render('addresses_edit',{rows});
-    })
+    res.redirect('/addresses');
     
   })
   
@@ -250,9 +269,25 @@ app.get('/addresses/delete/:id', function (req, res){
   })
 })
 
+app.get('/addresses_with_contact', function (req, res){
+  //show contacts
+  //show addresses
+  let qContacts = `SELECT * FROM Contacts`;
+  let qAddresses = `SELECT * FROM Addresses`;
+  
+  db.all(qContacts, (err, rows) => {
+    let contacts = rows;
+    // res.send(contacts);
+    db.all(qAddresses, (err, rows) =>{
+      res.render('addresses_with_contact',{"rows": rows, "contacts": contacts});
+    
+    })
+  })
+  
+})
+
 
 //////////////////// 4. PROFILES ///////////////////////////
-let showContacts     = `SELECT * FROM Contacts`;
 let showProfilesJoin = `SELECT
                          Profile.id AS id, Profile.id_contacts, Profile.username, Profile.password,
                          Contacts.id AS cid, Contacts.name
@@ -278,7 +313,7 @@ app.get('/profiles', function (req, res) {
 //POST PROFILES
 app.post('/profiles', function (req, res) {
   //set query
-  console.log(req.body);
+  // console.log(req.body);
   let qCheckId = `SELECT COUNT (*) FROM Profile WHERE id_contacts = ${req.body.id_contacts}`
   let query = `INSERT OR IGNORE INTO Profile
                (username, password, id_contacts)
@@ -286,7 +321,6 @@ app.post('/profiles', function (req, res) {
                ("${req.body.username}", "${req.body.password}", "${req.body.id_contacts}");`
   
   db.all(qCheckId, (err, rows)=>{
-      console.log(rows[0]['COUNT (*)']);
       let checkId = rows[0]['COUNT (*)'];
       if(checkId == 0){
           //execute query

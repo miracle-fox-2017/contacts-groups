@@ -40,6 +40,7 @@
 			color: wheat;
 		}
 	</style>
+	<% let currentContactIds = []; %>
 	<% if (typeof data != 'undefined') { %>
 		<table class="adress-table" border="1">
 			<thead>
@@ -48,6 +49,8 @@
 					<th>STREET</th>
 					<th>CITY</th>
 					<th>ZIPCODE</th>
+					<!-- <th>CONTACTS ID</th> -->
+					<th>NAME</th>
 					<th>ACTION</th>
 				</tr>
 			</thead>
@@ -55,10 +58,13 @@
 			<tbody>
 				<% data.forEach((address) => {%>
 					<tr>
+						<% currentContactIds.push(address.contacts_id); %>
 						<td><%= address.id %></td>
 						<td><%= address.street %></td>
 						<td><%= address.city %></td>
 						<td><%= address.zipcode %></td>
+						<!-- <th><%= address.contacts_id %></th> -->
+						<th><%= address.name%></th>
 						<td>
 							<a href="/addresses/edit/<%= address.id %>">Edit</a>
 							<a href="/addresses/delete/<%= address.id %>">Delete</a>
@@ -70,7 +76,7 @@
 	<br>
 	<% } %>
 
-	<form method="post" action="<%= (typeof editItem != 'undefined') ? `/addresses/edit/${id}`  : '/addresses' %>">
+	<form onsubmit="return validateAddressForm();" method="post" action="<%= (typeof editItem != 'undefined') ? `/addresses/edit/${id}`  : '/addresses' %>">
 		<% if (typeof editItem != 'undefined') { %>
 			<h5>Editing <%= editItem.street %></h5>
 		<% } %>
@@ -79,8 +85,34 @@
 		<input type="text" id="street" name="street"  placeholder="Street" value="<%= (typeof editItem != 'undefined') ? editItem.street  : '' %>">
 		<input type="text" id="city" name="city"  placeholder="City" value="<%= (typeof editItem != 'undefined') ? editItem.city  : '' %>">
 		<input type="text" id="zipcode" name="zipcode"  placeholder="Zipcode" value="<%= (typeof editItem != 'undefined') ? editItem.zipcode  : '' %>">
+		
+		<select name="contacts_id" id="contacts_id" data-exists-contactid="<%= currentContactIds.toString(); %>">
+			<option value=""></option>
+			<% contacts.forEach((contact) => {%>
+				<option value="<%= contact.id %>" <%= (typeof editItem != 'undefined' && contact.id == editItem.contacts_id) ? 'selected' : '' %>><%= contact.name %></option>
+			<% }) %>
+		</select>
 
 		<input type="submit" value="Tambah">
 	</form>
+
+	<script>
+		function validateAddressForm() {
+			let hiddenId = document.getElementById('id').value;
+			let streetField = document.getElementById('street').value;
+			let contactNameDropdown = document.getElementById('contacts_id');
+			let arrExistingContactId = contactNameDropdown.getAttribute('data-exists-contactid').split(',');
+			let selectedOptions = contactNameDropdown.options[contactNameDropdown.selectedIndex].value;
+			
+			if (streetField.length < 1) {
+				alert('Street harus diisi');
+		
+				return false;
+			}
+
+			return true;
+			
+		}
+	</script>
 </body>
 </html>

@@ -125,8 +125,11 @@ app.get('/profiles/delete/:id', (req, res) => {
 
 // Address
 app.get('/addresses', (req, res) => {
-	address.getAllData(function(rows) {
-		res.render('addresses', { data: rows });
+	address.getAllDataInnerJoin('Contacts', function(rows) {
+		console.log(rows);
+		contact.getAllData((allcontacts) => {
+			res.render('addresses', { data: rows, contacts: allcontacts });
+		});
 	});
 });
 
@@ -136,14 +139,17 @@ app.post('/addresses', (req, res) => {
 });
 
 app.get('/addresses/edit/:id', (req, res) => {
-	address.getAllData(function(rows) {
-		address.getById({id: req.params.id}, (editedRows) =>{
-			res.render('addresses', { id: req.params.id, data: rows, editItem: editedRows });
+	address.getAllDataInnerJoin('Contacts', function(rows) {
+		contact.getAllData((allcontacts) => {
+			address.getById({id: req.params.id}, (editedRows) =>{
+				res.render('addresses', { id: req.params.id, data: rows, editItem: editedRows, contacts: allcontacts});
+			});
 		});
 	});	
 });
 
 app.post('/addresses/edit/:id', (req, res) => {
+	console.log({id: req.params.id, editItem: req.body});
 	address.updateDataById({id: req.params.id, editItem: req.body});
 	res.redirect('/addresses/');
 });

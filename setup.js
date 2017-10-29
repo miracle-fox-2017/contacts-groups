@@ -33,7 +33,7 @@ db.serialize(() => {
 		street	VARCHAR(25),
 		city	VARCHAR(25),
 		zipcode	INTEGER,
-		contacts_id	INTEGER UNIQUE,
+		contacts_id	INTEGER,
 		FOREIGN KEY (contacts_id) REFERENCES Contacts(id)
 	)`);
 

@@ -20,7 +20,6 @@
         <li class="active"><a href="/groups">GROUPS</a></li>
         <li><a href="/profiles">PROFILES</a></li>
         <li><a href="/addresses">ADDRESSES</a></li>
-        <li><a href="/addresses_with_contact">ADDRESSES WITH CONTACT</a></li>
       </ul>
     </div>
   </nav>
@@ -32,7 +31,8 @@
           <tr>
             <th>ID</th>
             <th>GROUP NAME</th>
-            <th colspan="2">ACTION</th>
+            <th>CONTACS</th>
+            <th colspan="3">ACTION</th>
           </tr>
         </thead>
         <tbody>
@@ -40,9 +40,11 @@
             <tr>
               <td><%= row.id%></td>
               <td><%= row.name_of_group%></td>
+              <td><%= row.name_of_group%></td>
               <td>
                 <a href="groups/edit/<%=row.id%>">EDIT</a>
                 <a href="groups/delete/<%=row.id%>">DELETE</a>
+                <a href="groups/assign_contacts/<%=row.id%>">ASSIGN CONTACT</a>
               </td>
             </tr>
             <%})%>

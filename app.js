@@ -18,22 +18,20 @@ app.get('/', function (req, res) {
 //menampilkan semua data contacts
 app.get('/contacts', function (req, res) {
   db.all('SELECT * FROM Contacts', (err, rows) => {
-    if (err) {
-      console.log(err);
-    } else {
-      res.render('contacts.ejs', { data: rows });
-    }
+    db.all('SELECT * FROM Groups', (err, rows2) => {
+      db.all('SELECT ContactsGroups.id, ContactsGroups.ContactId, ContactsGroups.GroupId FROM ContactsGroups LEFT JOIN Groups ON ContactsGroups.GroupId = Groups.name_of_group', (err, rowsContact) => {
+        res.render('contacts.ejs', { data: rows, dataGroups: rows2, dataContacts: rowsContact });
+      });
+    });
   });
 });
 
 //menerima input data contacts
 app.post('/contacts', function (req, res) {
   db.run(`INSERT into Contacts (name, company, telp_number, email) VALUES ('${req.body.name}', '${req.body.company}', '${req.body.telp_number}', '${req.body.email}')`, (err, rows) => {
-    if (err) {
-      console.log(err);
-    } else {
+    db.run(`INSERT into ContactsGroups (ContactId, GroupId) VALUES ('${req.body.ContactId}', '${req.body.GroupId}')`, (err, rows) => {
       res.redirect('contacts');
-    }
+    });
   });
 });
 
@@ -53,6 +51,22 @@ app.post('/contacts/edit/:id', function (req, res) {
 app.get('/contacts/delete/:id', (req, res) => {
   db.run(`DELETE from Contacts WHERE id = "${req.params.id}"`, (err, rows) => {
     res.redirect('../../contacts');
+  });
+});
+
+// menampilkan semua address di contact
+app.get('/contacts/address/:id', (req, res) => {
+  db.all(`SELECT * FROM Addresses where ContactId = "${req.params.id}"`, (err, rows) => {
+    db.get(`SELECT * from Contacts where id = "${req.params.id}"`, (err, rowsContact) => {
+      res.render('addresses_with_contact', { data: rows, dataContacts: rowsContact });
+    });
+  });
+});
+
+// menerima input contact address
+app.post('/contacts/address/:id', (req, res) => {
+  db.run(`INSERT INTO Addresses (street, city, zipcode, ContactId) VALUES ('${req.body.street}', '${req.body.city}','${req.body.zipcode}', '${req.body.ContactId}')`, (err) => {
+    res.redirect(`/contacts/address/${req.params.id}`);
   });
 });
 
@@ -164,8 +178,18 @@ app.get('/profiles/delete/:id', (req, res) => {
   });
 });
 
-app.get('/addresses_with_contact', function (req, res) {
-  res.render('addresses_with_contact.ejs');
+// Menampilkan semua data groupsContact
+app.get('/groups/assign_contacts/:id', function (req, res) {
+  db.all('SELECT * FROM Groups', (err, rows) => {
+    res.render('assign_contacts', { data: rows });
+  });
+});
+
+//menerima input data groupsContact
+app.post('/groups', function (req, res) {
+  db.run(`INSERT into Groups (name_of_group) VALUES ('${req.body.name_of_group}')`, (err, rows) => {
+    res.redirect('groups');
+  });
 });
 
 app.listen(3000, function () {

@@ -14,6 +14,9 @@ db.serialize(function () {
   // db.run('CREATE TABLE IF NOT EXISTS Addresses (id INTEGER PRIMARY KEY AUTOINCREMENT, street TEXT, city TEXT, zipcode INTEGER)');
   // // console.log('table addresses created');
 
+  // db.run('CREATE TABLE IF NOT EXISTS ContactsGroups (id INTEGER PRIMARY KEY AUTOINCREMENT, ContactId INTEGER REFERENCES Contacts(id), GroupId INTEGER REFERENCES Groups(id))');
+  // console.log('table ContactsGroups created');
+
   // db.run('DROP TABLE Profile;')
   // console.log('table has been deleted');
 });
@@ -21,8 +24,7 @@ db.serialize(function () {
 // db.close();
 
 function alterContactsProfiles() {
-  let add = `ALTER TABLE Profile ADD COLUMN ContactId INTEGER REFERENCES Contacts(id)`;
-  db.run(add, (err) => {
+  db.run(`ALTER TABLE Profile ADD COLUMN ContactId INTEGER REFERENCES Contacts(id)`, (err) => {
     if (!err) {
       console.log('tabel berhasil ditambah');
     } else {
@@ -66,6 +68,12 @@ function alterContactsAddresses() {
 //
 //   console.log('data created');
 // }
+
+// function createContactGroup() {
+//   db.run("INSERT INTO ContactsGroups VALUES (1, 1, 4)");
+//
+//   console.log('data created');
+// }
 /*Structure table:
 
 Contacts:
@@ -92,3 +100,4 @@ attribute zipcode ber-type integer*/
 // alterUnique()
 // contactNotNull()
 // alterContactsAddresses()
+// createContactGroup()

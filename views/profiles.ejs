@@ -20,7 +20,6 @@
         <li><a href="/groups">GROUPS</a></li>
         <li class="active"><a href="/profiles">PROFILES</a></li>
         <li><a href="/addresses">ADDRESSES</a></li>
-        <li><a href="/addresses_with_contact">ADDRESSES WITH CONTACT</a></li>
       </ul>
     </div>
   </nav>
@@ -33,7 +32,7 @@
             <th>ID</th>
             <th>USER NAME</th>
             <th>PASSWORD</th>
-            <th>CONTACT NAME</th>
+            <th>CONTACT ID</th>
             <th colspan="2">ACTION</th>
           </tr>
         </thead>
@@ -65,7 +64,7 @@
         </div>
         <select name="ContactId">
           <%for(let i=0; i< dataContacts.length; i++){%>
-            <option value="<%=dataContacts[i].name%>"><%=dataContacts[i].name%></option>
+            <option value="<%=dataContacts[i].id%>"><%=dataContacts[i].name%></option>
             <%}%>
           </select>
           <button type="submit" class="btn btn-default">ADD</button>

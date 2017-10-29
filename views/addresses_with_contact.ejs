@@ -20,29 +20,37 @@
         <li><a href="/groups">GROUPS</a></li>
         <li><a href="/profiles">PROFILES</a></li>
         <li><a href="/addresses">ADDRESSES</a></li>
-        <li class="active"><a href="/addresses_with_contact">ADDRESSES WITH CONTACT</a></li>
+        <li class="active"><a href="#">ADDRESSES WITH CONTACT</a></li>
       </ul>
     </div>
   </nav>
   <div class="container">
     <h2>ADDRESS WITH CONTACT</h2>
+    <h3>Name: </h3>
+    <h3><%=dataContacts.name%></h3>
     <div class="table-responsive">
       <table class="table">
         <thead>
           <tr>
-            <th>ID</th>
             <th>STREET</th>
             <th>CITY</th>
             <th>ZIPCODE</th>
-            <th>CONTACT NAME</th>
-            <th colspan="2">ACTION</th>
           </tr>
         </thead>
+        <tbody>
+          <%for(var i = 0; i < data.length; i++){%>
+      <tr>
+        <td><%=data[i].street%></td>
+        <td><%=data[i].city%></td>
+        <td><%=data[i].zipcode%></td>
+      </tr>
+      <%}%>
+          </tbody>
 
         </table>
       </div>
 
-      <form class="form-inline" role="form" action="/addresses" method="post">
+      <form class="form-inline" role="form" action="/contacts/address/<%= dataContacts.id %>" method="post">
         <div class="form-group">
           <label for="street">Street</label>
           <input type="TEXT" name="street" placeholder="Enter Street">
@@ -53,15 +61,16 @@
         </div>
         <div class="form-group">
           <label for="zipcode">Zipcode</label>
-          <input type="TEXT" name="zipcode" placeholder="Enter Zipcode">
+          <input type="INTEGER" name="zipcode" placeholder="Enter Zipcode">
         </div>
-        <select name="ContactId">
+        <div class="form-group">
+          <label for="ContactId">Name</label>
+          <input type="TEXT" name="ContactId" value="<%= dataContacts.name %>" readonly>
+        </div>
+        <button type="submit" class="btn btn-default">ADD</button>
+      </form>
+    </div>
 
-          </select>
-          <button type="submit" class="btn btn-default">ADD</button>
-        </form>
-      </div>
 
-
-    </body>
-    </html>
+  </body>
+  </html>

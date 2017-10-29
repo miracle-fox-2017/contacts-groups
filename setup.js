@@ -21,6 +21,11 @@ db.serialize( () =>
               street varchar (100),
               city varchar(50),
               zipcode varchar(6))`);
+    db.run(`ALTER TABLE Profiles ADD COLUMN ContactID INTEGER REFERENCES Contacts (ID) ON UPDATE CASCADE`);
+    db.run(`CREATE UNIQUE INDEX IF NOT EXISTS ContactID on Contacts (ID)`);
+    db.run(`CREATE UNIQUE INDEX IF NOT EXISTS GroupID on Groups (ID)`);
+    db.run(`CREATE UNIQUE INDEX IF NOT EXISTS ProfileID on Profiles (ID)`);
+    db.run(`CREATE UNIQUE INDEX IF NOT EXISTS AddressID on Addresses (ID)`);
   }
 );
  

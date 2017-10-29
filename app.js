@@ -32,7 +32,6 @@ app.get('/contacts', (req, res) =>
   {
     contacts.select( (contactsData) =>
       {
-        // console.log(contactsData);
         res.render('contacts', {contactsData})
       }
     );
@@ -77,7 +76,6 @@ app.get('/groups', (req, res) =>
   {
     groups.select( (groupsData) =>
       {
-        // console.log(contactsData);
         res.render('groups', {groupsData})
       }
     );
@@ -95,7 +93,6 @@ app.get('/groups/edit/:id', (req, res) =>
   {
     groups.select( (groupData) =>
       {
-        // console.log(`di router, parameter idnya adalah ${req.params.id}`);
         res.render('groupEdit', {groupData})
       },`*`,req.params.id);
   }
@@ -121,10 +118,13 @@ app.get('/groups/delete/:id', (req, res) =>
 
 app.get('/profiles', (req, res) =>
   {
-    profiles.select( (profilesData) =>
+    profiles.leftJoin( (profilesData) =>
       {
-        // console.log(contactsData);
-        res.render('profiles', {profilesData})
+        contacts.select( (contactsData) =>
+          {
+            res.render('profiles', {profilesData, contactsData});
+          }
+        )
       }
     );
   }
@@ -137,11 +137,11 @@ app.post(`/profiles`, (req, res) =>
   }
 );
 
-app.get('/contacts/edit/:id', (req, res) =>
+app.get('/profiles/edit/:id', (req, res) =>
   {
-    contacts.select( (contactData) =>
+    profiles.select( (profileData) =>
       {
-        res.render('contactEdit', {contactData})
+        res.render('profileEdit', {profileData})
       },`*`,req.params.id);
   }
 );
@@ -168,7 +168,6 @@ app.get('/addresses', (req, res) =>
   {
     addresses.select( (addressesData) =>
       {
-        // console.log(contactsData);
         res.render('addresses', {addressesData})
       }
     );

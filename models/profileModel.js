@@ -13,7 +13,7 @@ const tableName = `Profiles`;
 
 let statement = ``;
 let command = ``;
-let properties = ['username', `password`];
+let properties = ['username', `password`, `ContactID`];
 let fill = ``;
 let columnNames = ``;
 
@@ -117,6 +117,24 @@ let deleteQuery = (id) =>
   resetAll();
 }
 
+let leftJoin = (callback) =>
+{
+  statement = `SELECT Profiles.username, Profiles.password, Contacts.name FROM Profiles LEFT JOIN Contacts on Profiles.ContactID = Contacts.ID`
+  db.all(statement, (err, rows) =>
+    {
+      if (err)
+      {
+        console.log(err);
+      }
+      else
+      {
+        callback(rows);
+      }
+    }
+  )
+  resetAll();
+}
+
 
 let resetAll = () =>
 {
@@ -126,4 +144,4 @@ let resetAll = () =>
   columnNames = ``;
 }
 
-module.exports = {add, select, update, deleteQuery};
+module.exports = {add, select, update, deleteQuery, leftJoin};

@@ -12,7 +12,7 @@
             <th>No</th>
             <th>Group</th>
         <% let i = 1 %>
-         <% rows.forEach(function(group){%>
+         <% data.forEach(function(group){%>
             <tr>
                  <td> <%= i %> </td>
                  <td> <%= group.name_of_group %> </td>
@@ -31,9 +31,9 @@
       </form>
      <% } %>
      <% if (edited === true) {%>
-    <form action="/groups/edit/<%=rows[0].id%>" method="post">
+    <form action="/groups/edit/<%=data[0].id%>" method="post">
         Name:<br>
-         <input type="text" name="name" value="<%=rows[0].name_of_group%>">
+         <input type="text" name="name" value="<%=data[0].name_of_group%>">
         <br>
         <input type="submit" value="EDIT"=>
         </form>

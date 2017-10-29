@@ -27,7 +27,18 @@ db.serialize(() => {
     	city varchar(20),
     	zipcode int
 	)`)
-});
+
+// Tabel Contacts dan Table Profiles memiliki relasi dimana satu data contact hanya boleh memiliki satu data profile. 
+// Pada file setup.js tambahkan column relasi foreign key dan tentukan di tabel mana foreign key tersebut ditambahkan (hint: gunakan alter table)
+// 2. Tentukan (jika ada dan perlu) column mana saja yang harus di set UNIQUE (baca dokumentasi sqlite3 untuk menambahkan unique pada existing table)
+
+	db.run(`ALTER TABLE Profile ADD COLUMN contact_id int REFERENCES Contacts(id)`, (err) => {
+		
+		  })
+	db.run(`ALTER TABLE Addresses ADD COLUMN contact_id int REFERENCES Contacts(id)`, (err)=> {
+			
+		})
+	}); 
 
 db.close()
 

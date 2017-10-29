@@ -43,6 +43,12 @@ db.serialize(()=> {
   		console.log(err);
   	}
   })
+
+  db.run(`create table if not exists ContactGroup (id integer primary key, id_contact references Contacts(id) on delete cascade, id_group references Groups(id) on delete cascade)`, err=>{
+  	if(err){
+  		console.log(err);
+  	}
+  })
 });
  
 db.close();

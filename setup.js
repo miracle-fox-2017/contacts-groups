@@ -23,6 +23,11 @@ db.serialize(function() {
     street VARCHAR(50),
     city VARCHAR(20),
     zipcode INTEGER)`)
+
+  db.run(`ALTER TABLE profile
+    ADD id_contacts INTEGER`)
+
+
 });
 
 db.close();

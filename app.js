@@ -26,7 +26,7 @@ app.get('/', function(req, res) {
 app.get('/contacts', function (req, res) {
   let query = `SELECT * FROM contacts`;
   db.all(query, (err, rows)=>{
-    res.render('contacts',{rows});
+    res.render('contacts',{"rows" : rows, "message":''});
   })
 
 })
@@ -37,10 +37,21 @@ app.post('/contacts', function(req, res) {
   let company = req.body.company;
   let telp = req.body.telp;
   let email = req.body.email;
+  let msg = 'Nama Tidak Boleh Kosong ..!!'
 
-  db.run(`INSERT INTO contacts (name, company, telp, email) VALUES ('${name}', '${company}', '${telp}', '${email}')`, ()=>{
-    res.redirect('/contacts');
-  });
+  // db.run(`INSERT INTO contacts (name, company, telp, email) VALUES ('${name}', '${company}', '${telp}', '${email}')`, ()=>{
+  //   res.redirect('/contacts');
+  // });
+
+  if (name != ''){
+    db.run(`INSERT INTO contacts (name, company, telp, email) VALUES ('${name}', '${company}', '${telp}', '${email}')`, ()=>{
+      res.redirect('/contacts');
+    });
+  }else{
+    db.all(`SELECT * FROM contacts`, (err, rows)=>{
+      res.render('contacts', {"rows":rows, "message": msg})
+    })
+  }
 })
 
 // UPDATE
@@ -195,25 +206,54 @@ app.get('/address/delete/:id', (req, res)=>{
 // --------PROFILE-------
 // SELECT
 app.get('/profiles', (req, res)=>{
-  let query = `SELECT * FROM profile`;
+  let query = `SELECT p.*, c.name as contacts FROM profile as p
+              LEFT JOIN contacts as c
+              ON p.id_contacts = c.id`;
 
   db.all(query, (err, rows)=>{
-    res.render('profile', {rows})
+    db.all(`SELECT * FROM contacts`, (err, data)=>{
+      res.render('profile', {"data":data, "rows":rows, "message" : ''})
+    })
   })
 })
+
 
 // INSERT
 app.post('/profiles', (req, res)=>{
   let username = req.body.username;
   let password = req.body.password;
+  let contacts = req.body.id_contacts;
+
+  let count = `SELECT COUNT(*) FROM profile WHERE id_contacts = '${contacts}'`
+
   let query = `INSERT INTO
-              profile (username, password)
+              profile (username, password, id_contacts)
               VALUES
-              ('${username}', '${password}')`;
+              ('${username}', '${password}', '${contacts}')`;
+  let queryProfile = `SELECT p.*, c.name as contacts FROM profile as p
+              LEFT JOIN contacts as c
+              ON p.id_contacts = c.id`;
 
+  let msg = 'Your contact already have profile'
 
-  db.run(query, ()=>{
-    res.redirect('/profiles');
+  db.all(count, (err, rows)=>{
+    let check = rows[0]['COUNT(*)'];
+
+    if (check == 0) {
+      db.run(query, ()=>{
+        db.all(`SELECT * FROM contacts`, (err, data)=>{
+          db.all(queryProfile, (err, rows)=>{
+            res.render('profile', {"data":data, "rows":rows, "message" : ''})
+          })
+        })
+      })
+    }else{
+      db.all(queryProfile, (err, rows)=>{
+        db.all(`SELECT * FROM contacts`, (err, data)=>{
+          res.render('profile', {"data":data, "rows":rows, "message":msg})
+        })
+      })
+    }
   })
 
 })
@@ -221,10 +261,15 @@ app.post('/profiles', (req, res)=>{
 // UPDATE
 app.get('/profiles/edit/:id', (req, res)=>{
   let id = req.params.id;
-  let query = `SELECT * FROM profile WHERE id = '${id}'`;
+  let query = `SELECT p.*, c.name as contacts FROM profile as p
+              INNER JOIN contacts as c
+              ON p.id_contacts = c.id
+              WHERE p.id = '${id}'`;
 
   db.all(query, (err, rows)=>{
-    res.render('profile-edit', {rows});
+    db.all(`SELECT * FROM contacts`, (err, data)=>{
+      res.render('profile-edit', {"rows": rows, "data":data});
+    })
   })
 })
 
@@ -232,9 +277,13 @@ app.post('/profiles/edit/:id', (req, res)=>{
   let id = req.body.id;
   let username = req.body.username;
   let password = req.body.password;
+  let id_contacts = req.body.id_contacts;
+
   let query = `UPDATE profile
               SET
-              username = '${username}', password = '${password}'
+              username = '${username}',
+              password = '${password}',
+              id_contacts = '${id_contacts}'
               WHERE
               id = '${id}'`;
 

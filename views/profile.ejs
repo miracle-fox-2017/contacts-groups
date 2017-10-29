@@ -51,11 +51,22 @@
         </div>
 
         <div class="col-md-12 col-xs-12" id="add">
+          <% if (message != ''){ %>
+          <div class="alert alert-danger">
+            <%= message %>
+          </div>
+          <%}%>
           <form class="" action="" method="post">
             <fieldset>
               <legend>Add Profile</legend>
               <input type="text" name="username" placeholder="Masukkan Username">
               <input type="text" name="password" placeholder="Masukkan Password">
+              <select class="" name="id_contacts">
+                <option selected disabled>Click to Choose -----</option>
+                <% data.forEach (contact => { %>
+                    <option value="<%= contact.id %>"><%= contact.name %></option>
+                <% }); %>
+              </select>
               <input type="submit" name="submit" value="SUBMIT" class="btn btn-primary">
             </fieldset>
 
@@ -69,6 +80,7 @@
                 <th class="text-center">ID</th>
                 <th class="text-center">USERNAME</th>
                 <th class="text-center">PASSWORD</th>
+                <th class="text-center">CONTATCS</th>
                 <th class="text-center">OPTION</th>
               </tr>
             </thead>
@@ -79,6 +91,7 @@
                   <td class="text-center"><%= profile.id %></td>
                   <td><%= profile.username %></td>
                   <td><%= profile.password %></td>
+                  <td><%= profile.contacts %></td>
                   <td class="text-center"><a href="/profiles/edit/<%= profile.id %>">Edit</a> | <a href="/profiles/delete/<%= profile.id %>">Delete</a> </td>
                 </tr>
               </tbody>

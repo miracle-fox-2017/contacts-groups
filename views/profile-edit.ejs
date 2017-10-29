@@ -57,7 +57,19 @@
               <input type="hidden" name="id" value="<%= rows[0].id %>">
               <input type="text" name="username" value="<%= rows[0].username %>" placeholder="Masukkan Username">
               <input type="text" name="password" value="<%= rows[0].password%>" placeholder="Masukkan Password">
+              <select class="" name="id_contacts">
+                <option selected disabled>Click to Choose -----</option>
+                <% data.forEach (contact => {
+                  if(contact.id == rows[0].id_contacts ){
+                %>
+                <option value="<%= contact.id %>" selected><%= contact.name %></option>
+                <%}else{%>
+                <option value="<%= contact.id %>"><%= contact.name %></option>
+                <% }}); %>
+              </select>
+
               <input type="submit" name="submit" value="SUBMIT" class="btn btn-primary">
+
             </fieldset>
 
           </form>

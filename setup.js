@@ -17,6 +17,11 @@ db.serialize(()=>{
             name_of_group VARCHAR
         )`
     );
+    // Update Release 3
+    // Buat table sementara dengan tambahan kolom contact_id
+    // Migrasi seluruh data dari table profile ke table baru
+    // Hapus tabel lama profile
+    // Ubah nama tabel baru menjadi profile
     db.run( // Profile Table
         `CREATE TABLE IF NOT EXISTS profile(
             id INT PRIMARY KEY AUTOINCREMENT,

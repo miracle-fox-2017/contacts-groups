@@ -38,7 +38,7 @@ app.post("/contacts",(req,res)=>{ // Tambah kontak
         (name, company, phone, email)
         VALUES ("${data.name}", "${data.company}", "${data.phone}", "${data.email}")`
     );
-    db.redirect("/contacts");
+    res.redirect("/contacts");
 });
 app.get("/contacts/edit/:id",(req,res)=>{ // Halaman Edit Kontak
     db.all(`SELECT * FROM contacts WHERE id="${req.params.id}"`,(err,data)=>{
@@ -133,42 +133,95 @@ app.get("/groups/delete/:id",(req,res)=>{ // Hapus group
 
 // Profile
 app.get("/profiles",(req,res)=>{ // Halaman awal profile
-    db.all(`SELECT * FROM profile`,(err,data)=>{
+    db.all(`SELECT profile.id, profile.username, profile.password, contacts.name FROM profile
+        INNER JOIN contacts
+        ON profile.contact_id = contacts.id`,(err,profile)=>{
         if(err){
             throw err;
         }else{
-            res.render("profile",{data:data});
+            db.all(`SELECT * FROM contacts`,(err,contact)=>{
+                if(err){
+                    throw err;
+                }else{
+                    res.render("profile",{profile:profile,contact:contact});
+                }
+            });
         }
     });
 });
 app.post("/profiles",(req,res)=>{ // Tambah profile
     const data=req.body;
-    db.run(
-        `INSERT INTO profile (username,password)
-        VALUES ("${data.username}","${data.password}")`
-    );
-    res.redirect("/profiles");
-});
-app.get("/profiles/edit/:id",(req,res)=>{ // Halaman edit group
-    db.all(`SELECT * FROM profile WHERE id="${req.params.id}"`,(err,data)=>{
+    db.all(`SELECT * FROM profile WHERE contact_id = "${data.contact}"`,(err,check)=>{
         if(err){
-            throw err;
-        }else if(data.length === 0){
+            throw err
+        }else if(check.length === 0){
+            db.run(
+                `INSERT INTO profile (username,password,contact_id)
+                VALUES ("${data.username}","${data.password}","${data.contact}")`
+            );
             res.redirect("/profiles");
         }else{
-            res.render("edit-profile",{data:data});
+            res.send("Kontak telah digunakan <a href='/profiles'>Back to Profile</a>");
+        }
+    });
+});
+app.get("/profiles/edit/:id",(req,res)=>{ // Halaman edit group
+    db.all(`SELECT * FROM profile WHERE id="${req.params.id}"`,(err,profile)=>{
+        if(err){
+            throw err;
+        }else if(profile.length === 0){
+            res.redirect("/profiles");
+        }else{
+            db.all(`SELECT * FROM contacts`,(err,contact)=>{
+                if(err){
+                    throw err;
+                }else{
+                    res.render("edit-profile",{profile:profile,contact:contact});
+                }
+            });
         }
     });
 });
 app.post("/profiles/edit/:id",(req,res)=>{ // Edit group
     const data=req.body;
-    db.run(
-        `UPDATE profile SET
-        username="${data.username}",
-        password="${data.password}"
-        WHERE id="${data.id}"`
-    );
-    res.redirect("/profiles");
+    db.all(`SELECT * FROM profile WHERE contact_id="${data.contact}"`,(err,checkUnique)=>{
+        if(err){
+            throw err;
+        }else if(checkUnique.length === 0){
+            db.run(
+                `UPDATE profile SET
+                username="${data.username}",
+                password="${data.password}",
+                contact_id="${data.contact}"
+                WHERE id="${data.id}"`
+            );
+            res.redirect("/profiles");
+        }else{
+            db.all(`SELECT * FROM profile WHERE id="${data.id}"`,(err,checkExist)=>{
+                if(err){
+                    throw err;
+                }else if(checkExist.length === 0){
+                    db.run(
+                        `UPDATE profile SET
+                        username="${data.username}",
+                        password="${data.password}",
+                        contact_id="${data.contact}"
+                        WHERE id="${data.id}"`
+                    );
+                    res.redirect("/profiles");
+                }else{
+                    res.send("Kontak telah digunakan <a href='/profiles'>Back to Profile</a>");
+                }
+            });
+        }
+    });
+    // db.run(
+    //     `UPDATE profile SET
+    //     username="${data.username}",
+    //     password="${data.password}"
+    //     WHERE id="${data.id}"`
+    // );
+    //res.redirect("/profiles");
 });
 app.get("/profiles/delete/:id",(req,res)=>{ // Hapus group
     db.all(`SELECT * FROM profile WHERE id="${req.params.id}"`,(err,data)=>{

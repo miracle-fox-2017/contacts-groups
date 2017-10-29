@@ -5,6 +5,7 @@ const model = require('./model/model');
 const contactsController = require('./controller/contacts-controller');
 const groupsController = require('./controller/groups-controller');
 const addressController = require('./controller/address-controller');
+const profilesController = require('./controller/profiles-controller');
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -30,7 +31,13 @@ app.get('/address', addressController.getAddress);
 app.post('/address', addressController.postAddress);
 app.get('/address/edit/:id', addressController.getEditAddress);
 app.post('/address/edit/:id', addressController.postEditAddress);
-app.get('/address/edit/:id', addressController.deleteAddress);
+app.get('/address/delete/:id', addressController.deleteAddress);
+
+app.get('/profiles', profilesController.getProfiles);
+app.post('/profiles', profilesController.postProfiles);
+app.get('/profiles/edit/:id', profilesController.getEditProfiles);
+app.post('/profiles/edit/:id', profilesController.postEditProfiles);
+app.get('/profiles/delete/:id', profilesController.deleteProfiles);
 
 app.listen('3000', () => {
   console.log(`App started on port 3000`);

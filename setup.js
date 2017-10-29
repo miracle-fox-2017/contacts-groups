@@ -37,8 +37,12 @@ db.serialize(()=> {
   		console.log(err);
   	}
   })
-});
- 
 
+  db.run(`alter table Addresses add column id_contact integer references Contacts(id) on delete set null`, err=>{
+  	if(err){
+  		console.log(err);
+  	}
+  })
+});
  
 db.close();

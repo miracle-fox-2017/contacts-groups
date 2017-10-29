@@ -1,0 +1,13 @@
+<%- include('../partials/header.ejs')%>
+<%- include('../partials/menu.ejs')%>
+
+<form action="/groups/edit/<%=group.id%>" method="POST">
+
+  Name of Group:<br>
+  <input type="text" name="name_of_group" value="<%=group.name_of_group%>">
+  <br><br>
+  <input type="submit" value="Submit">
+</form> 
+
+
+<%- include('../partials/footer.ejs')%>

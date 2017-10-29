@@ -1,0 +1,37 @@
+<%- include('../partials/header.ejs')%>
+<%- include('../partials/menu.ejs')%>
+
+  <table class="table table-striped">
+    <thead>
+      <tr>
+      	<th>Id</th>
+        <th>Username</th>
+        <th>Password</th>
+        <th>Contact</th>
+        <th>Options</th>
+      </tr>
+    </thead>
+    <tbody>
+    <%profiles.forEach(item=>{%>
+      <tr>
+        <td><%=item.id%></td>
+        <td><%=item.username%></td>
+        <td><%=item.password%></td>
+
+        <%contacts.forEach(contact=>{ %>
+            <%if(contact.id == item.id_contact){%>
+              <td><%=contact.name%></td>
+            <%}%>
+        <%})%>
+
+        <td>
+        	<a href="/profiles/add" class="btn btn-primary" role="button">Add</a>
+        	<a href="/profiles/edit/<%=item.id%>" class="btn btn-primary" role="button">Edit</a>
+        	<a href="/profiles/delete/<%=item.id%>" class="btn btn-primary" role="button">Delete</a>
+        </td>
+      </tr>
+      <%})%>
+    </tbody>
+  </table>
+
+<%- include('../partials/footer.ejs')%>

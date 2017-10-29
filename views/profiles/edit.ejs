@@ -1,0 +1,25 @@
+<%- include('../partials/header.ejs')%>
+<%- include('../partials/menu.ejs')%>
+
+<form action="/profiles/edit/<%=profiles.id%>" method="POST">
+
+  Username:<br>
+  <input type="text" name="username" value="<%=profiles.username%>">
+  <br>
+  Password:<br>
+  <input type="text" name="password" value="<%=profiles.password%>">
+  <br>
+  <label for="sel1" >Select contact:</label>
+  <select class="form-control" style="width:150px;" name="id_contact">
+  	<%contact.forEach(item=>{%>
+	    <option value="<%=item.id%>">
+	    	<%=item.id%>. <%=item.name%>
+	    </option>
+    <%})%>
+  </select>
+  <br><br>
+  <input type="submit" value="Submit">
+</form> 
+
+
+<%- include('../partials/footer.ejs')%>

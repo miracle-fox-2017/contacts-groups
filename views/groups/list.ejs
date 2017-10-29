@@ -1,0 +1,26 @@
+<%- include('../partials/header.ejs')%>
+<%- include('../partials/menu.ejs')%>
+
+  <table class="table table-striped">
+    <thead>
+      <tr>
+      	<th>Id</th>
+        <th>Name of Group</th>
+      </tr>
+    </thead>
+    <tbody>
+    <%group.forEach(item=>{%>
+      <tr>
+        <td><%=item.id%></td>
+        <td><%=item.name_of_group%></td>
+        <td>
+        	<a href="#" class="btn btn-primary" role="button">Add</a>
+        	<a href="/groups/edit/<%=item.id%>" class="btn btn-primary" role="button">Edit</a>
+        	<a href="/groups/delete/<%=item.id%>" class="btn btn-primary" role="button">Delete</a>
+        </td>
+      </tr>
+      <%})%>
+    </tbody>
+  </table>
+
+<%- include('../partials/footer.ejs')%>

@@ -1,0 +1,22 @@
+<%- include('../partials/header.ejs')%>
+<%- include('../partials/menu.ejs')%>
+
+<form action="/contacts/edit/<%=contact.id%>" method="POST">
+
+  Name:<br>
+  <input type="text" name="name" value="<%=contact.name%>">
+  <br>
+  Company:<br>
+  <input type="text" name="company" value="<%=contact.company%>">
+  <br>
+  Telp Number:<br>
+  <input type="text" name="telp_number" value="<%=contact.telp_number%>">
+  <br>
+  Email:<br>
+  <input type="text" name="email" value="<%=contact.email%>">
+  <br><br>
+  <input type="submit" value="Submit">
+</form> 
+
+
+<%- include('../partials/footer.ejs')%>

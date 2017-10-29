@@ -25,6 +25,20 @@ db.serialize(()=> {
   		console.log(err);
   	}
   })
+
+  db.run('alter table Profile add column id_contact integer references Contacts(id) on delete set null', err=>{
+  	if(err){
+  		console.log(err);
+  	}
+  })
+
+  db.run('create unique index if not exists unique_name on Profile(id_contact);', err=>{
+  	if(err){ f
+  		console.log(err);
+  	}
+  })
 });
+ 
+
  
 db.close();

@@ -31,7 +31,19 @@
         </tr>
       </thead>
       <tbody>
-
+        <% dataContacts.forEach((data) => { %>
+          <tr>
+            <td><%= data.id %></td>
+            <td><%= data.name %></td>
+            <td><%= data.company %></td>
+            <td><%= data.telp_number %></td>
+            <td><%= data.email %></td>
+            <td>
+              <a href="/contacts/edit/<%= data.id %>">Edit</a>
+              <a href="/contacts/delete/<%= data.id %>">Delete</a>
+            </td>
+          </tr>
+        <% }) %>
       </tbody>
     </table>
 

@@ -1,12 +1,74 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Contacts</title>
+    <style>
+         table{
+        border: 1px solid black;
+      }
+     </style>
 </head>
 <body>
-    ini Contacts
+    <table>
+        <tr>
+          <th>No</th>
+          <th>Nama</th>
+          <th>Company</th>
+          <th>Phone Number</th>
+          <th>Email</th>
+          <% let i = 1 %>
+        <% rows.forEach(function(element){%>
+            <tr>
+              <td> <%= i %> </td>
+              <td> <%= element.name %> </td>
+              <td> <%= element.company %> </td>
+              <td> <%= element.telp_number %> </td>
+              <td> <%= element.email %> </td>
+              <td> <a href="/contacts/edit/<%=element.id%>">edit</a>
+              <td> <a href="/contacts/delete/<%=element.id%>">delete</a>
+            </tr>
+          <% i++ })%>
+        </tr>
+      </table>
+      <% if (edited === true) {%>
+        <p></p>
+        <form action="/contacts/edit/<%=rows[0].id%>" method="post">
+          Name: <br>
+          <input type="text" name="name" value="<%=rows[0].name%>">
+          <br>
+          Company: <br>
+          <input type="text" name="company" value="<%=rows[0].company%>">
+          <br>
+          Phone Number<br>
+          <input type="text" name="phoneNumber" value="<%=rows[0].telp_number%>">
+          <br>
+          Email <br>
+          <input type="text" name="email" value="<%=rows[0].email%>">
+          <br><br>
+          <input type="submit" value="EDIT"=>
+        </form>
+      <% } %>
+      <% if (edited === false) {%>
+        <form action="/contacts" method="POST">
+          Name:<br>
+          <input type="text" name='name' >
+          <br>
+          Company:<br>
+          <input type="text" name='company' >
+          <br>
+          Phone Number<br>
+          <input type="text" name='phoneNumber'>
+          <br>
+          Email<br>
+          <input type="text" name='email'>
+          <br>
+          <input type="submit" value="SUBMIT"=>
+        </form>
+     <% } %> 
 </body>
 </html>

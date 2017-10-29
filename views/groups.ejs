@@ -7,6 +7,36 @@
     <title>Groups</title>
 </head>
 <body>
-   ini groups 
+     <table>
+        <tr>
+            <th>No</th>
+            <th>Group</th>
+        <% let i = 1 %>
+         <% rows.forEach(function(element){%>
+            <tr>
+                 <td> <%= i %> </td>
+                 <td> <%= element.name_of_group %> </td>
+                 <td> <a href="/groups/edit/<%=element.id%>">edit</a>
+                 <td> <a href="/groups/delete/<%=element.id%>">delete</a>
+            </tr>
+        <% i++ })%>
+             </tr>
+    </table>
+        <% if (edited === false) {%>
+        <form action="/groups" method="post">
+         Name:<br>
+         <input type="text" name="name" >
+        <br>
+         <input type="submit" value="ADD"=>
+      </form>
+     <% } %>
+     <% if (edited === true) {%>
+    <form action="/groups/edit/<%=rows[0].id%>" method="post">
+        Name:<br>
+         <input type="text" name="name" value="<%=rows[0].name_of_group%>">
+        <br>
+        <input type="submit" value="EDIT"=>
+        </form>
+    <% } %>
 </body>
 </html>

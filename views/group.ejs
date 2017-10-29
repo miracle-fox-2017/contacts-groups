@@ -10,17 +10,20 @@
 			<tr>
 				<td>Id</td>
 				<td>Name of Groups</td>
+				<td>Contact</td>
 				<td>Action</td>
 			</tr>
 		</thead>
 		<tbody>
-		<%group.forEach(row=>{%>
+		<%groups.forEach(row=>{%>
 			<tr>
 				<td><%=row.id%>
 				<td><%=row.name_of_group%></td>
+				<td><%=row.name%></td>
 				<td>
 					<a href="/groups/edit/<%=row.id%>">Edit</a>
 					<a href="/groups/delete/<%=row.id%>">Delete</a>
+					<a href="/groups/assign_contacts/<%=row.id%>">Assign Contact</a>
 				</td>		
 			</tr>
 		<%})%>

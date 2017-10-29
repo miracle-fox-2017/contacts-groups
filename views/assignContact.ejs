@@ -1,0 +1,17 @@
+<% %>
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Edit Address</title>
+</head>
+<body>
+<p>Assign contacts for group: <%=group.name_of_group%></p>
+	<form action="/groups/assign_contacts/<%=group.id%>" method="post">
+  		<select name="contact">
+  		<%contacts.forEach(contact=>{%>
+  			<option value="<%=contact.id%>"><%=contact.name%></option>
+  		<%})%>
+  		<input type="submit" value="Submit">
+	</form> 
+</body>
+</html>

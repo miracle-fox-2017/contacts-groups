@@ -1,10 +1,16 @@
 const express = require('express')
 const router = express.Router()
 const Model = require('../models/groupsModel')
+const Contact = require('../models/contactsModel')
 
 router.get('/', (req, res)=>{
-	Model.getAllGroup(rows=>{
-		res.render('group', {group : rows})
+	// Model.getAllGroup(rows=>{
+	// 	res.render('group', {group : rows})
+	// })
+
+	Model.getAllGroupContact(groups=>{
+		// res.send(groups)
+		res.render('group', {groups})
 	})
 })
 
@@ -29,6 +35,23 @@ router.post('/edit/:id', (req, res)=>{
 
 router.get('/delete/:id', (req, res)=>{
 	Model.deleteGroup(req.params.id, ()=>{
+		res.redirect('/groups')
+	})
+})
+
+router.get('/assign_contacts/:id', (req, res)=>{
+	Contact.getAllContactNonGroup(req.params.id, contacts=>{
+		// res.send(contacts)
+		Model.getGroupById(req.params.id, group=>{
+			// res.send({contacts, group})
+			res.render('assignContact', {contacts, group})
+		})		
+	})
+})
+
+router.post('/assign_contacts/:id', (req, res)=>{
+	req.body.id_group = req.params.id
+	Model.addContactGroup(req.body, ()=>{
 		res.redirect('/groups')
 	})
 })

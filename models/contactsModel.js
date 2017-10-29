@@ -20,6 +20,12 @@ class Contact{
 		})
 	}
 
+	static getAllContactNonGroup(data, cb){
+		db.all(`select C.id, C.name, G.name_of_group from Contacts as C left join ContactGroup as CG on C.id = CG.id_contact left join Groups as G on CG.id_group = G.id`, (err, result)=>{
+			cb(result)
+		})
+	}
+
 
 	static addContact(data, cb){
 		db.run(`insert into Contacts (name, telp_number, email) values ("${data.name}", "${data.telp_number}", "${data.email}")`, function(err){

@@ -17,22 +17,16 @@
           <th><a href="/addresses">Addresses</a></th>
         </tr>
       </thead>
-    </table>
+    </table><br>
 
-    <table>
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Username</th>
-          <th>Password</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-
-      </tbody>
-    </table>
-
-    <h4><a href="/profiles/add">Add Profile</a></h4>
+    <form class="" action="/profiles/add" method="post">
+      Username:<br>
+      <input type="text" name="username" placeholder="input your username"><br>
+      <br>
+      Password:<br>
+      <input type="password" name="password" placeholder="input your password"><br>
+      <br>
+      <input type="submit" value="Submit">
+    </form>
   </body>
 </html>

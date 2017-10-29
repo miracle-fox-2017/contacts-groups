@@ -11,11 +11,11 @@ class Contact {
   static create(data, callback) {
     db.run(`INSERT INTO Contacts (name, company, telp_number, email) VALUES (
       '${data.name}', '${data.company}', '${data.telp_number}', '${data.email}')`, (err) => {
-        callback(err)
-      })
+      callback(err)
+    })
   }
 
-  static findByID(contactId, callback) {
+  static findById(contactId, callback) {
     db.get(`SELECT * FROM Contacts WHERE id = ${contactId}`, (err, rows) => {
       callback(err, rows)
     })

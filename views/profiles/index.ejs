@@ -17,9 +17,9 @@
           <th><a href="/addresses">Addresses</a></th>
         </tr>
       </thead>
-    </table>
+    </table><br>
 
-    <table>
+    <table border="1px">
       <thead>
         <tr>
           <th>ID</th>
@@ -29,7 +29,17 @@
         </tr>
       </thead>
       <tbody>
-
+        <% dataProfiles.forEach((data) => { %>
+          <tr>
+            <td><%= data.id %></td>
+            <td><%= data.username %></td>
+            <td><%= data.password %></td>
+            <td>
+              <a href="/profiles/edit/<%= data.id %>">Edit</a>
+              <a href="/profiles/delete/<%= data.id %>">Delete</a>
+            </td>
+          </tr>
+        <% }) %>
       </tbody>
     </table>
 

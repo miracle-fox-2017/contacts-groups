@@ -22,7 +22,7 @@ router.post('/add', function(req, res) {
 })
 
 router.get('/edit/:id', function(req, res) {
-  Contact.findByID(req.params.id, (err, rows) => {
+  Contact.findById(req.params.id, (err, rows) => {
     res.render('contacts/edit', {error: err, dataContact: rows})
   })
 })

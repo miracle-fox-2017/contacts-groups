@@ -21,7 +21,7 @@ app.use(bodyParser.json())
 app.use('/', index)
 app.use('/contacts', contacts)
 app.use('/groups', groups)
-// app.use('/profiles', profiles)
+app.use('/profiles', profiles)
 app.use('/addresses', addresses)
 
 // Port

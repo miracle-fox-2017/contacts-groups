@@ -98,7 +98,6 @@ app.get('/profiles', (req, res) => {
 });
 
 app.post('/profiles', (req, res) => {
-	console.log(req.body);
 	profile.addData(req.body);
 	res.redirect('/profiles');
 });

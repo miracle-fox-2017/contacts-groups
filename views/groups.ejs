@@ -12,13 +12,19 @@
       <tr>
         <th>id</th>
         <th>name_of_group</th>
+        <th>Contact Assigned</th>
       </tr>
       <!-- tampilkan semua data contacts -->
       <% rows.forEach (group => { %>
         <tr>
           <td><%= group.id %></td>
           <td><%= group.name_of_group %></td>
-          <td><a href="/groups/edit/<%= group.id %>">edit</a> | <a href="/groups/delete/<%= group.id %>">delete</a> </td>
+          <td>
+            <% for(let i = 0; i<cg.length; i++){ if(cg[i].id_groups == group.id){  %>
+                <%= cg[i].name %>, 
+            <% } } %>
+          </td>
+          <td><a href="/groups/assign_contacts/<%= group.id %>">assign</a> |<a href="/groups/edit/<%= group.id %>">edit</a> | <a href="/groups/delete/<%= group.id %>">delete</a> </td>
         </tr>
       <% }) %>
       

@@ -44,7 +44,7 @@ app.get('/contacts', function (req, res) {
 //POST CONTACTS
 app.post('/contacts', function (req, res) {
   //if name not empty
-  console.log(req.body);
+  // console.log(req.body);
 
   //set query
   let showContacts = `SELECT * FROM Contacts`;
@@ -139,17 +139,51 @@ app.get('/contacts/delete/:id', function (req, res){
 })
 
 /////////////////////// RELEASE 11 ///////////////////////////
+app.get('/groups/assign_contacts/:id_group', function (req, res) {
+  let id_group = req.params.id_group;
+  // res.send('masuk asign profile dengan id '+id_group)
+  let showSpecificId = `SELECT * FROM Groups WHERE id=${id_group}`;
+  //execute query
+  db.all(showContacts, (err, rows)=>{
+    let contacts = rows
+    db.all(showSpecificId, (err, rows)=>{
+      res.render('groupassign',{"rows": rows, "contacts": contacts});
+    })
+  })
 
+})
 
+app.post('/groups/assign_contacts/:id_group', function (req, res){
+  // res.send(req.body);
+  let qInsert = `INSERT INTO ContactGroup
+  (id_groups, id_contacts)
+  VALUES
+  ('${req.body.id_groups}', '${req.body.id_contacts}');`
+  console.log(qInsert);
+  db.run(qInsert, ()=>{
+    res.redirect('/groups');
+  })
+})
 
 /////////////////////// 2. GROUPS /////////////////////////////
 
 //GET GROUPS
 app.get('/groups', function (req, res) {
   let showGroups = `SELECT * FROM Groups`;
-  db.all(showGroups, (err, rows)=>{
-    res.render('groups',{rows});
+  let join = `SELECT
+             ContactGroup.id_contacts, ContactGroup.id_groups,
+             Contacts.id AS cid, Contacts.name
+            FROM ContactGroup 
+            JOIN Contacts 
+            ON ContactGroup.id_contacts = Contacts.id`;
+  db.all(join, (err, rows)=>{
+    let cg = rows;
+    db.all(showGroups, (err, rows)=>{
+      // console.log(cg);
+      res.render('groups',{"rows": rows, "cg": cg});
+    })
   })
+
   
 })
 

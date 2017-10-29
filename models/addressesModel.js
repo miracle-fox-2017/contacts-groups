@@ -42,7 +42,7 @@ class Contact{
 	static deleteAddress(data, cb){
 		db.run(`delete from Addresses where id = "${data}"`, err=>{
 			if(err){
-				console.log(err);
+				console.log(err);	
 			}else{
 				cb()
 			}

@@ -13,18 +13,12 @@
 </head>
 <body>
 
-  <ul>
-    <li><a class="active" href="/">Home</a></li>
-    <li><a href="/contacts">Contacts</a></li>
-    <li><a href="/groups">Groups</a></li>
-    <li><a href="/profile">Profile</a></li>
-    <li><a href="/addresses">Addresses</a></li>
-  </ul>
+  <% include assets/partials/top-nav %>
 
   <div class="container" >
     <h4 class="title is-3" style="text-align:center;">EXPRESS CONTACTS - GROUPS</h4>
-    <p class="subtitle is-4" style="text-align:center;">all <strong>contact</strong> information | <a style="text-decoration:none;" href="/addresses_with_contact"class="button tag is-danger">contact with address</a> </p>
-    <table class="table">
+    <p class="subtitle is-4" style="text-align:center;">all <strong>contact</strong> information | <a style="text-decoration:none;" href="/addresses_with_contact"class="button tag is-danger is-outlined ">contact with address</a> </p>
+    <table class="table is-bordered is-striped is-narrow is-fullwidth">
     <thead>
 
         <tr>
@@ -33,6 +27,7 @@
           <th><abbr title="company">COMPANY</abbr></th>
           <th><abbr title="telp number">PHONE NUMBER</abbr></th>
           <th><abbr title="email">EMAIL</abbr></th>
+          <th>GROUP</th>
           <th><abbr title="actions">ACTIONS</abbr></th>
         </tr>
 
@@ -41,19 +36,20 @@
       <%for(let i=0; i<data_Contacts.length; i++){%>
       <tr>
         <th><%=data_Contacts[i].id%></th>
-        <td><strong><a href="#." title="full name" class="is-success"><%=data_Contacts[i].name%></a></strong>
+        <td><strong><%=data_Contacts[i].name%></strong>
         </td>
         <td><%=data_Contacts[i].company%></td>
         <td><%=data_Contacts[i].telp_number%></td>
         <td><%=data_Contacts[i].email%></td>
+        <td></td>
         <td style="margin-left:-5px;">
-              <a class="button is-info is-outlined is-small" href='/contacts/edit/<%=data_Contacts[i].id%>'>
+              <a class="button is-outlined is-small" href='/contacts/edit/<%=data_Contacts[i].id%>'>
               <span class="icon is-small">
                 <i class="fa fa-pencil"></i>
               </span>
               <span>Edit</span>
               </a>
-              <a onclick="myFunction()" class="button is-danger is-outlined is-small" href="/contacts/delete/<%=data_Contacts[i].id%>">
+              <a onclick="myFunction()" class="button is-outlined is-small" href="/contacts/delete/<%=data_Contacts[i].id%>">
               <span class="icon is-small">
                 <i class="fa fa-times"></i>
               </span>
@@ -86,6 +82,20 @@
         <div class="control">
           <input class="input" id="email" type="text" placeholder="email" name="email" required>
         </div>
+      </div>
+      <div class="field">
+        <p class="control has-icons-left">
+          <span class="select">
+            <select id="selectuser" name="name">
+
+                    <option value="#">options</option>
+
+            </select>
+          </span>
+          <span class="icon is-small is-left">
+            <i class="fa fa-user"></i>
+          </span>
+        </p>
       </div>
       <div class="control">
         <button type="submit" class="button is-success">Submit</button>

@@ -13,18 +13,12 @@
 </head>
 <body>
 
-  <ul>
-    <li><a class="active" href="/">Home</a></li>
-    <li><a href="/contacts">Contacts</a></li>
-    <li><a href="/groups">Groups</a></li>
-    <li><a href="/profile">Profile</a></li>
-    <li><a href="/addresses">Addresses</a></li>
-  </ul>
+  <% include assets/partials/top-nav %>
 
   <div class="container" >
     <h4 class="title is-3" style="text-align:center;">EXPRESS CONTACTS - GROUPS</h4>
     <p class="subtitle is-4" style="text-align:center;">all <strong>Addresses</strong> information</p>
-    <table class="table">
+    <table class="table is-bordered is-striped is-narrow is-fullwidth">
     <thead>
 
         <tr>
@@ -41,19 +35,19 @@
       <%for(let i=0; i<data_Addresses.length; i++){%>
       <tr>
         <th><%=data_Addresses[i].id%></th>
-        <td><strong><a href="#." title="full name" class="is-success"><%=data_Addresses[i].name%></a></strong>
+        <td><strong><%=data_Addresses[i].name%></strong>
         </td>
         <td><%=data_Addresses[i].street%></td>
         <td><%=data_Addresses[i].city%></td>
         <td><%=data_Addresses[i].zipcode%></td>
         <td style="margin-left:-5px;">
-              <a class="button is-info is-outlined is-small" href='/addresses/edit/<%=data_Addresses[i].id%>'>
+              <a class="button is-outlined is-small" href='/addresses/edit/<%=data_Addresses[i].id%>'>
               <span class="icon is-small">
                 <i class="fa fa-pencil"></i>
               </span>
               <span>Edit</span>
               </a>
-              <a onclick="myFunction()" class="button is-danger is-outlined is-small" href="/addresses/delete/<%=data_Addresses[i].id%>">
+              <a onclick="myFunction()" class="button is-outlined is-small" href="/addresses/delete/<%=data_Addresses[i].id%>">
               <span class="icon is-small">
                 <i class="fa fa-times"></i>
               </span>

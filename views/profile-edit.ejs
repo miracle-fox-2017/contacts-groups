@@ -13,13 +13,7 @@
 </head>
 <body>
 
-  <ul>
-    <li><a class="active" href="/">Home</a></li>
-    <li><a href="/contacts">Contacts</a></li>
-    <li><a href="/groups">Groups</a></li>
-    <li><a href="/profile">Profile</a></li>
-    <li><a href="/addresses">Addresses</a></li>
-  </ul>
+  <% include assets/partials/top-nav %>
 
   <div class="container" style="text-align:center;">
     <h4 class="title is-3">- EDIT PROFILE -</h4>
@@ -64,7 +58,7 @@
           </span>
         </p>
       </div>
-      
+
       <%=data_Profile.contact_id%>
           <div style="text-align: center; margin-top:33px;" class="control">
             <input class="button is-success is-outlined is-medium" type="submit" value="Submit input">

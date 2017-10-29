@@ -40,14 +40,36 @@ app.post('/contacts',(req,res)=>{
 })
 
 //READ
+// app.get('/contacts',(req,res)=>{
+//   db.all('select * from Groups',(err,data_Groups)=>{
+//     if(!err){
+//       // let joinToCunjunction = `select Contacts.id, Contacts.name, Contacts.company, Contacts.telp_number, Contacts.email, ConjContactGroup.id_contacts, ConjContactGroup.id_groups from ConjContactGroup left join Contacts on ConjContactGroup.id_contacts = Contacts.id left join Groups on ConjContactGroup.id_groups = Groups.id`
+//       let joinToCunjunction = `select Contacts.id, Contacts.name, Contacts.company, Contacts.telp_number, Contacts.email, ConjContactGroup.id_contacts, ConjContactGroup.id_groups from Contacts left join ConjContactGroup on ConjContactGroup.id_contacts = Contacts.id left join Groups on ConjContactGroup.id_groups = Groups.id`
+//       db.all(joinToCunjunction, (err,data_join)=>{
+//         if(!err){
+//           // res.send(data_join)
+//           db.all(`select * from ConjContactGroup`,(err,data_conjunction)=>{
+//             if(!err){
+//               res.render('contacts',{data_Groups:data_Groups, data_join:data_join, data_conjunction:data_conjunction})
+//             }else{
+//               res.send(err)
+//               console.log(err,'load db conjunction');
+//             }
+//           })
+//         }else{
+//           res.send(err)
+//           console.log(err,'load joinToCunjunction');
+//         }
+//       })
+//     }else{
+//       res.send(err)
+//       console.log(err,'error load db Groups');
+//     }
+//   })
+// })
 app.get('/contacts',(req,res)=>{
-  db.all('select * from Contacts',(err,data)=>{
-    if(!err){
-      res.render('contacts',{data_Contacts:data})
-    }else{
-      res.send(err)
-      console.log('error load db Contacts');
-    }
+  db.all(`select * from Contacts`,(err,data_Contacts)=>{
+    res.render('contacts',{data_Contacts:data_Contacts})
   })
 })
 //UPDATE

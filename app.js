@@ -20,13 +20,11 @@ app.get('/', function(req, res){
 
 app.get('/contacts', function(req, res){
   db.all(`SELECT * FROM contacts`, function(err, rows) {
-    console.log(rows);
   res.render('contacts', {rows})
   })
 })
 
 app.post('/contacts', function(req, res){
-  console.log(req.body);
   db.run(`INSERT INTO contacts (name, company, telp, email) VALUES ('${req.body.name}', '${req.body.company}', '${req.body.telp}', '${req.body.email}')`)
   res.redirect('./contacts')
 })
@@ -46,6 +44,35 @@ app.get('/contacts/delete/:id', function(req, res){
   db.all(`DELETE FROM contacts where id = "${req.params.id}"`)
   res.redirect('/contacts')
 })
+
+//=====GROUPS======
+app.get('/groups', function(req, res){
+  db.all(`SELECT * FROM groups`, function(err, rows) {
+  res.render('groups', {rows})
+  })
+})
+
+app.post('/groups', function (req, res) {
+  db.run(`INSERT INTO groups (name_of_group) VALUES ('${req.body.name_of_group}')` );
+  res.redirect('/groups');
+})
+
+app.get('/groups/edit/:id', function (req, res) {
+  db.each(`SELECT * FROM groups WHERE id = ${req.params.id}`, function(err, rows){
+    res.render('editGroups', {rows})
+  })
+})
+
+app.post('/groups/edit/:id', function (req, res){
+  db.run(`UPDATE groups SET name_of_group = '${req.body.name_of_group}' WHERE id = ${req.params.id}`);
+  res.redirect('/groups');
+})
+
+app.get('/groups/delete/:id', function(req, res){
+  db.all(`DELETE FROM groups where id = "${req.params.id}"`)
+  res.redirect('/groups')
+})
+
 
 app.listen(3000,function(){
   console.log('brum brum jalan app');

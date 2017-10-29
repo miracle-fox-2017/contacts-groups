@@ -3,9 +3,17 @@
 <html>
   <head>
     <style>
-      table{
-        border: 1px solid black;
-      }
+    table {
+      font-family: arial, sans-serif;
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    td, th {
+      border: 1px solid #dddddd;
+      text-align: left;
+      padding: 8px;
+    }
     </style>
     <meta charset="utf-8">
     <title>CONTACTS</title>
@@ -18,6 +26,8 @@
         <th>Company</th>
         <th>Phone Number</th>
         <th>Email</th>
+        <th>Edit</th>
+        <th>Delete</th>
         <% let i = 1 %>
       <% rows.forEach(function(el){%>
           <tr>
@@ -36,16 +46,16 @@
       <p>editnya true bro</p>
       <form action="/contacts/edit/<%=rows[0].id%>" method="post">
         Name:<br>
-        <input type="text" name="name" value="<%=rows[0].name%>">
+        <input type="text" name="name" value="<%=rows[0].name%>" required=true>
         <br>
         Company:<br>
-        <input type="text" name="company" value="<%=rows[0].company%>">
+        <input type="text" name="company" value="<%=rows[0].company%>" required=true>
         <br>
         Phone Number<br>
-        <input type="text" name="phoneNumber" value="<%=rows[0].telp_number%>">
+        <input type="text" name="phoneNumber" value="<%=rows[0].telp_number%>" required=true>
         <br>
         Email<br>
-        <input type="text" name="email" value="<%=rows[0].email%>">
+        <input type="text" name="email" value="<%=rows[0].email%>" required=true>
         <br><br>
         <input type="submit" value="EDIT"=>
       </form>
@@ -53,16 +63,16 @@
     <% if (isEdit === false) {%>
       <form action="/contacts" method="POST">
         Name:<br>
-        <input type="text" name='name' >
+        <input type="text" name='name' required=true>
         <br>
         Company:<br>
-        <input type="text" name='company' >
+        <input type="text" name='company' required=true>
         <br>
         Phone Number<br>
-        <input type="text" name='phoneNumber'>
+        <input type="text" name='phoneNumber' required=true>
         <br>
         Email<br>
-        <input type="text" name='email'>
+        <input type="text" name='email' required=true>
         <br>
         <input type="submit" value="ADD"=>
       </form>

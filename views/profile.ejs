@@ -2,9 +2,17 @@
 <html>
   <head>
   <style>
-    table,td{
-      border: 1px solid black;
-    }
+  table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+  }
+
+  td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+  }
   </style>
     <meta charset="utf-8">
     <title>PROFILE</title>
@@ -29,7 +37,7 @@
               if(eq.id === el.contacts_id){%>
                 <td> <%= eq.name %> </td>
               <%}%>
-              
+
             <%})%>
             <td> <a href="/profile/edit/<%=el.id%>">edit</a></td>
             <td> <a href="/profile/delete/<%=el.id%>">delete</a></td>
@@ -40,13 +48,13 @@
     <% if (isEdit === false) {%>
     <form action="/profile" method="post">
       username:<br>
-      <input type="text" name="username"/>
+      <input type="text" name="username" required=true/>
       <br>
       password:<br>
-      <input type="text" name="password"/>
+      <input type="text" name="password" required=true/>
       <br>
       contact : <br/>
-      <select name="contact">
+      <select name="contact" required=true>
         <option value="">--select contact--</option>
         <% contacts.forEach(function(eq){%>
           <option value="<%=eq.id%>"><%=eq.name %></option>
@@ -57,15 +65,15 @@
   </form>
     <% } %>
   <% if (isEdit === true) {%>
-  <form action="/profile/edit/<%=profiles[0].id%>" method="post">
+  <form action="/profile/edit/<%=profiles[0].id%>" method="post" required=true>
     username:<br>
-    <input type="text" name="username" value="<%=profiles[0].username%>">
+    <input type="text" name="username" value="<%=profiles[0].username%>" required=true>
     <br>
     password:<br>
-    <input type="text" name="password" value="<%=profiles[0].password%>">
+    <input type="text" name="password" value="<%=profiles[0].password%>" required=true>
     <br>
     contact : <br/>
-    <select name="contact">
+    <select name="contact" required=true>
       <option value="">--select contact--</option>
       <% contacts.forEach(function(eq){
         if(eq.id===profiles[0].contacts_id){%>

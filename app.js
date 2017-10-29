@@ -8,6 +8,7 @@ app.set('views', './views')
 app.set('view engine', 'ejs')
 //load/init body parser and save to variable
 const urlencodedParser = bodyParser.urlencoded({ extended: false })
+//CONTACTS
 app.get('/contacts',function(req,res){
   db.all(`SELECT * FROM Contacts`,function(err,rows){
     if(err){
@@ -19,8 +20,9 @@ app.get('/contacts',function(req,res){
     }
   })
 })
+//CONTACTS ADD
 app.post('/contacts', urlencodedParser, function(req,res){
-  console.log(req.body)
+  //mendifinisikan value yang diisi di form dengan body-parser urlencoded
   let name = req.body.name
   let company = req.body.company
   let phoneNumber = req.body.phoneNumber
@@ -29,9 +31,9 @@ app.post('/contacts', urlencodedParser, function(req,res){
           VALUES("${name}", "${company}", "${phoneNumber}", "${email}")`)
     res.redirect('/contacts')
 })
-
+//CONTACTS EDIT
 app.get('/contacts/edit/:id',function(req,res){
-  //console.log(req.params.id)
+  //mendifinisikan isEdit untuk form jika dia true tampilkan form edit
   let isEdit = true;
   db.all(`SELECT * FROM Contacts where id = "${req.params.id}"`,function(err,rows){
     if(err){
@@ -42,6 +44,7 @@ app.get('/contacts/edit/:id',function(req,res){
     }
   })
 })
+//CONTACTS menerima value dari form edit
 app.post('/contacts/edit/:id', urlencodedParser, function(req,res){
   console.log(req.params.id)
   let id = req.params.id
@@ -57,7 +60,7 @@ app.post('/contacts/edit/:id', urlencodedParser, function(req,res){
               WHERE id = "${id}"`);
   res.redirect('/contacts')
 })
-
+//CONTACTS DELETE
 app.get('/contacts/delete/:id', function(req,res){
   let id = req.params.id
   db.all(`DELETE FROM Contacts
@@ -176,12 +179,18 @@ app.post('/profile/edit/:id', urlencodedParser, function(req,res){
 })
 //ADDRESSES
 app.get('/addresses',function(req,res){
-  db.all(`SELECT * FROM Addresses`,function(err,rows){
+    console.log(req.params.error)
+  db.all(`SELECT * FROM Addresses`,function(err,rows1){
     if(err){
       console.log(err)
     }else{
-      res.render('addresses',{rows:rows, isEdit:false})
-
+      db.all(`SELECT * FROM Contacts`,function(err,rows2){
+        if(err){
+          console.log(err)
+        }else{
+          res.render('addresses',{addresses:rows1, contacts:rows2, isEdit:false})
+        }
+      })
     }
   })
 })
@@ -190,9 +199,21 @@ app.post('/addresses', urlencodedParser, function(req,res){
   let street = req.body.street
   let city = req.body.city
   let zipcode = req.body.zipcode
-  db.all(`INSERT INTO Addresses (street, city, zipcode)
-          VALUES("${street}", "${city}", "${zipcode}")`)
-    res.redirect('/addresses')
+  let contacts_id = req.body.address
+  db.all(`SELECT id FROM Addresses where contacts_id = '${contacts_id}'`,function(err,rows2){
+    if(err){
+      console.log(err)
+    }else{
+      console.log(rows2)
+      if (rows2.length > 0){
+        res.redirect('/addresses')
+      } else {
+        db.all(`INSERT INTO Addresses (street, city, zipcode, contacts_id)
+                VALUES("${street}", "${city}", "${zipcode}", "${contacts_id}")`)
+        res.redirect('/addresses')
+      }
+    }
+  })
 })
 //ADDRESSES EDIT
 app.get('/addresses/edit/:id',function(req,res){
@@ -201,7 +222,13 @@ app.get('/addresses/edit/:id',function(req,res){
     if(err){
       console.log(err)
     }else{
-      res.render('addresses',{rows:rows, isEdit:true})
+      db.all(`SELECT * FROM Contacts`,function(err,rows2){
+        if(err){
+          console.log(err)
+        }else{
+          res.render('addresses',{addresses:rows, contacts:rows2, isEdit:true})
+        }
+      })
     }
   })
 })
@@ -210,10 +237,12 @@ app.post('/addresses/edit/:id', urlencodedParser, function(req,res){
   let street = req.body.street
   let city = req.body.city
   let zipcode = req.body.zipcode
+  let contacts_id = req.body.address
   db.all(`UPDATE Addresses
           SET street = "${street}",
               city = "${city}",
-              zipcode = "${zipcode}"
+              zipcode = "${zipcode}",
+              contacts_id = "${contacts_id}"
               WHERE id = "${id}"`);
   res.redirect('/addresses')
 })

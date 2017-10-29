@@ -1,6 +1,20 @@
 <!DOCTYPE html>
 <html>
   <head>
+  <style>
+    table {
+      font-family: arial, sans-serif;
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    td, th {
+      border: 1px solid #dddddd;
+      text-align: left;
+      padding: 8px;
+    }
+
+  </style>
     <meta charset="utf-8">
     <title>ADDRESSES</title>
   </head>
@@ -11,13 +25,23 @@
         <th>Street</th>
         <th>City</th>
         <th>Zipcode</th>
+        <th>Contact Name</th>
+        <th>Edit</th>
+        <th>Delete</th
+      </tr>
         <% let i = 1 %>
-      <% rows.forEach(function(el){%>
+      <% addresses.forEach(function(el){%>
           <tr>
             <td> <%= i %> </td>
             <td> <%= el.street %> </td>
             <td> <%= el.city %> </td>
             <td> <%= el.zipcode %> </td>
+            <% contacts.forEach(function(eq){
+              if(eq.id === el.contacts_id){%>
+                <td> <%= eq.name %> </td>
+              <%}%>
+
+            <%})%>
             <td> <a href="/addresses/edit/<%=el.id%>">edit</a>
             <td> <a href="/addresses/delete/<%=el.id%>">delete</a>
           </tr>
@@ -27,30 +51,52 @@
     <% if (isEdit === false) {%>
     <form action="/addresses" method="post">
       Street:<br>
-      <input type="text" name="street" >
+      <input type="text" name="street" required=true>
       <br>
       City:<br>
-      <input type="text" name="city" >
+      <input type="text" name="city" required=true>
       <br>
       Zipcode:<br>
-      <input type="text" name="zipcode" >
+      <input type="text" name="zipcode" required=true>
+      <br>
+      contact : <br>
+      <select name="address" required=true>
+        <option value="">--select contact--</option>
+        <% contacts.forEach(function(eq){%>
+          <option value="<%=eq.id%>"><%=eq.name %></option>
+        <% }) %>
+      </select>
       <br>
       <input type="submit" value="ADD"=>
   </form>
     <% } %>
   <% if (isEdit === true) {%>
-    <form action="/addresses/edit/<%=rows[0].id%>" method="post">
+    <form action="/addresses/edit/<%=addresses[0].id%>" method="post">
       Street:<br>
-      <input type="text" name="street" value = "<%=rows[0].street%>" >
+      <input type="text" name="street" value = "<%=addresses[0].street%>" required=true>
       <br>
       City:<br>
-      <input type="text" name="city" value = "<%=rows[0].city%>">
+      <input type="text" name="city" value = "<%=addresses[0].city%>" required=true>
       <br>
       Zipcode:<br>
-      <input type="text" name="zipcode" value = "<%=rows[0].zipcode%>">
+      <input type="text" name="zipcode" value = "<%=addresses[0].zipcode%>" required=true>
+      <br>
+      contact : <br/>
+      <select name="address" required=true>
+        <option value="">--select contact--</option>
+        <% contacts.forEach(function(eq){
+          if(eq.id===addresses[0].contacts_id){%>
+            <option value="<%=eq.id%>" selected><%=eq.name %></option>
+          <%}else{%>
+            <option value="<%=eq.id%>"><%=eq.name %></option>
+          <%}%>
+        <% }) %>
+
+      </select>
       <br>
       <input type="submit" value="EDIT"=>
     </form>
+
   <% } %>
   </body>
 </html>

@@ -1,6 +1,19 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <style>
+      table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+      }
+
+      td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+      }
+    </style>
     <meta charset="utf-8">
     <title>GROUPS</title>
   </head>
@@ -9,6 +22,8 @@
       <tr>
         <th>No</th>
         <th>Group</th>
+        <th>Edit</th>
+        <th>Delete</th
         <% let i = 1 %>
       <% rows.forEach(function(el){%>
           <tr>
@@ -23,7 +38,7 @@
     <% if (isEdit === false) {%>
     <form action="/groups" method="post">
       Name:<br>
-      <input type="text" name="name" >
+      <input type="text" name="name" required=true>
       <br>
       <input type="submit" value="ADD"=>
   </form>
@@ -31,7 +46,7 @@
   <% if (isEdit === true) {%>
   <form action="/groups/edit/<%=rows[0].id%>" method="post">
     Name:<br>
-    <input type="text" name="name" value="<%=rows[0].name_of_group%>">
+    <input type="text" name="name" value="<%=rows[0].name_of_group%>" required=true>
     <br>
     <input type="submit" value="EDIT"=>
   </form>

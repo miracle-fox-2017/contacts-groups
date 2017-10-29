@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Addresses page</title>
+  </head>
+  <body>
+    <table>
+      <tr>
+        <form action="/Addresses" method="post">
+          <td><input type="text" name = "street" placeholder="STREET"></td>
+          <td><input type="text" name = "city" placeholder="CITY"></td>
+          <td><input type="text" name = "zipcode" placeholder="ZIPCODE"></td>
+          <td><button type="submit">SAVE</button></td>
+        </form>
+      </tr>
+    </table>
+    <table border="1">
+      <tr>
+      <th>ID</th>
+      <th>STREET</th>
+      <th>CITY</th>
+      <th>ZIPCODE</th>
+    </tr>
+  <%for(let i = 0;i<rows.length;i++){%>
+    <tr>
+      <td><%= rows[i].id %></td>
+      <td><%= rows[i].street %></td>
+      <td><%= rows[i].city %></td>
+      <td><%= rows[i].zipcode %></td>
+    </tr>
+  <%}%>
+    </table>
+  </body>
+</html>

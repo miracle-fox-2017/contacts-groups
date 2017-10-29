@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Contacts page</title>
+  </head>
+  <body>
+    <table>
+      <tr>
+        <form action="/Contacts" method="post">
+          <td><input type="text" name ="name" placeholder="YOU'R NAME"></td>
+          <td><input type="text" name ="company" placeholder="COMPANY NAME"></td>
+          <td><input type="text" name = "telp_number" placeholder="TELP_NUMBER"></td>
+          <td><input type="text" name = "email" placeholder="EMAIL"></td>
+          <td><button type="submit">SAVE</button></td>
+        </form>
+      </tr>
+    </table>
+    <table>
+    <tr>
+      <th>ID</th>
+      <th>NAME</th>
+      <th>COMPANY</th>
+      <th>TELP_NUMBER</th>
+      <th>EMAIL</th>
+    </tr>
+      <%for(let i = 0;i<rows.length;i++){%>
+        <tr>
+            <td><%=rows[i].id%></td>
+            <td><%=rows[i].name%></td>
+            <td><%=rows[i].company%></td>
+            <td><%=rows[i].telp_number%></td>
+            <td><%=rows[i].email%></td>
+            <td><a href="/Contacts/delete/:id">delete</a></td>
+        </tr>
+      <%}%>
+    </table>
+  </body>
+</html>

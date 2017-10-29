@@ -48,14 +48,30 @@ db.serialize(function() {
     }
   })
 
-  db.run(`INSERT INTO Contacts (name, company, telp_number, email) VALUES
-    ('Zuhri Nurhuda', 'Hacktiv8', '085258588122', 'zuhri.nurhuda@gmail.com'),
-    ('Davina Bonadilla', 'Athfaal Stuff', '085123456789', 'davina.bonadilla@gmail.com'),
-    ('Asiyah Asyaima', 'Muslimah Stuff', '085987654321', 'asiyah.asyaima@gmail.com')`, (err) => {
+  // db.run(`INSERT INTO Contacts (name, company, telp_number, email) VALUES
+  //   ('Zuhri Nurhuda', 'Hacktiv8', '085258588122', 'zuhri.nurhuda@gmail.com'),
+  //   ('Davina Bonadilla', 'Athfaal Stuff', '085123456789', 'davina.bonadilla@gmail.com'),
+  //   ('Asiyah Asyaima', 'Muslimah Stuff', '085987654321', 'asiyah.asyaima@gmail.com')`, (err) => {
+  //   if(err) {
+  //     console.log('Failed insert data Contacts');
+  //   } else {
+  //     console.log('Success insert data Contacts');
+  //   }
+  // })
+
+  db.run(`ALTER TABLE Profiles ADD contactId INTEGER REFERENCES Contacts(id)`, (err) => {
     if(err) {
-      console.log('Failed insert data Contacts');
+      console.log('Failed add column contactId');
     } else {
-      console.log('Success insert data Contacts');
+      console.log('Success add column contactId');
+    }
+  })
+
+  db.run(`CREATE UNIQUE INDEX contactId ON Profiles (contactId)`, (err) => {
+    if(err) {
+      console.log('Failed create unique index contactId');
+    } else {
+      console.log('Success create unique index contactId');
     }
   })
 

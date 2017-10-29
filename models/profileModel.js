@@ -95,7 +95,7 @@ let select = (callback, column = `*`, id) =>
  resetAll();
 }
 
-let update = (Obj) =>
+let update = (Obj, callback) =>
 {
   for (let i = 0; i < properties.length - 1 ; i++)
   {
@@ -106,8 +106,19 @@ let update = (Obj) =>
   
   command = `UPDATE`;
   statement = `UPDATE ${tableName} SET ${fill}`;
-  console.log(statement);
-  db.run(statement);
+  // console.log(statement);
+  db.run(statement, (report) =>
+    {
+      if (report.hasOwnProperty('changes'))
+      {
+        callback(true);
+      }
+      else
+      {
+        callback(false);
+      }
+    }
+  );
   resetAll();
 }
 

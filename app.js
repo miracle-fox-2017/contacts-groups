@@ -40,7 +40,7 @@ app.get('/contacts', (req, res) =>
 
 app.post(`/contacts`, (req, res) =>
   {
-    groups.add(req.body);
+    contacts.add(req.body);
     res.redirect(`/contacts`);
   }
 );
@@ -152,8 +152,14 @@ app.get('/profiles/edit/:id', (req, res) =>
 
 app.post('/profiles/edit/:id', (req, res) =>
   {
-    profiles.update(req.body);
-    res.redirect('/profiles');
+    profiles.update(req.body, (report) =>
+      {
+        if (!report)
+        {
+          res.redirect('/profiles', {report});
+        }
+      }
+    );
   }
 )
 

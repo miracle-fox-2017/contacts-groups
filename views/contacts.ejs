@@ -30,5 +30,33 @@
           <%})%>
       </tbody>
     </table>
+    
+    <form action="/contacts" method="post">
+      <table>
+        <thead>
+          <tr>
+            <th colspan="4" align="center">Add New Contact</th>
+          </tr>
+          <tr>
+            <td>Name</td>
+            <td>Company</td>
+            <td>Phone</td>
+            <td>Email</td>
+          </tr>
+        </thead>
+        
+        <tbody>
+          <tr>
+            <td><input type="text" name="name" required></td>
+            <td><input type="text" name="company"></td>
+            <td><input type="text" name="telp_number"></td>
+            <td><input type="text" name="email"></td>
+          </tr>
+          <tr>
+            <td colspan="4" align="right"><input type="submit" name="simpan" value="Add New"></td>
+          </tr>
+        </tbody>
+      </table>
+    </form>
   </body>
 </html>

@@ -71,7 +71,7 @@ Buatlah sejumlah route berikut dan tampilkan melalui view engine ejs
 |POST   | /profiles/edit/:id      | Menerima data form untuk update profile             |
 |GET    | /profiles/delete/:id    | Menghapus data profile berdasarkan id               |
 
-- [] incomplete
+- [x] completed
 ## Release 3
 1. Tabel Contacts dan Table Profiles memiliki relasi dimana satu data contact hanya boleh memiliki satu data profile. 
 Pada file setup.js tambahkan column relasi foreign key dan tentukan di tabel mana foreign key tersebut ditambahkan (hint: gunakan alter table)

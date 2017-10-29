@@ -33,9 +33,12 @@ db.serialize(() => {
   db.run(`CREATE TABLE IF NOT EXISTS Profile (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     username VARCHAR(30) NOT NULL,
-    password VARCHAR(30) NOT NULL
+    password VARCHAR(30) NOT NULL,
+    id_contacts INTEGER UNIQUE,
+    FOREIGN KEY (id_contacts) REFERENCES Contacts (id)
   )`, err => {
     if (err) throw err;
+    console.log(`Database profile dropped and created with new key`);
   });
 });
  

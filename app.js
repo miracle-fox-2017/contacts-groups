@@ -17,14 +17,26 @@ app.set('view engine', 'ejs') // register the template engine
 
 let msg = '';
 let showContacts     = `SELECT * FROM Contacts`;
+let showGroups       = `SELECT * FROM Groups`;
 
 /////////////////////// 1. CONTACTS /////////////////////////////
-
+let showContactsGroup = `SELECT
+                         ContactGroup.id_contacts, ContactGroup.id_groups,
+                         Groups.id AS gid, Groups.name_of_group
+                        FROM ContactGroup 
+                        JOIN Groups 
+                        ON ContactGroup.id_groups = Groups.id`;
+                        
 //GET CONTACTS
 app.get('/contacts', function (req, res) {
-  let showContacts = `SELECT * FROM Contacts`;
-  db.all(showContacts, (err, rows)=>{
-    res.render('contacts',{"rows": rows, "msg": ''});
+  db.all(showGroups, (err, rows)=>{
+    let groups = rows;
+    db.all(showContactsGroup, (err, rows)=>{
+      let cg = rows;
+      db.all(showContacts, (err, rows)=>{
+        res.render('contacts',{"rows": rows, "groups": groups, "cg": cg, "msg": ''});
+      })
+    })
   })
   
 })
@@ -32,7 +44,7 @@ app.get('/contacts', function (req, res) {
 //POST CONTACTS
 app.post('/contacts', function (req, res) {
   //if name not empty
-  // console.log(req.body);
+  console.log(req.body);
 
   //set query
   let showContacts = `SELECT * FROM Contacts`;
@@ -41,18 +53,41 @@ app.post('/contacts', function (req, res) {
                VALUES
                ("${req.body.name}", "${req.body.company}", "${req.body.telp_number}", "${req.body.email}");`
   
+
+  
   if(req.body.name != ''){
     //execute query
     db.run(query,()=>{
-      db.all(showContacts, (err, rows)=>{
-        res.render('contacts',{"rows": rows, "msg": ''});
-      })
+    
+    //cari yang id yang baru di insert
+    let qLastId = `SELECT id FROM Contacts ORDER BY id DESC LIMIT 1`;
+    db.all(qLastId, (err, rows) =>{
+      let lastid = rows[0].id;
+      let qCG = `INSERT INTO ContactGroup
+                  (id_contacts, id_groups)
+                  VALUES
+                  (${lastid}, ${req.body.id_groups})`;
+      //run query yang di groups
+      db.run(qCG, ()=>{
+        db.all(showGroups, (err, rows)=>{
+          let groups = rows;
+          db.all(showContacts, (err, rows)=>{
+            res.render('contacts',{"rows": rows, "groups":groups, "msg": ''});
+          })
+        })
+      });
+    })
+    
+
       
     })
   } else {
     msg = 'Name cannot empty';
-    db.all(showContacts, (err, rows)=>{
-      res.render('contacts',{"rows": rows, "msg": msg});
+    db.all(showGroups, (err, rows)=>{
+      let groups = rows;
+      db.all(showContacts, (err, rows)=>{
+        res.render('contacts',{"rows": rows, "groups":groups, "msg": msg});
+      })
     })
   }
 
@@ -102,6 +137,10 @@ app.get('/contacts/delete/:id', function (req, res){
     res.redirect('/contacts');
   })
 })
+
+/////////////////////// RELEASE 11 ///////////////////////////
+
+
 
 /////////////////////// 2. GROUPS /////////////////////////////
 

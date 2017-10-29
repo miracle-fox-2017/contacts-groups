@@ -5,7 +5,7 @@ db.serialize(()=>{
   
   //set query!!
   let contacts = `CREATE TABLE IF NOT EXISTS Contacts (
-                  id          INTEGER     PRIMARY KEY,
+                  id          INTEGER PRIMARY KEY AUTOINCREMENT,
                   name        VARCHAR(50) NOT NULL,
                   company     VARCHAR(50),
                   telp_number VARCHAR(20),
@@ -13,18 +13,18 @@ db.serialize(()=>{
                   )`;
                   
   let groups   = `CREATE TABLE IF NOT EXISTS Groups (
-                  id            INTEGER     PRIMARY KEY,
+                  id            INTEGER PRIMARY KEY AUTOINCREMENT,
                   name_of_group VARCHAR(50)
                   )`;
   
   let profile  = `CREATE TABLE IF NOT EXISTS Profile (
-                  id       INTEGER     PRIMARY KEY,
+                  id       INTEGER PRIMARY KEY AUTOINCREMENT,
                   username VARCHAR(50) NOT NULL UNIQUE,
                   password VARCHAR(50) NOT NULL
                   )`;
                   
   let addresses = `CREATE TABLE IF NOT EXISTS Addresses (
-                  id      INTEGER      PRIMARY KEY,
+                  id      INTEGER PRIMARY KEY AUTOINCREMENT,
                   street  VARCHAR(50),
                   city    VARCHAR(50),
                   zipcode INTEGER
@@ -55,7 +55,7 @@ db.serialize(()=>{
   let crNewProfile = `
                       CREATE TABLE IF NOT EXISTS Profile
                       (
-                        id       INTEGER     PRIMARY KEY,
+                        id       INTEGER PRIMARY KEY AUTOINCREMENT,
                         username VARCHAR(50) NOT NULL UNIQUE,
                         password VARCHAR(50) NOT NULL,
                         id_contacts INT  UNIQUE
@@ -81,8 +81,19 @@ db.serialize(()=>{
     console.log('coloumn id_contacts added to Addresses');
   }); 
   
-  
-  
+  //release 9
+  //buat tabel conjunction 
+  let contactGroup = `CREATE TABLE IF NOT EXISTS ContactGroup (
+                        id INTEGER PRIMARY KEY AUTOINCREMENT,
+                        id_groups INT
+                        CONSTRAINT id_groups REFERENCES Groups (id),
+                        id_contacts INT
+                        CONSTRAINT id_contacts REFERENCES Contacts (id)
+                      )`;
+  db.run(contactGroup, (err)=>{
+    // console.log(err);
+    console.log('table ContactGroup added');
+  }); 
      
 })
 

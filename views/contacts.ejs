@@ -15,6 +15,7 @@
         <th>company</th>
         <th>telp_number</th>
         <th>email</th>
+        <th>groups</th>
         <th>action</th>
       </tr>
       <!-- tampilkan semua data contacts -->
@@ -25,6 +26,11 @@
           <td><%= contact.company %></td>
           <td><%= contact.telp_number %></td>
           <td><%= contact.email %></td>
+          <td>
+            <% for(let i = 0; i<cg.length; i++){ if(cg[i].id_contacts == contact.id){  %>
+                <%= cg[i].name_of_group %>, 
+            <% } } %>
+          </td>
           <td><a href="/contacts/edit/<%= contact.id %>">edit</a> | <a href="/contacts/delete/<%= contact.id %>">delete</a> </td>
         </tr>
       <% }) %>
@@ -43,7 +49,13 @@
       company: <input type="text" name="company" value="" placeholder="company"><br>
       telp_number: <input type="text" name="telp_number" value="" placeholder="telp_number"><br>
       email: <input type="text" name="email" value="" placeholder="email"><br>
-      <input type="submit" name="" value="KIRIM">
+      groups: 
+      <select name="id_groups">
+      <% groups.forEach (group => { %>
+        <option value="<%= group.id %>"><%= group.name_of_group %></option> 
+      <% }) %>
+      </select>
+      <br><input type="submit" name="" value="KIRIM">
     </form>
   </div>
   

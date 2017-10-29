@@ -7,8 +7,44 @@
     <title>Profiles</title>
 </head>
 <body>
-    <table>
-        
-    </table>
+        <table>
+                <tr>
+                  <th>No</th>
+                  <th>Username</th>
+                  <th>Password</th>
+                  <% let i = 1 %>
+                <% rows.forEach(function(element){%>
+                    <tr>
+                      <td> <%= i %> </td>
+                      <td> <%= element.username %> </td>
+                      <td> <%= element.password %> </td>
+                      <td> <a href="/profile/edit/<%=element.id%>">edit</a>
+                      <td> <a href="/profile/delete/<%=element.id%>">delete</a>
+                    </tr>
+                  <% i++ })%>
+                </tr>
+              </table>
+              <% if (edited === false) {%>
+              <form action="/profile" method="post">
+                username:<br>
+                <input type="text" name="username" >
+                <br>
+                password:<br>
+                <input type="text" name="password" >
+                <br>
+                <input type="submit" value="ADD"=>
+            </form>
+              <% } %>
+            <% if (edited === true) {%>
+            <form action="/profile/edit/<%=rows[0].id%>" method="post">
+              username:<br>
+              <input type="text" name="username" value="<%=rows[0].username%>">
+              <br>
+              password:<br>
+              <input type="text" name="password" value="<%=rows[0].password%>">
+              <br>
+              <input type="submit" value="EDIT"=>
+            </form>
+            <% } %>
 </body>
 </html>

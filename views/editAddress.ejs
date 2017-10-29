@@ -8,6 +8,14 @@
   		<input type="text" name="street" value="<%=address.street%>">
   		<input type="text" name="city" value="<%=address.city%>">
   		<input type="text" name="zipcode" value="<%=address.zipcode%>">
+  		<select name="contact">
+  		<%contacts.forEach(contact=>{%>
+  			<%if(contact.id === address.id_contact){%>
+  			<option value="<%=contact.id%>" selected><%=contact.name%></option>
+  			<%}else{%>
+  			<option value="<%=contact.id%>"><%=contact.name%></option>
+  			<%}%>
+  		<%})%>
   		<input type="submit" value="Submit">
 	</form> 
 </body>

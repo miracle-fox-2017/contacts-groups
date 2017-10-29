@@ -3,8 +3,9 @@ const router = express.Router()
 const Model = require('../models/addressesModel')
 
 router.get('/', (req, res)=>{
-	Model.getAllAddress(result=>{
-		res.render('address', {addresses : result})
+	Model.getAllAddressContact(result=>{
+		// res.send(result)
+		res.render('address', {addresses : result.addresses, contacts : result.contacts})
 	})
 })
 
@@ -15,8 +16,9 @@ router.post('/', (req, res)=>{
 })
 
 router.get('/edit/:id', (req, res)=>{
-	Model.getAddressById(req.params.id, result=>{
-		res.render('editAddress', {address : result})
+	Model.getAddressContactById(req.params.id, result=>{
+		// res.send(result)
+		res.render('editAddress', {address : result.address, contacts : result.contacts})
 	})
 })
 

@@ -45,7 +45,7 @@ class Profile{
 	// }
 
 	static getProfileContactById(data, cb){
-		db.get(`select P.id, P.username, P.password, C.name from Profile as P left join Contacts as C on P.id_contact = C.id where P.id = "${data}"`, (err, profile)=>{
+		db.get(`select P.id, P.username, P.password, P.id_contact, C.name from Profile as P left join Contacts as C on P.id_contact = C.id where P.id = "${data}"`, (err, profile)=>{
 			if(err){
 				console.log(err)
 			}else{

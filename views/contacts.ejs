@@ -34,8 +34,12 @@
       <input type="input" name="company" placeholder="company">
       <input type="input" name="telp_number" placeholder="Telp Number">
       <input type="input" name="email" placeholder="Email">
+      <select name="groupid">
+        <%for(var i = 0; i < groupsname.length; i++) {%>
+          <option value="<%=groupsname[i].id%>"><%=groupsname[i].name_of_group%></option>
+        <%}%>
+      </select>
       <input type="submit" value="submit">
     </form>
-    <p><%=data%></p>
   </body>
 </html>

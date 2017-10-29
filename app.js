@@ -20,25 +20,31 @@ app.get('/', (req, res) => {
 app.get('/contacts', (req, res) => {
   db.all(`SELECT * FROM Contacts`, (err, contacts) => {
     db.all(`SELECT Groups.name_of_group, ContactsGroups.ContactId, ContactsGroups.GroupId FROM ContactsGroups LEFT JOIN Groups ON ContactsGroups.GroupId = Groups.id`, (err, groups) => {
-      for(var i = 0; i < contacts.length; i++) {
-        var tampung = []
-        groups.forEach((elemen) => {
-          if(contacts[i].id == elemen.ContactId) {
-            tampung.push(elemen.name_of_group)
-          }
-        })
-        contacts[i].group = tampung.join(',')
-      }
-      res.render('contacts', {data: contacts})
+      db.all(`SELECT * FROM Groups`, (err, groupsname) => {
+        for(var i = 0; i < contacts.length; i++) {
+          var tampung = []
+          groups.forEach((elemen) => {
+            if(contacts[i].id == elemen.ContactId) {
+              tampung.push(elemen.name_of_group)
+            }
+          })
+          contacts[i].group = tampung.join(',')
+        }
+        // res.send(groupsname)
+        res.render('contacts', {data: contacts, groupsname: groupsname})
+      })
     })
   })
 })
 
 app.post('/contacts', (req, res) => {
-  db.all(`INSERT INTO Contacts (name, company, telp_number, email) VALUES ('${req.body.name}', '${req.body.company}', '${req.body.telp_number}', '${req.body.email}')`)
-
-  res.redirect('/contacts')
-
+  db.all(`INSERT INTO Contacts (name, company, telp_number, email) VALUES ('${req.body.name}', '${req.body.company}', '${req.body.telp_number}', '${req.body.email}')`, (err) => {
+    db.all(`SELECT Contacts.id FROM Contacts ORDER BY id DESC LIMIT 1`, (err, contact) => {
+      db.all(`INSERT INTO ContactsGroups (ContactId, GroupId) VALUES ("${contact[0].id}", "${req.body.groupid}")`)
+      //res.send(req.body)
+      res.redirect('/contacts')
+    })
+  })
 })
 
 app.get('/contacts/delete/:id', (req, res) => {
@@ -205,6 +211,12 @@ app.post('/addresses/edit/:id', (req, res) => {
     console.log(req.body);
   })
   res.redirect('/addresses')
+})
+
+app.get('/lastcontact', (req, res) => {
+  db.all(`SELECT * FROM ContactsGroups`, (err, contact) => {
+    res.send(contact)
+  })
 })
 
 app.listen(3000, function () {

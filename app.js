@@ -112,12 +112,18 @@ app.post('/groups/edit/:id', urlencodedParser, function(req,res){
 })
 //PROFILE
 app.get('/profile',function(req,res){
-  db.all(`SELECT * FROM Profile`,function(err,rows){
+  db.all(`SELECT * FROM Profile`,function(err,rows1){
     if(err){
       console.log(err)
     }else{
-      res.render('profile',{rows:rows, isEdit:false})
-
+      db.all(`SELECT * FROM Contacts`,function(err,rows2){
+        if(err){
+          console.log(err)
+        }else{
+          console.log(rows1)
+          res.render('profile',{profiles:rows1, contacts:rows2, isEdit:false})
+        }
+      })
     }
   })
 })
@@ -125,8 +131,10 @@ app.get('/profile',function(req,res){
 app.post('/profile', urlencodedParser, function(req,res){
   let username = req.body.username
   let password = req.body.password
-  db.all(`INSERT INTO Profile (username, password)
-          VALUES("${username}", "${password}")`)
+  let contacts_id = req.body.contact
+  db.all(`INSERT INTO Profile (username, password, contacts_id)
+          VALUES("${username}", "${password}","${contacts_id}")`)
+          //console.log(req.body.id)
     res.redirect('/profile')
 })
 //PROFILE DELETE
@@ -139,11 +147,18 @@ app.get('/profile/delete/:id', function(req,res){
 //PROFILE EDIT
 app.get('/profile/edit/:id',function(req,res){
   let isEdit = true;
-  db.all(`SELECT * FROM Profile where id = "${req.params.id}"`,function(err,rows){
+  let id = req.params.id
+  db.all(`SELECT * FROM Profile WHERE id = ${id}`,function(err,rows1){
     if(err){
       console.log(err)
     }else{
-      res.render('profile',{rows:rows, isEdit:true})
+      db.all(`SELECT id,name FROM Contacts`,function(err,rows2){
+        if(err){
+          console.log(err)
+        }else{
+          res.render('profile',{profiles:rows1, contacts:rows2, isEdit:true})
+        }
+      })
     }
   })
 })
@@ -151,9 +166,11 @@ app.post('/profile/edit/:id', urlencodedParser, function(req,res){
   let id = req.params.id
   let username = req.body.username
   let password = req.body.password
+  let contacts_id = req.body.contact
   db.all(`UPDATE Profile
           SET username = "${username}",
-              password = "${password}"
+              password = "${password}",
+              contacts_id = "${contacts_id}"
               WHERE id = "${id}"`);
   res.redirect('/profile')
 })

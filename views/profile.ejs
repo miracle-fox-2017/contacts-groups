@@ -8,11 +8,13 @@
 </head>
 <body>
     <% include menu.ejs %>
+    <br />
     <a href="/profile/add">Add</a>
     <table>
         <tr>
             <th>No</th>
             <th>Username</th>
+            <th>Nama</th>
             <th>Action</th>
         </tr>
         <% 
@@ -26,6 +28,9 @@
                 </td>
                 <td>
                     <%= row.username %>
+                </td>
+                <td>
+                    <%= row.name %>
                 </td>
                 <td>
                     <a href="/profile/edit/<%= row.id %>">Edit</a> | <a href="/profile/hapus/<%= row.id %>">Hapus</a>

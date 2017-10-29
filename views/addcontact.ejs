@@ -9,6 +9,9 @@
 <body>
     <% include menu.ejs %>
     <table>
+        <% if(error) { %>
+            <%= error.error %>
+        <% } %>
         <form action="/contact/add" method="post">
             <tr>
                 <td><input type="text" name="nama" placeholder="Isi Nama"></td>

@@ -11,7 +11,36 @@
 <body>
     <% include menu.ejs %>
     <table>
-        <form action="/profile/edit/<%= rowsProfile[0].id %>" method="post">
+        <form action="/profile/edit/<%= rowsProfile[0].idcontact %>" method="post">
+            <tr>
+            <td>
+                    <select name="idcontact">
+
+                        <% 
+                        
+                        rowsCountact.forEach(function(row){ 
+
+                        if(rowsProfile[0].id == row.id){
+                            
+                         %>
+
+                        <option value="<%=row.id%>" selected><%=row.name%></option>
+
+                        <% }else{ %>
+                    
+                        <option value="<%=row.id%>"><%=row.name%></option>
+                        
+                        <% 
+                        
+                        }
+
+                        }) 
+                        
+                        %>
+
+                    </select>
+            </td>
+            </tr>
             <tr>
                 <td><input type="text" name="nama" placeholder="Isi Nama Groups" value="<%= rowsProfile[0].username %>"></td>
             </tr>

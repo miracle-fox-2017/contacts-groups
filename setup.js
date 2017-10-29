@@ -25,6 +25,10 @@ db.serialize(function(){
 	city	varchar(50),
 	zipcode	varchar(50))`);
 
+	db.run(`ALTER TABLE profile ADD COLUMN idcontact INTEGER`);
+
+	db.run(`ALTER TABLE address ADD COLUMN idcontact INTEGER`);
+
 });
 
 db.close();

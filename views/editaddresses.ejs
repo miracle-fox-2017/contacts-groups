@@ -8,8 +8,38 @@
 </head>
 <body>
     <% include menu.ejs %>
+    <% if(error) { %>
+        <%= error.error %>
+            <% } %>
     <table>
         <form action="/addresses/edit/<%= rowsAddresses[0].id %>" method="post">
+            <tr>
+                <td>
+                    <select name="idcontact">
+                    <% 
+                    
+                    rowsContacts.forEach(function(row){ 
+                    
+                    if(row.id == rowsAddresses[0].idcontact){
+                        
+                    %>
+                        <option value="<%=row.id%>" selected><%=row.name%></option>
+                    <% 
+                    
+                    }else
+
+                     %>
+                    <option value="<%=row.id%>">
+                        <%=row.name%>
+                    </option>
+                    <%
+                        
+                    }) 
+                        
+                    %>
+                    </select>
+                </td>
+            </tr>
             <tr>
                 <td><input type="text" name="street" placeholder="Isi Street" value="<%= rowsAddresses[0].street %>"></td>
             </tr>

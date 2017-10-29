@@ -10,8 +10,28 @@
 
 <body>
     <% include menu.ejs %>
+    <% if(error) { %>
+        <%= error.error %>
+    <% } %>
     <table>
         <form action="/profile/add" method="post">
+            <tr>
+                <td>
+                    <select name="idcontact">
+                    <% 
+                    
+                    rowsContacts.forEach(function(row){ 
+                        
+                    %>
+                        <option value="<%=row.id%>"><%=row.name%></option>
+                    <% 
+                  
+                    }) 
+                        
+                    %>
+                    </select>
+                </td>
+            </tr>
             <tr>
                 <td><input type="text" name="nama" placeholder="Isi Nama Username"></td>
             </tr>

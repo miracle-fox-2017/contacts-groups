@@ -31,22 +31,28 @@ app.get('/contact/add', function (req, res) {
     // const Contact = require('./models/contact');
     // let contact = new Contact();
     // db.all(contact.panggilData(), function (err, rowsContacts) {
-        res.render('addcontact');
+    let error = { error: null };
+    res.render('addcontact', { error });
     // });
 });
 
 app.post('/contact/add', function (req, res) {
     const Contact = require('./models/contact');
-    let obj = { nama : req.body.nama,
-                company : req.body.company,
-                telp : req.body.telp,
-                email : req.body.email,
-              }
-    let contact = new Contact();
-    db.all(contact.simpanData(obj), function (err, rowsContacts) {
-    // console.log(req.body.nama)
-        res.redirect('/contact');
-    });
+    if (req.body.nama != '' && req.body.company != '' && req.body.telp != '' && req.body.email !=''){
+        let obj = { nama : req.body.nama,
+                    company : req.body.company,
+                    telp : req.body.telp,
+                    email : req.body.email,
+                }
+        let contact = new Contact();
+        db.all(contact.simpanData(obj), function (err, rowsContacts) {
+        // console.log(req.body.nama)
+            res.redirect('/contact');
+        });
+    }else{
+        let error = {error:"Maaf Data Tidak Boleh Ada Yang Kosong"};
+        res.render('addcontact', { error });
+    }
 });
 
 app.get('/contact/edit/:id', function (req, res) {
@@ -148,54 +154,77 @@ app.get('/addresses', function (req, res) {
     const Addresses = require('./models/addresses');
     let addresses = new Addresses();
     db.all(addresses.panggilData(), function (err, rowsAddresses) {
-        res.render('addresses', { rowsAddresses });
+        let error = {error:null}
+        res.render('addresses', { rowsAddresses, error });
     });
 });
 
 app.get('/addresses/add', function (req, res) {
-    // const Contact = require('./models/contact');
-    // let contact = new Contact();
-    // db.all(contact.panggilData(), function (err, rowsContacts) {
-    res.render('addaddresses');
-    // });
+    const Addresses = require('./models/addresses');
+    let addresses = new Addresses();
+    db.all(addresses.panggilDataContact(), function (err, rowsContacts) {
+        let error = { error: null }
+        res.render('addaddresses', { rowsContacts,error });
+    });
 });
 
 app.post('/addresses/add', function (req, res) {
     const Addresses = require('./models/addresses');
-    let obj = {
-        street: req.body.street,
-        city: req.body.city,
-        zipcode: req.body.zipcode,
-    }
     let addresses = new Addresses();
-    db.all(addresses.simpanData(obj), function (err, rowsAddresses) {
-        // console.log(req.body.nama)
-        res.redirect('/addresses');
-    });
+        if (req.body.street != '' && req.body.city != '') {
+        let obj = {
+            street: req.body.street,
+            city: req.body.city,
+            zipcode: req.body.zipcode,
+            idcontact: req.body.idcontact,
+        }
+        
+        db.all(addresses.simpanData(obj), function (err, rowsAddresses) {
+            // console.log(req.body.nama)
+            res.redirect('/addresses');
+        });
+    }else{
+            db.all(addresses.panggilDataContact(), function (err, rowsContacts) {
+                let error = { error: "Data Harus Di isi" }
+                res.render('addaddresses', { rowsContacts, error });
+            });
+    }
 });
 
 app.get('/addresses/edit/:id', function (req, res) {
     const Addresses = require('./models/addresses');
     let addresses = new Addresses();
     db.all(addresses.editData(req.params.id), function (err, rowsAddresses) {
-        // console.log(rowsContacts);
-        res.render('editaddresses', { rowsAddresses });
+        db.all(addresses.panggilDataContact(), function(err,rowsContacts){
+            let error = { error: null }
+            res.render('editaddresses', { rowsAddresses, rowsContacts, error});
+        })
     });
 });
 
 app.post('/addresses/edit/:id', function (req, res) {
     const Addresses = require('./models/addresses');
     let addresses = new Addresses();
-    let obj = {
-        street: req.body.street,
-        city: req.body.city,
-        zipcode: req.body.zipcode,
-        id: req.params.id,
+    if (req.body.street != '' && req.body.city != ''){
+        let obj = {
+            street: req.body.street,
+            city: req.body.city,
+            zipcode: req.body.zipcode,
+            idcontact: req.body.idcontact,
+            id: req.params.id,
+        }
+        db.all(addresses.updateData(obj), function (err, rowsAddresses) {
+            // console.log(rowsContacts);
+            res.redirect('/addresses');
+        });
+    }else{
+        db.all(addresses.editData(req.params.id), function (err, rowsAddresses) {
+            db.all(addresses.panggilDataContact(), function (err, rowsContacts) {
+                let error = { error: "Data Harus Di isi" }
+                res.render('editaddresses', { rowsAddresses, rowsContacts, error});
+            })
+        });
     }
-    db.all(addresses.updateData(obj), function (err, rowsAddresses) {
-        // console.log(rowsContacts);
-        res.redirect('/addresses');
-    });
 });
 
 app.get('/addresses/hapus/:id', function (req, res) {
@@ -213,52 +242,78 @@ app.get('/profile', function (req, res) {
     const Profile = require('./models/profile');
     let profile = new Profile();
     db.all(profile.panggilData(), function (err, rowsProfile) {
+        
         res.render('profile', { rowsProfile });
     });
 });
 
 app.get('/profile/add', function (req, res) {
-    // const Contact = require('./models/contact');
-    // let contact = new Contact();
-    // db.all(contact.panggilData(), function (err, rowsContacts) {
-    res.render('addprofile');
-    // });
+    const Profile = require('./models/profile');
+    let profile = new Profile();
+    db.all(profile.dataContact(), function (err, rowsContacts) {
+        let error = { error: null };
+        res.render('addprofile', { rowsContacts, error });
+    });
 });
 
 app.post('/profile/add', function (req, res) {
     const Profile = require('./models/profile');
-    let obj = {
-        nama: req.body.nama,
-        password: req.body.password
-    }
     let profile = new Profile();
-    db.all(profile.simpanData(obj), function (err, rowsProfile) {
-        // console.log(req.body.nama)
-        res.redirect('/profile');
-    });
+    if ((req.body.idcontact != null) && (req.body.nama != '') && (req.body.password != '')){
+        db.all(profile.cekContact(req.body.idcontact), function(err, rowCek){
+            if (rowCek.length > 0){
+                db.all(profile.dataContact(), function (err, rowsContacts) {
+                    let error = { error: "Data Contact SUdah Terpakai" };
+                    res.render('addprofile', { rowsContacts, error });
+                });    
+            }else{
+                let obj = {
+                    idcontact: req.body.idcontact,
+                    nama: req.body.nama,
+                    password: req.body.password
+                }
+                db.all(profile.simpanData(obj), function (err, rowsProfile) {
+                    // console.log(req.body.nama)
+                    res.redirect('/profile');
+                });
+            }
+        })
+    }else{
+        db.all(profile.dataContact(), function (err, rowsContacts) {
+            let error = { error: "Data Tidak Boleh Ada Yang Kosong" };
+            res.render('addprofile', { rowsContacts, error });
+        });
+    }
 });
 
 app.get('/profile/edit/:id', function (req, res) {
     const Profile = require('./models/profile');
     let profile = new Profile();
     db.all(profile.editData(req.params.id), function (err, rowsProfile) {
-        // console.log(rowsContacts);
-        res.render('editprofile', { rowsProfile });
+        db.all(profile.dataContact(), function (err, rowsCountact) {
+            res.render('editprofile', { rowsProfile, rowsCountact });
+        })
     });
 });
 
 app.post('/profile/edit/:id', function (req, res) {
     const Profile = require('./models/profile');
     let profile = new Profile();
-    let obj = {
-        nama: req.body.nama,
-        password: req.body.password,
-        id: req.params.id,
+    console.log(req.body.nama)
+    if ((req.body.password != '') && (req.body.nama!='')) {
+        let obj = {
+            nama: req.body.nama,
+            password: req.body.password,
+            id: req.params.id,
+        }
+        let profile = new Profile();
+        db.all(profile.updateData(obj), function (err, rowsProfile) {
+            // console.log(req.body.nama)
+            res.redirect('/profile');
+        });
+    }else{
+        res.redirect('../../profile/edit/' + req.params.id);
     }
-    db.all(profile.updateData(obj), function (err, rowsProfile) {
-        // console.log(rowsContacts);
-        res.redirect('/profile');
-    });
 });
 
 app.get('/profile/hapus/:id', function (req, res) {
@@ -267,6 +322,25 @@ app.get('/profile/hapus/:id', function (req, res) {
     db.all(profile.hapusData(req.params.id), function (err, rowsProfile) {
         // console.log(rowsContacts);
         res.redirect('/profile');
+    });
+});
+
+
+// addresses with contact
+app.get('/addresses_with_contact', function (req, res) {
+    const Addresses = require('./models/addresses');
+    let addresses = new Addresses();
+    db.all(addresses.panggil(), function (err, rowsAddresses) {
+        if (rowsAddresses){
+            rowsAddresses.forEach(function(element) {
+                db.all(addresses.dataContact(element.idcontact), function (err, rowsContacts) {
+                    // console.log(element.idcontact);
+                    res.render('addresseswith', { rowsAddresses, rowsContacts});
+                });    
+            });
+            
+        }
+        
     });
 });
 

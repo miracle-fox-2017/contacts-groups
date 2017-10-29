@@ -14,6 +14,7 @@
     <table>
         <tr>
             <th>No</th>
+            <th>Nama</th>
             <th>Street</th>
             <th>City</th>
             <th>Zipcode</th>
@@ -21,7 +22,7 @@
         </tr>
         <% 
             let no = 0;
-            rowsAddresses.forEach(function(row){ 
+            rowsAddresses.forEach(function(row,index){ 
             no++;
         %>
             <tr>
@@ -29,7 +30,7 @@
                     <%= no %>
                 </td>
                 <td>
-                    <%= row.name %>
+                    <%= rowsContacts[0].name %>
                 </td>
                 <td>
                     <%= row.street %>

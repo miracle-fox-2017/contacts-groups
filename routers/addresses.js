@@ -1,11 +1,13 @@
 const express = require('express')
 const router = express.Router()
 const Address = require('../models/addresses.js');
+const Contact = require('../models/contacts')
 
-//console.log(Address);
 router.get('/addresses', (req, res) => {
   Address.findAll(dataAddress =>{
-    res.render('addresses/addresses', {dataAddress:dataAddress})
+    Contact.findAll(dataContacts =>{
+    res.render('addresses/addresses', {dataAddress:dataAddress, dataContacts:dataContacts})
+    })
   })
 })
 
@@ -17,7 +19,9 @@ router.post('/addresses', (req, res) => {
 
 router.get('/addresses/edit/:id', (req, res) => {
   Address.findById(req, dataAddress => {
-    res.render('addresses/edit', {dataAddress:dataAddress})
+    Contact.findAll(dataContacts =>{
+      res.render('addresses/edit', {dataAddress:dataAddress, dataContacts:dataContacts})
+    })
   })
 })
 
@@ -34,5 +38,20 @@ router.get('/addresses/delete/:id', (req, res) => {
   })
 })
 
+
+//rilis 8
+router.get('/contacts/addresses_with_contact/:id', (req, res) =>{
+  Contact.findById(req,dataContact =>{
+    Address.findAll(dataAddresses=>{
+      let data = []
+      dataAddresses.forEach(function (item){
+        if(dataContact.id == item.ContactId ){
+            data.push(item)
+          }
+      })
+      res.render('addresses/address_with_contact',{data:data, dataAddresses:dataAddresses})
+    })
+  })
+})
 
 module.exports = router;

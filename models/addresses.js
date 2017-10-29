@@ -7,7 +7,8 @@ class Address {
 
 
   static findAll(callback){
-    db.all(`SELECT * FROM Addresses`, (err, rows) => {
+    db.all(`SELECT Addresses.*, Contacts.name, Contacts.id as
+      ContactId FROM Addresses LEFT JOIN Contacts ON Contacts.id = Addresses.ContactId`, (err, rows) => {
       if(err){
         console.log(err);
       }else{
@@ -17,8 +18,8 @@ class Address {
   }
 
   static create(req, callback){
-    db.run(`INSERT INTO Addresses (street, city, zipcode)
-    VALUES ('${req.body.street}','${req.body.city}', ${req.body.zipcode})`, (err, rows) => {
+    db.run(`INSERT INTO Addresses (street, city, zipcode, ContactId)
+    VALUES ('${req.body.street}','${req.body.city}', ${req.body.zipcode}, ${req.body.ContactId})`, (err, rows) => {
       if(err){
         console.log(err);
       }else{
@@ -44,7 +45,8 @@ class Address {
     db.run(`UPDATE Addresses SET
       city = '${req.body.city}',
       street = '${req.body.street}',
-      zipcode = ${req.body.zipcode}
+      zipcode = ${req.body.zipcode},
+      ContactId = '${req.body.ContactId}'
       WHERE ID = ${req.params.id}`, (err, rows)=>{
         if(err){
           console.log(err);

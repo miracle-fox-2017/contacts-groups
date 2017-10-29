@@ -23,6 +23,11 @@
       <br>
     </div>
     <div class="col-xs-4 col-md-2">
+      <select class="box" name="ContactId">
+      <% for(let i = 0; i < dataContacts.length; i++) {%>
+      <option value="<%=dataContacts[i].id%>"><%=dataContacts[i].name%></option>
+      <%}%>
+      </select>
       <br>
       <input type="submit" value ="Submit">
       </div>

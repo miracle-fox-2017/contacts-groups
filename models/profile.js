@@ -6,22 +6,6 @@ var db = new sqlite3.Database('./data/database.db');
 class Profile {
 
 
-    // static findAll(callback){
-    //   db.all(`SELECT * FROM Profile`, (err, rows) => {
-    //     if(err){
-    //       console.log(err);
-    //     }else{
-    //       callback(rows)
-    //     }
-    //   })
-    // }
-// SELECT Profile.*, Contacts.name, Contacts.id as
-//  ContactId FROM Profiles LEFT JOIN
-// Contacts ON Contacts.id = Profiles.ContactsID`
-// //     SELECT Customers.CustomerName, Orders.OrderID
-// // FROM Customers
-// // LEFT JOIN Orders ON Customers.CustomerID = Orders.CustomerID
-// // ORDER BY Customers.CustomerName;
 
   static findAll(callback){
     db.all(`SELECT Profile.*, Contacts.name, Contacts.id as

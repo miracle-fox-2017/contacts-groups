@@ -54,15 +54,23 @@ db.serialize((err, rows)=>{
 //
 //
 
-  //
+  // relasi 0ne to One
   db.run(` ALTER TABLE Profile ADD COLUMN ContactId INTEGER REFERENCES Contacts('id')`)
     if(err){
       console.log(err);
     }else{
       console.log('jadi');
     }
-  //
-  //
+
+    // relasi one to many
+    db.run(` ALTER TABLE Addresses ADD COLUMN ContactId INTEGER REFERENCES Contacts('id')`)
+      if(err){
+        console.log(err);
+      }else{
+        console.log('addresses tambah');
+      }
+
+    // unique index relasi one to one
     db.run(`CREATE UNIQUE INDEX ContactId ON Profile(ContactId)`, ()=>{
       if(err){
         console.log(err);

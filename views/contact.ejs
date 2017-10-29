@@ -37,6 +37,9 @@
                     Email
                 </th>
                 <th>
+                    Groups
+                </th>
+                <th>
                     Address
                 </th>
                 <th colspan="2">
@@ -63,6 +66,10 @@
                     <td>
                         <%=contact.email %>
                     </td>
+                    <td>
+                        <%=contact.group %>
+                    </td>
+
                     <td>
                         <a href="/contacts/addresses/<%= contact.id%>"> Address </a>
                     </td>

@@ -7,6 +7,7 @@ const Contact = require('./models/modelContact')
 const Group = require('./models/modelGroup')
 const Profile = require('./models/modelProfile')
 const Address = require('./models/modelAddress')
+const ContactGroup = require('./models/modelContactGroup')
 
 app.set('view engine', 'ejs');
 app.use(express.static(__dirname + '/views'))
@@ -56,19 +57,29 @@ app.get('/groups/delete/:id', function (req, res) {
 //Contact
 app.get('/contacts', function (req, res) {
     Contact.getData((data) => {
-        res.render('contact', { dataContact: data })
+        ContactGroup.getContactGroup((data), (dataResult) => {
+            res.render('contact', { dataContact: dataResult })
+        })
     })
 })
 
 app.get('/contacts/add', function (req, res) {
-    res.render('contact-add', { message: '' })
+    Group.getData((data) => {
+        res.render('contact-add', { message: '', dataGroup: data })
+    })
+
 })
 app.post('/contacts/add', function (req, res) {
     if (req.body.name === '') {
         res.render('contact-add', { message: "Name required!" })
     } else {
-        Contact.addData(req.body)
-        res.redirect('../contacts')
+        Contact.addData(req.body, () => {
+            Contact.getLastId((data) => {
+                ContactGroup.addData(req.body.idGroup, data.id)
+                res.redirect('../contacts')
+            })
+        })
+
     }
 
 })

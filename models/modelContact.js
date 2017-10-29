@@ -13,12 +13,14 @@ class Contact {
             }
         })
     }
-    static addData(newData) {
+    static addData(newData, callback) {
         //console.log(newData)
         let query = `insert into contacts (name, company, telp_number, email) values ('${newData.name}', '${newData.company}', '${newData.telp_number}', '${newData.email}')`
         db.run(query, function (err) {
             if (err) {
                 console.log(err)
+            } else {
+                callback()
             }
         })
     }
@@ -51,15 +53,17 @@ class Contact {
         })
     }
 
-    // static getDataContactAddress(callback, dataAddress) {
-    //     let arr = []
-    //     dataAddress.forEach((address) => {
-    //         Contact.getData((dataContact) => {
+    static getLastId(callback) {
+        let query = 'select id from contacts order by id desc limit 1'
+        db.each(query, function (err, rows) {
+            if (err) {
+                callback(err)
+            } else {
+                callback(rows)
+            }
+        })
+    }
 
-    //         })
-
-    //     });
-    // }
 }
 
 module.exports = Contact

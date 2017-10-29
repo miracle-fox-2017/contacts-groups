@@ -12,6 +12,7 @@
 				<td>Name</td>
 				<td>Telp Number</td>
 				<td>Email</td>
+				<td>List Address</td>
 				<td>Action</td>
 			</tr>
 		</thead>
@@ -22,6 +23,7 @@
 				<td><%=contact.name%></td>
 				<td><%=contact.telp_number%></td>
 				<td><%=contact.email%></td>
+				<td><a href="/addresses_with_contact/<%=contact.id%>">addresses</a></td>
 				<td>
 					<a href="/contacts/edit/<%=contact.id%>">Edit</a>
 					<a href="/contacts/delete/<%=contact.id%>">Delete</a>

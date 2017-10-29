@@ -10,17 +10,17 @@ const app = express()
 app.set('view engine', 'ejs')
 app.use(bodyParser.urlencoded({ extended: false }))
 
-const Contacts   = require('./routes/contacts')
-const Groups     = require('./routes/groups')
-const Profile    = require('./routes/profile')
-const Addresses  = require('./routes/addresses')
-
-
+const Contacts   	 = require('./routes/contacts')
+const Groups     	 = require('./routes/groups')
+const Profile    	 = require('./routes/profile')
+const Addresses  	 = require('./routes/addresses')
+const AddressContact = require('./routes/addresscontact')
 
 app.use('/contacts', Contacts)
 app.use('/groups', Groups)
 app.use('/profiles', Profile)
 app.use('/addresses', Addresses)
+app.use('/addresses_with_contact', AddressContact)
 
 app.get('/', (req, res)=>{
 	res.render('index.ejs')

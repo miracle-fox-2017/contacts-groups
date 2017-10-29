@@ -1,16 +1,14 @@
-var sqlite3 = require('sqlite3').verbose()
-var db = new sqlite3.Database('database.db');
+const sqlite3 = require('sqlite3').verbose()
+const db 	  = new sqlite3.Database('database.db');
 
 class Contact{
-	constructor(){
-
-	}
 
 	static getAllContact(cb){
 		db.all("select * from Contacts", (err, row)=>{
 			cb(row)
 		})
 	}
+
 
 	static addContact(data, cb){
 		db.run(`insert into Contacts (name, telp_number, email) values ("${data.name}", "${data.telp_number}", "${data.email}")`, err=>{

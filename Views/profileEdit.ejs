@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Edit Profile</title>
+  </head>
+  <body>
+    <div class="">
+      <form class="" action="" method="post">
+        <input type="text" name="username" value="<%=rowProfile.Username%>">
+        <input type="password" name="password" value="<%=rowProfile.Password%>">
+        <select class="" name="contact_id">
+          <%contact.forEach(nama =>{ %>
+          <option value="<%=nama.ID%>" selected >
+          <%=nama.Name%></option>
+          <%})%>
+        </select>
+        <input type="submit" value="Submit">
+      </form>
+    </div>
+  </body>
+</html>

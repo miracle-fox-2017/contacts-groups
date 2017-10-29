@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Contacts</title>
+    <style media="screen">
+    h2 {
+      text-align: center;
+    }
+    table {
+    border-collapse: collapse;
+    width: 100%;
+    padding: 20px
+  }
+
+  th, td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+    }
+  form{
+    text-align: center;
+    padding: 20px
+  }
+    </style>
+  </head>
+  <body>
+    <div>
+      <table>
+        <thead>
+          <td>ID</td>
+          <td>Name</td>
+          <td>Company</td>
+          <td>Telphone</td>
+          <td>Email</td>
+        </thead>
+        <%contact.forEach(dt => { %>
+        <tr>
+          <td><%= dt.ID %></td>
+          <td><%= dt.Name %></td>
+          <td><%= dt.Company %></td>
+          <td><%= dt.Telp_Number %></td>
+          <td><%= dt.Email %></td>
+          <td><a href="/contacts/edit/<%=dt.ID%>">Edit</a></td>
+          <td><a href="/contacts/delete/<%=dt.ID%>">Delete</a></td>
+        </tr>
+        <% })%>
+      </table>
+    </div>
+    <div>
+      <form class="" action="/contacts" method="post">
+        Name    :
+        <input type="text" name="name">
+        Company :
+        <input type="text" name="company">
+        Telphone :
+        <input type="text" name="telp">
+        Email   :
+        <input type="text" name="email">
+        <input type="submit" value="Submit">
+      </form>
+    </div>
+
+  </body>
+</html>

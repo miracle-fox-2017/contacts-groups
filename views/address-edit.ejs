@@ -58,6 +58,16 @@
               <input type="text" name="street" value="<%= rows[0].street %>" placeholder="Masukkan Street">
               <input type="text" name="city" value="<%= rows[0].city %>" placeholder="Masukkan City">
               <input type="text" name="zipcode" value="<%= rows[0].zipcode %>" placeholder="Masukkan Zip Code">
+              <select class="" name="id_contacts">
+                <option selected disabled>Click to Choose -----</option>
+                <% data.forEach (contact => {
+                  if(contact.id == rows[0].id_contacts ){
+                %>
+                <option value="<%= contact.id %>" selected><%= contact.name %></option>
+                <%}else{%>
+                <option value="<%= contact.id %>"><%= contact.name %></option>
+                <% }}); %>
+              </select>
               <input type="submit" name="submit" value="SUBMIT" class="btn btn-primary">
             </fieldset>
 

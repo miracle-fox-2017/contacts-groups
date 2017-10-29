@@ -24,9 +24,8 @@ db.serialize(function() {
     city VARCHAR(20),
     zipcode INTEGER)`)
 
-  db.run(`ALTER TABLE profile
+  db.run(`ALTER TABLE address
     ADD id_contacts INTEGER`)
-
 
 });
 

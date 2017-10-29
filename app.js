@@ -145,10 +145,14 @@ app.get('/groups/delete/:id', (req, res)=>{
 // -------- ADDRESS ----------
 // SELECT
 app.get('/address', (req, res)=>{
-  let query = `SELECT * FROM address`;
+  let query = `SELECT a.*, c.name as contacts FROM address as a
+              LEFT JOIN contacts as c
+              ON a.id_contacts = c.id`;
 
   db.all(query, (err, rows)=>{
-    res.render('address', {rows})
+    db.all(`SELECT * FROM contacts`, (err, data)=>{
+      res.render('address', {"data":data, "rows":rows, "message" : ''})
+    })
   })
 })
 
@@ -157,11 +161,12 @@ app.post('/address', (req, res)=>{
   let street = req.body.street;
   let city = req.body.city;
   let zipcode = req.body.zipcode;
+  let id_contacts = req.body.id_contacts;
 
   let query = `INSERT INTO address
-              (street, city, zipcode)
+              (street, city, zipcode, id_contacts)
               VALUES
-              ('${street}', '${city}' , '${zipcode}') `;
+              ('${street}', '${city}' , '${zipcode}', '${id_contacts}') `;
 
   db.run(query, ()=>{
     res.redirect('/address');
@@ -171,11 +176,16 @@ app.post('/address', (req, res)=>{
 
 // UPDATE
 app.get('/address/edit/:id', (req, res)=>{
-  let query = `SELECT * FROM address WHERE id = '${req.params.id}'`
+  let query = `SELECT a.*, c.name as contacts FROM address as a
+              LEFT JOIN contacts as c
+              ON a.id_contacts = c.id WHERE a.id = '${req.params.id}'`
 
   db.all(query, (err, rows)=>{
-    res.render('address-edit', {rows})
+    db.all(`SELECT * FROM contacts`, (err, data)=>{
+      res.render('address-edit', {"data":data, "rows":rows, "message" : ''})
+    })
   })
+
 })
 
 app.post('/address/edit/:id', (req, res)=>{
@@ -183,9 +193,10 @@ app.post('/address/edit/:id', (req, res)=>{
   let street = req.body.street;
   let city = req.body.city;
   let zipcode = req.body.zipcode;
+  let id_contacts = req.body.id_contacts;
 
 
-  let query = `UPDATE address SET street = '${street}', city = '${city}', zipcode = '${zipcode}' WHERE id = '${id}'`;
+  let query = `UPDATE address SET street = '${street}', city = '${city}', zipcode = '${zipcode}', id_contacts = '${id_contacts}' WHERE id = '${id}'`;
 
   db.run(query, ()=>{
     res.redirect('/address');
@@ -203,11 +214,23 @@ app.get('/address/delete/:id', (req, res)=>{
   })
 })
 
+app.get('/addresses_with_contact', (req, res)=>{
+
+  db.all(`SELECT * FROM Addresses`, (err, data) => {
+    db.all(`SELECT * FROM Contacts`, (err, rows) =>{
+      res.render('addresses_with_contact',{"data":data, "rows": rows});
+
+    })
+  })
+
+})
+
+
 // --------PROFILE-------
 // SELECT
 app.get('/profiles', (req, res)=>{
   let query = `SELECT p.*, c.name as contacts FROM profile as p
-              LEFT JOIN contacts as c
+              INNER JOIN contacts as c
               ON p.id_contacts = c.id`;
 
   db.all(query, (err, rows)=>{
@@ -231,7 +254,7 @@ app.post('/profiles', (req, res)=>{
               VALUES
               ('${username}', '${password}', '${contacts}')`;
   let queryProfile = `SELECT p.*, c.name as contacts FROM profile as p
-              LEFT JOIN contacts as c
+              INNER JOIN contacts as c
               ON p.id_contacts = c.id`;
 
   let msg = 'Your contact already have profile'

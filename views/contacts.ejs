@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Contacts</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+  <nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="#">Hacktiv8</a>
+      </div>
+      <ul class="nav navbar-nav">
+        <li><a href="/">HOME</a></li>
+        <li class="active"><a href="/contacts">CONTACT</a></li>
+        <li><a href="/groups">GROUPS</a></li>
+        <li><a href="/profiles">PROFILES</a></li>
+        <li><a href="/addresses">ADDRESSES</a></li>
+        <li><a href="/addresses_with_contact">ADDRESSES WITH CONTACT</a></li>
+      </ul>
+    </div>
+  </nav>
+  <div class="container">
+    <h2>CONTACS</h2>
+    <div class="table-responsive">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>NAME</th>
+            <th>COMPANY</th>
+            <th>TEL. NUMBER</th>
+            <th>EMAIL</th>
+            <th colspan="2">ACTION</th>
+          </tr>
+        </thead>
+        <tbody>
+          <%data.forEach (row=> {%>
+            <tr>
+              <td><%= row.id %></td>
+              <td><%= row.name %></td>
+              <td><%= row.company %></td>
+              <td><%= row.telp_number %></td>
+              <td><%= row.email %></td>
+              <td>
+                <a href="/contacts/edit/<%= row.id %>">EDIT</a>
+                <a href="/contacts/delete/<%= row.id %>">DELETE</a>
+              </td>
+            </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+
+      <form class="form-inline" role="form" action="/contacts" method="post">
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input type="TEXT" name="name" placeholder="Enter Name" required="required">
+        </div>
+        <div class="form-group">
+          <label for="company">Company</label>
+          <input type="TEXT" name="company" placeholder="Enter Company">
+        </div>
+        <div class="form-group">
+          <label for="telp_number">Number</label>
+          <input type="TEXT" name="telp_number" placeholder="Enter Phone Number">
+        </div>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="TEXT" name="email" placeholder="Enter Email">
+        </div>
+          <button type="submit" class="btn btn-default">ADD</button>
+        </form>
+      </div>
+
+
+    </body>
+    </html>

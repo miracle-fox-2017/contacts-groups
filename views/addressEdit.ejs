@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Edit Address</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+  <nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">Hacktiv8</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li><a href="/">HOME</a></li>
+      <li><a href="/contacts">CONTACT</a></li>
+      <li><a href="/groups">GROUPS</a></li>
+      <li><a href="/profiles">PROFILES</a></li>
+      <li><a href="/addresses">ADDRESSES</a></li>
+      <li><a href="/addresses_with_contact">ADDRESSES WITH CONTACT</a></li>
+    </ul>
+  </div>
+</nav>
+<div class="jumbotron text-center">
+  <h1>EDIT ADDRESS</h1>
+</div>
+<div class="container">
+<form class="form-inline" role="form" action="/addresses/edit/<%= data.id %>" method="post">
+  <div class="form-group">
+    <label for="street">Street</label>
+    <input type="TEXT" name="street" value="<%= data.street %>">
+  </div>
+  <div class="form-group">
+    <label for="city">City</label>
+    <input type="TEXT" name="city" value="<%= data.city %>">
+  </div>
+  <div class="form-group">
+    <label for="zipcode">Zipcode</label>
+    <input type="TEXT" name="zipcode" value="<%= data.zipcode %>">
+  </div>
+  <select name="ContactId">
+    <%for(let i=0; i< dataContacts.length; i++){%>
+      <option value="<%=dataContacts[i].name%>"><%=dataContacts[i].name%></option>
+      <%}%>
+    </select>
+    <button type="submit" class="btn btn-default">EDIT</button>
+  </form>
+</div>
+</body>
+</html>

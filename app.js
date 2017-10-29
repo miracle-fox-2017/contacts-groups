@@ -24,7 +24,9 @@ app.get('/', function (req, res) {
 //Group
 app.get('/groups', function (req, res) {
     Group.getData((data) => {
-        res.render('group', { dataGroup: data })
+        ContactGroup.getGroupContact((data), (dataGroup) => {
+            res.render('group', { dataGroup: dataGroup })
+        })
     })
 })
 
@@ -199,6 +201,19 @@ app.get('/addresses-with-contact', function (req, res) {
             res.render('address-with-contact', { dataAddress: dataAddress, dataContact: dataContact })
         })
     })
+})
+
+app.get('/groups/assign_contacts/:id', function (req, res) {
+
+    Group.getDataById((data) => {
+        Contact.getData((dataContact) => {
+            res.render('group-contact', { dataGroup: data, dataContact: dataContact })
+        })
+    }, req.params.id)
+})
+app.post('/groups/assign_contacts/:id', function (req, res) {
+    ContactGroup.addData(req.params.id, req.body.idContact)
+    res.redirect('../../groups')
 })
 
 app.listen(3000, function (err) {

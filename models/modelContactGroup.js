@@ -42,6 +42,22 @@ class ContactGroup {
             })
         });
     }
+    static getGroupContact(dataGroup, callback) {
+        let result = []
+        dataGroup.forEach((group) => {
+            group.contact = []
+            let query = `select * from contactgroups inner join contacts on contactgroups.idContact = contacts.id where contactgroups.idGroup = ${group.id}`
+            db.all(query, function (err, rows) {
+                rows.forEach((row) => {
+                    group.contact.push(row.name)
+                })
+                result.push(group)
+                if (result.length == dataGroup.length) {
+                    callback(result)
+                }
+            })
+        })
+    }
 }
 
 module.exports = ContactGroup

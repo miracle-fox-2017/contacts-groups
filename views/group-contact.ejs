@@ -1,0 +1,39 @@
+<html>
+
+<head>
+    <title>
+        Address with Contact
+    </title>
+</head>
+
+<body>
+    <a href="/">  
+                Home
+            </a>
+    <a href="/groups">  
+                Group
+            </a>
+    <header>
+        <h3>
+            Group with Contact
+        </h3>
+    </header>
+
+    <div class="main-table">
+        Assign Contact for Group :
+        <%= dataGroup.name_of_group%> <br>
+            <br>
+    </div>
+    <form action="/groups/assign_contacts/<%= dataGroup.id%>" method="POST">
+        <select name="idContact">
+            <% dataContact.forEach((contact)=>{%>
+            <option value="<%= contact.id%>">
+                <%= contact.name%>
+            </option>
+            <% })%>
+        </select>
+        <input type="submit" value="Submit" />
+    </form>
+</body>
+
+</html>

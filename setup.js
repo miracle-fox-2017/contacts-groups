@@ -5,7 +5,7 @@ const db = new sqlite3.Database('./db/data.db')
 db.serialize(function () {
   //dibawah ini tabel Contacts
     db.run(`CREATE TABLE IF NOT EXISTS Contacts(
-      id INTEGER,
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
       name VARCHAR(32) ,
       company VARCHAR(50),
       telp_number VARCHAR(13),
@@ -14,20 +14,20 @@ db.serialize(function () {
 
     //dibawah ini tabel Groups
       db.run(`CREATE TABLE IF NOT EXISTS Groups(
-        id INTEGER,
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
         name_of_group VARCHAR(50)
         )`);
 
       //dibawah ini tabel Profile
       db.run(`CREATE TABLE IF NOT EXISTS Profile(
-        id INTEGER,
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
         username VARCHAR(50),
         password VARCHAR(8)
         )`);
 
       //dibawah ini tabel Addresses
       db.run(`CREATE TABLE IF NOT EXISTS Addresses(
-        id INTEGER,
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
         street VARCHAR(100),
         city VARCHAR(50),
         zipcode VARCHAR(50)

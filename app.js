@@ -29,14 +29,11 @@ app.post('/Contacts',function(req,res) {
   })
 })
 
-// app.get('/Contacts/delete/:id',function(req,res) {
-//   db.all(`DELETE FROM Contacts WHERE rows`,id,function(err) {
-//     if(err){
-//       res.render(err.message)
-//     }
-//     res.render('contacts')
-//   })
-// })
+app.get('/Contacts/delete/:id',function(req,res) {
+  db.all(`DELETE FROM Contacts WHERE id = "${req.params.id}"`,function(err,rows) {
+    res.redirect('/Contacts')
+  })
+})
 
 
 
@@ -54,6 +51,12 @@ app.post('/Addresses',function(req,res) {
   })
 })
 
+app.get('/Addresses/delete/:id',function(req,res) {
+  db.all(`DELETE FROM Addresses WHERE id = "${req.params.id}"`,function(err,rows) {
+    res.redirect('/Addresses')
+  })
+})
+
 //Groups
 app.get('/Groups',function(req,res){
   db.all("SELECT * FROM Groups",function(err,rows) {
@@ -65,6 +68,12 @@ app.post('/Groups',function(req,res){
   // console.log(req.body.groups);
   db.all(`INSERT INTO Groups(name_of_group) VALUES("${req.body.groups}")`,function(err,rows) {
       res.redirect('/Groups')
+  })
+})
+
+app.get('/Groups/delete/:id',function(req,res) {
+  db.all(`DELETE FROM Addresses WHERE id = "${req.params.id}"`,function(err,rows) {
+    res.redirect('/Groups')
   })
 })
 

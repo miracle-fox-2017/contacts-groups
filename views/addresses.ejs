@@ -61,9 +61,12 @@
 			<td><input type="text" name="zipcode" value="<%= data[edited].zipcode %>"></td>
 			<td>
 			<select id="contact_id" name="contact_id">
-				<option value="" selected > <%= data[edited].name %> </option>
 				<%for (let i = 0 ; i<contacts.length ;i++ ){%>
-				<option value= <%= contacts[i].id %> > <%= contacts[i].name %> </option>
+				 <% if(data[edited].name == contacts[i].name){%>
+					<option value= <%= contacts[i].id %> selected > <%= contacts[i].name %> </option>
+					 <%}else{%>
+						<option value= <%= contacts[i].id %> > <%= contacts[i].name %> </option>
+					 <%}%>
 				<%}%>
 			</select>				
 			</td>
@@ -84,7 +87,6 @@
 			<td><input type="text" name="zipcode"></td>
 			<td>
 			<select id="contact_id" name="contact_id">
-				<option value=""> </option>
 				<%for (let i = 0 ; i<contacts.length ;i++ ){%>
 				<option value= <%= contacts[i].id %> > <%= contacts[i].name %> </option>
 				<%}%>

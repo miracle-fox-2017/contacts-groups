@@ -10,13 +10,22 @@ router.get('/', (req, res)=>{
 	Model.getAllProfileContact(result=>{
 		// console.log(result);
 		// res.send(result.profiles)
-		res.render('profile', {profiles : result.profiles, contacts : result.contacts})
+		let message = ""
+		res.render('profile', {profiles : result.profiles, contacts : result.contacts, message})
 	})
 })
 
 router.post('/', (req, res)=>{
-	Model.addProfile(req.body, ()=>{
-		res.redirect('/profiles')
+	Model.addProfile(req.body, (err)=>{
+		if(!err){
+			res.redirect('/profiles')	
+		}else{
+			Model.getAllProfileContact(result=>{
+				let message = "Your contact already have profile"
+				res.render('profile', {profiles : result.profiles, contacts : result.contacts, message})
+			})
+		}
+		
 	})
 })
 

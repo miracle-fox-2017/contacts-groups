@@ -4,14 +4,23 @@ const Model = require('../models/contactsModel')
 
 router.get('/', (req, res)=>{
 	Model.getAllContact(result=>{
-		res.render('contact', {contacts : result})
+		let message = ""
+		res.render('contact', {contacts : result, message})
 	})
 })
 
 router.post('/', (req, res)=>{
-	Model.addContact(req.body, ()=>{
-		res.redirect('/contacts')
-	})
+	if(!req.body.name){
+		Model.getAllContact(result=>{
+			let message = "Kolom nama tidak boleh kosong"
+			res.render('contact', {contacts : result, message})
+		})
+	}else{
+		Model.addContact(req.body, ()=>{
+			res.redirect('/contacts')
+		})	
+	}
+	
 })
 
 router.get('/edit/:id', (req, res)=>{

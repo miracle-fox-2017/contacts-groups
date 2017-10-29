@@ -27,7 +27,7 @@ class Profile{
 	static addProfile(data, cb){
 		db.run(`insert into Profile (username, password, id_contact) values ("${data.username}", "${data.password}", "${data.contact}")`, err=>{
 			if(err){
-				console.log(err);
+				cb(err);
 			}else{
 				cb()
 			}

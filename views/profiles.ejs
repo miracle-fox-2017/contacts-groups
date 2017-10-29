@@ -59,9 +59,12 @@
 			<td><input type="text" name="username" value="<%= data[edited].username %>"></td>
 			<td><input type="password" name="password" value="<%= data[edited].password %>"></td>
 			<td><select id="contact_id" name="contact_id" existContact= "<%= tempContact %>" >
-			<option value=""></option>
 			<%for (let i = 0 ; i<contacts.length ;i++ ){%>
-			<option value= <%= contacts[i].id %> > <%= contacts[i].name %> </option>
+					 <% if(data[edited].name == contacts[i].name){%>
+						<option value= <%= contacts[i].id %> selected > <%= contacts[i].name %> </option>
+					 <%}else{%>			
+					 	<option value= <%= contacts[i].id %> > <%= contacts[i].name %> </option>
+					 <%}%>	
 			<%}%>		
 			</select>
 			</td>
@@ -80,7 +83,6 @@
 			<td><input type="text" name="username" ></td>
 			<td><input type="password" name="password"></td>
 			<td><select id="contact_id" name="contact_id" existContact= "<%= tempContact %>" >
-			<option value=""></option>
 			<%for (let i = 0 ; i<contacts.length ;i++ ){%>
 			<option value= <%= contacts[i].id %> > <%= contacts[i].name %> </option>
 			<%}%>		

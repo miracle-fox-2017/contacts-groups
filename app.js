@@ -173,7 +173,7 @@ app.get('/profiles', function(req, res){
 	})	
 
 	app.get('/profiles/edit/:id', function(req, res){		
-		db.all(`SELECT * FROM Profile`,(err, alldata)=>{
+		db.all(`SELECT Profile.username, Profile.id, Profile.password, Profile.contact_id, Contacts.name FROM Contacts INNER JOIN Profile on Profile.contact_id = Contacts.id`,(err, alldata)=>{
 			if (err) throw err;
 			let editedId ;
 

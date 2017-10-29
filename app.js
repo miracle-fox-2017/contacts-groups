@@ -90,6 +90,13 @@ app.post('/Profile',function(req,res) {
   })
 })
 
+app.get('/Profile/delete/:id',function(req,res) {
+  db.all(`DELETE FROM Addresses WHERE id = "${req.params.id}"`,function(err,rows) {
+    res.redirect('/profile')
+  })
+})
+
+
 app.listen(3000,function() {
   console.log('masuk port 3000');
 })

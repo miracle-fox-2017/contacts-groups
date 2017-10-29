@@ -47,12 +47,13 @@ app.get('/contacts', (req, res)=>{
   db.all(queryGroups, (err, dataGroups)=>{
     if(!err){
                                                                                             // `SELECT detail.id,detail.user_id, user.name, detail.movie_id,title,price FROM detail INNER JOIN user ON detail.user_id = user.id INNER JOIN movie ON detail.movie_id=movie.id;`
-      let query = `SELECT Contacts.id, Contacts.name, Contacts.company, Contacts_Groups.GroupsId, Contacts_Groups.ContactsId, Contacts.telp_number, Contacts.email, Groups.name_of_group FROM Contacts_Groups JOIN Contacts ON Contacts_Groups.ContactsId = Contacts.id   JOIN Groups ON Contacts_Groups.GroupsId = Groups.id`
+      let query = `SELECT Contacts.id, Contacts.name, Contacts.company, Contacts_Groups.GroupsId, Contacts_Groups.ContactsId,
+      Contacts.telp_number, Contacts.email, Groups.name_of_group FROM Contacts_Groups JOIN Contacts ON Contacts_Groups.ContactsId = Contacts.id JOIN Groups ON Contacts_Groups.GroupsId = Groups.id`
       db.all(query, (err, rows)=>{
         if(!err){
           db.all(`SELECT * FROM Contacts_Groups`, (err, dataConjuction)=>{
             if(!err){
-              res.send(rows)
+              // res.send(rows)
                 res.render('contacts', {msgError:msgError,rowsContacts:rows, dataGroups:dataGroups,dataConjuction:dataConjuction})
             } else {
               res.send(err)

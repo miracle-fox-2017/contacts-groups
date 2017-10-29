@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title> contacts</title>
+  </head>
+  <body>
+    <table>
+      <tr>
+        <th>ID</th>
+        <th>Nama</th>
+        <th>company</th>
+        <th>telephone</th>
+        <th>email</th>
+      </tr>
+      <% for(var i = 0; i < rows.length; i++){ %>
+      <tr>
+        <td><%= rows[i].id %></td>
+        <td><%= rows[i].name %></td>
+        <td><%= rows[i].company %></td>
+        <td><%= rows[i].telp %></td>
+        <td><%= rows[i].email %></td>
+        <td><a href="/contacts/edit/<%=rows[i].id%>"> Edit</td>
+        <td><a href="/contacts/delete/<%=rows[i].id%>"> Delete</td>
+      </tr>
+    <% } %>
+    <form class="" action="/contacts" method="post">
+      <td> Name<input type="text" name="name"> </td>
+      <td>Company<input type="text" name="company"></td>
+      <td>Phone number<input type="text" name="telp"></td>
+      <td>Email<input type="text" name="email"></td>
+      <td><input type="submit" value="Submit"></td>
+    </form>
+    </table>
+
+  </body>
+</html>

@@ -18,6 +18,7 @@ app.get('/', function(req, res){
   res.send('testing 3000')
 });
 
+//======RELEASE 1======
 app.get('/contacts', function(req, res){
   db.all(`SELECT * FROM contacts`, function(err, rows) {
   res.render('contacts', {rows})
@@ -73,6 +74,18 @@ app.get('/groups/delete/:id', function(req, res){
   res.redirect('/groups')
 })
 
+//=======RELEASE 2======
+//=======ADRRESS======
+app.get('/addresses', function(req, res){
+  db.all(`SELECT * FROM addresses`, function(err, rows) {
+  res.render('addresses', {rows})
+  })
+})
+
+app.post('/addresses', function(req, res){
+  db.run(`INSERT INTO addresses (street, city, zipcode) VALUES ('${req.body.street}', '${req.body.city}', '${req.body.zipcode}')`)
+  res.redirect('./addresses')
+})
 
 app.listen(3000,function(){
   console.log('brum brum jalan app');

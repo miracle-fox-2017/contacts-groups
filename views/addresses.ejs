@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title> addresses</title>
+  </head>
+  <body>
+    <table>
+      <tr>
+        <td>ID</td>
+        <td>Street</td>
+        <td>City</td>
+        <td>Zipcode</td>
+      </tr>
+      <% for(var i = 0; i < rows.length; i++){ %>
+      <tr>
+        <td><%= rows[i].id %></td>
+        <td><%= rows[i].street %></td>
+        <td><%= rows[i].city %></td>
+        <td><%= rows[i].zipcode %></td>
+        <td><a href="/addresses/edit/<%=rows[i].id%>"> Edit</td>
+        <td><a href="/addresses/delete/<%=rows[i].id%>"> Delete</td>
+      </tr>
+    <% } %>
+    <form class="" action="/addresses" method="post">
+      <td> Street <input type="text" name="street"> </td>
+      <td>City<input type="text" name="city"></td>
+      <td>Zipcode<input type="text" name="zipcode"></td>
+      <td><input type="submit" value="Submit"></td>
+    </form>
+    </table>
+
+  </body>
+</html>

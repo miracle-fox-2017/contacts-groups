@@ -20,8 +20,7 @@ db.serialize(() => {
         username varchar(20), 
 
         password varchar(20)
-	)`)
-  db.run(`ALTER TABLE Profile ADD COLUMN contact_id int REFERENCES Contacts(id)`)
+	)`) 
 
 	db.run(`CREATE TABLE IF NOT EXISTS Addresses (
     	id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -29,6 +28,12 @@ db.serialize(() => {
     	city varchar(20),
     	zipcode int
 	)`)
+  db.run(`ALTER TABLE Profile ADD COLUMN contact_id int REFERENCES Contacts(id)`, (err) =>{
+
+  })
+  db.run(`ALTER TABLE Addresses ADD COLUMN contact_id int REFERENCES Contacts(id)`, (err)=>{
+    
+  })
 });
 
 db.close()

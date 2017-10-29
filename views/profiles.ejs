@@ -58,7 +58,13 @@
 		<form action="/profiles/edit" method="post">
 			<td><input type="text" name="username" value="<%= data[edited].username %>"></td>
 			<td><input type="password" name="password" value="<%= data[edited].password %>"></td>
-			<td><input type="text" name="contact_id" value="<%= data[edited].contact_id %>"></td>
+			<td><select id="contact_id" name="contact_id" existContact= "<%= tempContact %>" >
+			<option value=""></option>
+			<%for (let i = 0 ; i<contacts.length ;i++ ){%>
+			<option value= <%= contacts[i].id %> > <%= contacts[i].name %> </option>
+			<%}%>		
+			</select>
+			</td>
 			<td><input type="submit" value="replace"></td>
 			<input type="hidden" name="id" value="<%= data[edited].id %>">
 		</form>	
@@ -75,8 +81,8 @@
 			<td><input type="password" name="password"></td>
 			<td><select id="contact_id" name="contact_id" existContact= "<%= tempContact %>" >
 			<option value=""></option>
-			<%for (let i = 0 ; i<data.length ;i++ ){%>
-			<option value= <%= data[i].contact_id %> > <%= data[i].name %> </option>
+			<%for (let i = 0 ; i<contacts.length ;i++ ){%>
+			<option value= <%= contacts[i].id %> > <%= contacts[i].name %> </option>
 			<%}%>		
 			</select>
 			</td>

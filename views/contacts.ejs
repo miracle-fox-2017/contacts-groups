@@ -22,15 +22,15 @@
           <th>Phone Number</th>
           <th>Email</th>
           <% let i = 1 %>
-        <% rows.forEach(function(element){%>
+        <% rows.forEach(function(contact){%>
             <tr>
               <td> <%= i %> </td>
-              <td> <%= element.name %> </td>
-              <td> <%= element.company %> </td>
-              <td> <%= element.telp_number %> </td>
-              <td> <%= element.email %> </td>
-              <td> <a href="/contacts/edit/<%=element.id%>">edit</a>
-              <td> <a href="/contacts/delete/<%=element.id%>">delete</a>
+              <td> <%= contact.name %> </td>
+              <td> <%= contact.company %> </td>
+              <td> <%= contact.telp_number %> </td>
+              <td> <%= contact.email %> </td>
+              <td> <a href="/contacts/edit/<%=contact.id%>">edit</a>
+              <td> <a href="/contacts/delete/<%=contact.id%>">delete</a>
             </tr>
           <% i++ })%>
         </tr>

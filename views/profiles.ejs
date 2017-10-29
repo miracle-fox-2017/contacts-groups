@@ -13,13 +13,13 @@
                   <th>Username</th>
                   <th>Password</th>
                   <% let i = 1 %>
-                <% rows.forEach(function(element){%>
+                <% rows.forEach(function(profile){%>
                     <tr>
                       <td> <%= i %> </td>
-                      <td> <%= element.username %> </td>
-                      <td> <%= element.password %> </td>
-                      <td> <a href="/profile/edit/<%=element.id%>">edit</a>
-                      <td> <a href="/profile/delete/<%=element.id%>">delete</a>
+                      <td> <%= profile.username %> </td>
+                      <td> <%= profile.password %> </td>
+                      <td> <a href="/profile/edit/<%=profile.id%>">edit</a>
+                      <td> <a href="/profile/delete/<%=profile.id%>">delete</a>
                     </tr>
                   <% i++ })%>
                 </tr>

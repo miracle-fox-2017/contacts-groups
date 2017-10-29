@@ -14,14 +14,14 @@
                   <th>City</th>
                   <th>Zipcode</th>
                   <% let i = 1 %>
-                <% rows.forEach(function(element){%>
+                <% rows.forEach(function(address){%>
                     <tr>
                       <td> <%= i %> </td>
-                      <td> <%= element.street %> </td>
-                      <td> <%= element.city %> </td>
-                      <td> <%= element.zipcode %> </td>
-                      <td> <a href="/addresses/edit/<%=element.id%>">edit</a>
-                      <td> <a href="/addresses/delete/<%=element.id%>">delete</a>
+                      <td> <%= address.street %> </td>
+                      <td> <%= address.city %> </td>
+                      <td> <%= address.zipcode %> </td>
+                      <td> <a href="/addresses/edit/<%=address.id%>">edit</a>
+                      <td> <a href="/addresses/delete/<%=address.id%>">delete</a>
                     </tr>
                   <% i++ })%>
                 </tr>

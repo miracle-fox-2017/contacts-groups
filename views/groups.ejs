@@ -12,12 +12,12 @@
             <th>No</th>
             <th>Group</th>
         <% let i = 1 %>
-         <% rows.forEach(function(element){%>
+         <% rows.forEach(function(group){%>
             <tr>
                  <td> <%= i %> </td>
-                 <td> <%= element.name_of_group %> </td>
-                 <td> <a href="/groups/edit/<%=element.id%>">edit</a>
-                 <td> <a href="/groups/delete/<%=element.id%>">delete</a>
+                 <td> <%= group.name_of_group %> </td>
+                 <td> <a href="/groups/edit/<%=group.id%>">edit</a>
+                 <td> <a href="/groups/delete/<%=group.id%>">delete</a>
             </tr>
         <% i++ })%>
              </tr>

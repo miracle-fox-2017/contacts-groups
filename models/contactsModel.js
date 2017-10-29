@@ -9,13 +9,29 @@ class Contact{
 		})
 	}
 
-
-	static addContact(data, cb){
-		db.run(`insert into Contacts (name, telp_number, email) values ("${data.name}", "${data.telp_number}", "${data.email}")`, err=>{
+	static getAllContactGroup(cb){
+		console.log('masuk sini');
+		db.all(`select C.id, C.name, C.company, C.telp_number, C.email, G.name_of_group from Contacts as C left join ContactGroup as CG on C.id = CG.id_contact left join Groups as G on CG.id_group = G.id`, (err, contacts)=>{
 			if(err){
 				console.log(err);
 			}else{
-				cb()
+				cb(contacts)
+			}
+		})
+	}
+
+
+	static addContact(data, cb){
+		db.run(`insert into Contacts (name, telp_number, email) values ("${data.name}", "${data.telp_number}", "${data.email}")`, function(err){
+			if(!err){
+				data.id = this.lastID
+				db.run(`insert into ContactGroup (id_contact, id_group) values ("${data.id}", "${data.group}")`, err=>{
+					if(!err){
+						cb()
+					}else{
+						console.log(err);
+					}
+				})	
 			}
 		})
 	}

@@ -1,11 +1,20 @@
 const express = require('express')
 const router = express.Router()
 const Model = require('../models/contactsModel')
+const Group = require('../models/groupsModel')
 
 router.get('/', (req, res)=>{
-	Model.getAllContact(result=>{
-		let message = ""
-		res.render('contact', {contacts : result, message})
+	// Model.getAllContact(result=>{
+	// 	let message = ""
+	// 	res.render('contact', {contacts : result, message})
+	// })
+	let message = ""
+
+	Model.getAllContactGroup(contacts=>{
+		Group.getAllGroup(groups=>{
+			// res.send({contacts, groups})
+			res.render('contact', {contacts, groups, message})
+		})
 	})
 })
 

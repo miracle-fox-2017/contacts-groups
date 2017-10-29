@@ -13,6 +13,7 @@
 				<td>Telp Number</td>
 				<td>Email</td>
 				<td>List Address</td>
+				<td>Groups</td>
 				<td>Action</td>
 			</tr>
 		</thead>
@@ -24,6 +25,8 @@
 				<td><%=contact.telp_number%></td>
 				<td><%=contact.email%></td>
 				<td><a href="/addresses_with_contact/<%=contact.id%>">addresses</a></td>
+				<td><%=contact.name_of_group%></td>
+				</td>
 				<td>
 					<a href="/contacts/edit/<%=contact.id%>">Edit</a>
 					<a href="/contacts/delete/<%=contact.id%>">Delete</a>
@@ -37,6 +40,11 @@
   		<input type="text" name="name" placeholder="FullName">
   		<input type="text" name="telp_number" placeholder="Telp Number">
   		<input type="text" name="email" placeholder="Email">
+  		<select name="group">
+  		<%groups.forEach(group=>{%>
+  			<option value="<%=group.id%>"><%=group.name_of_group%></option>
+  		<%})%>
+		</select>
   		<input type="submit" value="Submit">
 	</form> 
 </body>

@@ -162,33 +162,7 @@ app.get('/addresses_with_contact', (req, res) => {
 	address.getAllData(function(rows) {
 
 		contact.getAllData((allcontacts) => {
-			let joinedData = [];
-
-			for (var i = 0; i < rows.length; i++) {
-				let obj = {};
-				obj.id = rows[i].id,
-				obj.street = rows[i].street,
-				obj.city = rows[i].city;
-				obj.zipcode = rows[i].zipcode;
-				obj.name = '';
-				obj.company = '';
-				obj.telp_number = '';
-				obj.email = '';
-
-				for (var j = 0; j < allcontacts.length; j++) {
-
-					if (rows[i].contacts_id === allcontacts[j].id) {
-						obj.name = allcontacts[j].name;
-						obj.company = allcontacts[j].company;
-						obj.telp_number = allcontacts[j].telp_number;
-						obj.email = allcontacts[j].email;
-					}
-				}
-
-				joinedData.push(obj);
-			}
-
-			res.render('addresses-contact', { data: rows, contacts: allcontacts, joinedData: joinedData});
+			res.render('addresses-contact', { data: rows, contacts: allcontacts, joinedData: contact.getAllDataArrayJoin(rows, allcontacts)});
 		});
 	});
 });

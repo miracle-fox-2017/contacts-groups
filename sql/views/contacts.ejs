@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      <table>
+    </style>
+    <meta charset="utf-8">
+    <title>CONTACTS</title>
+  </head>
+  <body>
+    <table width="10%">
+      <tr>
+        <th>No</th>
+        <th>Nama</th>
+        <th>Company</th>
+        <th>Telp</th>
+        <th>Email</th>
+        <% let i = 1 %>
+      <% rows.forEach(function(row){%>
+          <tr>
+            <td> <%= row.id %> </td>
+            <td> <%= row.name %> </td>
+            <td> <%= row.company %> </td>
+            <td> <%= row.telp_number %> </td>
+            <td> <%= row.email %> </td>
+            <td> <a href="/contacts/edit/<%=row.id%>">edit</a>
+            <td> <a href="/contacts/delete/<%=row.id%>">delete</a>
+          </tr>
+        <% i++ })%>
+      </tr>
+    </table>
+    <% if (edit === true) {%>
+      <form action="/contacts/edit/<%=rows[0].id%>" method="post">
+        Name:
+        <input type="text" name="name" value="<%=rows[0].name%>">
+        Company:
+        <input type="text" name="company" value="<%=rows[0].company%>">
+        Phone Number
+        <input type="text" name="telp" value="<%=rows[0].telp_number%>">
+        Email
+        <input type="text" name="email" value="<%=rows[0].email%>">
+        <input type="submit" value="EDIT"=>
+      </form>
+    <% } %>
+    <% if (edit === false) {%>
+      <form action="/contacts" method="POST">
+        Name:<br>
+        <input type="text" name='name' >
+        <br>
+        Company:<br>
+        <input type="text" name='company' >
+        <br>
+        Phone Number<br>
+        <input type="text" name='phoneNumber'>
+        <br>
+        Email<br>
+        <input type="text" name='email'>
+        <br>
+        <input type="submit" value="ADD"=>
+      </form>
+   <% } %>
+  </body>
+</html>

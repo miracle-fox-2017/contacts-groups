@@ -4,7 +4,7 @@ var db = new sqlite3.Database('../database/person.db');
 db.serialize (function() {
   db.run(`CREATE TABLE IF NOT EXISTS Contacts (
     ID Integer PRIMARY KEY AUTOINCREMENT,
-    Name varchar(45) NOT NULL,
+    Name varchar(45) NOT NULL UNIQUE,
     Company varchar(50),
     Telp_Number int,
     Email varchar(45));`  );
@@ -26,5 +26,14 @@ db.serialize (function() {
     City varchar(50),
     Zipcode Integer);`
   );
-db.close();
+
+//   db.run(`ALTER TABLE Profile
+// DROP FOREIGN KEY FK_ContactsID;`)
+  db.run(`ALTER TABLE Profile ADD ContactID INT
+    CONSTRAINT FK_ContactsID REFERENCES Contacts(ID) ON UPDATE SET DEFAULT;`)
+
+  // db.run(`ALTER TABLE Profile ADD
+  //   CONSTRAINT UQ_ContactsID UNIQUE Contacts(ID) ON UPDATE ACTION;;`)
+
+  db.close();
 })

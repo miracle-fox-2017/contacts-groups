@@ -5,23 +5,36 @@ const Profile = require('../Model/profile');
 var route = express.Router()
 
 route.get('/',(req,res)=>{
-  Profile.getall(rows=>{
-    res.render('profile',{profile : rows})
+  Profile.gettable('Contacts',rowstable =>{
+    Profile.getall(rows=>{
+      // res.send({profile : rows,contact :rowstable})
+      res.render('profile',{profile : rows,contact :rowstable})
+    })
   })
 })
 
 route.post('/',(req,res)=>{
+  if (req.body.username.length === 0){
+    res.render('profile',{error:["Error namasudah ada"]})
+  }
+  else {
   let profile ={
     username : req.body.username,
-    password   : req.body.password
+    password   : req.body.password,
+    contactid : req.body.contact_id
   }
+  // res.send(profile)
   Profile.addnew(profile)
   res.redirect('/profile')
+}
 })
 
 route.get('/edit/:id',(req,res)=>{
-  Profile.edit(req.params.id,row=>{
-    res.render('profileEdit',{rowProfile:row})
+  Profile.gettable('Contacts',rowstable =>{
+    Profile.edit(req.params.id,row=>{
+      // res.send(row)
+      res.render('profileEdit',{rowProfile:row,contact :rowstable})
+    })
   })
 })
 
@@ -30,6 +43,7 @@ route.post('/edit/:id',(req,res) =>{
     let update = {
       username : req.body.username,
       password : req.body.password,
+      contactid : req.body.contact_id
     }
     // res.send(update)
     Profile.update(id,update)

@@ -33,6 +33,7 @@
          <td>ID</td>
          <td>Username</td>
          <td>Password</td>
+         <td>Contact Name</td>
          <td>Actions</td>
       </thead>
       <tr>
@@ -41,6 +42,7 @@
         <td><%=dt.Id_profile%></td>
         <td><%=dt.Username%></td>
         <td><%=dt.Password%></td>
+        <td><%=dt.Name%></td>
         <td><a href="/profile/edit/<%=dt.Id_profile%>">Edit<a>
         <a href="/profile/delete/<%=dt.Id_profile%>">Delete</a></td>
       </tr>
@@ -50,8 +52,17 @@
         <form class="" action="/profile" method="post">
           <input type="text" name="username" placeholder="Username">
           <input type="password" name="password" placeholder="Password">
+          <select class="" name="contact_id">
+            <!-- <option value=""></option> -->
+            <%contact.forEach(nama =>{ %>
+            <option value="<%=nama.ID%> "><%=nama.Name%></option>
+            <%})%>
+          </select>
           <input type="submit" value="Submit">
         </form>
+    </div>
+    <div>
+      
     </div>
   </body>
 </html>

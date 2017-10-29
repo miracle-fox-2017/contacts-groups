@@ -141,7 +141,11 @@ app.get('/profiles/edit/:id', (req, res) =>
   {
     profiles.select( (profileData) =>
       {
-        res.render('profileEdit', {profileData})
+        contacts.select( (contactsData) =>
+          {
+            res.render('profileEdit', {profileData, contactsData})
+          }
+        )
       },`*`,req.params.id);
   }
 );
@@ -149,7 +153,7 @@ app.get('/profiles/edit/:id', (req, res) =>
 app.post('/profiles/edit/:id', (req, res) =>
   {
     profiles.update(req.body);
-    res.redirect('/profile');
+    res.redirect('/profiles');
   }
 )
 

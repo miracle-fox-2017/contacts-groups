@@ -59,6 +59,8 @@ let select = (callback, column = `*`, id) =>
     statement += ` WHERE ID = ${id}`;
   }
   
+  console.log(statement);
+  
   if (command === `SELECT`)
  {
    db.all(statement, (err, rows) =>
@@ -119,7 +121,7 @@ let deleteQuery = (id) =>
 
 let leftJoin = (callback) =>
 {
-  statement = `SELECT Profiles.username, Profiles.password, Contacts.name FROM Profiles LEFT JOIN Contacts on Profiles.ContactID = Contacts.ID`
+  statement = `SELECT Profiles.ID, Profiles.username, Profiles.password, Contacts.name FROM Profiles LEFT JOIN Contacts on Profiles.ContactID = Contacts.ID`
   db.all(statement, (err, rows) =>
     {
       if (err)
@@ -134,7 +136,6 @@ let leftJoin = (callback) =>
   )
   resetAll();
 }
-
 
 let resetAll = () =>
 {

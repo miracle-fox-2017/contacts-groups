@@ -24,6 +24,7 @@
     			 <th> COMPANY </th>
     			 <th> TELP_NUMBER </th>
     			 <th> EMAIL </th>
+    			 <th colspan="2"> ACTION </th>
   			  </tr>
 		</thead>
 		<tbody align ="center">	
@@ -71,7 +72,7 @@
 	<h2> ADD </h2>
 	<tbody align ="center">	
 		<tr>
-		<form action="/contacts" method="post">
+		<form action="/contacts" method="post" onsubmit="return validasi_input(this)">
 			<td><input type="text" name="name" ></td>
 			<td><input type="text" name="company"></td>
 			<td><input type="text" name="telp_number"></td>
@@ -79,9 +80,20 @@
 			<td><input type="submit" value="kirim"></td>
 		</form>		
 		</tr>
-	</tbody>		
-<%}%>
+			<script type="text/javascript">
+				function validasi_input(form){
+  				if (form.name.value == ""){
+    			alert("ISI NAMA");
+    			form.name.focus();
+    			return (false);
+  			}
+				return (true);
+			}
+			</script>				
+	</tbody>	
     </table>	
+<%}%>
+
 </body>
 </html>
 <!DOCTYPE

@@ -17,9 +17,11 @@ db.serialize(() => {
 
 	db.run(`CREATE TABLE IF NOT EXISTS Profile(
    	    id INTEGER PRIMARY KEY AUTOINCREMENT,
-        username varchar(20),
+        username varchar(20), 
+
         password varchar(20)
 	)`)
+  db.run(`ALTER TABLE Profile ADD COLUMN contact_id int REFERENCES Contacts(id)`)
 
 	db.run(`CREATE TABLE IF NOT EXISTS Addresses (
     	id INTEGER PRIMARY KEY AUTOINCREMENT,

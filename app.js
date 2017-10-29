@@ -143,21 +143,21 @@ app.get('/addresses', function(req, res){
 //Profiles
 
 app.get('/profiles', function(req, res){
-		db.all(`SELECT * FROM Profile`,(err, data)=>{
+		db.all(`SELECT Profile.username, Profile.id, Profile.password, Profile.contact_id, Contacts.name FROM Profile INNER JOIN Contacts on Profile.contact_id = Contacts.id`,(err, data)=>{
 			if (err) throw err;
 			res.render('profiles',{ edited : undefined, data : data})
 		})
 	})
 	app.post('/profiles/edit', function(req, res){
-		db.all(`UPDATE Profiles SET username = "${req.body.username}", password = "${req.body.password}" WHERE id = ${req.body.id}`,(err, data)=>{
+		db.all(`UPDATE Profile SET username = "${req.body.username}", password = "${req.body.password}", contact_id = ${req.body.contact_id} WHERE id = ${req.body.id}`,(err, data)=>{
 			if (err) throw err;
 			// res.render('contacts',{ edited : undefined, data : data})
 			res.redirect('/profiles')
 		})
 	})	
 	app.post('/profiles', function(req, res){
-		db.all(`INSERT INTO Profile (username, password)
-			VALUES ("${req.body.username}", "${req.body.password}")`,(err, data)=>{
+		db.all(`INSERT INTO Profile (username, password, contact_id)
+			VALUES ("${req.body.username}", "${req.body.password}", ${req.body.contact_id})`,(err, data)=>{
 			if (err) throw err;
 			res.redirect('/profiles')
 		})

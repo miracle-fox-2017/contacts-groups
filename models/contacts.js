@@ -39,8 +39,9 @@ class Contact {
     })
   }
 
+
   static update(req, callback){
-    //console.log(req);
+
     db.run(`UPDATE Contacts SET
       name = '${req.body.name}',
       company = '${req.body.company}',

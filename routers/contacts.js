@@ -2,13 +2,17 @@
 const express = require('express')
 const router = express.Router()
 const Contact = require('../models/contacts')
+const Group = require('../models/groups')
+const Contacts_Groups = require('../models/contacts_groups')
 
 
 
 router.get('/contacts', function (req, res) {
   Contact.findAll(dataContacts =>{
-    res.render('contacts/contacts', {dataContacts:dataContacts})
-  });
+    Group.findAll(dataGroups => {
+    res.render('contacts/contacts', {dataContacts:dataContacts, dataGroups:dataGroups})
+    });
+  })
 })
 
 

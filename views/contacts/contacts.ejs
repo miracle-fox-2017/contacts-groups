@@ -9,7 +9,7 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   </head>
   <body>
-
+  <% include ../partials/nav.ejs%>
     <h1>Contacts</h1>
 
   <div class="container">
@@ -57,7 +57,11 @@
         <br>
       </div>
       <div class="col-xs-4 col-md-2">
-        <br>
+        <select class="box" name="ContactsId">
+        <% for(let i = 0; i < dataGroups.length; i++) {%>
+        <option value="<%=dataGroups[i].id%>"><%=dataGroups[i].name_of_group%></option>
+        <%}%>
+        </select>
         <input type="submit" value ="Submit">
         </div>
     </div>

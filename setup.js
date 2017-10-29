@@ -51,10 +51,25 @@ db.serialize((err, rows)=>{
   }else{
     console.log('Table Addresses had Create');
   }
-//
-//
 
-  // relasi 0ne to One
+
+  // table conjungtion Many to Many
+  db.run(`CREATE TABLE IF NOT EXISTS Contacts_Groups
+    (
+      id INTEGER primary key AUTOINCREMENT,
+      ContactsId INTEGER REFERENCES Contacts('id'),
+      GroupsId INTEGER REFERENCES Groups('id')
+    )`)
+      if(err){
+        console.log(err);
+      }else{
+        console.log('katakan jadi. Horeee')
+      }
+
+
+
+
+//  relasi 0ne to One
   db.run(` ALTER TABLE Profile ADD COLUMN ContactId INTEGER REFERENCES Contacts('id')`)
     if(err){
       console.log(err);
@@ -79,14 +94,14 @@ db.serialize((err, rows)=>{
       }
     })
 
-//
+
  })
-//
-//
-// //
-// //
-// //
+
 // //tambah record
+
+db.run (`INSERT INTO Contacts_Groups (ContactsId, GroupsId)
+ VALUES (1,1), (1,2), (1,3), (2,3), (2,1)`)
+
 // db.run (`INSERT INTO Contacts (name, company, telp_number, email) VALUES ('Jhon Doe', 'Hacktiv8', '081234567', 'jhondoe@rocketmail.com')`)
 // db.run (`INSERT INTO Contacts (name, company, telp_number, email) VALUES ('Chandra Buwana', 'Hacktiv8', '0812250927367', 'chandra@rocketmail.com')`)
 //
@@ -103,6 +118,13 @@ db.serialize((err, rows)=>{
 //
 // //
 // //
+
+// SELECT Contacts.name, Groups.name_of_group
+// FROM Contacts_Groups
+// 	inner join Contacts ON Contacts_Groups.ContactsId = Contacts.id
+// 	inner join Groups  ON Contacts_Groups.GroupsId = Groups.id
+
+
 //    db.run(`INSERT INTO Profile (username, password)
 //     VALUES ('azharieazharou', 'ABB12990')`)
 //     db.run(`INSERT INTO Profile (username, password)

@@ -1,0 +1,48 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>addresses</title>
+  </head>
+  <body>
+
+    <h1>addresses</h1>
+    <a href="/">Home</a>
+    <div class="body">
+      <table>
+        <form class="" action="/addresses" method="post">
+          <input type="text" name="street" placeholder="street">
+          <input type="text" name="city" placeholder="city">
+          <input type="text" name="zipcode" placeholder="zipcode">
+          <input type="submit" name="" value="SUBMIT">
+        </form>
+        <br>
+        <br>
+
+        <tr>
+          <th>id</th>
+          <th>street</th>
+          <th>city</th>
+          <th>zipcode</th>
+        </tr>
+        <tbody>
+          <%data.forEach( row => { %>
+            <tr>
+              <td> <%= row.id %> </td>
+              <td> <%= row.street %></td>
+              <td> <%= row.city %></td>
+              <td> <%= row.zipcode %></td>
+              <td>
+                <a href="/addresses/edit/<%=row.id%>">Edit</a>
+                <a href="/addresses/delete/<%=row.id%>">Delete</a>
+              </td>
+            </tr>
+            <% }) %>
+        </tbody>
+
+
+      </table>
+    </div>
+  </body>
+</html>

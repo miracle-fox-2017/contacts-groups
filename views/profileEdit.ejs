@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Edit Profile</title>
+  </head>
+  <body>
+    <h1>Profile Edit</h1>
+    <a href="/profile"> back </a>
+
+    <% data.forEach(row => {%>
+    <form class="" action="/profile/edit/<%=row.id%>" method="post">
+      <input type="text" name="Username" value="<%=row.Username %>">
+      <input type="text" name="password" value="<%=row.password %>">
+      <input type="submit" name="" value="SUBMIT">
+
+    </form>
+    <%})%>
+
+  </body>
+</html>

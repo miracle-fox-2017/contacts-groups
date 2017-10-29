@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+
+  <% data.forEach(row => { %>
+    <form class="" action="/groups/edit/<%=row.id%>" method="post">
+      <input type="text" name="name_of_group" value="<%=row.name_of_group%>">
+      <input type="submit" name="" value="SUBMIT">
+    </form>
+  <%})%>
+
+  </body>
+</html>

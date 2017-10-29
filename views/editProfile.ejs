@@ -1,0 +1,14 @@
+<% %>
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Edit Profile</title>
+</head>
+<body>
+	<form action="/profiles/edit/<%=profile.id%>" method="post">
+  		<input type="text" name="username" value="<%=profile.username%>">
+  		<input type="text" name="password" value="<%=profile.password%>">
+  		<input type="submit" value="Submit">
+	</form> 
+</body>
+</html>

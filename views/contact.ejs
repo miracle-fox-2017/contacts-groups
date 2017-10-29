@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Contacts</title>
+</head>
+<body>
+	<table>
+		<thead>
+			<tr>
+				<td>ID</td>
+				<td>Name</td>
+				<td>Telp Number</td>
+				<td>Email</td>
+				<td>Action</td>
+			</tr>
+		</thead>
+		<tbody>
+			<%contacts.forEach(contact=>{%>
+			<tr>
+				<td><%=contact.id%></td>
+				<td><%=contact.name%></td>
+				<td><%=contact.telp_number%></td>
+				<td><%=contact.email%></td>
+				<td>
+					<a href="/contacts/edit/<%=contact.id%>">Edit</a>
+					<a href="/contacts/delete/<%=contact.id%>">Delete</a>
+				</td>
+			</tr>
+			<%})%>
+		</tbody>
+	</table>
+
+	<form action="/contacts" method="post">
+  		<input type="text" name="name" placeholder="FullName">
+  		<input type="text" name="telp_number" placeholder="Telp Number">
+  		<input type="text" name="email" placeholder="Email">
+  		<input type="submit" value="Submit">
+	</form> 
+</body>
+</html>

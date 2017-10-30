@@ -3,33 +3,53 @@ const router=express.Router();
 
 // Import model
 const Profile=require("../model/profile");
+const Contact=require("../model/contact");
 
 router.get("/",(req,res)=>{ // Halaman awal profile
-    Profile.findAll((err,allRows)=>{
+    Profile.leftJoinContact((err,rowsProfile)=>{
         if(err){
             res.send(err);
         }else{
-            res.render("profile",{data:allRows});
+            Contact.findAll((err,rowsContact)=>{
+                if(err){
+                    res.send(err);
+                }else{
+                    res.render("profile",{profile:rowsProfile,contact:rowsContact});
+                }
+            });
         }
     });
 });
 router.post("/",(req,res)=>{ // Tambah profile
-    Profile.create(req.body,(err,object)=>{
-        if(err){
-            res.send(err);
+    Profile.checkUniqueContact(req.body.contact,(err,row)=>{
+        if(row.length > 0){
+            res.send("Your contact already have profile! <a href='/profiles'>Back</a>");
+            console.log("Your contact already have profile!");
         }else{
-            res.redirect("/profiles");
+            Profile.create(req.body,(err,object)=>{
+                if(err){
+                    res.send(err);
+                }else{
+                    res.redirect("/profiles");
+                }
+            });
         }
     });
 });
 router.get("/edit/:id",(req,res)=>{ // Halaman edit profile
-    Profile.findById(req.params.id,(err,row)=>{
+    Profile.findById(req.params.id,(err,rowProfile)=>{
         if(err){
             res.send(err);
-        }else if(row.length === 0){
+        }else if(rowProfile.length === 0){
             res.redirect("/profiles");
         }else{
-            res.render("edit-profile",{data:row});
+            Contact.findAll((err,rowsContact)=>{
+                if(err){
+                    res.send(err);
+                }else{
+                    res.render("edit-profile",{profile:rowProfile,contact:rowsContact});
+                }
+            });
         }
     });
 });

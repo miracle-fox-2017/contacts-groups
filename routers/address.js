@@ -3,13 +3,20 @@ const router=express.Router();
 
 // Import model
 const Address=require("../model/address");
+const Contact=require("../model/contact");
 
 router.get("/",(req,res)=>{ // Halaman awal alamat
-    Address.findAll((err,allRows)=>{
+    Address.findAll((err,addressRows)=>{
         if(err){
             res.send(err);
         }else{
-            res.render("address",{data:allRows});
+            Contact.findAll((err,contactRows)=>{
+                if(err){
+                    res.send(err);
+                }else{
+                    res.render("address",{address:addressRows,contact:contactRows});
+                }
+            });
         }
     });
 });

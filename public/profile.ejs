@@ -10,7 +10,7 @@
     <section>
         <div class="header">Daftar Profile</div>
         <div class="content">
-            <%if(data.length === 0){%>
+            <%if(profile.length === 0){%>
                 <div class="empty">Data Kosong!</div>
             <%}else{%>
                 <table border="1">
@@ -18,13 +18,15 @@
                         <td>No</td>
                         <td>Username</td>
                         <td>Password</td>
+                        <td>Contact Name</td>
                         <td>Action</td>
                     </tr>
-                    <%data.map((value,i)=>{%>
+                    <%profile.map((value,i)=>{%>
                     <tr>
                         <td><%=i + 1%></td>
                         <td><%=value.username%></td>
                         <td><%=value.password%></td>
+                        <td><%=value.name%></td>
                         <td>
                             <a href="/profiles/edit/<%=value.id%>"><button type="button">Edit</button></a>
                             <a href="/profiles/delete/<%=value.id%>"><button type="button">Hapus</button></a>
@@ -47,6 +49,20 @@
                     <tr>
                         <td>Password</td>
                         <td><input type="password" name="password" placeholder="Type your password"></td>
+                    </tr>
+                    <tr>
+                        <td>Contact List</td>
+                        <td>
+                            <select name="contact">
+                                <%if(contact.length === 0){%>
+                                <option value="">Tidak ada data contact</option>
+                                <%}else{
+                                    contact.map((value)=>{%>
+                                    <option value="<%=value.id%>"><%=value.name%></option>
+                                    <%});
+                                }%>
+                            </select>
+                        </td>
                     </tr>
                     <tr>
                         <td colspan="2"><input type="submit" value="Tambah"></td>

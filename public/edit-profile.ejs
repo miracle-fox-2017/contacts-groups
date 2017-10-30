@@ -9,16 +9,34 @@
 <body>
     <section>
         <div class="header">Edit Data Profile</div>
-        <form action="/profiles/edit/<%=data[0].id%>" method="post">
-            <input type="hidden" name="id" value="<%=data[0].id%>">
+        <form action="/profiles/edit/<%=profile[0].id%>" method="post">
+            <input type="hidden" name="id" value="<%=profile[0].id%>">
             <table border="1">
                 <tr>
                     <td>Username</td>
-                    <td><input type="text" name="username" value="<%=data[0].username%>"></td>
+                    <td><input type="text" name="username" value="<%=profile[0].username%>"></td>
                 </tr>
                 <tr>
                     <td>Password</td>
-                    <td><input type="text" name="password" value="<%=data[0].password%>"></td>
+                    <td><input type="text" name="password" value="<%=profile[0].password%>"></td>
+                </tr>
+                <tr>
+                    <td>Contact Name</td>
+                    <td>
+                        <select name="contact">
+                        <%if(profile[0].contact_id === ""){%>
+                            <option value="">Tidak ada data kontak</option>
+                        <%}else{
+                            contact.map((value)=>{
+                                if(value.id === profile[0].contact_id){%>
+                                <option value="<%=value.id%>" selected><%=value.name%></option>
+                                <%}else{%>
+                                <option value="<%=value.id%>"><%=value.name%></option>
+                                <%}
+                            });
+                        }%>
+                        </select>
+                    </td>
                 </tr>
                 <tr>
                     <td colspan="2"><input type="submit" value="Simpan"></td>

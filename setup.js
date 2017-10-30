@@ -26,15 +26,16 @@ db.serialize(()=>{
             password VARCHAR
         );`
     );
-    db.run(`ALTER TABLE profile ADD COLUMN contact_id INTEGER FOREIGNKEY contact_id REFERENCES contacts(id)`);
+    // db.run(`ALTER TABLE profile ADD COLUMN contact_id INTEGER FOREIGNKEY contact_id REFERENCES contacts(id)`);
 
     db.run( // Address Table
         `CREATE TABLE IF NOT EXISTS address(
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             street VARCHAR,
             city TEXT,
-            zipcode INT
+            zipcode INTEGER
         );`
     );
+    // db.run(`ALTER TABLE address ADD COLUMN contact_id INTEGER FOREIGNKEY contact_id REFERENCES contacts(id)`);
 });
 db.close();

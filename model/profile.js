@@ -13,7 +13,7 @@ class Profile{
         });
     }
     static create(input,callback){ // Tambah data
-        const query=`INSERT INTO profile (username,password) VALUES ("${input.username}", "${input.password}")`;
+        const query=`INSERT INTO profile (username,password,contact_id) VALUES ("${input.username}", "${input.password}", "${input.contact}")`;
         db.run(query,function(err){ // Tidak bisa menggunakan arrow function
             if(err){
                 callback(err,null);
@@ -33,7 +33,7 @@ class Profile{
         });
     }
     static update(input,callback){ // Update data
-        const query=`UPDATE profile SET username="${input.username}", password="${input.password}" WHERE id="${input.id}"`;
+        const query=`UPDATE profile SET username="${input.username}", password="${input.password}", contact_id="${input.contact}" WHERE id="${input.id}"`;
         db.run(query,function(err){ // Tidak bisa menggunakan arrow function
             if(err){
                 callback(err,null);
@@ -49,6 +49,26 @@ class Profile{
                 callback(err,null);
             }else{
                 callback(null,this);
+            }
+        });
+    }
+    static leftJoinContact(callback){
+        const query=`SELECT profile.username, profile.password, profile.id, contacts.name FROM profile LEFT JOIN contacts ON profile.contact_id = contacts.id`;
+        db.all(query,function(err,rows){
+            if(err){
+                callback(err,null);
+            }else{
+                callback(null,rows);
+            }
+        });
+    }
+    static checkUniqueContact(input,callback){
+        const query=`SELECT * FROM profile WHERE contact_id="${input}"`;
+        db.all(query,(err,row)=>{
+            if(err){
+                callback(err,null);
+            }else{
+                callback(null,row);
             }
         });
     }

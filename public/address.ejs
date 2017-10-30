@@ -10,7 +10,7 @@
     <section class="other-page">
         <div class="header">Daftar Alamat</div>
         <div class="content">
-            <%if(data.length === 0){%>
+            <%if(address.length === 0){%>
                 <div class="empty">Data Kosong!</div>
             <%}else{%>
                 <table border="1">
@@ -21,7 +21,7 @@
                         <td>Kodepos</td>
                         <td>Action</td>
                     </tr>
-                    <%data.map((value,i)=>{%>
+                    <%address.map((value,i)=>{%>
                     <tr>
                         <td><%=i + 1%></td>
                         <td><%=value.street%></td>
@@ -53,6 +53,20 @@
                     <tr>
                         <td>Kodepos</td>
                         <td><input type="text" name="zipcode" placeholder="Type your zipcode"></td>
+                    </tr>
+                    <tr>
+                        <td>Contact Name</td>
+                        <td>
+                            <select name="contact">
+                            <%if(contact.length === 0){%>
+                                <option value="">Tidak ada data contact</option>
+                            <%}else{
+                                contact.map((value)=>{%>
+                                <option value="<%=value.id%>"><%=value.name%></option>
+                                <%});
+                            }%>
+                            </select>
+                        </td>
                     </tr>
                     <tr>
                         <td colspan="2"><input type="submit" value="Tambah"></td>

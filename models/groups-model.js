@@ -40,6 +40,13 @@ class GroupsModel {
 		db.close();
 	}
 
+	static rawJoin(sql, callback) {
+		let db = new sqlite3.Database(dbLocation);
+		db.all(sql, function(err, rows) {
+			callback(err, rows);
+		});
+	}
+
 	/* Method pengganti addData(data) */
 	static create(data, callback) {
 		let db = new sqlite3.Database(dbLocation);

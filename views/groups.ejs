@@ -45,19 +45,21 @@
 			<thead>
 				<tr>
 					<th>ID</th>
-					<th>NAME</th>
+					<th>GROUP NAME</th>
+					<th>CONTACT NAME</th>
 					<th>ACTION</th>
 				</tr>
 			</thead>
-
 			<tbody>
-				<% data.forEach((group) => {%>
+				<% joinedGroups.forEach((group) => {%>
 					<tr>
 						<td><%= group.id %></td>
 						<td><%= group.name_of_group %></td>
+						<td><%= group.contacts_name.toString() %></td>
 						<td>
 							<a href="/groups/edit/<%= group.id %>">Edit</a>
 							<a href="/groups/delete/<%= group.id %>">Delete</a>
+							<a href="/groups/assign_contacts/<%= group.id %>">Assign Contact</a>
 						</td>
 					</tr>
 				<% }) %>

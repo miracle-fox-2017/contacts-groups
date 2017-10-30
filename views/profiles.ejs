@@ -28,16 +28,16 @@
 		</thead>
 		<tbody align ="center">	
 			<% let tempContact = [] %>
-			<%for (let i = 0 ; i<data.length ;i++ ){%>
-				<% tempContact.push(data[i].contact_id) %>
+			<%for (let i = 0 ; i<rowProfile.length ;i++ ){%>
+				<% tempContact.push(rowProfile[i].contact_id) %>
 			<tr>
-				<td> <%= data[i].id %> </td>
-				<td> <%= data[i].username %> </td>
-		  		<td> <%= data[i].password %>  </td>
-		  		<td> <%= data[i].contact_id %>  </td>
-		  		<td> <%= data[i].name %>  </td>
-		  		<td> <a href ="/profiles/edit/<%= data[i].id %>">Edit</a> </td>
-		  		<td> <a href ="/profiles/delete/<%= data[i].id %>">Delete</a> </td>
+				<td> <%= rowProfile[i].id %> </td>
+				<td> <%= rowProfile[i].username %> </td>
+		  		<td> <%= rowProfile[i].password %>  </td>
+		  		<td> <%= rowProfile[i].contact_id %>  </td>
+		  		<td> <%= rowProfile[i].name %>  </td>
+		  		<td> <a href ="/profiles/edit/<%= rowProfile[i].id %>">Edit</a> </td>
+		  		<td> <a href ="/profiles/delete/<%= rowProfile[i].id %>">Delete</a> </td>
 			<%}%>
 			</tr>
 		</tbody>	
@@ -48,19 +48,19 @@
 			  <tr>
     			 <th> USERNAME </th>
     			 <th> PASSWORD </th>
-    			 <th> CONTACT_ID </th>
+    			 <th> CONTACT NAME </th>
   			  </tr>
 		</thead>
 <% if(edited !== undefined) {%>
 	<h2> EDIT </h2>
 	<tbody align ="center">	
 		<tr>
-		<form action="/profiles/edit" method="post">
-			<td><input type="text" name="username" value="<%= data[edited].username %>"></td>
-			<td><input type="password" name="password" value="<%= data[edited].password %>"></td>
+		<form action="/profiles/edit" method="post" onsubmit="return validasi_input(this)">
+			<td><input type="text" name="username" value="<%= edited[0].username %>"></td>
+			<td><input type="password" name="password" value="<%= edited[0].password %>"></td>
 			<td><select id="contact_id" name="contact_id" existContact= "<%= tempContact %>" >
 			<%for (let i = 0 ; i<contacts.length ;i++ ){%>
-					 <% if(data[edited].name == contacts[i].name){%>
+					 <% if(edited[0].contact_id == contacts[i].id){%>
 						<option value= <%= contacts[i].id %> selected > <%= contacts[i].name %> </option>
 					 <%}else{%>			
 					 	<option value= <%= contacts[i].id %> > <%= contacts[i].name %> </option>
@@ -69,7 +69,7 @@
 			</select>
 			</td>
 			<td><input type="submit" value="replace"></td>
-			<input type="hidden" name="id" value="<%= data[edited].id %>">
+			<input type="hidden" name="id" value="<%= edited[0].id %>">
 		</form>	
 		</tr>
 	</tbody>	
@@ -79,7 +79,7 @@
 	<h2> ADD </h2>
 	<tbody align ="center">	
 		<tr>
-		<form action="/profiles" method="post" onsubmit="return validasi_input(this, <% data %>)">
+		<form action="/profiles" method="post" onsubmit="return validasi_input(this)">
 			<td><input type="text" name="username" ></td>
 			<td><input type="password" name="password"></td>
 			<td><select id="contact_id" name="contact_id" existContact= "<%= tempContact %>" >
@@ -90,20 +90,21 @@
 			</td>
 			<td><input type="submit" value="kirim"></td>
 		</form>		
-		</tr>	
-			<script type="text/javascript">
-				function validasi_input(form){
-						let e = document.getElementById('contact_id');
-						let selected = e.options[e.selectedIndex].value;
-						let contactExist = e.getAttribute('existContact')
-  						if (contactExist.indexOf(selected) != -1){
-    						alert("Contact sudah di pakai");
-    						return false;
-    					}		
-				}
-			</script>			
+		</tr>				
 	</tbody>		
 <%}%>
+
+	<script type="text/javascript">
+		function validasi_input(form){
+			let e = document.getElementById('contact_id');
+			let selected = e.options[e.selectedIndex].value;
+			let contactExist = e.getAttribute('existContact')
+			if (contactExist.indexOf(selected) != -1){
+				alert("Contact sudah di pakai");
+				return false;
+			}		
+		}
+	</script>
     </table>	
 </body>
 </html>

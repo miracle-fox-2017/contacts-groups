@@ -20,35 +20,31 @@
 	<table width="50%" border="1">	
 		<thead align ="center">
 			  <tr>
-    			 <th> STREET </th>
-    			 <th> CITY </th>
-    			 <th> ZIPCODE </th>
-    			 <th> ID </th>
     			 <th> NAMA CONTACT </th>
     			 <th> COMPANY </th>
     			 <th> TELP </th>
-    			 <th> EMAIL </th>
+    			 <th> EMAIL </th>	
+       			 <th> ID </th>
+    			 <th> STREET </th>
+    			 <th> CITY </th>
+    			 <th> ZIPCODE </th>
   			  </tr>
 		</thead>
 		<tbody align ="center">	
-			<% for (let i = 0 ; i<address.length ; i++ ) {%>
-				<% if (address[i].contact_id != undefined) {%>
-				<tr>
-					<td> <%= address[i].street %> </td>
-		  			<td> <%= address[i].city %>  </td>
-		  			<td> <%= address[i].zipcode %> </td>
-		  			<% for (let j = 0 ; j<contacts.length ; j++) {%>
-		  				<% if (address[i].contact_id == contacts[j].id) {%>
-		  					<td> <%= contacts[j].id %> </td>
-		  					<td> <%= contacts[j].name %></td>
-		  					<td> <%= contacts[j].company %></td>
-		  					<td> <%= contacts[j].telp_number %></td>
-		  					<td> <%= contacts[j].email %></td>
-		  				<%}%>
-		  			<%}%>	
-		  		<%}%>
-			<%}%>
-			</tr>
+			<% for (let i = 0 ; i<contact.length ; i++ ) {%>
+				<% for (let j = 0 ; j<contact[i].address.length ; j++ ) {%>
+			<tr>
+					<td> <%= contact[i].name %></td>
+					<td> <%= contact[i].company %></td>
+					<td> <%= contact[i].telp_number %></td>
+					<td> <%= contact[i].email %></td>
+					<td> <%= contact[i].address[j].id %></td>
+					<td> <%= contact[i].address[j].street %></td>
+					<td> <%= contact[i].address[j].city %></td>
+					<td> <%= contact[i].address[j].zipcode %></td>
+			</tr>	
+				<%}%>
+	 		<%}%>
 		</tbody>	
 	</table>
 	</div>	

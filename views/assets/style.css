@@ -50,7 +50,13 @@ li a:hover:not(.active) {
 			font-size: 30px;
 		}
 
-		.container{
+		.container_cg{
+      margin-top: 13px;
+			max-width: 1080px;
+			margin: 10% auto 0 auto;
+		}
+
+    .container{
       margin-top: 13px;
 			max-width: 777px;
 			margin: 10% auto 0 auto;

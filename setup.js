@@ -76,7 +76,7 @@ function address_profile(){
 
 // release 9
 function many_to_many(){
-  let query_many_to_many = `create table if not exists ConjContactGroup(
+  let query_many_to_many = `create table if not exists Contacts_Groups(
     id integer primary key autoincrement,
     id_contacts integer references Contacts('id'),
     id_groups integer references Groups('id')

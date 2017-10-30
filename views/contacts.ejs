@@ -15,7 +15,7 @@
 
   <% include assets/partials/top-nav %>
 
-  <div class="container" >
+  <div class="container_cg" >
     <h4 class="title is-3" style="text-align:center;">EXPRESS CONTACTS - GROUPS</h4>
     <p class="subtitle is-4" style="text-align:center;">all <strong>contact</strong> information | <a style="text-decoration:none;" href="/addresses_with_contact"class="button tag is-danger is-outlined ">contact with address</a> </p>
     <table class="table is-bordered is-striped is-narrow is-fullwidth">
@@ -41,7 +41,7 @@
         <td><%=data_Contacts[i].company%></td>
         <td><%=data_Contacts[i].telp_number%></td>
         <td><%=data_Contacts[i].email%></td>
-        <td></td>
+        <td style="width:180px;"><%=data_contacts_groups[i].name_of_group%></td>
         <td style="margin-left:-5px;">
               <a class="button is-outlined is-small" href='/contacts/edit/<%=data_Contacts[i].id%>'>
               <span class="icon is-small">
@@ -83,20 +83,20 @@
           <input class="input" id="email" type="text" placeholder="email" name="email" required>
         </div>
       </div>
-      <!-- <div class="field">
+      <div class="field">
         <p class="control has-icons-left">
           <span class="select">
-            <select id="selectuser" name="name">
-
-                    <option value="#">options</option>
-
+            <select id="selectuser" name="new_group">
+                <%for(let j=0; j<data_Groups.length; j++){%>
+                    <option value="<%=data_Groups[j].id%>"><%=data_Groups[j].name_of_group%></option>
+                <%}%>
             </select>
           </span>
           <span class="icon is-small is-left">
-            <i class="fa fa-user"></i>
+            <i class="fa fa-users"></i>
           </span>
         </p>
-      </div> -->
+      </div>
       <div class="control">
         <button type="submit" class="button is-success">Submit</button>
       </div>

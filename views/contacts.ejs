@@ -46,7 +46,7 @@
 		<br/><br/>
 	</div>
 
-	<% if (typeof data != 'undefined') { %>
+	<% if (typeof contacts_groups != 'undefined') { %>
 		<table class="contact-table" border="1">
 			<thead>
 				<tr>
@@ -55,18 +55,20 @@
 					<th>COMPANY</th>
 					<th>TELP</th>
 					<th>EMAIL</th>
+					<th>GROUPS</th>
 					<th>Action</th>
 				</tr>
 			</thead>
 
 			<tbody>
-				<% data.forEach((contact) => {%>
+				<% contacts_groups.forEach((contact) => {%>
 					<tr>
 						<td><%= contact.id %></td>
 						<td><%= contact.name %></td>
 						<td><%= contact.company %></td>
 						<td><%= contact.telp_number %></td>
 						<td><%= contact.email %></td>
+						<td><%= contact.name_of_group.toString(); %></td>
 						<td>
 							<a href="/contacts/edit/<%= contact.id %>">Edit</a>
 							<a href="/contacts/delete/<%= contact.id %>">Delete</a>
@@ -89,8 +91,8 @@
 		<input type="tel" id="telp_number" name="telp_number"  placeholder="Nomor Telepon" value="<%= (typeof editItem != 'undefined') ? editItem.email  : '' %>">
 		<input type="email" id="email" name="email"  placeholder="email" value="<%= (typeof editItem != 'undefined') ? editItem.email  : '' %>">
 		
-		
-		<select name="groups_id" id="groups_id" <%= (typeof editItem != 'undefined') ? 'disabled'  : '' %>>
+
+		<select name="groups_id" id="groups_id">
 			<option value=""></option>
 			<% groups.forEach((group) => {%>
 				<option value="<%= group.id %>"><%= group.name_of_group %></option>

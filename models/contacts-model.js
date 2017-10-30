@@ -33,22 +33,6 @@ class ContactsModel {
 		})
 	}
 
-	// getAllDataInnerJoin(tableSource, callback) {
-	// 	let db = new sqlite3.Database(this.dbFile);
-	// 	let sql = `select ${this.tablename}.id, ${this.tablename}.username, ${this.tablename}.password, ${this.tablename}.contacts_id, ${tableSource}.name
-	// 				from ${this.tablename}
-	// 				inner join ${tableSource} ON ${this.tablename}.contacts_id =  ${tableSource}.id`;
-	// 	db.all(sql, (err, rows) => {
-	// 		if (err) {
-	// 			throw err;
-	// 		} 
-
-	// 		callback(rows);
-	// 	})
-
-	// 	db.close();
-	// }
-
 	getAllDataArrayJoin(addresses, contacts) {
 		let joinedData = [];
 
@@ -74,6 +58,30 @@ class ContactsModel {
 			}
 
 			joinedData.push(obj);
+		}
+
+		return joinedData;
+	}
+
+	getAllDataArrayJoinContactsGroups(contact, contactsGroups) {
+		let joinedData = [];
+
+		for (var i = 0; i < contact.length; i++) {
+			let obj = {};
+			obj.id = contact[i].id;
+			obj.name = contact[i].name;
+			obj.company = contact[i].company;
+			obj.telp_number = contact[i].telp_number;
+			obj.email = contact[i].email;
+			obj.name_of_group = [];
+
+			joinedData.push(obj);
+
+			for (var j = 0; j < contactsGroups.length; j++) {
+				if (contactsGroups[j].contacts_id == contact[i].id) {
+					obj.name_of_group.push(contactsGroups[j].name_of_group);
+				}
+			}
 		}
 
 		return joinedData;

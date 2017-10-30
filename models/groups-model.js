@@ -19,6 +19,20 @@ class GroupsModel {
 		})
 	}
 
+	getAllDataConjunctionInnerJoin(tableSource, callback) {
+		let db = new sqlite3.Database(this.dbFile);
+		let sql = `Select * FROM ${tableSource} INNER JOIN ${this.tablename} ON ${tableSource}.groups_id = ${this.tablename}.id ;`;
+		db.all(sql, (err, rows) => {
+			if (err) {
+				throw err;
+			} 
+
+			callback(rows);
+		})
+
+		db.close();
+	}
+
 	addData(data) {
 		let db = new sqlite3.Database(this.dbFile);
 		let sql = `INSERT INTO ${this.tablename} (name_of_group) VALUES ("${data.name_of_group}")`;

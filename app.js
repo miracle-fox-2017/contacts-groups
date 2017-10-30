@@ -30,7 +30,11 @@ app.get('/', (req, res) => {
 app.get('/contacts', (req, res) => {
 	contact.getAllData(function(rows) {
 		group.getAllData((allgroups) => {
-			res.render('contacts', { data: rows, groups: allgroups});
+			group.getAllDataConjunctionInnerJoin('Contacts_Groups', (allcontactgroups) => {
+				// console.log({joined: contact.getAllDataArrayJoinContactsGroups(rows, allcontactgroups)});
+
+				res.render('contacts', {groups: allgroups, contacts_groups: contact.getAllDataArrayJoinContactsGroups(rows, allcontactgroups)});
+			})
 		})
 	});
 });
@@ -45,15 +49,22 @@ app.post('/contacts', (req, res) => {
 
 app.get('/contacts/edit/:id', (req, res) => {
 	contact.getAllData(function(rows) {
-		contact.getById({id: req.params.id}, (editedRows) =>{
-			res.render('contacts', { id: req.params.id, data: rows, editItem: editedRows });
+		group.getAllData((allgroups) => {
+			group.getAllDataConjunctionInnerJoin('Contacts_Groups', (allcontactgroups) => {
+				contact.getById({id: req.params.id}, (editedRows) =>{
+					res.render('contacts', {groups: allgroups, contacts_groups: contact.getAllDataArrayJoinContactsGroups(rows, allcontactgroups), id: req.params.id, data: rows, editItem: editedRows });
+				});
+			});
 		});
 	});	
 });
 
 app.post('/contacts/edit/:id', (req, res) => {
-	contact.updateDataById({id: req.params.id, editItem: req.body});
-	res.redirect('/contacts/');
+	contact.getLatestIdSequence('Contacts', (latestId) => {
+		contact.updateDataById({id: req.params.id, editItem: req.body});
+		contact.addDataContactGroups({contacts_id: req.params.id, groups_id: +req.body.groups_id}, 'Contacts_Groups')
+		res.redirect('/contacts');
+	})
 });
 
 app.get('/contacts/delete/:id', (req, res) => {

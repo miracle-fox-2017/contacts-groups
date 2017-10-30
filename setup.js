@@ -4,7 +4,7 @@ const db=new sqlite3.Database("./database/database.db");
 db.serialize(()=>{
     db.run( // Contact Table
         `CREATE TABLE IF NOT EXISTS contacts(
-            id INT PRIMARY KEY AUTOINCREMENT,
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
             name TEXT,
             company TEXT,
             phone VARCHAR,
@@ -13,7 +13,7 @@ db.serialize(()=>{
     );
     db.run( // Group Table
         `CREATE TABLE IF NOT EXISTS groups(
-            id INT PRIMARY KEY AUTOINCREMENT,
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
             name_of_group VARCHAR
         )`
     );
@@ -24,28 +24,30 @@ db.serialize(()=>{
     // Ubah nama tabel baru menjadi profile
     db.run( // Profile Table
         `CREATE TABLE IF NOT EXISTS profile(
-            id INT PRIMARY KEY AUTOINCREMENT,
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
             username VARCHAR,
             password VARCHAR
-        );
-        CREATE TABLE new_profile(
-            id INT PRIMARY KEY AUTOINCREMENT,
+        );`
+    );
+    db.run(
+        `CREATE TABLE new_profile(
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
             username VARCHAR,
             password VARCHAR,
             contact_id INT UNIQUE
-        );
-        INSERT INTO new_profile(id,username,password)
-        SELECT * FROM profile;
-        DROP TABLE profile;
-        ALTER TABLE new_profile RENAME TO profile;`
+        );`
     );
+    db.run(`INSERT INTO new_profile (id,username,password) SELECT id,username,password FROM profile`);
+    db.run(`DROP TABLE profile`);
+    db.run(`ALTER TABLE new_profile RENAME TO profile`);
+
     db.run( // Address Table
         `CREATE TABLE IF NOT EXISTS address(
-            id INT PRIMARY KEY AUTOINCREMENT,
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
             street VARCHAR,
             city TEXT,
             zipcode INT
-        )`
+        );`
     );
 });
 db.close();

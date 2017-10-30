@@ -151,19 +151,23 @@ app.get("/profiles",(req,res)=>{ // Halaman awal profile
 });
 app.post("/profiles",(req,res)=>{ // Tambah profile
     const data=req.body;
-    db.all(`SELECT * FROM profile WHERE contact_id = "${data.contact}"`,(err,check)=>{
-        if(err){
-            throw err
-        }else if(check.length === 0){
-            db.run(
-                `INSERT INTO profile (username,password,contact_id)
-                VALUES ("${data.username}","${data.password}","${data.contact}")`
-            );
-            res.redirect("/profiles");
-        }else{
-            res.send("Kontak telah digunakan <a href='/profiles'>Back to Profile</a>");
-        }
-    });
+    if(data.contact === "null"){
+        res.send("Kontak kosong! Silakan buat terlebih dahulu! <a href='/contacts'>Contact Page</a>")
+    }else{
+        db.all(`SELECT * FROM profile WHERE contact_id = "${data.contact}"`,(err,check)=>{
+            if(err){
+                throw err
+            }else if(check.length === 0){
+                db.run(
+                    `INSERT INTO profile (username,password,contact_id)
+                    VALUES ("${data.username}","${data.password}","${data.contact}")`
+                );
+                res.redirect("/profiles");
+            }else{
+                res.send("Kontak telah digunakan <a href='/profiles'>Back to Profile</a>");
+            }
+        });
+    }
 });
 app.get("/profiles/edit/:id",(req,res)=>{ // Halaman edit group
     db.all(`SELECT * FROM profile WHERE id="${req.params.id}"`,(err,profile)=>{
@@ -182,7 +186,7 @@ app.get("/profiles/edit/:id",(req,res)=>{ // Halaman edit group
         }
     });
 });
-app.post("/profiles/edit/:id",(req,res)=>{ // Edit group
+app.post("/profiles/edit/:id",(req,res)=>{ // Edit profile
     const data=req.body;
     db.all(`SELECT * FROM profile WHERE contact_id="${data.contact}"`,(err,checkUnique)=>{
         if(err){
@@ -215,15 +219,8 @@ app.post("/profiles/edit/:id",(req,res)=>{ // Edit group
             });
         }
     });
-    // db.run(
-    //     `UPDATE profile SET
-    //     username="${data.username}",
-    //     password="${data.password}"
-    //     WHERE id="${data.id}"`
-    // );
-    //res.redirect("/profiles");
 });
-app.get("/profiles/delete/:id",(req,res)=>{ // Hapus group
+app.get("/profiles/delete/:id",(req,res)=>{ // Hapus profile
     db.all(`SELECT * FROM profile WHERE id="${req.params.id}"`,(err,data)=>{
         if(err){
             throw err;

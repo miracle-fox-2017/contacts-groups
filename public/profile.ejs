@@ -55,6 +55,7 @@
                         <td>
                             <%if(contact.length === 0){%>
                                 Tidak ada data kontak
+                                <input type="hidden" name="contact" value="null">
                             <%}else{%>
                                 <select name="contact">
                                     <%contact.map((value)=>{%>

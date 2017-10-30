@@ -14,7 +14,7 @@ class Profile {
         })
     }
     static addData(callback, newData) {
-    
+
         let query = `insert into profiles (username, password, idContact) values ('${newData.username}', '${newData.password}', '${newData.idContact}')`
         db.run(query, function (err) {
             if (err) {
@@ -56,6 +56,15 @@ class Profile {
             }
         })
     }
+
+    // static removeByIdContact(idContact) {
+    //     let query = `delete from profiles where idContact = ${idContact}`
+    //     db.run(query, function (err) {
+    //         if (err) {
+    //             console.log(err)
+    //         }
+    //     })
+    // }
 
 
 }

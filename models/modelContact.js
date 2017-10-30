@@ -44,11 +44,13 @@ class Contact {
             }
         })
     }
-    static deleteData(id) {
+    static deleteData(id, callback) {
         let query = `delete from contacts where id = ${id}`
         db.run(query, function (err) {
             if (err) {
                 console.log(err)
+            } else {
+                callback()
             }
         })
     }

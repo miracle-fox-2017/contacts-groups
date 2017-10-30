@@ -58,6 +58,28 @@ class ContactGroup {
             })
         })
     }
+
+    static removeDataByIdContact(idContact, callback) {
+        let query = `delete from contactgroups where idContact = ${idContact}`
+        db.run(query, function (err) {
+            if (err) {
+                console.log(err)
+            } else {
+                callback()
+            }
+        })
+    }
+
+    static removeDataByIdGroup(idGroup, callback) {
+        let query = `delete from contactgroups where idGroup = ${idGroup}`
+        db.run(query, function (err) {
+            if (err) {
+                console.log(err)
+            } else {
+                callback()
+            }
+        })
+    }
 }
 
 module.exports = ContactGroup

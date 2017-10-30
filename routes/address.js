@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const Address = require('./../models/modelAddress')
+const Contact = require('./../models/modelContact')
 const Profile = require('./../models/modelProfile')
 
 router.get('/', function (req, res) {

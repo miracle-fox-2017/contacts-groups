@@ -41,8 +41,11 @@ router.post('/edit/:id', function (req, res) {
     res.redirect('../../contacts')
 })
 router.get('/delete/:id', function (req, res) {
-    Contact.deleteData(req.params.id)
-    res.redirect('../../contacts')
+    Contact.deleteData(req.params.id, () => {
+        ContactGroup.removeDataByIdContact(req.params.id, () => {
+            res.redirect('../../contacts')
+        })
+    })
 })
 
 router.get('/addresses/:id', function (req, res) {

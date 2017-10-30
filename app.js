@@ -28,28 +28,6 @@ app.use('/profiles', profile)
 app.use('/addresses', address)
 app.use('/groups', group)
 
-//Index
-
-//Group
-
-
-//Contact
-
-
-
-
-
-
-
-
-
-//Profile
-
-
-//Addresses
-
-
-//Addresses with contact
 
 app.get('/addresses-with-contact', function (req, res) {
     Address.getData((err, dataAddress) => {

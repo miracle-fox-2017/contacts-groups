@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 const Group = require('./../models/modelGroup')
 const ContactGroup = require('./../models/modelContactGroup')
+const Contact = require('./../models/modelContact')
 
 router.get('/', function (req, res) {
     Group.getData((data) => {
@@ -32,8 +33,12 @@ router.post('/edit/:id', function (req, res) {
 })
 
 router.get('/delete/:id', function (req, res) {
-    Group.deleteData(req.params.id)
-    res.redirect('../../groups')
+    Group.deleteData(req.params.id, () => {
+        ContactGroup.removeDataByIdGroup(req.params.id, () => {
+            res.redirect('../../groups')
+        })
+    })
+
 })
 
 router.get('/assign_contacts/:id', function (req, res) {

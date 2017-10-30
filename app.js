@@ -5,6 +5,7 @@ const app = express();
 // Router
 const indexRouter = require('./routers/index-routes');
 const contactRouter = require('./routers/contact-routes');
+const groupRouter = require('./routers/group-routes');
 
 const ContactsModel = require('./models/contacts-model');
 const GroupsModel = require('./models/groups-model');
@@ -30,60 +31,10 @@ app.set('view engine', 'ejs');
 // Website route
 app.use('/', indexRouter);
 app.use('/contacts', contactRouter);
-
+app.use('/groups', groupRouter);
 
 // Groups
-app.get('/groups', (req, res) => {
-	GroupsModel.findAll(function(err, rows) {
-		if (err == null) {
-			res.render('groups', { data: rows });
-		} else {
-			res.send(err);
-		}
-	});
-});
 
-app.post('/groups', (req, res) => {
-	GroupsModel.create(req.body, function(err, rows) {
-		if (err == null) {
-			res.redirect('/groups');
-		} else {
-			res.send(err);
-		}
-	});
-});
-
-app.get('/groups/edit/:id', (req, res) => {
-	GroupsModel.findAll(function(err, rows) {
-		GroupsModel.findById({id: req.params.id}, function(err, editedRows){
-			if (err == null) {
-				res.render('groups', { id: req.params.id, data: rows, editItem: editedRows });
-			} else {
-				res.send(err);
-			}
-		});
-	});	
-});
-
-app.post('/groups/edit/:id', (req, res) => {
-	GroupsModel.update({id: req.params.id, editItem: req.body}, function(err, rows, lastId){
-		if (err == null) {
-			res.redirect('/groups/');
-		} else {
-			res.send(err);
-		}
-	});
-});
-
-app.get('/groups/delete/:id', (req, res) => {
-	GroupsModel.delete({id: req.params.id}, function(err, rows, obj) {
-		if (err == null) {
-			res.redirect('/groups/');
-		} else {
-			res.send(err);
-		}
-	});
-});
 
 // Profile
 app.get('/profiles', (req, res) => {

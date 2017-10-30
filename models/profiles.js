@@ -9,7 +9,6 @@ class Profiles {
     JOIN Contacts ON Profile.id_contact = Contacts.id`;
     db.all(queryJoin, (err, records) => {
       if (err) callback(err, null);
-      console.log(records);
       callback(null, records);
     });
   }

@@ -3,12 +3,18 @@ const Profiles = require('../models/profiles');
 const Contacts = require('../models/contacts');
 
 router.get('/', (req, res) => {
+  let error = '';
+  if (req.query.hasOwnProperty('error')) {
+    error = 'Your contact already have profile';
+  }
+
   Contacts.findAllContacts((err, contactRecords) => {
     Profiles.findAllProfiles((err, profileRecords) => {
       if (err) throw err;
       res.render('profiles', {
         profiles: profileRecords,
-        contacts: contactRecords
+        contacts: contactRecords,
+        error: error
       });
     });
   });
@@ -22,8 +28,8 @@ router.post('/', (req, res) => {
   };
 
   Profiles.createProfiles(dataBody, err => {
-    if (err) throw err;
-    res.redirect('/profiles');
+    if (err) res.redirect('/profiles?error=true');
+    else res.redirect('/profiles');
   });
 });
 

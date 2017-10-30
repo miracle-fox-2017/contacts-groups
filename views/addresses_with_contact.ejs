@@ -39,11 +39,7 @@
             <td><%= data.city %></td>
             <td><%= data.zipcode %></td>
             <td><%= data.name %></td>
-            <% dataContacts.forEach((data2) => { %>
-              <% if(data2.id == data.contactId) { %>
-                <td><%= data2.company %></td>
-              <% } %>
-            <% }) %>
+            <td><%= data.company %></td>
             <td>
               <a href="/addresses/edit/<%= data.id %>">Edit</a>
               <a href="/addresses/delete/<%= data.id %>">Delete</a>

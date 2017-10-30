@@ -22,13 +22,13 @@ router.get('/add', function(req, res) {
 })
 
 router.post('/add', function(req, res) {
-  Contact.create(req.body, (err) => {
-    if(req.body.name == '') {
-      res.render('contacts/add', {error: true})
-    } else {
+  if(req.body.name == '') {
+    res.render('contacts/add', {error: true})
+  } else {
+    Contact.create(req.body, (err) => {
       res.redirect('/contacts')
-    }
-  })
+    })
+  }
 })
 
 router.get('/edit/:id', function(req, res) {
@@ -48,15 +48,6 @@ router.get('/delete/:id', function(req, res) {
   Contact.remove(req.params.id, (err) => {
     if(err) res.send(err)
     res.redirect('/contacts')
-  })
-})
-
-router.get('/addresses_with_contact', function(req, res) {
-  Address.findAll((err1, rows1) => {
-    Contact.findAll((err2, rows2) => {
-      // res.send(rows1)
-      res.render('contacts/addresses_with_contact', {errorAddress: err1, errorContacts: err2, dataAddresses: rows1, dataContacts: rows2})
-    })
   })
 })
 

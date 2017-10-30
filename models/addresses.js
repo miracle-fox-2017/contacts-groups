@@ -3,6 +3,12 @@ const db = new sqlite3.Database('database/data.db');
 
 class Address {
   static findAll(callback) {
+    db.all(`SELECT * FROM Addresses`, (err, rows) => {
+      callback(err, rows)
+    })
+  }
+
+  static findWithContact(callback) {
     let query = `SELECT Addresses.*, Contacts.name FROM Addresses
     LEFT JOIN Contacts ON Addresses.contactId = Contacts.id`
     db.all(query, (err, rows) => {
@@ -30,7 +36,7 @@ class Address {
     })
   }
 
-  static delete(addressId, callback) {
+  static remove(addressId, callback) {
     db.run(`DELETE FROM Addresses WHERE id = ${addressId}`, (err) => {
       callback(err)
     })

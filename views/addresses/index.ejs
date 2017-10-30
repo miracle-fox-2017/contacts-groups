@@ -26,6 +26,7 @@
           <th>Street</th>
           <th>City</th>
           <th>Zipcode</th>
+          <th>Contact Name</th>
           <th>Actions</th>
         </tr>
       </thead>
@@ -36,6 +37,7 @@
             <td><%= data.street %></td>
             <td><%= data.city %></td>
             <td><%= data.zipcode %></td>
+            <td><%= data.name %></td>
             <td>
               <a href="/addresses/edit/<%= data.id %>">Edit</a>
               <a href="/addresses/delete/<%= data.id %>">Delete</a>

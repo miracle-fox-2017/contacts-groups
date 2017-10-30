@@ -6,7 +6,7 @@ const router = express.Router()
 
 // define the addresses page route
 router.get('/', function(req, res) {
-  Address.findAll((err, rows) => {
+  Address.findWithContact((err, rows) => {
     res.render('addresses/index', {error: err, dataAddresses: rows})
   })
 })
@@ -41,7 +41,7 @@ router.post('/edit/:id', function(req, res) {
 })
 
 router.get('/delete/:id', function(req, res) {
-  Address.delete(req.params.id, (err) => {
+  Address.remove(req.params.id, (err) => {
     if(err) res.send(err)
     res.redirect('/addresses')
   })

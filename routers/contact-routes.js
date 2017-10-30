@@ -58,7 +58,7 @@ router.post('/edit/:id', (req, res) => {
 });
 
 router.get('/delete/:id', (req, res) => {
-	ContactsModel.delete({id: req.params.id}, function(err, rows, obj) {
+	ContactsModel.removeItem({id: req.params.id}, function(err, rows, obj) {
 		if (err === null) {
 			res.redirect('/contacts');
 		} else {

@@ -45,7 +45,7 @@ router.post('/edit/:id', (req, res) => {
 });
 
 router.get('/delete/:id', (req, res) => {
-	GroupsModel.delete({id: req.params.id}, function(err, rows, obj) {
+	GroupsModel.removeItem({id: req.params.id}, function(err, rows, obj) {
 		if (err == null) {
 			res.redirect('/groups/');
 		} else {

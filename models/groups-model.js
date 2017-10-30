@@ -153,7 +153,7 @@ class GroupsModel {
 	}
 
 	/* Method pengganti deleteDataById(data) */
-	static delete(data, callback) {
+	static removeItem(data, callback) {
 		let db = new sqlite3.Database(dbLocation);
 		let sql = `DELETE FROM ${tableName} WHERE id = ${data.id}`;
 

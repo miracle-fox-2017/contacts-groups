@@ -6,6 +6,7 @@ const app = express();
 const indexRouter = require('./routers/index-routes');
 const contactRouter = require('./routers/contact-routes');
 const groupRouter = require('./routers/group-routes');
+const profileRouter = require('./routers/profile-routes');
 
 const ContactsModel = require('./models/contacts-model');
 const GroupsModel = require('./models/groups-model');
@@ -32,45 +33,8 @@ app.set('view engine', 'ejs');
 app.use('/', indexRouter);
 app.use('/contacts', contactRouter);
 app.use('/groups', groupRouter);
+app.use('/profiles', profileRouter);
 
-// Groups
-
-
-// Profile
-app.get('/profiles', (req, res) => {
-	profile.getAllDataInnerJoin('Contacts', function(rows) {
-		
-		contact.getAllData((allcontacts) => {
-			res.render('profile', { data: rows, contacts: allcontacts });
-		});
-		
-	});
-});
-
-app.post('/profiles', (req, res) => {
-	profile.addData(req.body);
-	res.redirect('/profiles');
-});
-
-app.get('/profiles/edit/:id', (req, res) => {
-	profile.getAllDataInnerJoin('Contacts', function(rows) {
-		contact.getAllData((allcontacts) => {
-			profile.getById({id: req.params.id}, (editedRows) =>{
-				res.render('profile', { id: req.params.id, data: rows, editItem: editedRows, contacts: allcontacts});
-			});
-		});
-	});	
-});
-
-app.post('/profiles/edit/:id', (req, res) => {
-	profile.updateDataById({id: req.params.id, editItem: req.body});
-	res.redirect('/profiles/');
-});
-
-app.get('/profiles/delete/:id', (req, res) => {
-	profile.deleteDataById({id: req.params.id});
-	res.redirect('/profiles/');
-});
 
 // Address
 app.get('/addresses', (req, res) => {
@@ -109,7 +73,6 @@ app.get('/addresses/delete/:id', (req, res) => {
 
 app.get('/addresses_with_contact', (req, res) => {
 	address.getAllData(function(rows) {
-
 		contact.getAllData((allcontacts) => {
 			res.render('addresses-contact', { data: rows, contacts: allcontacts, joinedData: contact.getAllDataArrayJoin(rows, allcontacts)});
 		});

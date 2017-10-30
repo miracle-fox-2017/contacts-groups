@@ -137,6 +137,7 @@ class ContactsModel {
 		let sql = `SELECT * FROM ${tableName}`;
 		db.all(sql, function(err, rows) {
 			if (err) {
+				console.error(err);
 				callback({err: err, message: 'Something wrong with sql query!'}, null);
 			} else {
 				callback(null, rows);
@@ -222,7 +223,7 @@ class ContactsModel {
 
 
 	/* Method pengganti deleteDataById(data) */
-	static delete(data, callback) {
+	static removeItem(data, callback) {
 		let db = new sqlite3.Database(dbLocation);
 		let sql = `DELETE FROM ${tableName} WHERE id = ${data.id}`;
 

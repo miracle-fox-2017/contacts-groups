@@ -1,13 +1,6 @@
 const db = require('../component/koneksi')
 
 class Contact{
-	constructor(data){
-		this.id = data['id']
-		this.name = data['name']
-		this.company = data['company']
-		this.telp_number = data['telp_number']
-		this.email = data['email']
-	}
 	
 	static read(cb){
 		let select = "SELECT * FROM Contacts"
@@ -57,9 +50,34 @@ class Contact{
 				console.log(err)
 			}
 			else{
-				return 'data sudah didelete'
+				cb('data sudah didelete')
 			}
 		}) 
+	}
+
+	static insert(sql, cb){
+
+		let insert = `INSERT INTO Contacts (name, company, telp_number, email) VALUES `+
+			`("${sql.name}", `+
+			`"${sql.company}", `+
+			`"${sql.telp_number}", `+
+			`"${sql.email}");`
+
+				
+			db.run(insert, function(err){
+				if(err){
+					console.log(err)
+				}
+				else{
+					//  db.get("SELECT last_insert_rowid() as id", function (err, row) {
+		   //   			cb(row)
+					// });
+					cb(this)
+				}
+			})
+
+
+			
 	}
 }
 

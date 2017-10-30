@@ -189,12 +189,42 @@ function foreign_kontak_address(){
 	})
 }
 
+function conjunction_mto_many(){
+	let create = "CREATE TABLE IF NOT EXISTS Contacts_Groups "+
+		"(id INTEGER PRIMARY KEY AUTOINCREMENT);",
+
+		drop = "DROP TABLE Contacts_Groups",
+
+		alter_contact = "ALTER TABLE Contacts_Groups ADD COLUMN id_contact INTEGER REFERENCES Contacts(id);",
+
+		alter_group = "ALTER TABLE Contacts_Groups ADD COLUMN id_group INTEGER REFERENCES Groups(id);"
+
+
+
+		db2.run(create,(err)=>{
+		if(err){
+			console.log('ini error', err)
+		}
+		else{
+			console.log('berhasil create')
+		}
+	})
+
+		db2.run(alter_contact)
+		db2.run(alter_group)
+}
+
+function add_foreign_conj(){
+
+}
+
 // create_table()
 // dummy_contact()
 // dummy_group()
-dummy_address()
+// dummy_address()
 // dummy_profile()
 // foreign_kontak_profile()
 // add_unique()
 // drop_table()
 // foreign_kontak_address()
+conjunction_mto_many()

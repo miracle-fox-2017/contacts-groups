@@ -1,24 +1,9 @@
 <%- include('../partials/header.ejs')%>
 <%- include('../partials/menu.ejs')%>
 
-<h3>Tambahkan Data Address</h3>
-  <%if(error.is_error){%>
-    <div class="alert alert-warning">
-      <strong>Warning!</strong> <%=error.status%>
-    </div>
+<form action="/groups/assign_contacts/<%=groups.id%>" method="POST">
 
-  <%}%>
-
-<form action="/addresses/add" method="POST">
-
-  Street:<br>
-  <input type="text" name="street" >
-  <br>
-  City:<br>
-  <input type="text" name="city" >
-  <br>
-  Zipcode:<br>
-  <input type="text" name="zipcode" >
+  <%=groups.name_of_group%> :<br> 
   <br>
   <label for="sel1" >Select contact:</label>
   <select class="form-control" style="width:150px;" name="id_contact">
@@ -29,7 +14,7 @@
     <%})%>
   </select>
   
-  <br><br>
+  <br>
   <input type="submit" value="Submit">
 </form> 
 

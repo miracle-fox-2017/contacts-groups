@@ -9,24 +9,28 @@
         <th>Company</th>
         <th>Telp Number</th>
         <th>Email</th>
+        <th>Group</th>
         <th>Options</th>
       </tr>
     </thead>
     <tbody>
-    <%contact.forEach(item=>{%>
+    <%contacts.forEach(item=>{%>
       <tr>
         <td><%=item.id%></td>
         <td><%=item.name%></td>
         <td><%=item.company%></td>
         <td><%=item.telp_number%></td>
         <td><%=item.email%></td>
+        <td><%=item.groups%></td>
+        
         <td>
           <a href="/addresses_with_contact" class="btn btn-primary" role="button">Address</a>
-        	<a href="#" class="btn btn-primary" role="button">Add</a>
+        	<a href="/contacts/add" class="btn btn-primary" role="button">Add</a>
         	<a href="/contacts/edit/<%=item.id%>" class="btn btn-primary" role="button">Edit</a>
         	<a href="/contacts/delete/<%=item.id%>" class="btn btn-primary" role="button">Delete</a>
         </td>
       </tr>
+
       <%})%>
     </tbody>
   </table>

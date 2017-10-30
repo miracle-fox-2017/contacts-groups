@@ -1,0 +1,34 @@
+<%- include('../partials/header.ejs')%>
+<%- include('../partials/menu.ejs')%>
+
+
+
+<form action="/contacts/add" method="POST">
+
+  Name:<br>
+  <input type="text" name="name" >
+  <br>
+  Company:<br>
+  <input type="text" name="company" >
+  <br>
+  Telp Number:<br>
+  <input type="text" name="telp_number" >
+  <br>
+  Email:<br>
+  <input type="text" name="email" >
+  <br>
+  <label for="sel1" >Select group:</label>
+  <select class="form-control" style="width:150px;" name="id_group">
+  	<%group.forEach(item=>{%>
+	    <option value="<%=item.id%>">
+	    	<%=item.name_of_group%>
+	    </option>
+    <%})%>
+  </select>
+  
+  <br><br>
+  <input type="submit" value="Submit">
+</form> 
+
+
+<%- include('../partials/footer.ejs')%>

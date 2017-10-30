@@ -7,9 +7,9 @@ class Address {
         let query = 'select * from addresses'
         db.all(query, function (err, rows) {
             if (err) {
-                callback(err)
+                callback(err, null)
             } else {
-                callback(rows)
+                callback(null, rows)
             }
         })
     }

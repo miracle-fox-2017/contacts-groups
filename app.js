@@ -75,11 +75,9 @@ app.post('/contacts/add', function (req, res) {
     if (req.body.name === '') {
         res.render('contact-add', { message: "Name required!" })
     } else {
-        Contact.addData(req.body, () => {
-            Contact.getLastId((data) => {
-                ContactGroup.addData(req.body.idGroup, data.id)
-                res.redirect('../contacts')
-            })
+        Contact.addData(req.body, (lastId) => {
+            ContactGroup.addData(req.body.idGroup, lastId)
+            res.redirect('../contacts')
         })
 
     }
@@ -154,10 +152,15 @@ app.get('/profiles/delete/:id', function (req, res) {
 
 //Addresses
 app.get('/addresses', function (req, res) {
-    Address.getData((dataAddress) => {
-        Contact.getData((dataContact) => {
-            res.render('address', { dataAddress: dataAddress, dataContact: dataContact })
-        })
+    Address.getData((err, dataAddress) => {
+        if (err) {
+            res.render('address', { Error: err })
+
+        } else {
+            Contact.getData((dataContact) => {
+                res.render('address', { dataAddress: dataAddress, dataContact: dataContact })
+            })
+        }
     })
 })
 app.get('/addresses/add', function (req, res) {
@@ -196,7 +199,7 @@ app.get('/contacts/addresses/:id', function (req, res) {
 })
 
 app.get('/addresses-with-contact', function (req, res) {
-    Address.getData((dataAddress) => {
+    Address.getData((err, dataAddress) => {
         Contact.getData((dataContact) => {
             res.render('address-with-contact', { dataAddress: dataAddress, dataContact: dataContact })
         })

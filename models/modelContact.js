@@ -20,7 +20,7 @@ class Contact {
             if (err) {
                 console.log(err)
             } else {
-                callback()
+                callback(this.lastID)
             }
         })
     }
@@ -49,17 +49,6 @@ class Contact {
         db.run(query, function (err) {
             if (err) {
                 console.log(err)
-            }
-        })
-    }
-
-    static getLastId(callback) {
-        let query = 'select id from contacts order by id desc limit 1'
-        db.each(query, function (err, rows) {
-            if (err) {
-                callback(err)
-            } else {
-                callback(rows)
             }
         })
     }

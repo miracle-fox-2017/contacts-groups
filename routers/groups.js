@@ -75,5 +75,24 @@ router.post('/assign_contacts/:id_group', function (req, res){
   
 })
 
+//unasign group
+router.get('/unassign_contacts/:id_group', function (req, res) {
+  Contact.showContacts(function(contacts){
+    Group.showSpecificId(req.params.id_group, function(groups){
+      res.render('groupunassign',{"rows": groups, "contacts": contacts});
+      
+    })
+  })
+
+})
+
+router.post('/unassign_contacts/:id_group', function (req, res){
+  // ContactGroup.insertContactGroup(req.body.id_contacts, req.body.id_groups, function(){
+  ContactGroup.unassign_contacts(req.body, function(){
+    res.redirect('/groups');
+  })
+  
+})
+
 
 module.exports = router;

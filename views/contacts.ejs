@@ -2,10 +2,11 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Menampilkan semua data contacts</title>
+    <title>Contacts</title>
   </head>
   <body>
-    <a href="/contacts">contacts</a> | <a href="/groups">groups</a> | <a href="/addresses">address</a> | <a href="/profiles">profile</a>    <h1>Menampilkan semua data contacts</h1>
+    <a href="/contacts">contacts</a> | <a href="/groups">groups</a> | <a href="/addresses">address</a> | <a href="/profiles">profile</a>
+    <h1>Contacts</h1>
     <a href="/addresses/addresses_with_contact">addresses_with_contact</a>
     <div>
     <table>
@@ -27,9 +28,9 @@
           <td><%= contact.telp_number %></td>
           <td><%= contact.email %></td>
           <td>
-            <% for(let i = 0; i<cg.length; i++){ if(cg[i].id_contacts == contact.id){  %>
-                <%= cg[i].name_of_group %>, 
-            <% } } %>
+            <% let result = [] %>
+            <% for(let i = 0; i<cg.length; i++){ if(cg[i].id_contacts == contact.id){ result.push(cg[i].name_of_group) } }%>
+            <%= result.join(', ')%>
           </td>
           <td><a href="/contacts/edit/<%= contact.id %>">edit</a> | <a href="/contacts/delete/<%= contact.id %>">delete</a> </td>
         </tr>

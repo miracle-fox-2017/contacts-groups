@@ -41,6 +41,14 @@ class ContactGroup {
     })
   }
 
+  static unassign_contacts(data, cb){
+    let deleteQuery = `DELETE FROM ContactGroup WHERE id_contacts = ${data.id_contacts} AND id_groups = ${data.id_groups}`
+    // console.log(deleteQuery);
+    db.run(deleteQuery, function(){
+      cb();
+    })
+  }
+
 }
 
 module.exports = ContactGroup;

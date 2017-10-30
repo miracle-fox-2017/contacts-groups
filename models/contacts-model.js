@@ -205,6 +205,37 @@ class ContactsModel {
 		return joinedData;
 	}
 
+	/* Method pengganti getAllDataArrayJoin(addresses, contacts) */
+	static findAllJoinContactsAddresses(addresses, contacts) {
+		let joinedData = [];
+
+		for (var i = 0; i < addresses.length; i++) {
+			let obj = {};
+			obj.id = addresses[i].id,
+			obj.street = addresses[i].street,
+			obj.city = addresses[i].city;
+			obj.zipcode = addresses[i].zipcode;
+			obj.name = '';
+			obj.company = '';
+			obj.telp_number = '';
+			obj.email = '';
+
+			for (var j = 0; j < contacts.length; j++) {
+
+				if (addresses[i].contacts_id === contacts[j].id) {
+					obj.name = contacts[j].name;
+					obj.company = contacts[j].company;
+					obj.telp_number = contacts[j].telp_number;
+					obj.email = contacts[j].email;
+				}
+			}
+
+			joinedData.push(obj);
+		}
+
+		return joinedData;
+	}
+
 	/* Method pengganti updateDataById(data) */
 	static update(data, callback) {
 		let db = new sqlite3.Database(dbLocation);

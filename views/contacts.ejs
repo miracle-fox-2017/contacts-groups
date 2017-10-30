@@ -61,7 +61,9 @@
 			</thead>
 
 			<tbody>
+				<% console.log(contacts_groups)  %>
 				<% contacts_groups.forEach((contact) => {%>
+
 					<tr>
 						<td><%= contact.id %></td>
 						<td><%= contact.name %></td>
@@ -90,11 +92,11 @@
 		<input type="text" id="company" name="company"  placeholder="Company" value="<%= (typeof editItem != 'undefined') ? editItem.company  : '' %>">
 		<input type="tel" id="telp_number" name="telp_number"  placeholder="Nomor Telepon" value="<%= (typeof editItem != 'undefined') ? editItem.email  : '' %>">
 		<input type="email" id="email" name="email"  placeholder="email" value="<%= (typeof editItem != 'undefined') ? editItem.email  : '' %>">
-		
-
+	
 		<select name="groups_id" id="groups_id">
 			<option value=""></option>
 			<% groups.forEach((group) => {%>
+
 				<option value="<%= group.id %>"><%= group.name_of_group %></option>
 			<% }) %>
 		</select>

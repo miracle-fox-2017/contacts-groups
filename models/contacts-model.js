@@ -1,4 +1,6 @@
 const sqlite3 = require('sqlite3').verbose();
+const dbLocation = './database/database.db';
+const tableName = 'Contacts';
 
 class ContactsModel {
 	constructor(dbFile) {
@@ -124,6 +126,54 @@ class ContactsModel {
 
 			callback(rows);
 			
+		});
+
+		db.close();
+	}
+
+	/* Method pengganti getAllData(callback) */
+	static findAll(callback) {
+		let db = new sqlite3.Database(dbLocation);
+		let sql = `SELECT * FROM ${tableName}`;
+		db.all(sql, function(err, rows) {
+			if (err) {
+				callback({err: err, message: 'Something wrong with sql query!'}, null);
+			} else {
+				callback(null, rows);
+			}
+		})
+
+		db.close();
+	}
+
+	/* Method pengganti addData(data) */
+	static create(data, callback) {
+		let db = new sqlite3.Database(dbLocation);
+		let sql = `INSERT INTO ${tableName} (name, company, telp_number, email) VALUES ("${data.name}", "${data.company}", "${data.telp_number}", "${data.email}")`;
+
+		db.run(sql, function(err, rows) {
+			if (err) {
+				console.error(err);
+				callback(err, null, null);
+			} else {
+				callback(null, rows, this.lastID);
+			}
+		});
+
+		db.close();
+	}
+
+	/* Method pengganti getById(data, callback) */
+	static findById(data, callback) {
+		let db = new sqlite3.Database(dbLocation);
+		let sql = `SELECT * FROM ${tableName} WHERE id = ${data.id}`;
+		db.get(sql, (err, rows) =>{
+			if (err) {
+				console.error(err);
+				callback(err, null);
+			} else {
+				callback(null, rows);
+			}
 		});
 
 		db.close();

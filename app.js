@@ -6,12 +6,14 @@ const ContactsModel = require('./models/contacts-model');
 const GroupsModel = require('./models/groups-model');
 const ProfilesModel = require('./models/profile-model');
 const AddressesModel = require('./models/addresses-model');
+const ContactsGroupsModel = require('./models/contacts-groups-model');
 
 // Model
 let contact = new ContactsModel('./database/database.db');
 let group = new GroupsModel('./database/database.db');
 let profile = new ProfilesModel('./database/database.db');
 let address = new AddressesModel('./database/database.db');
+let contactGroup = new ContactsGroupsModel();
 
 // Setup body parser
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -28,30 +30,36 @@ app.get('/', (req, res) => {
 
 // Contacts
 app.get('/contacts', (req, res) => {
-	contact.getAllData(function(rows) {
-		group.getAllData((allgroups) => {
-			group.getAllDataConjunctionInnerJoin('Contacts_Groups', (allcontactgroups) => {
-
-				res.render('contacts', {groups: allgroups, contacts_groups: contact.getAllDataArrayJoinContactsGroups(rows, allcontactgroups)});
+	ContactsModel.findAll(function(err, rows) {
+		if (err === null) {
+			GroupsModel.findAll(function(err, allgroups) {
+				GroupsModel.findAllInnerJoin('Contacts_Groups', 'Groups', (err, allcontactgroups) => {
+					res.render('contacts', {groups: allgroups, contacts_groups: contact.getAllDataArrayJoinContactsGroups(rows, allcontactgroups)});
+				})
 			})
-		})
+		} else {
+			res.send(err);
+		}
 	});
 });
 
 app.post('/contacts', (req, res) => {
-	contact.getLatestIdSequence('Contacts', (latestId) => {
-		contact.addData(req.body);
-		contact.addDataContactGroups({contacts_id: latestId.seq+1, groups_id: +req.body.groups_id}, 'Contacts_Groups')
+	ContactsModel.create(req.body, function(err, data, lastContactId) {
+		ContactsGroupsModel.create({contacts_id: lastContactId, groups_id: +req.body.groups_id});
 		res.redirect('/contacts');
-	})
+	});
 });
 
 app.get('/contacts/edit/:id', (req, res) => {
-	contact.getAllData(function(rows) {
-		group.getAllData((allgroups) => {
-			group.getAllDataConjunctionInnerJoin('Contacts_Groups', (allcontactgroups) => {
-				contact.getById({id: req.params.id}, (editedRows) =>{
-					res.render('contacts', {groups: allgroups, contacts_groups: contact.getAllDataArrayJoinContactsGroups(rows, allcontactgroups), id: req.params.id, data: rows, editItem: editedRows });
+	ContactsModel.findAll(function(err, allcontacts) {
+		GroupsModel.findAll((err, allgroups) => {
+			GroupsModel.findAllInnerJoin('Contacts_Groups', 'Groups', (err, allcontactgroups) => {
+				ContactsModel.findById({id: req.params.id}, (err, editedRows) =>{
+					res.render('contacts', {
+						groups: allgroups, 
+						contacts_groups: contact.getAllDataArrayJoinContactsGroups(allcontacts, allcontactgroups), 
+						id: req.params.id, editItem: editedRows 
+					});
 				});
 			});
 		});

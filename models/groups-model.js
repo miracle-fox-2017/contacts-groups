@@ -1,4 +1,6 @@
 const sqlite3 = require('sqlite3').verbose();
+const dbLocation = './database/database.db';
+const tableName = 'Groups';
 
 class GroupsModel {
 	constructor(dbFile) {
@@ -66,6 +68,46 @@ class GroupsModel {
 			callback(rows);
 			
 		});
+		db.close();
+	}
+
+	/* Method pengganti getAllData(callback) */
+	static findAll(callback) {
+		let db = new sqlite3.Database(dbLocation);
+		let sql = `SELECT * FROM ${tableName}`;
+		db.all(sql, (err, rows) => {
+			if (err) {
+				callback({err: err, message: 'Something wrong with sql query on findAll()'}, null);
+			} else {
+				callback(null, rows);
+			}
+		})
+
+		db.close();
+	}
+
+	/* Method pengganti getAllDataConjunctionInnerJoin(tableSource, callback) */
+	static findAllInnerJoin(tableSource, tableTarget, callback) {
+		let db = new sqlite3.Database(dbLocation);
+		let sql = `Select * FROM ${tableSource} INNER JOIN ${tableTarget} ON ${tableSource}.groups_id = ${tableTarget}.id ;`;
+
+		db.all(sql, (err, rows) => {
+			if (err) {
+				callback({err: err, message: 'Something wrong with sql query on findAllInnerJoin()'}, null);
+				console.error(err);
+			} else {
+				callback(null, rows);
+			}
+		})
+
+		db.close();
+	}
+
+	/* Method pengganti addData(data) */
+	static create(data) {
+		let db = new sqlite3.Database(dbLocation);
+		let sql = `INSERT INTO ${tableName} (name_of_group) VALUES ("${data.name_of_group}")`;
+		db.run(sql);
 		db.close();
 	}
 }

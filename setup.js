@@ -77,14 +77,6 @@ db.serialize((err, rows)=>{
       console.log('jadi');
     }
 
-    // relasi one to many
-    db.run(` ALTER TABLE Addresses ADD COLUMN ContactId INTEGER REFERENCES Contacts('id')`)
-      if(err){
-        console.log(err);
-      }else{
-        console.log('addresses tambah');
-      }
-
     // unique index relasi one to one
     db.run(`CREATE UNIQUE INDEX ContactId ON Profile(ContactId)`, ()=>{
       if(err){
@@ -93,6 +85,16 @@ db.serialize((err, rows)=>{
         console.log('jadi unique');
       }
     })
+
+    // relasi one to many
+    db.run(` ALTER TABLE Addresses ADD COLUMN ContactId INTEGER REFERENCES Contacts('id')`)
+      if(err){
+        console.log(err);
+      }else{
+        console.log('addresses tambah');
+      }
+
+
 
 
  })
@@ -119,10 +121,6 @@ db.run (`INSERT INTO Contacts_Groups (ContactsId, GroupsId)
 // //
 // //
 
-// SELECT Contacts.name, Groups.name_of_group
-// FROM Contacts_Groups
-// 	inner join Contacts ON Contacts_Groups.ContactsId = Contacts.id
-// 	inner join Groups  ON Contacts_Groups.GroupsId = Groups.id
 
 
 //    db.run(`INSERT INTO Profile (username, password)

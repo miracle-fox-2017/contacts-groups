@@ -5,16 +5,17 @@ var db = new sqlite3.Database('./data/database.db');
 
 class Contacts_Groups {
 
-  // static findAll(callback){
-  //
-  //   db.all(`SELECT * FROM Contacts`, (err, rows)=>{
-  //     if(err){
-  //       console.log(err);
-  //     }else{
-  //       callback(rows)
-  //     }
-  //   })
-  // }
+  static findAll(callback){
+
+    db.all(`SELECT Contacts_Groups.*, Groups.name_of_group FROM Contacts_Groups LEFT JOIN
+            Groups ON Groups.id = Contacts_Groups.GroupsId`, (err, rows)=>{
+      if(err){
+        console.log(err);
+      }else{
+        callback(rows)
+      }
+    })
+  }
   //
   // static findById(req, callback){
   //
@@ -27,17 +28,17 @@ class Contacts_Groups {
   //   })
   // }
 
-  // static create(req, callback){
-  //   db.run(`INSERT INTO Contacts (name, company, telp_number, email)
-  //   VALUES("${req.body.name}", "${req.body.company}", "${req.body.telp_number}",
-  //   "${req.body.email}")`, (err, rows)=>{
-  //     if(err){
-  //       console.log(err);
-  //     }else{
-  //       callback(rows)
-  //     }
-  //   })
-  // }
+  static create(idC, idG, callback){
+    console.log(idC);
+     db.run(`INSERT INTO Contacts_Groups (ContactsId, GroupsId)
+    VALUES(${idC}, ${idG})`, (err, rows)=>{
+      if(err){
+        console.log(err);
+      }else{
+        callback(rows)
+      }
+    })
+  }
 
   // static insert (req, callback){
   //   console.log(req.params.id);

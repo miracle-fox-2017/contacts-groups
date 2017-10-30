@@ -13,6 +13,7 @@ router.get('/profile', (req, res) => {
 
 router.post('/profile', (req, res) => {
   Profile.create(req, dataProfile => {
+    console.log(dataProfile, '------------');
     res.redirect('/profile')
   })
 })

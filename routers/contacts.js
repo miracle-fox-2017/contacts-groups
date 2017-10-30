@@ -10,15 +10,29 @@ const Contacts_Groups = require('../models/contacts_groups')
 router.get('/contacts', function (req, res) {
   Contact.findAll(dataContacts =>{
     Group.findAll(dataGroups => {
-    res.render('contacts/contacts', {dataContacts:dataContacts, dataGroups:dataGroups})
+     Contacts_Groups.findAll(dataContacts_Groups =>{
+
+        res.render('contacts/contacts', {error: null, dataContacts:dataContacts, dataGroups:dataGroups,
+           dataContacts_Groups:dataContacts_Groups})
+      })
     });
   })
 })
 
 
 router.post('/contacts', function(req,res){
-  Contact.create(req,dataContacts =>{
-    res.redirect('/Contacts')
+
+  Contact.create(req,data =>{
+    let GroupId = req.body.GroupsId
+    let ContactId = data.lastID
+  Contacts_Groups.create(ContactId,GroupId, dataContacts_Groups =>{
+    console.log();
+      if(data == true){
+        res.render('contacts/contacts', {error:error})
+      }else{
+        res.redirect('/Contacts')
+      }
+    })
   })
 })
 
@@ -28,7 +42,7 @@ router.get('/contacts/edit/:id', function (req, res) {
   });
 });
 
-router.post('/contacts/edit/:id', function (req, res) {
+router.post('/contacts/edit/:id', function (req, res){
   Contact.update(req,dataContacts =>{
     res.redirect('/contacts')
   });

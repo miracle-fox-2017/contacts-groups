@@ -28,15 +28,23 @@ class Contact {
   }
 
   static create(req, callback){
-    db.run(`INSERT INTO Contacts (name, company, telp_number, email)
-    VALUES("${req.body.name}", "${req.body.company}", "${req.body.telp_number}",
-    "${req.body.email}")`, (err, rows)=>{
-      if(err){
-        console.log(err);
+      let name = req.body.name
+      if(name.length == 0 ){
+        error.is_error = true
+        return callback(true)
       }else{
-        callback(rows)
+        db.run(`INSERT INTO Contacts (name, company, telp_number, email)
+        VALUES("${req.body.name}", "${req.body.company}", "${req.body.telp_number}",
+        "${req.body.email}")`, function(err, rows){
+          if(err){
+            return callback(err)
+          }else{
+            //console.log(rows, '000000');
+            callback(this)
+          }
+        })
       }
-    })
+
   }
 
 

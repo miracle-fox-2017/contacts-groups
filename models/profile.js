@@ -24,6 +24,7 @@ class Profile {
     db.run(`INSERT INTO Profile (username, password, ContactId)
     VALUES ('${req.body.username}','${req.body.password}', ${req.body.ContactId})`, (err, rows) => {
       if(err){
+
         console.log(err);
       }else{
         callback(rows)

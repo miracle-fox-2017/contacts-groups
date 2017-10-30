@@ -13,6 +13,10 @@
     <h1>Contacts</h1>
 
   <div class="container">
+    <%if(error != null){%>
+    <h3 style="color:red">Nama Tidak Boleh Kosong</h3>
+    <a href="/contacts"><<</a>
+    <%} else{%>
     <table class="table">
       <thead>
         <tr>
@@ -21,10 +25,12 @@
         <th>Company</th>
         <th>Telp</th>
         <th>Email</th>
+        <th>Groups</th>
         <th>option</th>
       </tr>
       </thead>
       <tbody>
+
         <%dataContacts.forEach((item)=>{%>
           <tr>
           <td><%=item.id%></td>
@@ -32,6 +38,13 @@
           <td><%=item.company%></td>
           <td><%=item.telp_number%></td>
           <td><%=item.email%></td>
+          <td>
+          <%for(let i =0; i < dataContacts_Groups.length; i++){%>
+              <%if(item.id == dataContacts_Groups[i].ContactsId){%>
+                <%=dataContacts_Groups[i].name_of_group%>
+            <%}%>
+          <%}%>
+          </td>
 
           <td>
             <a href="/contacts/edit/<%=item.id%>">Edit</a>
@@ -40,11 +53,13 @@
           </td>
         </tr>
         <%})%>
+
       </tbody>
     </table>
 
 
     <div class="container">
+
     <h3>Add Contact</h3>
       <form class ="form" action="/contacts" method="POST">
         <input id="name" type="text" name="name" placeholder="Name">
@@ -57,7 +72,7 @@
         <br>
       </div>
       <div class="col-xs-4 col-md-2">
-        <select class="box" name="ContactsId">
+        <select class="box" name="GroupsId">
         <% for(let i = 0; i < dataGroups.length; i++) {%>
         <option value="<%=dataGroups[i].id%>"><%=dataGroups[i].name_of_group%></option>
         <%}%>
@@ -66,7 +81,7 @@
         </div>
     </div>
   </div>
-
+    <%}%>
   </body>
   <style>
   table#t01 tr:nth-child(even) {

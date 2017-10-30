@@ -31,7 +31,7 @@
             <td><%=rows[i].company%></td>
             <td><%=rows[i].telp_number%></td>
             <td><%=rows[i].email%></td>
-            <td><a href="/Contacts/delete/:id">delete</a></td>
+            <td><a href="/Contacts/delete/<%=rows[i].id%>">delete</a></td>
         </tr>
       <%}%>
     </table>

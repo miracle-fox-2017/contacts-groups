@@ -22,7 +22,7 @@
         <tr>
           <td><%=rows[i].id%></td>
           <td><%=rows[i].name_of_group%></td>
-          <td><a href="/Groups/delete/:id">delete</a></td>
+          <td><a href="/Groups/delete/<%= rows[i].id %>">delete</a></td>
         </tr>
       <%}%>
     </table>

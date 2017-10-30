@@ -24,7 +24,11 @@ app.get('/Contacts',function(req,res){
       })
 
 app.post('/Contacts',function(req,res) {
-  db.all(`INSERT INTO Contacts(name,company,telp_number,email) VALUES("${req.body.name}","${req.body.company}","${req.body.telp_number}","${req.body.email}")`,function(err,rows) {
+  db.all(`INSERT INTO Contacts(name,company,telp_number,email) VALUES("${req.body.name}",
+  "${req.body.company}",
+  "${req.body.telp_number}",
+  "${req.body.email}")`
+  ,function(err,rows) {
       res.redirect('/Contacts')
   })
 })
@@ -34,8 +38,6 @@ app.get('/Contacts/delete/:id',function(req,res) {
     res.redirect('/Contacts')
   })
 })
-
-
 
 
 //Addresses
@@ -72,7 +74,7 @@ app.post('/Groups',function(req,res){
 })
 
 app.get('/Groups/delete/:id',function(req,res) {
-  db.all(`DELETE FROM Addresses WHERE id = "${req.params.id}"`,function(err,rows) {
+  db.all(`DELETE FROM Groups WHERE id = "${req.params.id}"`,function(err,rows) {
     res.redirect('/Groups')
   })
 })

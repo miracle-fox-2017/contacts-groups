@@ -46,12 +46,14 @@ div {
         <th>No</th>
         <th>Username</th>
         <th>Password</th>
+        <th>Contacts</th>
         <% let i = 1 %>
       <% rows.forEach(function(el){%>
           <tr>
             <td> <%= i %> </td>
             <td> <%= el.username %> </td>
             <td> <%= el.password %> </td>
+            <td> <%= el.name %> </td>
             <td> <a href="/profile/edit/<%=el.id%>">edit</a>
             <td> <a href="/profile/delete/<%=el.id%>">delete</a>
           </tr>

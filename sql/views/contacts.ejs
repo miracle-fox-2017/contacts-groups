@@ -51,7 +51,7 @@ div {
         <% let i = 1 %>
       <% rows.forEach(function(row){%>
           <tr>
-            <td> <%= row.id %> </td>
+            <td> <%= i %> </td>
             <td> <%= row.name %> </td>
             <td> <%= row.company %> </td>
             <td> <%= row.telp_number %> </td>
@@ -62,7 +62,8 @@ div {
         <% i++ })%>
       </tr>
     </table>
-    <% if (edit === true) {%>
+    <% console.log(rows) %>
+    <% if (edit == true) {%>
       <form action="/contacts/edit/<%=rows[0].id%>" method="post">
         Name:
         <input type="text" name="name" value="<%=rows[0].name%>">

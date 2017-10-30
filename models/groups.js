@@ -44,7 +44,7 @@ class Groups{
 
   static update(obj){
     let query = `UPDATE Groups
-               SET name_of_group = "${obj.name_of_group}",
+               SET name_of_group = "${obj.name_of_group}"
                WHERE id = "${obj.id}"`;
    db.all(query)
   }

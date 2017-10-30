@@ -3,6 +3,8 @@ const bodyParser = require('body-parser');
 const app = express();
 const contact = require('./router/contacts');
 const group = require('./router/groups');
+const profile = require('./router/profiles');
+const address = require('./router/addresses');
 app.use(bodyParser.urlencoded({ extended: false }))
 app.set('views', './views')
 app.set('view engine', 'ejs')
@@ -10,7 +12,9 @@ app.set('view engine', 'ejs')
 //const urlencodedParser = bodyParser.urlencoded({ extended: false })
 //CONTACTS
 app.use('/',contact);
-app.use('/',group)
+app.use('/',group);
+app.use('/',profile);
+app.use('/',address);
 //CONTACTS EDIT
 // app.get('/contacts/edit/:id',function(req,res){
 //   //mendifinisikan isEdit untuk form jika dia true tampilkan form edit

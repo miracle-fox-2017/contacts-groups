@@ -6,7 +6,7 @@ db.serialize(function() {
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     name STRING,
     company STRING,
-    telp_number STRING,
+    telp_number TEXT,
     email STRING)`, (err) => {
     if(err) {
       console.log('Failed create table Contacts');
@@ -83,7 +83,7 @@ db.serialize(function() {
   //   }
   // })
 
-  db.run(`CREATE TABLE IF NOT EXISTS contactsGroups (
+  db.run(`CREATE TABLE IF NOT EXISTS ContactsGroups (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     contactId INTEGER REFERENCES Contacts(id),
     groupId INTEGER REFERENCES Groups(id))`, (err) => {

@@ -34,32 +34,55 @@ app.use('/contacts', contactRouter);
 
 // Groups
 app.get('/groups', (req, res) => {
-	group.getAllData(function(rows) {
-		res.render('groups', { data: rows });
+	GroupsModel.findAll(function(err, rows) {
+		if (err == null) {
+			res.render('groups', { data: rows });
+		} else {
+			res.send(err);
+		}
 	});
 });
 
 app.post('/groups', (req, res) => {
-	group.addData(req.body);
-	res.redirect('/groups');
+	GroupsModel.create(req.body, function(err, rows) {
+		if (err == null) {
+			res.redirect('/groups');
+		} else {
+			res.send(err);
+		}
+	});
 });
 
 app.get('/groups/edit/:id', (req, res) => {
-	group.getAllData(function(rows) {
-		group.getById({id: req.params.id}, (editedRows) =>{
-			res.render('groups', { id: req.params.id, data: rows, editItem: editedRows });
+	GroupsModel.findAll(function(err, rows) {
+		GroupsModel.findById({id: req.params.id}, function(err, editedRows){
+			if (err == null) {
+				res.render('groups', { id: req.params.id, data: rows, editItem: editedRows });
+			} else {
+				res.send(err);
+			}
 		});
 	});	
 });
 
 app.post('/groups/edit/:id', (req, res) => {
-	group.updateDataById({id: req.params.id, editItem: req.body});
-	res.redirect('/groups/');
+	GroupsModel.update({id: req.params.id, editItem: req.body}, function(err, rows, lastId){
+		if (err == null) {
+			res.redirect('/groups/');
+		} else {
+			res.send(err);
+		}
+	});
 });
 
 app.get('/groups/delete/:id', (req, res) => {
-	group.deleteDataById({id: req.params.id});
-	res.redirect('/groups/');
+	GroupsModel.delete({id: req.params.id}, function(err, rows, obj) {
+		if (err == null) {
+			res.redirect('/groups/');
+		} else {
+			res.send(err);
+		}
+	});
 });
 
 // Profile

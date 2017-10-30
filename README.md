@@ -88,12 +88,12 @@ Pada file setup.js tambahkan column relasi foreign key dan tentukan di tabel man
 - Tambahkan validasi pada halaman Contact, saat melakukan add field name tidak boleh kosong. Munculkan pesan error pada frontend (ejs)
 - Tambahkan validasi pada halaman Profile, saat melakukan add profile dan memilih contact yang sudah memiliki profile munculkan pesan error "Your contact already have profile" pada frontend (ejs)
 
-- [x] incomplete
+- [x] completed
 ## Release 6
 Tabel Contacts dan Table Address memiliki relasi dimana satu data contact boleh memiliki lebih dari satu data address 
 Pada file setup.js tambahkan column relasi foreign key dan tentukan di tabel mana foreign key tersebut ditambahkan (hint: gunakan alter table)
 
-- [] incomplete
+- [x] completed
 ## Release 7
 1. Pada route get '/addresses', tambahkanlah column untuk menampilkan nama contact (jika data contact telah di-assign)
 2. Pada saat melakukan add di halaman address, tambahkanlah input fields berupa select-option(dropdown/combobox) yang isinya merupakan nama dari semua contact. Sehingga ketika user/client menekan tombol save, data contact akan ke-assign pada data address tersebut

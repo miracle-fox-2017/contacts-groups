@@ -5,8 +5,10 @@ const db = new sqlite3.Database('./database/database.db', err => {
 
 class Profiles {
   static findAllProfiles(callback) {
-    const queryJoin = `SELECT Profile.id, Profile.username, Profile.password, Contacts.name FROM Profile
-    JOIN Contacts ON Profile.id_contact = Contacts.id`;
+    const queryJoin = `
+      SELECT Profile.id, Profile.username, Profile.password, Contacts.name
+      FROM Profile JOIN Contacts ON Profile.id_contact = Contacts.id
+    `;
     db.all(queryJoin, (err, records) => {
       if (err) callback(err, null);
       callback(null, records);

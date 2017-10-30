@@ -5,15 +5,19 @@ const db = new sqlite3.Database('./database/database.db', err => {
 
 class Address {
   static findAllAddress(callback) {
-    db.all(`SELECT * FROM Addresses`, (err, records) => {
+    const queryJoin = `
+      SELECT Addresses.id, Addresses.city, Addresses.zipcode, Contacts.name
+      FROM Addresses JOIN Contacts ON Addresses.id_contact = Contacts.id
+    `;
+    db.all(queryJoin, (err, records) => {
       if (err) callback(err, null);
       callback(null, records);
     });
   }
 
   static createAddress(data, callback) {
-    const queryPut = `INSERT INTO Addresses (street, city, zipcode)
-            VALUES ('${data.street}','${data.city}', '${data.zipcode}')`;
+    const queryPut = `INSERT INTO Addresses (street, city, zipcode, id_contact)
+            VALUES ('${data.street}','${data.city}', '${data.zipcode}', '${data.id}')`;
     db.run(queryPut, err => {
       callback(err);
     });

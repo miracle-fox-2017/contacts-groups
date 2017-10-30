@@ -16,9 +16,9 @@
       <p>Username: <input type="text" name="username" required/></p>
       <p>Password: <input type="text" name="password" required/></p>
       <select name="id">
-          <% contacts.forEach(contact => { %>
-        <option value="<%= contact.id %>"><%= contact.name %></option>
-          <% }) %>
+        <% contacts.forEach(contact => { %>
+          <option value="<%= contact.id %>"><%= contact.name %></option>
+        <% }) %>
       </select>
       <button>SUBMIT PROFILES</button>
     </form>

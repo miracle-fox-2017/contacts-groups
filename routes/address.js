@@ -1,10 +1,16 @@
 const router = require('express').Router();
 const Address = require('../models/address');
+const Contacts = require('../models/contacts');
 
 router.get('/', (req, res) => {
-  Address.findAllAddress((err, records) => {
-    if (err) throw err;
-    res.render('address', {addresses: records});
+  Contacts.findAllContacts((err, contactRecords) => {
+    Address.findAllAddress((err, addressRecords) => {
+      if (err) throw err;
+      res.render('address', {
+        addresses: addressRecords,
+        contacts: contactRecords
+      });
+    });
   });
 });
 
@@ -12,7 +18,8 @@ router.post('/', (req, res) => {
   const dataBody = {
     street: req.body.street,
     city: req.body.city,
-    zipcode: req.body.zipcode
+    zipcode: req.body.zipcode,
+    id: req.body.id
   };
 
   Address.createAddress(dataBody, err => {

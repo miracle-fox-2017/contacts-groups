@@ -11,6 +11,11 @@
       <form action="/profiles" method="post">
         <p>Username: <input type="text" name="username" required/></p>
         <p>Password: <input type="text" name="password" required/></p>
+        <% contacts.forEach(contact => { %>
+          <select name="id">
+            <option value="<%= contact.id %>"><%= contact.name %></option>
+          </select>
+        <% }) %>
         <button>SUBMIT PROFILES</button>
       </form>
 
@@ -20,6 +25,7 @@
             <th>ID Profiles</th>
             <th>Username</th>
             <th>Password</th>
+            <th>Contact</th>
             <th>Action</th>
           </tr>
         </thead>
@@ -29,6 +35,7 @@
               <td align="center"><%= profile.id %></td>
               <td align="center"><%= profile.username %></td>
               <td align="center"><%= profile.password %></td>
+              <td align="center"><%= profile.name %></td>
               <td align="center">
                 <a href="/profiles/edit/<%= profile.id %>">edit</a>
                 <a href="/profiles/delete/<%= profile.id %>">delete</a>

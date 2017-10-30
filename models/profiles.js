@@ -5,15 +5,18 @@ const db = new sqlite3.Database('./database/database.db', err => {
 
 class Profiles {
   static findAllProfiles(callback) {
-    db.all(`SELECT * FROM Profile`, (err, records) => {
+    const queryJoin = `SELECT Profile.id, Profile.username, Profile.password, Contacts.name FROM Profile
+    JOIN Contacts ON Profile.id_contact = Contacts.id`;
+    db.all(queryJoin, (err, records) => {
       if (err) callback(err, null);
+      console.log(records);
       callback(null, records);
     });
   }
 
   static createProfiles(data, callback) {
-    const queryPut = `INSERT INTO Profile (username, password)
-            VALUES ('${data.username}','${data.password}')`;
+    const queryPut = `INSERT INTO Profile (username, password, id_contact)
+            VALUES ('${data.username}','${data.password}', '${data.id}')`;
     db.run(queryPut, err => {
       callback(err);
     });

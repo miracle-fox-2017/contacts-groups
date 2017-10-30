@@ -1,17 +1,24 @@
 const router = require('express').Router();
 const Profiles = require('../models/profiles');
+const Contacts = require('../models/contacts');
 
 router.get('/', (req, res) => {
-  Profiles.findAllProfiles((err, records) => {
-    if (err) throw err;
-    res.render('profiles', {profiles: records});
+  Contacts.findAllContacts((err, contactRecords) => {
+    Profiles.findAllProfiles((err, profileRecords) => {
+      if (err) throw err;
+      res.render('profiles', {
+        profiles: profileRecords,
+        contacts: contactRecords
+      });
+    });
   });
 });
 
 router.post('/', (req, res) => {
   const dataBody = {
     username: req.body.username,
-    password: req.body.password
+    password: req.body.password,
+    id: req.body.id
   };
 
   Profiles.createProfiles(dataBody, err => {

@@ -27,7 +27,7 @@ class Contact {
 		})
 	}
 
-	static update(change, data, cb){
+	static update(change,cb){
 		change.id = Number(change.id)
 		let replace = `UPDATE Contacts SET name = "${change.name}", company = "${change.company}", telp_number = "${change.telp_number}", email = "${change.email}" WHERE id = ${change.id}`;
 		db.all(replace, function(err, rowContact){

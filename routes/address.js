@@ -64,4 +64,32 @@ router.get('/delete/:id', (req, res) => {
   });
 });
 
+router.get('/with-contact', (req, res) => {
+  Address.findAddressWithContacts((err, recordsObj) => {
+    if (err) console.log(err);
+    
+    const contactAddress = [];
+    for (let i = 0; i < recordsObj.address.length; i++) {
+      for (let j = 0; j < recordsObj.contacts.length; j++) {
+        const dataObj = {};
+
+        if (recordsObj.address[i].id_contact === recordsObj.contacts[j].id) {
+          dataObj['name'] = recordsObj.contacts[j].name;
+          dataObj['id'] = recordsObj.address[i].id;
+          dataObj['street'] = recordsObj.address[i].street;
+          dataObj['city'] = recordsObj.address[i].city;
+          dataObj['zipcode'] = recordsObj.address[i].zipcode;
+          dataObj['company'] = recordsObj.contacts[j].company;
+        }
+
+        contactAddress.push(dataObj);
+      }
+    }
+
+    res.render('address-with-contact', {
+      contactAddresses: contactAddress
+    });
+  });
+});
+
 module.exports = router;

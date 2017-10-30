@@ -51,6 +51,23 @@ class Address {
       callback(err);
     });
   }
+
+  static findAddressWithContacts(callback) {
+    const queryContacts = `SELECT * FROM Contacts`;
+    const queryAddress = `SELECT * FROM Addresses`;
+
+    db.all(queryContacts, (err, contactRecords) => {
+      db.all(queryAddress, (err, addressRecords) => {
+        if (err) callback(err, null);
+        const recordsObj = {
+          contacts: contactRecords,
+          address: addressRecords
+        }
+        callback(null, recordsObj);
+      });
+    });
+
+  }
 }
 
 module.exports = Address;

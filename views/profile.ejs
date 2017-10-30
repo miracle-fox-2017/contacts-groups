@@ -10,14 +10,13 @@
         <th>id</th>
         <th>username</th>
         <th>password</th>
-        <th>contactId</th>
+        <th>Contact name</th>
       </tr>
       <%for(var i = 0; i < data.length; i++) {%>
         <tr>
           <td><%=data[i].id%></td>
           <td><%=data[i].username%></td>
           <td><%=data[i].password%></td>
-          <td><%=data[i].contactId%></td>
           <td><%=data[i].name%></td>
           <td><a href="/profiles/edit/<%=data[i].id%>">edit</a></td>
           <td><a href="/profiles/delete/<%=data[i].id%>">delete</a></td>

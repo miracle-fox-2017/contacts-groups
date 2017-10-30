@@ -1,6 +1,7 @@
-var contacts = [{"id":5,"name":"wisnu dharma jaya","company":"PT. Bahagia Selamanya","telp_number":"08564141085","email":"jayalahwisnu@gmail.com"},{"id":6,"name":"Chontry Novita Dewi","company":"PT.Acset Selalu Bahagia","telp_number":"08576189411","email":"novibdn.gmail.com"},{"id":7,"name":"Novaliani","company":"PT. Bahagia Selamanya","telp_number":"08576189412","email":"nova@gmail.com"}]
+var contacts = [{"ContactId":6,"GroupId":1,"name":"Chontry Novita Dewi"},{"ContactId":7,"GroupId":1,"name":null},{"ContactId":11,"GroupId":2,"name":"Adit Reza"},{"ContactId":7,"GroupId":2,"name":null},{"ContactId":16,"GroupId":2,"name":"wisnu dharma jaya"}]
 
-var groups = [{"name_of_group":null,"ContactId":"undefined","GroupId":"index.html"},{"name_of_group":null,"ContactId":"undefined","GroupId":"index.html"},{"name_of_group":"javascript indonesia","ContactId":5,"GroupId":1},{"name_of_group":"Python ID","ContactId":5,"GroupId":2},{"name_of_group":"Python ID","ContactId":6,"GroupId":2},{"name_of_group":"javascript indonesia","ContactId":6,"GroupId":1},{"name_of_group":"javascript indonesia","ContactId":7,"GroupId":1}]
+var groups = [{"id":1,"name_of_group":"javascript indonesia","groups":"Chontry Novita Dewi,"},{"id":2,"name_of_group":"Python ID","groups":"Adit Reza,,wisnu dharma jaya"}]
+
 
 for(var i = 0; i < contacts.length; i++) {
   var tampung = []

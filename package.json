@@ -4,7 +4,8 @@
   "description": "ExpressJS CRUD Exercise",
   "main": "setup.js",
   "scripts": {
-    "start": "nodemon"
+      "watch": "nodemon app.js",
+      "setup": "node setup.js"
   },
   "repository": {
     "type": "git",

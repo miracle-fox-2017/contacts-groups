@@ -54,7 +54,7 @@ class Profile{
     }
     static leftJoinContact(callback){
         const query=`SELECT profile.username, profile.password, profile.id, contacts.name FROM profile LEFT JOIN contacts ON profile.contact_id = contacts.id`;
-        db.all(query,function(err,rows){
+        db.all(query,(err,rows)=>{
             if(err){
                 callback(err,null);
             }else{

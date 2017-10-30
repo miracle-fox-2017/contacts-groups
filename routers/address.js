@@ -6,15 +6,15 @@ const Address=require("../model/address");
 const Contact=require("../model/contact");
 
 router.get("/",(req,res)=>{ // Halaman awal alamat
-    Address.findAll((err,addressRows)=>{
+    Address.leftJoinContact((err,rowsJoin)=>{
         if(err){
             res.send(err);
         }else{
-            Contact.findAll((err,contactRows)=>{
+            Contact.findAll((err,rowsContact)=>{
                 if(err){
                     res.send(err);
                 }else{
-                    res.render("address",{address:addressRows,contact:contactRows});
+                    res.render("address",{address:rowsJoin,contact:rowsContact});
                 }
             });
         }
@@ -30,13 +30,19 @@ router.post("/",(req,res)=>{ // Tambah alamat
     });
 });
 router.get("/edit/:id",(req,res)=>{ // Halaman edit alamat
-    Address.findById(req.params.id,(err,row)=>{
+    Address.findById(req.params.id,(err,rowAddress)=>{
         if(err){
             res.send(err);
-        }else if(row.length === 0){
+        }else if(rowAddress.length === 0){
             res.redirect("/addresses");
         }else{
-            res.render("edit-address",{data:row});
+            Contact.findAll((err,rowsContact)=>{
+                if(err){
+                    res.send(err);
+                }else{
+                    res.render("edit-address",{address:rowAddress,contact:rowsContact});
+                }
+            });
         }
     });
 });

@@ -9,20 +9,38 @@
 <body>
     <section>
         <div class="header">Edit Data Group</div>
-        <form action="/addresses/edit/<%=data[0].id%>" method="post">
-            <input type="hidden" name="id" value="<%=data[0].id%>">
+        <form action="/addresses/edit/<%=address[0].id%>" method="post">
+            <input type="hidden" name="id" value="<%=address[0].id%>">
             <table border="1">
                 <tr>
                     <td>Jalan</td>
-                    <td><input type="text" name="street" value="<%=data[0].street%>"></td>
+                    <td><input type="text" name="street" value="<%=address[0].street%>"></td>
                 </tr>
                 <tr>
                     <td>Kota</td>
-                    <td><input type="text" name="city" value="<%=data[0].city%>"></td>
+                    <td><input type="text" name="city" value="<%=address[0].city%>"></td>
                 </tr>
                 <tr>
                     <td>Kodepos</td>
-                    <td><input type="text" name="zipcode" value="<%=data[0].zipcode%>"></td>
+                    <td><input type="text" name="zipcode" value="<%=address[0].zipcode%>"></td>
+                </tr>
+                <tr>
+                    <td>Contact Name</td>
+                    <td>
+                        <select name="contact">
+                            <%if(address[0].contact_id === ""){%>
+                                <option value="">Tidak ada data kontak</option>
+                            <%}else{
+                                contact.map((value)=>{
+                                    if(value.id === address[0].contact_id){%>
+                                    <option value="<%=value.id%>" selected><%=value.name%></option>
+                                    <%}else{%>
+                                    <option value="<%=value.id%>"><%=value.name%></option>
+                                    <%}
+                                });
+                            }%>
+                        </select>
+                    </td>
                 </tr>
                 <tr>
                     <td colspan="2"><input type="submit" value="Simpan"></td>

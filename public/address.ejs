@@ -19,6 +19,7 @@
                         <td>Jalan</td>
                         <td>Kota</td>
                         <td>Kodepos</td>
+                        <td>Owner</td>
                         <td>Action</td>
                     </tr>
                     <%address.map((value,i)=>{%>
@@ -27,6 +28,7 @@
                         <td><%=value.street%></td>
                         <td><%=value.city%></td>
                         <td><%=value.zipcode%></td>
+                        <td><%=value.name%></td>
                         <td>
                             <a href="/addresses/edit/<%=value.id%>"><button type="button">Edit</button></a>
                             <a href="/addresses/delete/<%=value.id%>"><button type="button">Hapus</button></a>

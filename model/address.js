@@ -13,7 +13,7 @@ class Address{
         });
     }
     static create(input,callback){ // Tambah data
-        const query=`INSERT INTO address (street,city,zipcode) VALUES ("${input.street}", "${input.city}", "${input.zipcode}")`;
+        const query=`INSERT INTO address (street,city,zipcode,contact_id) VALUES ("${input.street}", "${input.city}", "${input.zipcode}", "${input.contact}")`;
         db.run(query,function(err){ // Tidak bisa menggunakan arrow function
             if(err){
                 callback(err,null);
@@ -33,7 +33,7 @@ class Address{
         });
     }
     static update(input,callback){ // Update data
-        const query=`UPDATE address SET street="${input.street}", city="${input.city}", zipcode="${input.zipcode}" WHERE id="${input.id}"`;
+        const query=`UPDATE address SET street="${input.street}", city="${input.city}", zipcode="${input.zipcode}", contact_id="${input.contact}" WHERE id="${input.id}"`;
         db.run(query,function(err){ // Tidak bisa menggunakan arrow function
             if(err){
                 callback(err,null);
@@ -49,6 +49,16 @@ class Address{
                 callback(err,null);
             }else{
                 callback(null,this);
+            }
+        });
+    }
+    static leftJoinContact(callback){ // Left Join Address with Contact
+        const query=`SELECT address.id, address.street, address.city, address.zipcode, contacts.name FROM address LEFT JOIN contacts ON address.contact_id = contacts.id`;
+        db.all(query,(err,rows)=>{
+            if(err){
+                callback(err,null);
+            }else{
+                callback(null,rows);
             }
         });
     }

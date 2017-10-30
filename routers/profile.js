@@ -6,7 +6,7 @@ const Profile=require("../model/profile");
 const Contact=require("../model/contact");
 
 router.get("/",(req,res)=>{ // Halaman awal profile
-    Profile.leftJoinContact((err,rowsProfile)=>{
+    Profile.leftJoinContact((err,rowsJoin)=>{
         if(err){
             res.send(err);
         }else{
@@ -14,7 +14,7 @@ router.get("/",(req,res)=>{ // Halaman awal profile
                 if(err){
                     res.send(err);
                 }else{
-                    res.render("profile",{profile:rowsProfile,contact:rowsContact});
+                    res.render("profile",{profile:rowsJoin,contact:rowsContact});
                 }
             });
         }

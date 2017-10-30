@@ -1,10 +1,10 @@
 var sqlite3 = require('sqlite3').verbose();
 var db = new sqlite3.Database('./db/database.db');
 
-class Profiles {
+class Profile {
   static getAll(callback) {
     db.all('SELECT Profiles.*, Contacts.name FROM Profiles LEFT JOIN Contacts ON contact_id=Contacts.id', (err, rows)=>{
-      callback(rows);
+      callback(err, rows);
     })
   }
 
@@ -13,14 +13,14 @@ class Profiles {
       if(err){
         callback('Your contact already have profile')
       }else(
-        callback(true)
+        callback(null)
       )
     })
   }
 
   static getOne(id, callback) {
     db.get(`SELECT * FROM Profiles WHERE id='${id}'`, (err, rows)=>{
-      callback(rows);
+      callback(err, rows);
     })
   }
 
@@ -29,14 +29,16 @@ class Profiles {
       if(err){
         callback('Your contact already have profile')
       }else{
-        callback(true)
+        callback(null)
       }
     })
   }
 
-  static destroy(id) {
-    db.run(`DELETE FROM Profiles WHERE id='${id}'`)
+  static destroy(id, callback) {
+    db.run(`DELETE FROM Profiles WHERE id='${id}'`, err => {
+      callback(err)
+    })
   }
 }
 
-module.exports = Profiles;
+module.exports = Profile;

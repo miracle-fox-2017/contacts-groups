@@ -8,11 +8,11 @@ app.use(bodyParser.json())
 
 app.set('view engine', 'ejs')
 
-const index = require('./routes/index');
-const contacts = require('./routes/contacts');
-const groups = require('./routes/groups');
-const profiles = require('./routes/profiles');
-const addresses = require('./routes/addresses');
+const index = require('./routers/index');
+const contacts = require('./routers/contacts');
+const groups = require('./routers/groups');
+const profiles = require('./routers/profiles');
+const addresses = require('./routers/addresses');
 
 app.use('/', index)
 app.use('/contacts', contacts)

@@ -35,12 +35,12 @@ function alterProfiles() {
       console.log(err);
     }
   })
-  // add UNIQUE via DB Browser
-  // db.run('ALTER TABLE Profiles ADD UNIQUE (contact_id);', err => {
-  //   if(err){
-  //     console.log(err);
-  //   }
-  // })
+
+  db.run('CREATE UNIQUE INDEX IF NOT EXISTS UniqueContactId ON Profiles (contact_id)', err => {
+    if(err){
+      console.log(err);
+    }
+  })
 }
 
 function alterAddresses() {
@@ -52,10 +52,7 @@ function alterAddresses() {
 }
 
 function tableContactsGroups() {
-  db.run(`CREATE TABLE IF NOT EXISTS ContactsGroups(
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    contact_id INTEGER REFERENCES Contacts(id) ON DELETE CASCADE,
-    group_id INTEGER REFERENCES Groups(id) ON DELETE CASCADE)`,err=>{
+  db.run(`CREATE TABLE IF NOT EXISTS ContactsGroups(id INTEGER PRIMARY KEY AUTOINCREMENT, contact_id INTEGER REFERENCES Contacts(id) ON DELETE CASCADE, group_id INTEGER REFERENCES Groups(id) ON DELETE CASCADE)`,err=>{
     if(!err){
       console.log('table ContactsGroups created..');
     }
@@ -65,4 +62,4 @@ function tableContactsGroups() {
 // createTable()
 // alterProfiles()
 // alterAddresses()
-tableContactsGroups()
+// tableContactsGroups()

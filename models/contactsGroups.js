@@ -1,18 +1,16 @@
 var sqlite3 = require('sqlite3').verbose();
 var db = new sqlite3.Database('./db/database.db');
 
-class ContactsGroups {
+class ContactGroup {
   static getAll(callback) {
     db.all('SELECT * FROM ContactsGroups', (err, rows)=>{
-      callback(rows);
+      callback(err, rows);
     })
   }
 
   static create(contact_id,group_id,callback) {
     db.run(`INSERT INTO ContactsGroups (contact_id,group_id) VALUES ('${contact_id}','${group_id}')`,err => {
-      if(!err){
-        callback(true)
-      }
+      callback(err)
     })
   }
 
@@ -21,4 +19,4 @@ class ContactsGroups {
   }
 }
 
-module.exports = ContactsGroups;
+module.exports = ContactGroup;

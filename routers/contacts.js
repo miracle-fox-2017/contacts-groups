@@ -1,14 +1,14 @@
 const express = require('express')
 const router = express.Router()
-const Contacts = require('../models/contacts')
-const Addresses = require('../models/addresses')
-const Groups = require('../models/groups')
-const ContactsGroups = require('../models/contactsGroups')
+const Contact = require('../models/contacts')
+const Address = require('../models/addresses')
+const Group = require('../models/groups')
+const ContactGroup = require('../models/contactsGroups')
 
 router.get('/', (req, res) => {
-  Contacts.getAll(contactsData => {
-    ContactsGroups.getAll(cgData => {
-      Groups.getAll(groupsData => {
+  Contact.getAll((err, contactsData) => {
+    ContactGroup.getAll((err,cgData) => {
+      Group.getAll((err, groupsData) => {
         contactsData.forEach(contact => {
           contact.groups = []
           cgData.forEach(cg => {
@@ -26,7 +26,7 @@ router.get('/', (req, res) => {
 })
 
 function addRender(req,res,err){
-  Groups.getAll(groupsData => {
+  Group.getAll((err, groupsData) => {
     res.render('contacts/add', {title:'Add Contact', groups:groupsData, err:err})
   })
 }
@@ -36,39 +36,50 @@ router.get('/add', (req, res) => {
 })
 
 router.post('/add', (req, res) => {
-  // console.log(req.body);
-  Contacts.create(req.body, (lastID,report)=> {
-    if(report == true){
-      ContactsGroups.create(lastID,req.body.group_id,reportCg => {
-        if(reportCg == true){
+  Contact.create(req.body, (err, lastID)=> {
+    if(!err){
+      ContactGroup.create(lastID,req.body.group_id,err => {
+        if(!err){
           res.redirect('/contacts')
+        }else{
+          res.send(err)
         }
       })
     }else{
-      addRender(req,res,report);
+      addRender(req,res,err);
     }
   })
 })
 
 router.get('/edit/:id', (req, res) => {
-  Contacts.getOne(req.params.id, contact => {
+  Contact.getOne(req.params.id, (err, contact) => {
     res.render('contacts/edit', {title:'Edit Contact', contact:contact});
   })
 })
 
 router.post('/edit/:id', (req, res) => {
-  Contacts.update(req.body, req.params.id)
-  res.redirect('/contacts')
+  Contact.update(req.body, req.params.id, err => {
+    if(!err){
+      res.redirect('/contacts')
+    }else{
+      res.send(err)
+    }
+  })
 })
 
 router.get('/delete/:id', (req, res) => {
-  Contacts.destroy(req.params.id)
-  res.redirect('/contacts')
+  Contact.destroy(req.params.id, err => {
+    if(!err){
+      res.redirect('/contacts')
+    }else{
+      res.send(err)
+    }
+  })
 })
 
 router.get('/addresses/:id', (req, res) => {
-  Contacts.getOne(req.params.id, contact => {
-    Addresses.getAll(addressesData => {
+  Contact.getOne(req.params.id, (err, contact) => {
+    Address.getAll((err, addressesData) => {
       contact.addresses = []
       addressesData.forEach(address => {
         if(contact.id == address.contact_id){

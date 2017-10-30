@@ -1,6 +1,10 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const app = express()
+const Contact = require('./models/contact')
+const Group = require('./models/group')
+const Address = require('./models/address')
+const Profile = require('./models/profile')
 
 var sqlite3 = require('sqlite3').verbose();
 var db = new sqlite3.Database('./database.db');
@@ -16,48 +20,45 @@ app.set('view engine', 'ejs');
 
 
 // Contacts
-//====================================================================
+//===================================================================
 app.get('/contacts', function (req, res) {
-  db.all(`SELECT * FROM Contacts`, function(err, rows)
-  {
-    // console.log(rows);
-    res.render('contacts', {rows})
+  Contact.findAll(function(rows){
+      res.render('contacts', {rows})
   })
+  
 })
 
 app.post('/contacts', function (req, res) {
   // console.log(req.body);
-  db.run(`INSERT INTO Contacts (name, company, telp_number, email) VALUES ('${req.body.name}','${req.body.company}','${req.body.telp_number}','${req.body.email}')` );
+  Contact.create(req.body)
   res.redirect('/contacts');
 })
 
 app.get('/contacts/edit/:id', function (req, res) {
   // console.log(req.params);
-  db.each(`SELECT * FROM Contacts WHERE id = ${req.params.id}`, function(err, rows){
-    res.render('contactedit', {rows})
+  Contact.findID(req.params.id, function(rows){
+  res.render('contactedit', {rows})
   })
 })
 
 app.post('/contacts/edit/:id', function (req, res){
   // console.log('masuk UPDATE');
-  db.run(`UPDATE Contacts SET name = '${req.body.name}', company = '${req.body.company}', telp_number = '${req.body.telp_number}', email = '${req.body.email}' WHERE id = ${req.params.id}`);
+  Contact.update(req.body,req.params.id);
   res.redirect('/contacts');
 })
 
 app.get('/contacts/delete/:id', function (req, res) {
-  console.log('masuk DELETE');
-  db.each(`DELETE FROM Contacts WHERE id = ${req.params.id}`, function(err, rows){
-  });
+  // console.log('masuk DELETE');
+  Contact.remove(req.params.id);
   res.redirect('/contacts');
 })
-//====================================================================
+//===================================================================
 // End of Contacts
 
 // Groups
-//====================================================================
+//===================================================================
 app.get('/groups', function (req, res) {
-  db.all(`SELECT * FROM Groups`, function(err, rows)
-  {
+  Group.findAll(function(rows){
     // console.log(rows);
     res.render('groups', {rows})
   })
@@ -65,32 +66,108 @@ app.get('/groups', function (req, res) {
 
 app.post('/groups', function (req, res) {
   // console.log(req.body);
-  db.run(`INSERT INTO Groups (name_of_group) VALUES ('${req.body.name_of_group}')` );
-  res.redirect('/groups');
+  Group.create(req.body)
+    res.redirect('/groups');
 })
 
 app.get('/groups/edit/:id', function (req, res) {
   // console.log(req.params);
-  db.each(`SELECT * FROM Groups WHERE id = ${req.params.id}`, function(err, rows){
+  Group.findID(req.params.id, function(rows){
     res.render('groupedit', {rows})
   })
 })
 
 app.post('/groups/edit/:id', function (req, res){
   // console.log('masuk UPDATE');
-  db.run(`UPDATE Groups SET name_of_group = '${req.body.name_of_group}' WHERE id = ${req.params.id}`);
-  res.redirect('/groups');
+  Group.update(req.body, req.params.id)
+    res.redirect('/groups');
+  
 })
 
 app.get('/groups/delete/:id', function (req, res) {
   // console.log('masuk DELETE');
-  db.each(`DELETE FROM Groups WHERE id = ${req.params.id}`, function(err, rows){
-  });
+  Group.remove(req.params.id);
   res.redirect('/groups');
 })
 
-//====================================================================
+//===================================================================
 // End of Groups
+
+// Addresses
+//===================================================================
+app.get('/addresses', function (req, res) {
+  Address.findAll(function(rows)
+  {
+    console.log(rows);
+    res.render('addresses', {rows})
+  })
+})
+
+app.post('/addresses', function (req, res) {
+  // console.log(req.body);
+  Address.create(req.body);
+  res.redirect('/addresses');
+})
+
+app.get('/addresses/edit/:id', function (req, res) {
+  // console.log(req.params);
+  Address.findID(req.params.id, function(rows){
+    res.render('addressedit', {rows})
+  })
+})
+
+app.post('/addresses/edit/:id', function (req, res){
+  // console.log('masuk UPDATE');
+  Address.update(req.body, req.params.id)
+  res.redirect('/addresses');
+})
+
+app.get('/addresses/delete/:id', function (req, res) {
+  // console.log('masuk DELETE');
+  Address.remove(req.params.id);
+  res.redirect('/addresses');
+})
+
+//===================================================================
+// End of Addresses
+
+// Profiles
+//===================================================================
+app.get('/profiles', function (req, res) {
+  Profile.findAll(function(rows)
+  {
+    // console.log(rows);
+    res.render('profiles', {rows})
+  })
+})
+
+app.post('/profiles', function (req, res) {
+  // console.log(req.body);
+  Profile.create(req.body);
+  res.redirect('/profiles');
+})
+
+app.get('/profiles/edit/:id', function (req, res) {
+  // console.log(req.params);
+  Profile.findID(req.params.id, function(rows){
+    res.render('profileedit', {rows})
+  })
+})
+
+app.post('/profiles/edit/:id', function (req, res){
+  // console.log('masuk UPDATE');
+  Profile.update(req.body,req.params.id)
+  res.redirect('/profiles');
+})
+
+app.get('/profiles/delete/:id', function (req, res) {
+  // console.log('masuk DELETE');
+  Profile.remove(req.params.id);
+  res.redirect('/profiles');
+})
+
+//===================================================================
+// End of Profiles
 
 app.listen(3000, function () {
   console.log('Example app listening on port 3000!')

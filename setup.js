@@ -14,7 +14,7 @@ db.serialize(function() {
               name_of_group VARCHAR)`);
 
   db.run(`CREATE TABLE IF NOT EXISTS
-      Profile (id INTEGER PRIMARY KEY AUTOINCREMENT,
+      Profiles (id INTEGER PRIMARY KEY AUTOINCREMENT,
               username VARCHAR,
               password VARCHAR)`);
 

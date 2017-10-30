@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+
+    <form action="/Contacts/edit/<%= rows[0].id %>" method="post">
+      <td><input type="text" name ="name" value="<%= rows[0].name %>" placeholder="YOU'R NAME"></td>
+      <td><input type="text" name ="company" value = "<%= rows[0].company %>"placeholder="COMPANY NAME"></td>
+      <td><input type="text" name = "telp_number" value ="<%= rows[0].telp_number %>"placeholder="TELP_NUMBER"></td>
+      <td><input type="text" name = "email" value = "<%= rows[0].email %>"placeholder="EMAIL"></td>
+      <td><button type="submit">SAVE</button></td>
+    </form>
+  </body>
+</html>

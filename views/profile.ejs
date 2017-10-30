@@ -26,6 +26,7 @@
           <td><%=rows[i].username%></td>
           <td><%=rows[i].password%></td>
           <td><a href="/Profile/delete/<%= rows[i].id %>">delete</a></td>
+          <td><a href="/Profile/edit/<%= rows[i].id %>">edit</a></td>
         </tr>
       <%}%>
     </table>

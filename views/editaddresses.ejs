@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+
+    <form action="/addresses/edit/<%= rows[0].id %>" method="post">
+      <td><input type="text" name ="street" value="<%= rows[0].street %>" placeholder="STREET"></td>
+      <td><input type="text" name ="city" value="<%= rows[0].city %>" placeholder="CITY"></td>
+      <td><input type="text" name ="zipcode" value="<%= rows[0].zipcode %>" placeholder="STREET"></td>
+      <td><button type="submit">SAVE</button></td>
+    </form>
+  </body>
+</html>

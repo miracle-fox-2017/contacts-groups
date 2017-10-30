@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+
+    <form action="/groups/edit/<%= rows[0].id %>" method="post">
+      <td><input type="text" name ="groups" value="<%= rows[0].name_of_group %>" placeholder="GROUP NAME"></td>
+      <td><button type="submit">SAVE</button></td>
+    </form>
+  </body>
+</html>

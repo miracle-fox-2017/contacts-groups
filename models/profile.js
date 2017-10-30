@@ -7,7 +7,11 @@ class Profile {
   static showProfile(cb){
     let q = `SELECT * FROM Profile`;
     db.all(q, function(err, rows){
-      cb(rows);
+      if(!err){
+        cb(rows);
+      } else {
+        console.log(err);
+      }
     })
   }
   
@@ -19,7 +23,11 @@ class Profile {
                        "${dataInsert.id_contacts}");`    
     // console.log(query);
     db.run(queryInsert, function(err){
-      cb(this);
+      if(!err){
+        cb(this);
+      } else {
+        console.log(err);
+      }
     });
     
   }
@@ -33,7 +41,11 @@ class Profile {
                    WHERE 
                      id = ${dataUpdate.id}`;
     db.run(queryUpdate, function(err){
-      cb(err);
+      if(!err){
+        cb();
+      } else {
+        console.log(err);
+      }
     })
   }
   
@@ -41,7 +53,11 @@ class Profile {
     let queryDelete = `DELETE FROM Profile WHERE id = ${id}`;   
     //execute query
     db.run(queryDelete,(err)=>{
-      cb(err);
+      if(!err){
+        cb();
+      } else {
+        console.log(err);
+      }
     })
   }
   
@@ -52,7 +68,11 @@ class Profile {
                             WHERE Profile.id=${id}`;
     //execute query
     db.all(showSpecificId, (err, profile)=>{
-      cb(profile);
+      if(!err){
+        cb(profile);
+      } else {
+        console.log(err);
+      }
     })
   }
   
@@ -64,14 +84,22 @@ class Profile {
                             JOIN Contacts 
                             ON Profile.id_contacts = Contacts.id`;
     db.all(showProfilesJoin, (err, rows)=>{
-      cb(rows);
+      if(!err){
+        cb(rows);
+      } else {
+        console.log(err);
+      }
     })
   }
 
   static checkId(id, cb){
     let qCheckId = `SELECT COUNT (*) FROM Profile WHERE id_contacts = ${id}`
     db.all(qCheckId, (err, rows)=>{
-      cb(rows[0]['COUNT (*)']);
+      if(!err){
+        cb(rows[0]['COUNT (*)']);
+      } else {
+        console.log(err);
+      }
     })
   }
 

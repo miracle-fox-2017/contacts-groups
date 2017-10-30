@@ -8,7 +8,11 @@ class Contact {
     let q = `SELECT * FROM Contacts`;
     db.all(q, function(err, showContacts){
       // callback here
-      cb(showContacts);
+      if(!err){
+        cb(showContacts);
+      } else {
+        console.log(err);
+      }
     })
   }
   
@@ -20,7 +24,11 @@ class Contact {
     
     // console.log(query);
     db.run(queryInsert, function(err){
-      cb(this);
+      if(!err){
+        cb(this);
+      } else {
+        console.log(err);
+      }
     });
 
   }
@@ -29,7 +37,11 @@ class Contact {
     let showSpecificId = `SELECT * FROM Contacts WHERE id=${id}`;
     //execute query
     db.all(showSpecificId, (err, contacts)=>{
-      cb(contacts);
+      if(!err){
+        cb(contacts);
+      } else {
+        console.log(err);
+      }
     })
   }
   
@@ -43,7 +55,11 @@ class Contact {
                       WHERE 
                         id = ${dataUpdate.id}`;
     db.run(queryUpdate, function(err){
-      cb(err);
+      if(!err){
+        cb();
+      } else {
+        console.log(err);
+      }
     })
   }
 
@@ -54,7 +70,11 @@ class Contact {
     //execute query
     db.run(queryDelete,function(err){
       db.run(queryDeleteContactGroup, function(err){
-        cb(err);
+        if(!err){
+          cb();
+        } else {
+          console.log(err);
+        }
       })
       
     })

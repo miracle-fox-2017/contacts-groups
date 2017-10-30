@@ -13,7 +13,11 @@ class ContactGroup {
                
       db.all(q, function(err, showContactsGroup){
         // callback here
-        cb(showContactsGroup);
+        if(!err){
+          cb(showContactsGroup);
+        } else {
+          console.log(err);
+        }
       })
     }
 
@@ -25,7 +29,11 @@ class ContactGroup {
     // console.log(qCG);
     //db run cg
     db.run(qCG, function(err){
-      cb(err);
+      if(!err){
+        cb();
+      } else {
+        console.log(err);
+      }
     })
   }
   
@@ -37,15 +45,23 @@ class ContactGroup {
               JOIN Contacts 
               ON ContactGroup.id_contacts = Contacts.id`;
     db.all(join, (err, cg)=>{
-      cb(cg);
+      if(!err){
+        cb(cg);
+      } else {
+        console.log(err);
+      }
     })
   }
 
   static unassign_contacts(data, cb){
     let deleteQuery = `DELETE FROM ContactGroup WHERE id_contacts = ${data.id_contacts} AND id_groups = ${data.id_groups}`
     // console.log(deleteQuery);
-    db.run(deleteQuery, function(){
-      cb();
+    db.run(deleteQuery, function(err){
+      if(!err){
+        cb();
+      } else {
+        console.log(err);
+      }
     })
   }
 

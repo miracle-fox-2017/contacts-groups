@@ -7,7 +7,11 @@ class Group {
   static showGroups(cb){
     let q = `SELECT * FROM Groups`;
     db.all(q, function(err, showGroups){
-      cb(showGroups)
+      if(!err){
+        cb(showGroups)
+      } else {
+        console.log(err);
+      }
     })
   }
   
@@ -15,7 +19,11 @@ class Group {
     let showSpecificId = `SELECT * FROM Groups WHERE id=${id}`;
     //execute query
     db.all(showSpecificId, (err, groups)=>{
-      cb(groups);
+      if(!err){
+        cb(groups);
+      } else {
+        console.log(err);
+      }
     })
   }
   
@@ -26,7 +34,11 @@ class Group {
                   ("${dataInsert.name_of_group}");`    
     // console.log(query);
     db.run(queryInsert, function(err){
-      cb(this);
+      if(!err){
+        cb(this);
+      } else {
+        console.log(err);
+      }
     });
     
   }
@@ -38,7 +50,11 @@ class Group {
                        WHERE 
                          id = ${dataUpdate.id}`;
     db.run(queryUpdate, function(err){
-      cb(err);
+      if(!err){
+        cb();
+      } else {
+        console.log(err);
+      }
     })
   }
 
@@ -48,7 +64,11 @@ class Group {
     //execute query
     db.run(queryDelete,function(err){
       db.run(queryDeleteContactGroup, function(err){
-        cb(err);
+        if(!err){
+          cb();
+        } else {
+          console.log(err);
+        }
       })
       
     })

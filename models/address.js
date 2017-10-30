@@ -7,9 +7,11 @@ class Address {
   static showAddress(cb){
     let q = `SELECT * FROM Addresses`;
     db.all(q, function(err, rows){
-      cb(rows);
-      // console.log(rows);
-      // console.log('heloo');
+      if(!err){
+        cb(rows);
+      } else {
+        console.log(err);
+      }
     })
   }
 
@@ -21,7 +23,11 @@ class Address {
                         "${dataInsert.zipcode}", "${dataInsert.id_contacts}");`    
     // console.log(query);
     db.run(queryInsert, function(err){
-      cb(this);
+      if(!err){
+        cb(this);
+      } else {
+        console.log(err);
+      }
     });
     
   }
@@ -36,7 +42,11 @@ class Address {
                 WHERE 
                   id = ${dataUpdate.id}`;
     db.run(queryUpdate, function(err){
-      cb(err);
+      if(!err){
+        cb();
+      } else {
+        console.log(err);
+      }
     })
   }
 
@@ -45,7 +55,11 @@ class Address {
                  
     //execute query
     db.run(queryDelete,(err)=>{
-      cb(err);
+      if(!err){
+        cb();
+      } else {
+        console.log(err);
+      }
     })
   }
 
@@ -58,7 +72,11 @@ class Address {
                             ON Addresses.id_contacts = Contacts.id`;
     //bikin query address join
     db.all(showAddressesJoin, function (err, data){
-      cb(data);
+      if(!err){
+        cb(data);
+      } else {
+        console.log(err);
+      }
     })
   }
 
@@ -71,9 +89,14 @@ class Address {
                             ON Addresses.id_contacts = Contacts.id
                             WHERE Addresses.id=${id}`;
     db.all(showSpecificId, (err, rows)=>{
-      cb(rows);
+      if(!err){
+        cb(rows);
+      } else {
+        console.log(err);
+      }
     })
   }
+
 }
 
 module.exports = Address;

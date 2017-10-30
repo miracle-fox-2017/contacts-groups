@@ -10,10 +10,16 @@
         <input type="text" name="username" value="<%=rowProfile.Username%>">
         <input type="password" name="password" value="<%=rowProfile.Password%>">
         <select class="" name="contact_id">
-          <%contact.forEach(nama =>{ %>
-          <option value="<%=nama.ID%>" selected >
-          <%=nama.Name%></option>
-          <%})%>
+          <%let profile = rowProfile.ContactID %>
+          <%for (let i = 0; i<contact.length;i++) {%>
+            <%if (profile === contact[i].ID) {%>
+              <option value="<%=contact[i].ID%>" selected><%=contact[i].Name%></option>
+            <%}%>
+            <%if (profile !== contact[i].ID) {%>
+            <option value="<%=contact[i].ID%>"><%=contact[i].Name%></option>
+            <%}%>
+
+          <%}%>
         </select>
         <input type="submit" value="Submit">
       </form>

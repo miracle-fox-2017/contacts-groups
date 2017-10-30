@@ -9,7 +9,19 @@
       <form class="" action="" method="post">
         <input type="text" name="jalan" value="<%=rowAddress.Street%>">
         <input type="text" name="kota" value="<%=rowAddress.City%>">
-        <input type="text" name="kodepos" value="rowAddress.Zipcode">
+        <input type="text" name="kodepos" value="<%=rowAddress.Zipcode%>">
+        <select class="" name="contactid">
+          <%let address = rowAddress.ContactID %>
+          <%for (let i = 0; i<contact.length;i++) {%>
+            <%if (address === contact[i].ID) {%>
+              <option value="<%=contact[i].ID%>" selected><%=contact[i].Name%></option>
+            <%}%>
+            <%if (address !== contact[i].ID) {%>
+            <option value="<%=contact[i].ID%>"><%=contact[i].Name%></option>
+            <%}%>
+
+          <%}%>
+        </select>
         <input type="submit" value="Submit">
       </form>
     </div>

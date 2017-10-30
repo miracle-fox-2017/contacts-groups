@@ -59,10 +59,14 @@
             <%})%>
           </select>
           <input type="submit" value="Submit">
+          <br>
+          <%if (error.length !== 0){%>
+            <h2><%=error[0]%></h2>
+          <%}%>
         </form>
     </div>
     <div>
-      
+
     </div>
   </body>
 </html>

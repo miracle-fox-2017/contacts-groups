@@ -3,25 +3,28 @@ const sqlite3 = require('sqlite3').verbose();
 const db = new sqlite3.Database('./database/person.db')
 
 class Profile {
-  static gettable(table,call){
-    db.all(`SELECT * FROM ${table}`,(err,rowstable)=>{
-      call(rowstable)
-    })
-  }
+  // static gettable(table,call){
+  //   db.all(`SELECT * FROM ${table}`,(err,rowstable)=>{
+  //     call(rowstable)
+  //   })
+  // }
 
   static getall(cb){ //buat join table bisa pake left atau inner
     //dicoba dlu takut masih salah
     db.all(`SELECT Profile.Id_profile, Profile.Username, Profile.Password, Contacts.Name
       FROM Profile LEFT JOIN Contacts ON Profile.ContactID=Contacts.ID`,(err,rows)=>{
-      console.log(rows);
-      cb(rows)
+      // console.log(rows);
+      if(err){cb(err)}
+      else{cb(rows)}
     })
   }
 
-  static addnew(add){
+  static addnew(add,cb){
 
     db.run(`INSERT INTO Profile(Username,Password,ContactID)
-            VALUES('${add.username}','${add.password}','${add.contactid}')`)
+            VALUES('${add.username}','${add.password}','${add.contactid}')`,err =>{
+              if (err){cb(err)}
+            })
   }
 
   static edit (id,cb){

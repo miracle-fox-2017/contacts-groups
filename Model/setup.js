@@ -27,10 +27,20 @@ db.serialize (function() {
     Zipcode Integer);`
   );
 
+  db.run(`CREATE TABLE IF NOT EXISTS GroupContact(
+    Id_groupcontact Integer PRIMARY KEY AUTOINCREMENT,
+    groupId Integer
+    CONSTRAINT FK_groupId REFERENCES Grups(Id_grup) ON UPDATE SET DEFAULT,
+    ContactID Integer
+    CONSTRAINT FK_ContactsID REFERENCES Contacts(ID) ON UPDATE SET DEFAULT
+  )`)
+
 //   db.run(`ALTER TABLE Profile
 // DROP FOREIGN KEY FK_ContactsID;`)
-  db.run(`ALTER TABLE Profile ADD ContactID INT
-    CONSTRAINT FK_ContactsID REFERENCES Contacts(ID) ON UPDATE SET DEFAULT;`)
+
+  // db.run(`CREATE UNIQUE INDEX ContactID ON Profile(ContactID)`)
+  // db.run(`ALTER TABLE Profile ADD ContactID INT
+  //   CONSTRAINT FK_ContactsID REFERENCES Contacts(ID) ON UPDATE SET DEFAULT;`)
 
   // db.run(`ALTER TABLE Profile ADD
   //   CONSTRAINT UQ_ContactsID UNIQUE Contacts(ID) ON UPDATE ACTION;;`)

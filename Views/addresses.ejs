@@ -34,6 +34,7 @@
          <td>Streets</td>
          <td>Cities</td>
          <td>Zipcode</td>
+         <td>Contact Name</td>
          <td>Actions</td>
       </thead>
       <tr>
@@ -43,6 +44,7 @@
         <td><%=dt.Street%></td>
         <td><%=dt.City%></td>
         <td><%=dt.Zipcode%></td>
+        <td><%=dt.Name%></td>
         <td><a href="/address/edit/<%=dt.Id_address%>">Edit<a>
         <a href="/address/delete/<%=dt.Id_address%>">Delete</a></td>
       </tr>
@@ -53,7 +55,15 @@
           <input type="text" name="street" placeholder="Street">
           <input type="text" name="city" placeholder="City">
           <input type="text" name="zipcode" placeholder="Zip Code">
+          <select name="contact_id">
+            <%contact.forEach(nama =>{ %>
+            <option value="<%=nama.ID%> "><%=nama.Name%></option>
+            <%})%>
+          </select>
           <input type="submit" value="Submit">
+          <%if (error.length !== 0){%>
+            <h2><%=error[0]%></h2>
+          <%}%>
         </form>
     </div>
   </body>

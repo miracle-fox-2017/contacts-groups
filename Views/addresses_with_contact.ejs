@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Address With Contact</title>
+    <style media="screen">
+      h2{
+        text-align: center;
+      }
+      table {
+      border-collapse: collapse;
+      width: 100%;
+      padding: 20px
+    }
+
+    th, td {
+      padding: 8px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+      }
+    form{
+      text-align: center;
+      padding: 20px
+    }
+    </style>
+  </head>
+  <body>
+    <div>
+      <h2>ADDRESSES WITH CONTACTS</h2>
+    </div>
+    <table>
+      <thead>
+        <td>ID</td>
+        <td>STREET</td>
+        <td>CITY</td>
+        <td>ZIPCODE</td>
+        <td>CONTACT NAME</td>
+        <td>COMPANY</td>
+        <td>TELPON NUMBER</td>
+        <td>EMAIL</td>
+        <td>ACTION</td>
+      </thead>
+
+        <%Address.forEach(d =>{ %>
+          <tr>
+          <td><%=d.Id_address%></td>
+          <td><%=d.Street%></td>
+          <td><%=d.City%></td>
+          <td><%=d.Zipcode%></td>
+          <% contact.forEach(c=>{ %>
+          <% if(d.ContactID === c.ID){%>
+              <td><%=c.Name%></td>
+              <td><%=c.Company%></td>
+              <td><%=c.Telp_Number%></td>
+              <td><%=c.Email%></td>
+          <%  }%>
+        <%  })%>
+        </tr>
+        <%})%>
+
+    </table>
+  </body>
+</html>

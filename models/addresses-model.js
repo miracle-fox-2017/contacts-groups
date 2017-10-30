@@ -15,8 +15,9 @@ class AddressesModel {
 			} 
 
 			callback(rows);
-			db.close();
 		})
+
+		db.close();
 	}
 
 	getAllDataInnerJoin(tableSource, callback) {
@@ -66,8 +67,8 @@ class AddressesModel {
 			} 
 
 			callback(rows);
-			db.close();
 		});
+		db.close();
 	}
 }
 

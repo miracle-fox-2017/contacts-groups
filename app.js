@@ -31,7 +31,6 @@ app.get('/contacts', (req, res) => {
 	contact.getAllData(function(rows) {
 		group.getAllData((allgroups) => {
 			group.getAllDataConjunctionInnerJoin('Contacts_Groups', (allcontactgroups) => {
-				// console.log({joined: contact.getAllDataArrayJoinContactsGroups(rows, allcontactgroups)});
 
 				res.render('contacts', {groups: allgroups, contacts_groups: contact.getAllDataArrayJoinContactsGroups(rows, allcontactgroups)});
 			})

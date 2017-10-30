@@ -15,8 +15,9 @@ class GroupsModel {
 			} 
 
 			callback(rows);
-			db.close();
 		})
+
+		db.close();
 	}
 
 	getAllDataConjunctionInnerJoin(tableSource, callback) {
@@ -37,18 +38,21 @@ class GroupsModel {
 		let db = new sqlite3.Database(this.dbFile);
 		let sql = `INSERT INTO ${this.tablename} (name_of_group) VALUES ("${data.name_of_group}")`;
 		db.run(sql);
+		db.close();
 	}
 
 	updateDataById(data) {
 		let db = new sqlite3.Database(this.dbFile);
 		let sql = `UPDATE ${this.tablename} SET name_of_group = "${data.editItem.name_of_group}" WHERE id = ${data.id}`;
 		db.run(sql);
+		db.close();
 	}
 
 	deleteDataById(data) {
 		let db = new sqlite3.Database(this.dbFile);
 		let sql = `DELETE FROM ${this.tablename} WHERE id = ${data.id}`;
 		db.run(sql);
+		db.close();
 	}
 
 	getById(data, callback) {
@@ -60,8 +64,9 @@ class GroupsModel {
 			} 
 
 			callback(rows);
-			db.close();
+			
 		});
+		db.close();
 	}
 }
 

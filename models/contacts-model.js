@@ -15,9 +15,8 @@ class ContactsModel {
 			} 
 
 			callback(rows);
-			db.close();
 		})
-
+		db.close();
 	}
 
 	getAllData(callback) {
@@ -29,8 +28,8 @@ class ContactsModel {
 			} 
 
 			callback(rows);
-			db.close();
 		})
+		db.close();
 	}
 
 	getAllDataArrayJoin(addresses, contacts) {
@@ -91,25 +90,28 @@ class ContactsModel {
 		let db = new sqlite3.Database(this.dbFile);
 		let sql = `INSERT INTO ${this.tablename} (name, company, telp_number, email) VALUES ("${data.name}", "${data.company}", "${data.telp_number}", "${data.email}")`;
 		db.run(sql);
+		db.close();
 	}
 
 	addDataContactGroups(data, conjTable = 'Contacts_Groups') {
 		let db = new sqlite3.Database(this.dbFile);
 		let sql = `INSERT INTO ${conjTable} (contacts_id, groups_id) VALUES (${data.contacts_id}, ${data.groups_id})`;
 		db.run(sql);
-		console.log(sql);
+		db.close();
 	}
 
 	updateDataById(data) {
 		let db = new sqlite3.Database(this.dbFile);
 		let sql = `UPDATE ${this.tablename} SET name = "${data.editItem.name}", company = "${data.editItem.company}", telp_number = "${data.editItem.telp_number}", email = "${data.editItem.email}" WHERE id = ${data.id}`;
 		db.run(sql);
+		db.close();
 	}
 
 	deleteDataById(data) {
 		let db = new sqlite3.Database(this.dbFile);
 		let sql = `DELETE FROM ${this.tablename} WHERE id = ${data.id}`;
 		db.run(sql);
+		db.close();
 	}
 
 	getById(data, callback) {
@@ -121,8 +123,10 @@ class ContactsModel {
 			} 
 
 			callback(rows);
-			db.close();
+			
 		});
+
+		db.close();
 	}
 }
 

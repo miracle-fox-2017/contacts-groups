@@ -44,10 +44,13 @@ class Group {
 
   static deleteGroups(id, cb){
     let queryDelete = `DELETE FROM Groups WHERE id = ${id}`;
-                 
+    let queryDeleteContactGroup = `DELETE FROM ContactGroup WHERE id_groups = ${id}`;
     //execute query
-    db.run(queryDelete,(err)=>{
-      cb(err);
+    db.run(queryDelete,function(err){
+      db.run(queryDeleteContactGroup, function(err){
+        cb(err);
+      })
+      
     })
   }
 

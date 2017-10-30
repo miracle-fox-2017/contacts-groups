@@ -43,6 +43,4 @@ class ContactGroup {
 
 }
 
-// Contact.findAllContacts();
-
 module.exports = ContactGroup;

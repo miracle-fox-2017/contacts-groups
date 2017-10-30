@@ -7,9 +7,7 @@ class Profile {
   static showProfile(cb){
     let q = `SELECT * FROM Profile`;
     db.all(q, function(err, rows){
-      cb(rows)
-      // console.log(rows);
-      // console.log('heloo');
+      cb(rows);
     })
   }
   
@@ -40,8 +38,7 @@ class Profile {
   }
   
   static deleteProfile(id, cb){
-    let queryDelete = `DELETE FROM Profile WHERE id = ${id}`;
-                 
+    let queryDelete = `DELETE FROM Profile WHERE id = ${id}`;   
     //execute query
     db.run(queryDelete,(err)=>{
       cb(err);
@@ -77,6 +74,7 @@ class Profile {
       cb(rows[0]['COUNT (*)']);
     })
   }
+
 }
 
 module.exports = Profile;

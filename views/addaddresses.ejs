@@ -8,9 +8,6 @@
 </head>
 <body>
     <% include menu.ejs %>
-        <% if(error) { %>
-        <%= error.error %>
-        <% } %>
     <table>
         <form action="/addresses/add" method="post">
             <tr>

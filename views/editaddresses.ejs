@@ -8,9 +8,6 @@
 </head>
 <body>
     <% include menu.ejs %>
-    <% if(error) { %>
-        <%= error.error %>
-            <% } %>
     <table>
         <form action="/addresses/edit/<%= rowsAddresses[0].id %>" method="post">
             <tr>
@@ -26,13 +23,15 @@
                         <option value="<%=row.id%>" selected><%=row.name%></option>
                     <% 
                     
-                    }else
+                    }else{
 
                      %>
                     <option value="<%=row.id%>">
                         <%=row.name%>
                     </option>
                     <%
+
+                    }
                         
                     }) 
                         

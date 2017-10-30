@@ -1,37 +1,51 @@
+const sqlite3 = require('sqlite3').verbose();
+const db = new sqlite3.Database('./db/database.db');
+
 class Contact {
-
-    constructor() {
-        
-    }
-
-    panggilData() {
+    static findAll(callback) {
         let getData = "SELECT * FROM contact";
-        return getData;
+        db.all(getData, function (err, rowsContacts) {
+            if(!err){
+                return callback(null, rowsContacts);
+            }else{
+                return callback(err, null);
+            }
+        });
     }
 
-    editData(id) {
+    static findAllWhere(id,callback) {
         let getData = `SELECT * FROM contact WHERE id = ${id}`;
-        return getData;
+        db.get(getData, function (err, rowsContacts) {
+            if (!err) {
+                return callback(null, rowsContacts);
+            } else {
+                return callback(err, null);
+            }
+        });
     }
 
-    simpanData(obj) {
+    static createData(obj,callback) {
         let getData = `INSERT INTO contact (name,company,telp_number,email)
                     values('${obj.nama}','${obj.company}','${obj.telp}','${obj.email}')`;
-        return getData;
+        db.run(getData, function (err, rowsContacts) {
+            if(!err){
+                return callback(this.lastID);
+            }
+        });
     }
 
-    updateData(obj) {
+    static updateData(obj) {
         let getData = `UPDATE contact set name = '${obj.nama}',
                                         company = '${obj.company}',
                                         telp_number = '${obj.telp}',
                                         email = '${obj.email}'
                                     WHERE id = ${obj.id}`;
-        return getData;
+        db.run(getData);
     }
 
-    hapusData(id) {
+    static removeData(id) {
         let getData = `DELETE FROM contact WHERE id = ${id}`;
-        return getData;
+        db.run(getData);
     }
 
 }

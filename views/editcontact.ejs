@@ -11,18 +11,18 @@
 <body>
     <% include menu.ejs %>
     <table>
-        <form action="/contact/edit/<%= rowsContacts[0].id %>" method="post">
+        <form action="/contact/edit/<%= rowsContacts.id %>" method="post">
             <tr>
-                <td><input type="text" name="nama" placeholder="Isi Nama" value="<%= rowsContacts[0].name %>"></td>
+                <td><input type="text" name="nama" placeholder="Isi Nama" value="<%= rowsContacts.name %>"></td>
             </tr>
             <tr>
-                <td><input type="text" name="company" placeholder="Isi company" value="<%= rowsContacts[0].company %>"></td>
+                <td><input type="text" name="company" placeholder="Isi company" value="<%= rowsContacts.company %>"></td>
             </tr>
             <tr>
-                <td><input type="text" name="telp" placeholder="Isi Telpon/Hp" value="<%= rowsContacts[0].telp_number %>"></td>
+                <td><input type="text" name="telp" placeholder="Isi Telpon/Hp" value="<%= rowsContacts.telp_number %>"></td>
             </tr>
             <tr>
-                <td><input type="email" name="email" placeholder="Isi Email" value="<%= rowsContacts[0].email %>"></td>
+                <td><input type="email" name="email" placeholder="Isi Email" value="<%= rowsContacts.email %>"></td>
             </tr>
             <tr>
                 <td><input type="submit" value="Edit"></td>

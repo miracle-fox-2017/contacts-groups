@@ -11,9 +11,9 @@
 <body>
     <% include menu.ejs %>
     <table>
-        <form action="/groups/edit/<%= rowsGroups[0].id %>" method="post">
+        <form action="/groups/edit/<%= rowsGroups.id %>" method="post">
             <tr>
-                <td><input type="text" name="nama" placeholder="Isi Nama Groups" value="<%= rowsGroups[0].name_of_group %>"></td>
+                <td><input type="text" name="nama" placeholder="Isi Nama Groups" value="<%= rowsGroups.name_of_group %>"></td>
             </tr>
             <tr>
                 <td><input type="submit" value="Simpan"></td>

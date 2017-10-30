@@ -1,55 +1,55 @@
+const sqlite3 = require('sqlite3').verbose();
+const db = new sqlite3.Database('./db/database.db');
+
 class Profile{
-
-    constructor(){
-        
-    }
     
-    panggilData(){
+    static findAll(callback){
         let getData = "SELECT profile.*, contact.name FROM profile INNER JOIN contact ON contact.id = profile.idcontact";
-        return getData;
+        db.all(getData, function (err, rowsContacts) {
+            if (!err) {
+                return callback(null, rowsContacts);
+            } else {
+                return callback(err, null);
+            }
+        });
     }
 
-    dataContact() {
-        let getData = "SELECT * FROM contact";
-        return getData;
-    }
-
-    cekContact(id) {
+    static cekContact(id) {
         let getData = `SELECT * FROM profile WHERE idcontact = ${id}`;
         return getData;
     }
 
-    panggilDataSelect() {
-        let getData = "SELECT * FROM profile";
-        return getData;
-    }
-
-    panggilDataContact() {
-        let getData = "SELECT contact.*, profile.idcontact FROM contact LEFT JOIN profile ON contact.id = profile.idcontact";
-        return getData;
-    }
-
-    editData(id) {
+    static findAllWhere(id,callback) {
         let getData = `SELECT contact.id,contact.name, profile.username, profile.password,profile.id AS idcontact FROM profile INNER JOIN contact ON contact.id = profile.idcontact WHERE profile.id = ${id}`;
-        return getData;
+        db.all(getData, function (err, rowsContacts) {
+            if (!err) {
+                return callback(null, rowsContacts);
+            } else {
+                return callback(err, null);
+            }
+        });
     }
 
-    simpanData(obj) {
+    static createData(obj,callback) {
         let getData = `INSERT INTO profile (username,password,idcontact)
                     values('${obj.nama}','${obj.password}',${obj.idcontact})`;
-        return getData;
+        db.run(getData, function (err, rowsProfile) {
+            if (!err) {
+                return callback(this.lastID);
+            }
+        });
     }
 
-    updateData(obj) {
+    static updateData(obj) {
         let getData = `UPDATE profile set username = '${obj.nama}',
                                         password = '${obj.password}'
                                     WHERE id = ${obj.id}`;
-        return getData;
+        db.run(getData);
     }
 
     hapusData(id) {
         let getData = `DELETE FROM profile WHERE id = ${id}`;
-        return getData;
+        db.run(getData);
     }
     
 }

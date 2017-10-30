@@ -1,52 +1,52 @@
+const sqlite3 = require('sqlite3').verbose();
+const db = new sqlite3.Database('./db/database.db');
+
 class Addresses {
 
-    constructor() {
-        
-    }
-
-    panggilData() {
+    static findAll(callback) {
         let getData = "SELECT address.*,contact.name FROM address INNER JOIN contact ON contact.id = address.idcontact";
-        return getData;
+        db.all(getData, function (err, rowsContacts) {
+            if (!err) {
+                return callback(null, rowsContacts);
+            } else {
+                return callback(err, null);
+            }
+        });
     }
 
-    panggil() {
-        let getData = "SELECT * FROM address";
-        return getData;
+    static findAllWhere(id,callback) {
+        let getData = `SELECT address.*,contact.name FROM address INNER JOIN contact ON contact.id = address.idcontact WHERE address.id = ${id}`;
+        db.all(getData, function (err, rowsContacts) {
+            if (!err) {
+                return callback(null, rowsContacts);
+            } else {
+                return callback(err, null);
+            }
+        });
     }
 
-    panggilDataContact() {
-        let getData = "SELECT * FROM contact";
-        return getData;
-    }
-
-    dataContact(id) {
-        let getData = `SELECT * FROM contact WHERE id = ${id}`;
-        return getData;
-    }
-
-    editData(id) {
-        let getData = `SELECT * FROM address WHERE id = ${id}`;
-        return getData;
-    }
-
-    simpanData(obj) {
+    static createData(obj,callback) {
         let getData = `INSERT INTO address (street,city,zipcode,idcontact)
                     values('${obj.street}','${obj.city}','${obj.zipcode}',${obj.idcontact})`;
-        return getData;
+        db.run(getData, function (err, rowsContacts) {
+            if (!err) {
+                return callback(this.lastID);
+            }
+        });
     }
 
-    updateData(obj) {
+    static updateData(obj) {
         let getData = `UPDATE address set street = '${obj.street}',
                                         city = '${obj.city}',
                                         zipcode = '${obj.zipcode}',
                                         idcontact = '${obj.idcontact}'
                                     WHERE id = ${obj.id}`;
-        return getData;
+        db.run(getData);
     }
 
-    hapusData(id) {
+    static removeData(id) {
         let getData = `DELETE FROM address WHERE id = ${id}`;
-        return getData;
+        db.run(getData);
     }
 
 }

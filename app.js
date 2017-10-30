@@ -22,13 +22,10 @@ app.set('view engine', 'ejs') // register the template engine
 //                       START ROUTE                           //
 /////////////////////////////////////////////////////////////////
 
-let msg = '';
-
 /////////////////////// 1. CONTACTS /////////////////////////////
                         
 //GET CONTACTS
 app.get('/contacts', function (req, res) {
-  
   Group.showGroups(function(groups){
     ContactGroup.showContactsGroup(function(cg){
       Contact.showContacts(function(contacts){
@@ -56,10 +53,10 @@ app.post('/contacts', function (req, res) {
         })
       })
   } else {
-    msg = 'Name cannot empty';
+    // msg = 'Name cannot empty';
     Group.showGroups(function(groups){
       Contact.showContacts(function(contacts){
-        res.render('contacts', {"rows": contacts, "groups": groups, "cg": cg, "msg": ''});      
+        res.render('contacts', {"rows": contacts, "groups": groups, "cg": cg, "msg": 'Name cannot empty'});      
         // res.redirect('/contacts')
       })
     })
@@ -101,17 +98,6 @@ app.get('/groups/assign_contacts/:id_group', function (req, res) {
       
     })
   })
-  // let id_group = req.params.id_group;
-  // res.send('masuk asign profile dengan id '+id_group)
-  // let showSpecificId = `SELECT * FROM Groups WHERE id=${id_group}`;
-  //execute query
-  
-  // db.all(showContacts, (err, rows)=>{
-  //   let contacts = rows
-  //   db.all(showSpecificId, (err, rows)=>{
-  //     res.render('groupassign',{"rows": rows, "contacts": contacts});
-  //   })
-  // })
 
 })
 
@@ -120,15 +106,6 @@ app.post('/groups/assign_contacts/:id_group', function (req, res){
     res.redirect('/groups');
   })
   
-  // res.send(req.body);
-  // let qInsert = `INSERT INTO ContactGroup
-  // (id_groups, id_contacts)
-  // VALUES
-  // ('${req.body.id_groups}', '${req.body.id_contacts}');`
-  // console.log(qInsert);
-  // db.run(qInsert, ()=>{
-  //   res.redirect('/groups');
-  // })
 })
 
 /////////////////////// 2. GROUPS /////////////////////////////
@@ -141,22 +118,6 @@ app.get('/groups', function (req, res) {
     })
   })
   
-  // let showGroups = `SELECT * FROM Groups`;
-  // let join = `SELECT
-  //            ContactGroup.id_contacts, ContactGroup.id_groups,
-  //            Contacts.id AS cid, Contacts.name
-  //           FROM ContactGroup 
-  //           JOIN Contacts 
-  //           ON ContactGroup.id_contacts = Contacts.id`;
-  // db.all(join, (err, rows)=>{
-  //   let cg = rows;
-  //   db.all(showGroups, (err, rows)=>{
-  //     // console.log(cg);
-  //     res.render('groups',{"rows": rows, "cg": cg});
-  //   })
-  // })
-
-  
 })
 
 //POST GROUPS
@@ -167,20 +128,6 @@ app.post('/groups', function (req, res) {
       res.redirect('/groups');
     })
   })
-  //set query
-  // let showGroups = `SELECT * FROM Groups`;
-  // let query = `INSERT INTO Groups
-  //              (name_of_group)
-  //              VALUES
-  //              ("${req.body.name_of_group}");`
-  // 
-  // //execute query
-  // db.run(query,()=>{
-  //   db.all(showGroups, (err, rows)=>{
-  //     res.render('groups',{rows});
-  //   })
-  //   
-  // })
 
 })
 
@@ -190,12 +137,7 @@ app.get('/groups/edit/:id', function (req, res) {
     res.render('groups_edit',{rows: group});
     
   })
-  // let id = req.params.id;
-  // let showSpecificId = `SELECT * FROM Groups WHERE id=${id}`;
-  // //execute query
-  // db.all(showSpecificId, (err, rows)=>{
-  //   res.render('groups_edit',{rows});
-  // })
+  
 })
 
 //POST GROUPS EDIT
@@ -207,23 +149,6 @@ app.post('/groups/edit/:id', function (req, res){
     })
   })
   
-  // let id = req.params.id;
-  // // console.log(req.body);
-  // let showSpecificId = `SELECT * FROM Groups WHERE id=${id}`;
-  // 
-  // let query = `UPDATE Groups SET
-  //               id = ${req.body.id},
-  //               name_of_group = "${req.body.name_of_group}"
-  //             WHERE 
-  //               id = ${req.body.id}`;
-  // //execute query
-  // db.run(query, ()=>{
-  //   db.all(showSpecificId, (err, rows)=>{
-  //     res.render('groups_edit',{rows});
-  //   })
-  //   
-  // })
-  
 })
 
 //GET DELETE ID
@@ -231,14 +156,7 @@ app.get('/groups/delete/:id', function (req, res){
   Group.deleteGroups(req.params.id, function(){
     res.redirect('/groups');
   })
-  // let id = req.params.id;
-  // let query = `DELETE FROM Groups
-  //              WHERE id = ${id}`;
-  //              
-  // //execute query
-  // db.run(query,()=>{
-  //   res.redirect('/groups');
-  // })
+  
 })
 
 //////////////////// 3. ADDRESSES ///////////////////////////
@@ -251,13 +169,6 @@ app.get('/addresses', function (req, res) {
         res.render('addresses',{"rows": addressjoin, "contacts": contacts});
     })
   })
-  // db.all(showContacts, (err, rows)=>{
-  //   let contacts = rows;
-  //   db.all(showAddressesJoin, (err, rows)=>{
-  //     res.render('addresses',{"rows": rows, "contacts": contacts});
-  //   })
-  // })
-
   
 })
 
@@ -266,47 +177,16 @@ app.post('/addresses', function (req, res) {
   Address.insertAddress(req.body, function(){
     res.redirect('/addresses');
   })
-  
-  //set query
-  // console.log(req.body);
-  // let showAddresses = `SELECT * FROM Addresses`;
-  // let query = `INSERT INTO Addresses
-  //              (street, city, zipcode, id_contacts)
-  //              VALUES
-  //              ("${req.body.street}", "${req.body.city}", "${req.body.zipcode}", "${req.body.id_contacts}");`
-  // 
-  // // execute query
-  // db.run(query, ()=>{
-  //   res.redirect('/addresses');
-  //   
-  // })
 
 })
 
 //GET ADDRESSES EDIT
 app.get('/addresses/edit/:id', function (req, res) {
-  
   Contact.showContacts(function(contact){
     Address.addressJoinId(req.params.id, function(addressjoin){
       res.render('addresses_edit',{"rows": addressjoin, "contacts": contact});
     })
   })
-  // let id = req.params.id;
-  // // let showSpecificId = `SELECT * FROM Addresses WHERE id=${id}`;
-  // let showSpecificId = `SELECT
-  //                          Addresses.id AS id, Addresses.id_contacts, Addresses.street, Addresses.city, Addresses.zipcode,
-  //                          Contacts.id AS cid, Contacts.name, Contacts.company, Contacts.telp_number, Contacts.email
-  //                         FROM Addresses 
-  //                         JOIN Contacts 
-  //                         ON Addresses.id_contacts = Contacts.id
-  //                         WHERE Addresses.id=${id}`;
-  // //execute query
-  // db.all(showContacts, (err, rows)=>{
-  //   let contacts = rows;
-  //   db.all(showSpecificId, (err, rows)=>{
-  //     res.render('addresses_edit',{"rows": rows, "contacts": contacts});
-  //   })
-  // })
 
 })
 
@@ -315,22 +195,6 @@ app.post('/addresses/edit/:id', function (req, res){
   Address.updateAddress(req.body, function(){
     res.redirect('/addresses');
   })
-  // let id = req.params.id;
-  // // console.log(req.body);
-  // let showSpecificId = `SELECT * FROM Addresses WHERE id=${id}`;
-  // let query = `UPDATE Addresses SET
-  //               id = ${req.body.id},
-  //               street = "${req.body.street}",
-  //               city = "${req.body.city}",
-  //               zipcode = ${req.body.zipcode},
-  //               id_contacts = ${req.body.id_contacts}
-  //             WHERE 
-  //               id = ${req.body.id}`;
-  // //execute query
-  // db.run(query, ()=>{
-  //   res.redirect('/addresses');
-  //   
-  // })
   
 })
 
@@ -339,14 +203,6 @@ app.get('/addresses/delete/:id', function (req, res){
   Address.deleteAddress(req.params.id, function(){
     res.redirect('/addresses');
   })
-  // let id = req.params.id;
-  // let query = `DELETE FROM Addresses
-  //              WHERE id = ${id}`;
-  //              
-  // //execute query
-  // db.run(query,()=>{
-  //   res.redirect('/addresses');
-  // })
 })
 
 app.get('/addresses_with_contact', function (req, res){
@@ -356,148 +212,75 @@ app.get('/addresses_with_contact', function (req, res){
     })
   })
   
-  //show contacts
-  //show addresses
-  // let qContacts = `SELECT * FROM Contacts`;
-  // let qAddresses = `SELECT * FROM Addresses`;
-  // 
-  // db.all(qContacts, (err, rows) => {
-  //   let contacts = rows;
-  //   // res.send(contacts);
-  //   db.all(qAddresses, (err, rows) =>{
-  //     res.render('addresses_with_contact',{"rows": rows, "contacts": contacts});
-  //   
-  //   })
-  // })
-  
 })
 
 
-// //////////////////// 4. PROFILES ///////////////////////////
-// let showProfilesJoin = `SELECT
-//                          Profile.id AS id, Profile.id_contacts, Profile.username, Profile.password,
-//                          Contacts.id AS cid, Contacts.name
-//                         FROM Profile 
-//                         JOIN Contacts 
-//                         ON Profile.id_contacts = Contacts.id`;
-// 
-// //GET PROFILES
-// app.get('/profiles', function (req, res) {
-//   db.all(showContacts, (err, rows)=>{
-//     let contacts = rows;
-//     db.all(showProfilesJoin, (err, rows)=>{
-//       // console.log(rows);
-//       // res.render('profiles',{rows});
-//       // console.log('contacts',contacts);
-//       res.render('profiles',{"rows": rows, "contacts": contacts, "msg": ""});
-//     })
-//     
-//   })
-//   
-// })
-// 
-// //POST PROFILES
-// app.post('/profiles', function (req, res) {
-//   //set query
-//   // console.log(req.body);
-//   let qCheckId = `SELECT COUNT (*) FROM Profile WHERE id_contacts = ${req.body.id_contacts}`
-//   let query = `INSERT OR IGNORE INTO Profile
-//                (username, password, id_contacts)
-//                VALUES
-//                ("${req.body.username}", "${req.body.password}", "${req.body.id_contacts}");`
-//   
-//   db.all(qCheckId, (err, rows)=>{
-//       let checkId = rows[0]['COUNT (*)'];
-//       if(checkId == 0){
-//           //execute query
-//           db.run(query,()=>{
-//             db.all(showContacts, (err, rows)=>{
-//               let contacts = rows;
-//               db.all(showProfilesJoin, (err, rows)=>{
-//                 res.render('profiles',{"rows": rows, "contacts": contacts, "msg": ""});
-//               })
-//                   
-//             })
-//             
-//           })
-//       } else {
-//         db.all(showContacts, (err, rows)=>{
-//           msg = "Your contact already have profile";
-//           let contacts = rows;
-//           db.all(showProfilesJoin, (err, rows)=>{
-//             res.render('profiles',{"rows": rows, "contacts": contacts, "msg":msg});
-//           })
-//               
-//         })
-//       }
-//   
-//   })
-// 
-// })
-// 
-// //GET PROFILES EDIT
-// app.get('/profiles/edit/:id', function (req, res) {
-//   let id = req.params.id;
-//   // let showSpecificId = `SELECT * FROM Profile WHERE id=${id}`;
-//   let showSpecificId = `SELECT Profile.id AS id, Profile.id_contacts, Profile.username, Profile.password, Contacts.id AS cid, Contacts.name FROM Profile 
-//                           JOIN Contacts 
-//                           ON Profile.id_contacts = Contacts.id
-//                           WHERE Profile.id=${id}`;
-//   //execute query
-//   db.all(showContacts, (err, rows)=>{
-//     let contacts = rows;
-//     db.all(showSpecificId, (err, rows)=>{
-//       res.render('profiles_edit',{"rows": rows, "contacts": contacts});
-//     })
-//         
-//   })
-//   
-// })
-// 
-// //POST PROFILES EDIT
-// app.post('/profiles/edit/:id', function (req, res){
-//   let id = req.params.id;
-//   // console.log(req.body);
-//   let showSpecificId = `SELECT Profile.id AS id, Profile.id_contacts, Profile.username, Profile.password, Contacts.id AS cid, Contacts.name FROM Profile 
-//                           JOIN Contacts 
-//                           ON Profile.id_contacts = Contacts.id
-//                           WHERE Profile.id=${id}`;
-//   
-//   let query = `UPDATE Profile SET
-//                 id = ${req.body.id},
-//                 username = "${req.body.username}",
-//                 password = "${req.body.password}",
-//                 id_contacts = "${req.body.id_contacts}"
-//               WHERE 
-//                 id = ${req.body.id}`;
-//                 
-//   // execute query
-//   db.run(query, ()=>{
-//     db.all(showContacts, (err, rows)=>{
-//       let contacts = rows;
-//       db.all(showSpecificId, (err, rows)=>{
-//         // res.render('profiles',{"rows": rows, "contacts": contacts});
-//         res.redirect('/profiles');
-//       })
-//           
-//     })
-//     
-//   })
-//   
-// })
-// 
-// //GET PROFILES ID
-// app.get('/profiles/delete/:id', function (req, res){
-//   let id = req.params.id;
-//   let query = `DELETE FROM Profile
-//                WHERE id = ${id}`;
-//                
-//   //execute query
-//   db.run(query,()=>{
-//     res.redirect('/profiles');
-//   })
-// })
-// 
+//////////////////// 4. PROFILES ///////////////////////////
+
+//GET PROFILES
+app.get('/profiles', function (req, res) {
+  Contact.showContacts(function(contacts){
+    Profile.showProfilesJoin(function(profile){
+      res.render('profiles',{"rows": profile, "contacts": contacts, "msg": ""});
+    })
+  })
+  
+})
+
+//POST PROFILES
+app.post('/profiles', function (req, res) {
+  Profile.checkId(req.body.id_contacts, function(avail){
+    // console.log(avail);
+    if(avail == 0){
+      Profile.insertProfile(req.body, function(last){
+        Contact.showContacts(function(contacts){
+          Profile.showProfilesJoin(function(profile){
+            res.render('profiles',{"rows": profile, "contacts": contacts, "msg": ""});
+          })
+        })
+        
+      })
+    } else {
+      Contact.showContacts(function(contacts){
+        Profile.showProfilesJoin(function(profile){
+          res.render('profiles',{"rows": profile, "contacts": contacts, "msg": "Your contact already have profile"});
+        })
+      })
+    }
+  })
+  
+})
+
+//GET PROFILES EDIT
+app.get('/profiles/edit/:id', function (req, res) {
+  Contact.showContacts(function(contacts){
+    Profile.showSpecificId(req.params.id, function(profile){
+      res.render('profiles_edit',{"rows": profile, "contacts": contacts});
+    })
+  })
+  
+})
+
+//POST PROFILES EDIT
+app.post('/profiles/edit/:id', function (req, res){
+  Profile.updateProfile(req.body, function(){
+    Contact.showContacts(function(contacts){
+      Profile.showSpecificId(req.params.id, function(profile){
+        // res.render('profiles_edit',{"rows": profile, "contacts": contacts});
+        res.redirect('/profiles');
+      })
+    })
+  })
+  
+})
+
+//DELETE PROFILES ID
+app.get('/profiles/delete/:id', function (req, res){
+  Profile.deleteProfile(req.params.id, function(){
+    res.redirect('/profiles');
+  })
+})
+
 
 
 app.listen(3000, function () {

@@ -1,6 +1,6 @@
 const sqlite3 = require('sqlite3').verbose();
 const db = new sqlite3.Database('./database/database.db', err => {
-  if (err) throw err;
+  if (err) console.log(err);;
 });
  
 db.serialize(() => {
@@ -12,7 +12,7 @@ db.serialize(() => {
     email VARCHAR(255),
     company VARCHAR(255)
   )`, err => {
-    if (err) throw err;
+    if (err) console.log(err);;
     console.log(`Created Table Contacts`);
   });
 
@@ -21,7 +21,7 @@ db.serialize(() => {
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     name_of_group VARCHAR(30) NOT NULL
   )`, err => {
-    if (err) throw err;
+    if (err) console.log(err);;
     console.log(`Created Table Groups`);
   });
 
@@ -32,7 +32,7 @@ db.serialize(() => {
     city VARCHAR(30) NOT NULL,
     zipcode VARCHAR(30)
   )`, err => {
-    if (err) throw err;
+    if (err) console.log(err);;
     console.log(`Created Table Addresses`);
   });
   
@@ -42,7 +42,7 @@ db.serialize(() => {
     username VARCHAR(30) NOT NULL,
     password VARCHAR(30) NOT NULL
   )`, err => {
-    if (err) throw err;
+    if (err) console.log(err);;
     console.log(`Created Table Profile`);
   });
 
@@ -51,11 +51,26 @@ db.serialize(() => {
     ADD COLUMN id_contact INTEGER
     REFERENCES Contacts (id)
   `, err => {
-    if (err) throw err;
+    if (err) console.log(err);;
     console.log(`Created column id_contact in Profile`);
   });
 
-  db.run(`CREATE UNIQUE INDEX id_contact ON Profile (id_contact)`);
+  db.run(`
+    CREATE UNIQUE INDEX id_contact
+    ON Profile (id_contact)`, err => {
+      if (err) console.log(err);
+      console.log(`Created unique id_contact on Profile`);
+    }
+  );
+
+  db.run(`
+    ALTER TABLE Addresses
+    ADD COLUMN id_contact INTEGER
+    REFERENCES Contacts (id)
+  `), err => {
+    if (err) console.log(err);
+    console.log(`Created column id_contact in Addresses`);
+  };
 });
  
 db.close();

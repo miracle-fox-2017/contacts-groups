@@ -26,7 +26,20 @@
       Password:<br>
       <input type="password" name="password" placeholder="input your password"><br>
       <br>
+      Contact Name:<br>
+      <select name="contactId">
+        <% dataContacts.forEach((data) => { %>
+          <option value="<%= data.id %>"><%= data.name %></option>
+        <% }) %>
+      </select><br>
+      <br>
       <input type="submit" value="Submit">
     </form>
   </body>
+
+  <script type="text/javascript">
+    <% if(error) { %>
+      alert('Your contact already have profile!')
+    <% } %>
+  </script>
 </html>

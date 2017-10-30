@@ -9,9 +9,9 @@ db.serialize(function() {
     telp_number STRING,
     email STRING)`, (err) => {
     if(err) {
-      console.log('Failed create database Contacts');
+      console.log('Failed create table Contacts');
     } else {
-      console.log('Success create database Contacts');
+      console.log('Success create table Contacts');
     }
   });
 
@@ -19,9 +19,9 @@ db.serialize(function() {
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     name_of_group STRING)`, (err) => {
     if(err) {
-      console.log('Failed create database Groups');
+      console.log('Failed create table Groups');
     } else {
-      console.log('Success create database Groups');
+      console.log('Success create table Groups');
     }
   })
 
@@ -30,9 +30,9 @@ db.serialize(function() {
     username STRING,
     password STRING)`, (err) => {
     if(err) {
-      console.log('Failed create database Profiles');
+      console.log('Failed create table Profiles');
     } else {
-      console.log('Success create database Profiles');
+      console.log('Success create table Profiles');
     }
   })
 
@@ -42,9 +42,9 @@ db.serialize(function() {
     city STRING,
     zipcode STRING)`, (err) => {
     if(err) {
-      console.log('Failed create database Addresses');
+      console.log('Failed create table Addresses');
     } else {
-      console.log('Success create database Addresses');
+      console.log('Success create table Addresses');
     }
   })
 
@@ -59,25 +59,40 @@ db.serialize(function() {
   //   }
   // })
 
-  db.run(`ALTER TABLE Profiles ADD contactId INTEGER REFERENCES Contacts(id)`, (err) => {
-    if(err) {
-      console.log('Failed add column contactId');
-    } else {
-      console.log('Success add column contactId');
-    }
-  })
-
-  db.run(`CREATE UNIQUE INDEX contactId ON Profiles (contactId)`, (err) => {
-    if(err) {
-      console.log('Failed create unique index contactId');
-    } else {
-      console.log('Success create unique index contactId');
-    }
-  })
-
-  // db.all(`SELECT * FROM Contacts`, (err, rows) => {
-  //   console.log(rows);
+  // db.run(`ALTER TABLE Profiles ADD contactId INTEGER REFERENCES Contacts(id)`, (err) => {
+  //   if(err) {
+  //     console.log('Failed add column contactId');
+  //   } else {
+  //     console.log('Success add column contactId');
+  //   }
   // })
+  //
+  // db.run(`CREATE UNIQUE INDEX contactId ON Profiles (contactId)`, (err) => {
+  //   if(err) {
+  //     console.log('Failed create unique index contactId');
+  //   } else {
+  //     console.log('Success create unique index contactId');
+  //   }
+  // })
+
+  // db.run(`ALTER TABLE Addresses ADD contactId INTEGER REFERENCES Contacts(id)`, (err) => {
+  //   if(err) {
+  //     console.log('Failed add column contactId');
+  //   } else {
+  //     console.log('Success add column contactId');
+  //   }
+  // })
+
+  db.run(`CREATE TABLE IF NOT EXISTS contactsGroups (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    contactId INTEGER REFERENCES Contacts(id),
+    groupId INTEGER REFERENCES Groups(id))`, (err) => {
+      if(err) {
+        console.log('Failed create table contactsGroups');
+      } else {
+        console.log('Success create table contactsGroups');
+      }
+    })
 });
 
 db.close();

@@ -8,9 +8,17 @@ class Profile {
     })
   }
 
+  static findWithContacts(callback) {
+    let query = `SELECT Profiles.*, Contacts.name FROM Profiles
+    LEFT JOIN Contacts ON Profiles.contactId = Contacts.id`
+    db.all(query, (err, rows) => {
+      callback(err, rows)
+    })
+  }
+
   static create(data, callback) {
-    db.run(`INSERT INTO Profiles (username, password) VALUES (
-      '${data.username}', '${data.password}')`, (err) => {
+    db.run(`INSERT INTO Profiles (username, password, contactId) VALUES (
+      '${data.username}', '${data.password}', ${data.contactId})`, (err) => {
       callback(err)
     })
   }
@@ -22,13 +30,13 @@ class Profile {
   }
 
   static update(data, profileId, callback) {
-    db.run(`UPDATE Profiles SET username = '${data.username}', password = '${data.password}'
+    db.run(`UPDATE Profiles SET username = '${data.username}', password = '${data.password}', contactId = ${data.contactId}
     WHERE id = ${profileId}`, (err) => {
       callback(err)
     })
   }
 
-  static delete(profileId, callback) {
+  static remove(profileId, callback) {
     db.run(`DELETE FROM Profiles WHERE id = ${profileId}`, (err) => {
       callback(err)
     })

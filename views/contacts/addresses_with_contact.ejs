@@ -5,7 +5,7 @@
     <title>My Contacts App</title>
   </head>
   <body>
-    <h1>Contacts Page</h1>
+    <h1>Addresses With Contact</h1>
 
     <table>
       <thead>
@@ -15,39 +15,42 @@
           <th><a href="/groups">Groups</a></th>
           <th><a href="/profiles">Profile</a></th>
           <th><a href="/addresses">Addresses</a></th>
-          <th><a href="/contacts/addresses_with_contact">Addresses With Contact</a></th>
         </tr>
       </thead>
-    </table><br>
+    </table>
 
     <table border="1px">
       <thead>
         <tr>
           <th>ID</th>
-          <th>Name</th>
+          <th>Street</th>
+          <th>City</th>
+          <th>Zipcode</th>
+          <th>Contact Name</th>
           <th>Company</th>
-          <th>Telp</th>
-          <th>Email</th>
           <th>Actions</th>
         </tr>
       </thead>
       <tbody>
-        <% dataContacts.forEach((data) => { %>
+        <% dataAddresses.forEach((data) => { %>
           <tr>
             <td><%= data.id %></td>
+            <td><%= data.street %></td>
+            <td><%= data.city %></td>
+            <td><%= data.zipcode %></td>
             <td><%= data.name %></td>
-            <td><%= data.company %></td>
-            <td><%= data.telp_number %></td>
-            <td><%= data.email %></td>
+            <% dataContacts.forEach((data2) => { %>
+              <% if(data2.id == data.contactId) { %>
+                <td><%= data2.company %></td>
+              <% } %>
+            <% }) %>
             <td>
-              <a href="/contacts/edit/<%= data.id %>">Edit</a>
-              <a href="/contacts/delete/<%= data.id %>">Delete</a>
+              <a href="/addresses/edit/<%= data.id %>">Edit</a>
+              <a href="/addresses/delete/<%= data.id %>">Delete</a>
             </td>
           </tr>
         <% }) %>
       </tbody>
     </table>
-
-    <h4><a href="/contacts/add">Add Contact</a></h4>
   </body>
 </html>

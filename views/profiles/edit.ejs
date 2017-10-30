@@ -5,7 +5,7 @@
     <title>My Contacts App</title>
   </head>
   <body>
-    <h1>Add Profile</h1>
+    <h1>Edit Profile</h1>
 
     <table>
       <thead>
@@ -25,6 +25,13 @@
       <br>
       Password:<br>
       <input type="password" name="password" value="<%= dataProfile.password %>"><br>
+      <br>
+      Contact Name:<br>
+      <select name="contactId">
+        <% dataContacts.forEach((data) => { %>
+          <option value="<%= data.id %>" <%= data.id ==  dataProfile.contactId ? "selected" : "" %>><%= data.name %></option>
+        <% }) %>
+      </select><br>
       <br>
       <input type="submit" value="Submit">
     </form>

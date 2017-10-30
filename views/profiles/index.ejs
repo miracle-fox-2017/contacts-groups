@@ -25,6 +25,7 @@
           <th>ID</th>
           <th>Username</th>
           <th>Password</th>
+          <th>Contact Name</th>
           <th>Actions</th>
         </tr>
       </thead>
@@ -34,6 +35,7 @@
             <td><%= data.id %></td>
             <td><%= data.username %></td>
             <td><%= data.password %></td>
+            <td><%= data.name %></td>
             <td>
               <a href="/profiles/edit/<%= data.id %>">Edit</a>
               <a href="/profiles/delete/<%= data.id %>">Delete</a>

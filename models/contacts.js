@@ -28,7 +28,7 @@ class Contact {
     })
   }
 
-  static delete(contactId, callback) {
+  static remove(contactId, callback) {
     db.run(`DELETE FROM Contacts WHERE id = ${contactId}`, (err) => {
       callback(err)
     })

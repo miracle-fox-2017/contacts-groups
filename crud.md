@@ -13,23 +13,23 @@ table pada database. Tentukan column mana saja yang akan di set unique.
 kali, tidak error
 
 Structure table:
-* Contacts: 
+* Contacts:
   - attribute id ber-type integer
   - attribute name ber-type string
   - attribute company ber-type string
   - attribute telp_number ber-type string
   - attribute email ber-type string
-* Groups: 
+* Groups:
   - attribute id ber-type integer
   - attribute name_of_group ber-type string
-* Profile: 
+* Profile:
   - attribute id ber-type integer
   - attribute username ber-type string
   - attribute password ber-type string
-* Addresses: 
+* Addresses:
   - attribute id ber-type integer
   - attribute street ber-type string
-  - attribute city ber-type string 
+  - attribute city ber-type string
   - attribute zipcode ber-type integer
 
 ## Release 1 - Basic Routing for Contacts dan Groups
@@ -66,4 +66,3 @@ Buatlah sejumlah route berikut dan tampilkan melalui view engine ejs<br />
 |GET    | /profiles/edit/:id      | Menampilkan data profile spesifik untuk diubah      |
 |POST   | /profiles/edit/:id      | Menerima data form untuk update profile             |
 |GET    | /profiles/delete/:id    | Menghapus data profile berdasarkan id               |
-

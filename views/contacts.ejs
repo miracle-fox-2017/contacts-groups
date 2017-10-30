@@ -26,56 +26,56 @@
         <th>Company</th>
         <th>Phone Number</th>
         <th>Email</th>
-        <th>Edit</th>
-        <th>Delete</th>
+        <th>Action</th>
+      </tr>
         <% let i = 1 %>
-      <% rows.forEach(function(el){%>
+      <% contactsRows.forEach(function(el){%>
           <tr>
             <td> <%= i %> </td>
             <td> <%= el.name %> </td>
             <td> <%= el.company %> </td>
             <td> <%= el.telp_number %> </td>
             <td> <%= el.email %> </td>
-            <td> <a href="/contacts/edit/<%=el.id%>">edit</a>
-            <td> <a href="/contacts/delete/<%=el.id%>">delete</a>
+            <td><a href="/contacts/edit/<%=el.id%>">edit</a>
+                <a href="/contacts/delete/<%=el.id%>">delete</a>
+            </td>
           </tr>
         <% i++ })%>
       </tr>
     </table>
-    <% if (isEdit === true) {%>
-      <p>editnya true bro</p>
-      <form action="/contacts/edit/<%=rows[0].id%>" method="post">
+      <% if (isEdit === false) {%>
+      <form action="/contacts" method="post">
         Name:<br>
-        <input type="text" name="name" value="<%=rows[0].name%>" required=true>
+        <input type="text" name="name" required/>
         <br>
         Company:<br>
-        <input type="text" name="company" value="<%=rows[0].company%>" required=true>
+        <input type="text" name="company" required=true/>
         <br>
-        Phone Number<br>
-        <input type="text" name="phoneNumber" value="<%=rows[0].telp_number%>" required=true>
+        Phone Number:<br>
+        <input type="text" name="telp_number" required=true/>
         <br>
-        Email<br>
-        <input type="text" name="email" value="<%=rows[0].email%>" required=true>
+        Email:<br>
+        <input type="text" name="email" required=true/>
         <br><br>
-        <input type="submit" value="EDIT"=>
+        <input type="submit" value="ADD">
       </form>
-    <% } %>
-    <% if (isEdit === false) {%>
-      <form action="/contacts" method="POST">
-        Name:<br>
-        <input type="text" name='name' required=true>
-        <br>
-        Company:<br>
-        <input type="text" name='company' required=true>
-        <br>
-        Phone Number<br>
-        <input type="text" name='phoneNumber' required=true>
-        <br>
-        Email<br>
-        <input type="text" name='email' required=true>
-        <br>
-        <input type="submit" value="ADD"=>
-      </form>
-   <% } %>
+      <%}%>
+      <% if (isEdit === true) {%>
+        <form action="/contacts/edit/<%=contactsRows[0].id%>" method="post">
+          Name:<br>
+          <input type="text" name="name" value="<%=contactsRows[0].name%>" required/>
+          <br>
+          Company:<br>
+          <input type="text" name="company" value="<%=contactsRows[0].company%>" required=true/>
+          <br>
+          Phone Number:<br>
+          <input type="text" name="telp_number" value="<%=contactsRows[0].telp_number%>" required=true/>
+          <br>
+          Email:<br>
+          <input type="text" name="email" value="<%=contactsRows[0].email%>" required=true/>
+          <br><br>
+          <input type="submit" value="EDIT">
+        </form>
+        <%}%>
   </body>
 </html>

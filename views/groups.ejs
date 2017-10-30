@@ -23,9 +23,10 @@
         <th>No</th>
         <th>Group</th>
         <th>Edit</th>
-        <th>Delete</th
+        <th>Delete</th>
+      </tr>
         <% let i = 1 %>
-      <% rows.forEach(function(el){%>
+      <% groups.forEach(function(el){%>
           <tr>
             <td> <%= i %> </td>
             <td> <%= el.name_of_group %> </td>
@@ -40,14 +41,32 @@
       Name:<br>
       <input type="text" name="name" required=true>
       <br>
+      <select name="contact" required=true>
+        <option value="">--select contact--</option>
+        <% contacts.forEach(function(eq){%>
+          <option value="<%=eq.id%>"><%=eq.name %></option>
+        <% }) %>
+      </select>
+      <br/>
       <input type="submit" value="ADD"=>
   </form>
     <% } %>
   <% if (isEdit === true) {%>
-  <form action="/groups/edit/<%=rows[0].id%>" method="post">
+  <form action="/groups/edit/<%=groups[0].id%>" method="post">
     Name:<br>
-    <input type="text" name="name" value="<%=rows[0].name_of_group%>" required=true>
+    <input type="text" name="name" value="<%=groups[0].name_of_group%>" required=true>
     <br>
+    <select name="contact" required=true>
+      <option value="">--select contact--</option>
+    <% contacts.forEach(function(eq){
+      if(eq.id===groups[0].contacts_id){%>
+        <option value="<%=eq.id%>" selected><%=eq.name %></option>
+      <%}else{%>
+        <option value="<%=eq.id%>"><%=eq.name %></option>
+      <%}%>
+    <% }) %>
+  </select>
+  <br>
     <input type="submit" value="EDIT"=>
   </form>
   <% } %>

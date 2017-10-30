@@ -48,6 +48,12 @@
         </div>
       </div>
       <form action="/groups" method="post">
+        <%if(msgError){%>
+          <div class="notification is-danger">
+            <strong><%=msgError%></strong>
+          </div>
+        <%}%>
+        <br/>
           Name of Groups:<br><br>
           <input class="input is-light" type="text" name="name_of_group" required>
           <br><br>

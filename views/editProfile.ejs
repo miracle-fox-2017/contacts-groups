@@ -11,6 +11,12 @@
 
     <div class="tile is-ancestor">
           <form action="/profiles/edit/<%=dataProfiles.id%>" method="post">
+            <%if(msgError){%>
+              <div class="notification is-danger">
+                <strong><%=msgError%></strong>
+              </div>
+            <%}%>
+            <br/>
             Username:<br>
             <input class="input is-light" type="text" name="username" value="<%=dataProfiles.username%>" required>
             <br>

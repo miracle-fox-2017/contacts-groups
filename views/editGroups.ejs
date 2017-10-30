@@ -11,6 +11,12 @@
 
     <div class="tile is-ancestor">
       <form action="/groups/edit/<%=dataGroups.id%>" method="post">
+        <%if(msgError){%>
+          <div class="notification is-danger">
+            <strong><%=msgError%></strong>
+          </div>
+        <%}%>
+        <br/>
           Name of Groups:<br>
           <input class="input is-light" type="text" name="name_of_group" value="<%=dataGroups.name_of_group%>" required>
           <br><br>

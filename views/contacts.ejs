@@ -33,12 +33,7 @@
                     <td><%=Contacts.company%></td>
                     <td><%=Contacts.telp_number%></td>
                     <td><%=Contacts.email%></td>
-                    <td><%=Contacts.name_of_group%></td>
-                    <td><a href="contacts/edit/<%=Contacts.id%>">
-                      <span class="icon has-text-success">
-                        <i class="fa fa-pencil-square-o"></i>
-                      </span>
-                    </a></td>
+                    <td><%=Contacts.name_of_groups%></td>
                     <td><a href="contacts/delete/<%=Contacts.id%>">
                       <span class="icon has-text-success">
                         <i class="fa fa-trash"></i>
@@ -58,6 +53,7 @@
                 <strong><%=msgError%></strong>
               </div>
             <%}%>
+            <br/>
             Name:<br>
             <input class="input is-light" type="text" name="name" required>
             <br>

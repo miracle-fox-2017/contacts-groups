@@ -1,86 +1,92 @@
-const express = require('express')
-const bodyParser = require('body-parser')
-const app = express()
-
-var sqlite3 = require('sqlite3').verbose();
-var db = new sqlite3.Database('./database.db');
+const express=require('express');
+const bodyParser =require('body-parser')
+const app = express();
+const sqlite3 = require('sqlite3').verbose()
+const db = new sqlite3.Database('./database/database.db')
 
 // parse application/x-www-form-urlencoded
-// parse application/json
 app.use(bodyParser.urlencoded({ extended: false }))
+// parse application/json
 app.use(bodyParser.json())
 
+app.set('views','./views')
+app.set('view engine','ejs')
 
-app.set('views', './views')//renderer
-app.set('view engine', 'ejs');
 
-
-// Contacts
-//====================================================================
-app.get('/contacts', function (req, res) {
-  db.all(`SELECT * FROM contacts`, function(err, rows)
-  {
-    res.render('contacts', {rows})
+app.get('/',function(req,res){
+  res.send('this is HOME')
+})
+//CONTACTS=======================================================//
+//Menampilkan semua data contacts
+app.get('/contacts',function(req,res){
+  db.all(`SELECT * FROM Contacts`,function(err,rowContacts){
+    res.render('contacts',{rowContacts})
   })
 })
-
-app.post('/contacts', function (req, res) {
-  db.run(`INSERT INTO Contacts (name, company, telp_number, email) VALUES ('${req.body.name}','${req.body.company}','${req.body.telp_number}','${req.body.email}')` );
-  res.redirect('/contacts');
+//Menerima input contact
+app.post('/contacts',function(req,res){
+  // console.log(req.body.Name);
+  db.run(`INSERT INTO Contacts(Name, Company, Telp_number, Email)
+  VALUES ('${req.body.Name}','${req.body.Company}','${req.body.Telp_number}','${req.body.Email}')` );
+  res.redirect('/contacts')
 })
-
-app.get('/contacts/edit/:id', function (req, res) {
-  db.each(`SELECT * FROM Contacts WHERE id = ${req.params.id}`, function(err, rows){
-    res.render('editContact', {rows})
+//Menampilkan data contact spesifik untuk diubah
+app.get('/contacts/edit/:id',function(req,res){
+  db.each(`SELECT * FROM Contacts WHERE id = ${req.params.id}`, function(err,rowContacts){
+    // console.log(rowContacts);
+    res.render('editcontacts',{rowContacts})
   })
 })
+//Menerima data form untuk update contact
+app.post('/contacts/edit/:id',function(req,res){
 
-app.post('/contacts/edit/:id', function (req, res){
-  db.run(`UPDATE Contacts SET name = '${req.body.name}', company = '${req.body.company}', telp_number = '${req.body.telp_number}', email = '${req.body.email}' WHERE id = ${req.params.id}`);
-  res.redirect('/contacts');
+  db.run(`UPDATE Contacts
+    SET Name = '${req.body.Name}',
+    Company = '${req.body.Company}',
+    Telp_number = '${req.body.Telp_number}',
+    Email = '${req.body.Email}'
+    WHERE id = ${req.params.id}
+  ` );
+  res.redirect('/contacts')
+})
+// Menghapus data contact berdasarkan id
+app.get('/contacts/delete/:id',function(req,res){
+  db.run(`DELETE FROM Contacts WHERE id = ${req.params.id}`)
+    res.redirect('/contacts')
 })
 
-app.get('/contacts/delete/:id', function (req, res) {
-  db.each(`DELETE FROM Contacts WHERE id = ${req.params.id}`, function(err, rows){
-  });
-  res.redirect('/contacts');
-})
-//====================================================================
-
-
-// Groups
-//====================================================================
-app.get('/groups', function (req, res) {
-  db.all(`SELECT * FROM Groups`, function(err, rows)
-  {
-    res.render('groups', {rows})
+//GROUPS======================================================
+//Menampilkan semua data groups
+app.get('/groups',function(req,res){
+  db.all(`SELECT * FROM Groups`,function(err,rowContacts){
+    res.render('groups',{rowContacts})
   })
 })
-
-app.post('/groups', function (req, res) {
-  db.run(`INSERT INTO Groups (name_of_group) VALUES ('${req.body.name_of_group}')` );
-  res.redirect('/groups');
+//Menerima data form untuk input group
+app.post('/groups',function(req,res){
+  // console.log(req.body.Name);
+  db.run(`INSERT INTO Groups(name_of_group)
+  VALUES ('${req.body.name_of_group}')` );
+  res.redirect('/groups')
 })
-
-app.get('/groups/edit/:id', function (req, res) {
-  db.each(`SELECT * FROM Groups WHERE id = ${req.params.id}`, function(err, rows){
-    res.render('editGroup', {rows})
+//Menampilkan data group spesifik untuk diubah
+app.get('/groups/edit/:id',function(req,res){
+  db.each(`SELECT * FROM Groups WHERE id = ${req.params.id}`, function(err,rowGroups){
+    // console.log(rowContacts);
+    res.render('editgroups',{rowGroups})
   })
 })
-
-app.post('/groups/edit/:id', function (req, res){
-  db.run(`UPDATE Groups SET name_of_group = '${req.body.name_of_group}' WHERE id = ${req.params.id}`);
-  res.redirect('/groups');
+//Menerima data form untuk update group
+app.post('/groups/edit/:id',function(req,res){
+  db.run(`UPDATE Groups
+    SET name_of_group = '${req.body.name_of_group}'
+    WHERE id = ${req.params.id}
+  ` );
+  res.redirect('/groups')
 })
-
-app.get('/groups/delete/:id', function (req, res) {
-  db.each(`DELETE FROM Groups WHERE id = ${req.params.id}`, function(err, rows){
-  });
-  res.redirect('/groups');
+//Menghapus data group berdasarkan id
+app.get('/groups/delete/:id',function(req,res){
+  db.run(`DELETE FROM Groups WHERE id = ${req.params.id}`)
+    res.redirect('/groups')
 })
-
-
-
-app.listen(3000, function () {
-  console.log('Welcome to Contact app')
-})
+app.listen(3000)

@@ -5,36 +5,21 @@
     <title>Contacts</title>
   </head>
   <body>
-    <table>
-  <tr>
-    <th>ID</th>
-    <th>Name</th>
-    <th>Company</th>
-    <th>Phone Number</th>
-    <th>Email</th>
-  </tr>
-  <% console.log(rows) %>
-  <% for(let i = 0; i < rows.length; i++){ %>
-    <tr>
-      <td><%= rows[i].id %></td>
-      <td><%= rows[i].name %></td>
-      <td><%= rows[i].company %></td>
-      <td><%= rows[i].telp_number %></td>
-      <td><%= rows[i].email %></td>
-      <td><a href="/contacts/edit/<%= rows[i].id %>"> Edit </td>
-      <td><a href="/contacts/delete/<%= rows[i].id %>"> Delete </td>
-    </tr>
-  <% } %>
-  <tr>
-  <form class="" action="/contacts" method="post">
-    <td></td>
-    <td><input type="text" name="name"></td>
-    <td><input type="text" name="company"></td>
-    <td><input type="text" name="telp_number"></td>
-    <td><input type="text" name="email"></td>
-    <td><input type="submit" value="Submit"></td>
-  </form>
-  </tr>
-</table>
+    <% for(let i=0;i<rowContacts.length;i++){ %>
+      <%=rowContacts[i].ID%>
+      <%=rowContacts[i].Name%>
+      <%=rowContacts[i].Company%>
+      <%=rowContacts[i].Telp_number%>
+      <%=rowContacts[i].Email%>
+      <br>
+      <%}%>
+    <form class="" action="/contacts" method="post">
+      <td>Nama<input type="text" name="Name" value=""></td>
+      <td>Company <input type="text" name="Company" value=""></td>
+      <td>Telp Number <input type="text" name="Telp_number" value=""></td>
+      <td>Email</td> <input type="text" name="Email" value="">
+      <td> <input type="submit" value="Submit!"></td>
+    </form>
+
   </body>
 </html>

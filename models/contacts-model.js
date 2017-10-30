@@ -178,6 +178,63 @@ class ContactsModel {
 
 		db.close();
 	}
+
+	/* Method pengganti getAllDataArrayJoinContactsGroups(contact, contactsGroups) */
+	static findAllJoinContactsGroups(contact, contactsGroups) {
+		let joinedData = [];
+
+		for (var i = 0; i < contact.length; i++) {
+			let obj = {};
+			obj.id = contact[i].id;
+			obj.name = contact[i].name;
+			obj.company = contact[i].company;
+			obj.telp_number = contact[i].telp_number;
+			obj.email = contact[i].email;
+			obj.name_of_group = [];
+
+			joinedData.push(obj);
+
+			for (var j = 0; j < contactsGroups.length; j++) {
+				if (contactsGroups[j].contacts_id == contact[i].id) {
+					obj.name_of_group.push(contactsGroups[j].name_of_group);
+				}
+			}
+		}
+
+		return joinedData;
+	}
+
+	/* Method pengganti updateDataById(data) */
+	static update(data, callback) {
+		let db = new sqlite3.Database(dbLocation);
+		let sql = `UPDATE ${tableName} SET name = "${data.editItem.name}", company = "${data.editItem.company}", telp_number = "${data.editItem.telp_number}", email = "${data.editItem.email}" WHERE id = ${data.id}`;
+		db.run(sql, function(err, rows){
+			if (err) {
+				console.error(err);
+				callback(err, null, null);
+			} else {
+				callback(null, rows, this.lastID);
+			}
+		});
+
+		db.close();
+	}
+
+
+	/* Method pengganti deleteDataById(data) */
+	static delete(data, callback) {
+		let db = new sqlite3.Database(dbLocation);
+		let sql = `DELETE FROM ${tableName} WHERE id = ${data.id}`;
+
+		db.run(sql, function(err, rows) {
+			if (err) {
+				callback(err, null, null);
+			} else {
+				callback(null, rows, this);
+			}
+		});
+		db.close();
+	}
 }
 
 module.exports = ContactsModel;

@@ -2,6 +2,10 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
 
+// Router
+const indexRouter = require('./routers/index-routes');
+const contactRouter = require('./routers/contact-routes');
+
 const ContactsModel = require('./models/contacts-model');
 const GroupsModel = require('./models/groups-model');
 const ProfilesModel = require('./models/profile-model');
@@ -24,60 +28,9 @@ app.set('views', './views');
 app.set('view engine', 'ejs');
 
 // Website route
-app.get('/', (req, res) => {
-	res.render('index');
-});
+app.use('/', indexRouter);
+app.use('/contacts', contactRouter);
 
-// Contacts
-app.get('/contacts', (req, res) => {
-	ContactsModel.findAll(function(err, rows) {
-		if (err === null) {
-			GroupsModel.findAll(function(err, allgroups) {
-				GroupsModel.findAllInnerJoin('Contacts_Groups', 'Groups', (err, allcontactgroups) => {
-					res.render('contacts', {groups: allgroups, contacts_groups: contact.getAllDataArrayJoinContactsGroups(rows, allcontactgroups)});
-				})
-			})
-		} else {
-			res.send(err);
-		}
-	});
-});
-
-app.post('/contacts', (req, res) => {
-	ContactsModel.create(req.body, function(err, data, lastContactId) {
-		ContactsGroupsModel.create({contacts_id: lastContactId, groups_id: +req.body.groups_id});
-		res.redirect('/contacts');
-	});
-});
-
-app.get('/contacts/edit/:id', (req, res) => {
-	ContactsModel.findAll(function(err, allcontacts) {
-		GroupsModel.findAll((err, allgroups) => {
-			GroupsModel.findAllInnerJoin('Contacts_Groups', 'Groups', (err, allcontactgroups) => {
-				ContactsModel.findById({id: req.params.id}, (err, editedRows) =>{
-					res.render('contacts', {
-						groups: allgroups, 
-						contacts_groups: contact.getAllDataArrayJoinContactsGroups(allcontacts, allcontactgroups), 
-						id: req.params.id, editItem: editedRows 
-					});
-				});
-			});
-		});
-	});	
-});
-
-app.post('/contacts/edit/:id', (req, res) => {
-	contact.getLatestIdSequence('Contacts', (latestId) => {
-		contact.updateDataById({id: req.params.id, editItem: req.body});
-		contact.addDataContactGroups({contacts_id: req.params.id, groups_id: +req.body.groups_id}, 'Contacts_Groups')
-		res.redirect('/contacts');
-	})
-});
-
-app.get('/contacts/delete/:id', (req, res) => {
-	contact.deleteDataById({id: req.params.id});
-	res.redirect('/contacts/');
-});
 
 // Groups
 app.get('/groups', (req, res) => {

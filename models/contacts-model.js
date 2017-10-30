@@ -6,6 +6,20 @@ class ContactsModel {
 		this.dbFile = dbFile;
 	}
 
+	getLatestIdSequence(tableName = this.tablename, callback) {
+		let db = new sqlite3.Database(this.dbFile);
+		let sql = `SELECT seq FROM sqlite_sequence WHERE name like "${tableName}"`;
+		db.get(sql, (err,rows) => {
+			if (err) {
+				throw err;
+			} 
+
+			callback(rows);
+			db.close();
+		})
+
+	}
+
 	getAllData(callback) {
 		let db = new sqlite3.Database(this.dbFile);
 		let sql = `SELECT * FROM ${this.tablename}`;
@@ -18,6 +32,22 @@ class ContactsModel {
 			db.close();
 		})
 	}
+
+	// getAllDataInnerJoin(tableSource, callback) {
+	// 	let db = new sqlite3.Database(this.dbFile);
+	// 	let sql = `select ${this.tablename}.id, ${this.tablename}.username, ${this.tablename}.password, ${this.tablename}.contacts_id, ${tableSource}.name
+	// 				from ${this.tablename}
+	// 				inner join ${tableSource} ON ${this.tablename}.contacts_id =  ${tableSource}.id`;
+	// 	db.all(sql, (err, rows) => {
+	// 		if (err) {
+	// 			throw err;
+	// 		} 
+
+	// 		callback(rows);
+	// 	})
+
+	// 	db.close();
+	// }
 
 	getAllDataArrayJoin(addresses, contacts) {
 		let joinedData = [];
@@ -53,6 +83,13 @@ class ContactsModel {
 		let db = new sqlite3.Database(this.dbFile);
 		let sql = `INSERT INTO ${this.tablename} (name, company, telp_number, email) VALUES ("${data.name}", "${data.company}", "${data.telp_number}", "${data.email}")`;
 		db.run(sql);
+	}
+
+	addDataContactGroups(data, conjTable = 'Contacts_Groups') {
+		let db = new sqlite3.Database(this.dbFile);
+		let sql = `INSERT INTO ${conjTable} (contacts_id, groups_id) VALUES (${data.contacts_id}, ${data.groups_id})`;
+		db.run(sql);
+		console.log(sql);
 	}
 
 	updateDataById(data) {

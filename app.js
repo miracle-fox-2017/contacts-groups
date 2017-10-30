@@ -29,13 +29,18 @@ app.get('/', (req, res) => {
 // Contacts
 app.get('/contacts', (req, res) => {
 	contact.getAllData(function(rows) {
-		res.render('contacts', { data: rows });
+		group.getAllData((allgroups) => {
+			res.render('contacts', { data: rows, groups: allgroups});
+		})
 	});
 });
 
 app.post('/contacts', (req, res) => {
-	contact.addData(req.body);
-	res.redirect('/contacts');
+	contact.getLatestIdSequence('Contacts', (latestId) => {
+		contact.addData(req.body);
+		contact.addDataContactGroups({contacts_id: latestId.seq+1, groups_id: +req.body.groups_id}, 'Contacts_Groups')
+		res.redirect('/contacts');
+	})
 });
 
 app.get('/contacts/edit/:id', (req, res) => {

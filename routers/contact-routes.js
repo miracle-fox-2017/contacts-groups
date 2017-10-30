@@ -10,11 +10,11 @@ let group = new GroupsModel('./database/database.db');
 let contactGroup = new ContactsGroupsModel();
 
 router.get('/', (req, res) => {
-	ContactsModel.findAll(function(err, rows) {
+	ContactsModel.findAll(function(err, allContacts) {
 		if (err === null) {
 			GroupsModel.findAll(function(err, allgroups) {
 				GroupsModel.findAllInnerJoin('Contacts_Groups', 'Groups', (err, allcontactgroups) => {
-					res.render('contacts', {groups: allgroups, contacts_groups: contact.getAllDataArrayJoinContactsGroups(rows, allcontactgroups)});
+					res.render('contacts', {groups: allgroups, contacts_groups: ContactsModel.findAllJoinContactsGroups(allContacts, allcontactgroups)});
 				})
 			})
 		} else {

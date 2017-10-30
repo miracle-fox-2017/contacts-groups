@@ -2,20 +2,18 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Edit Profile</title>
+    <title></title>
   </head>
   <body>
-    <h1>Profile Edit</h1>
-    <a href="/profile"> back </a>
-
-    <% data.forEach(row => {%>
-    <form class="" action="/profile/edit/<%=row.id%>" method="post">
-      <input type="text" name="Username" value="<%=row.Username %>">
-      <input type="text" name="password" value="<%=row.password %>">
-      <input type="submit" name="" value="SUBMIT">
-
+    <form class="" action="/profile/edit/<%=dataProfile.id%>" method="POST">
+      <input type="text" name="username" placeholder="Username" value="<%=dataProfile.username%>">
+      <input type="text" name="password" placeholder="Password" value="<%=dataProfile.password%>">
+      <select name="Contactsid">
+        <%for(var i=0;i< dataContacts.length;i++){%>
+          <option value="<%=dataContacts[i].id%>"><%=dataContacts[i].name%></option>
+          <%}%>
+        </select>
+      <button type="submit" name="submit">Submit</button>
     </form>
-    <%})%>
-
   </body>
 </html>

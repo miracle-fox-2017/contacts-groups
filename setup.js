@@ -1,37 +1,32 @@
-var sqlite3 = require('sqlite3').verbose();
-var db = new sqlite3.Database('db/database.db');
+var sqlite3= require ('sqlite3');
+var db=new sqlite3.Database('./db/database.db')
 
-db.serialize(function() {
-  db.run(`CREATE TABLE IF NOT EXISTS Contacts (
-        id INTEGER PRIMARY KEY AUTOINCREMENT, name VARCHAR(20), company VARCHAR(20),
-        telp VARCHAR(15), email VARCHAR(20) )`,() => {
-          console.log('create contacts sukses');
-        })
+db.serialize(function(){
+  //USER PROFILE ONE to ONE
+  //======================CONTACT========================
+  db.run("CREATE TABLE if not exists Contacts (id INTEGER PRIMARY KEY AUTOINCREMENT,name VARCHAR(255),company VARCHAR(255),telp_number VARCHAR(255),email VARCHAR(255))",()=>{
+    console.log('Table Contacts berhasil dibuat!');
+  })
+  //====================PROFILE===========================
+  db.run("CREATE TABLE if not exists Profiles (id INTEGER PRIMARY KEY AUTOINCREMENT,username VARCHAR(255),password VARCHAR(255)) ",()=>{
+    console.log('Table Profiles berhasil dibuat!')
+  })
+  db.run("CREATE TABLE if not exists Groups (id INTEGER PRIMARY KEY AUTOINCREMENT,name_of_group VARCHAR(255))",()=>{
+    console.log('Table Groups berhasil dibuat!')
+  })
+  db.run("CREATE TABLE if not exists Addresses (id INTEGER PRIMARY KEY AUTOINCREMENT,street VARCHAR(255),city VARCHAR(255),zipcode INTEGER(25))",()=>{
+    console.log('Table Addresses berhasil dibuat!')
+  })
 
-  db.run(`CREATE TABLE IF NOT EXISTS Groups(
-    id INTEGER PRIMARY KEY AUTOINCREMENT, name_of_group VARCHAR(20) )`,()=>{
-      console.log('create EXISTS Groups sukses');
-    })
+})
 
-  db.run(`CREATE TABLE IF NOT EXISTS Profile(
-    id INTEGER PRIMARY KEY AUTOINCREMENT , Username VARCHAR(20), password VARCHAR(20) ) `,()=>{
-      console.log('create EXISTS Profile sukses');
-    })
-
-  db.run(`CREATE TABLE IF NOT EXISTS Addresses(
-      id INTEGER PRIMARY KEY AUTOINCREMENT, street VARCHAR(20),
-      city VARCHAR(20), zipcode INTEGER(3) )`,()=>{
-      console.log('create EXISTS Addresses sukses');
-    })
-});
-//
-// function queryProfile(){
-//   let query=`ALTER TABLE Profiles ADD COLUMN Contactsid INTEGER REFERENCES Contacts(id)`
-//   db.run(query, (err)=>{
-//     console.log('Alter bERHASIL');
-//   })
-// }
-// queryProfile()
+function queryProfile(){
+  let query=`ALTER TABLE Profiles ADD COLUMN Contactsid INTEGER REFERENCES Contacts(id)`
+  db.run(query, (err)=>{
+    console.log('Alter bERHASIL');
+  })
+}
+queryProfile()
 
 // SELECT Profile * , Contacts.name FROM Profile LEFT
 // JOIN Contacts ON

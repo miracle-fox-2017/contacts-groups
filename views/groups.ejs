@@ -36,11 +36,17 @@
           </tr>
         </thead>
         <tbody>
-          <%data.forEach (row=> {%>
+          <%dataGroups.forEach (row=> {%>
             <tr>
               <td><%= row.id%></td>
               <td><%= row.name_of_group%></td>
-              <td><%= row.name_of_group%></td>
+              <td>
+                <%for (let i = 0; i < dataContactsGroups.length; i++) {%>
+                  <%if(row.id == dataContactsGroups[i].GroupId) {%>
+                    <%=dataContactsGroups[i].name%>
+                  <%}%>
+                <%}%>
+              </td>
               <td>
                 <a href="groups/edit/<%=row.id%>">EDIT</a>
                 <a href="groups/delete/<%=row.id%>">DELETE</a>

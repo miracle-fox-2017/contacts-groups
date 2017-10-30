@@ -33,16 +33,18 @@
             <th>USER NAME</th>
             <th>PASSWORD</th>
             <th>CONTACT ID</th>
+            <th>NAME</th>
             <th colspan="2">ACTION</th>
           </tr>
         </thead>
         <tbody>
-          <%data.forEach (row=> {%>
+          <%dataProfile.forEach (row=> {%>
             <tr>
               <td><%= row.id%></td>
               <td><%= row.username%></td>
               <td><%= row.password%></td>
               <td><%= row.ContactId%></td>
+              <td><%= row.name%></td>
               <td>
                 <a href="profiles/edit/<%=row.id%>">EDIT</a>
                 <a href="profiles/delete/<%=row.id%>">DELETE</a>
@@ -62,15 +64,15 @@
           <label for="password">Password</label>
           <input type="TEXT" name="password" placeholder="Enter Password">
         </div>
-        <select name="ContactId">
-          <%for(let i=0; i< dataContacts.length; i++){%>
-            <option value="<%=dataContacts[i].id%>"><%=dataContacts[i].name%></option>
-            <%}%>
-          </select>
+        <div class="form-group">
+          <select name="ContactId">
+            <%for(let i=0; i< dataContacts.length; i++){%>
+              <option value="<%=dataContacts[i].id%>"><%=dataContacts[i].name%></option>
+              <%}%>
+            </select>
+        </div>
           <button type="submit" class="btn btn-default">ADD</button>
         </form>
       </div>
-
-      <h3><%=errorMsg%></h3>
     </body>
     </html>

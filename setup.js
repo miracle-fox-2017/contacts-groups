@@ -14,7 +14,7 @@ db.serialize(function () {
   // db.run('CREATE TABLE IF NOT EXISTS Addresses (id INTEGER PRIMARY KEY AUTOINCREMENT, street TEXT, city TEXT, zipcode INTEGER)');
   // // console.log('table addresses created');
 
-  // db.run('CREATE TABLE IF NOT EXISTS ContactsGroups (id INTEGER PRIMARY KEY AUTOINCREMENT, ContactId INTEGER REFERENCES Contacts(id), GroupId INTEGER REFERENCES Groups(id))');
+  // db.run('CREATE TABLE IF NOT EXISTS ContactsGroups (id INTEGER PRIMARY KEY AUTOINCREMENT, ContactId INTEGER REFERENCES Contacts(id) ON DELETE CASCADE, GroupId INTEGER REFERENCES Groups(id) ON DELETE CASCADE)');
   // console.log('table ContactsGroups created');
 
   // db.run('DROP TABLE Profile;')
@@ -24,7 +24,7 @@ db.serialize(function () {
 // db.close();
 
 function alterContactsProfiles() {
-  db.run(`ALTER TABLE Profile ADD COLUMN ContactId INTEGER REFERENCES Contacts(id)`, (err) => {
+  db.run(`ALTER TABLE Profile ADD COLUMN ContactId INTEGER REFERENCES Contacts(id) ON DELETE CASCADE`, (err) => {
     if (!err) {
       console.log('tabel berhasil ditambah');
     } else {

@@ -12,8 +12,8 @@ router.get('/contacts', function (req, res) {
     Group.findAll(dataGroups => {
      Contacts_Groups.findAll(dataContacts_Groups =>{
 
-        res.render('contacts/contacts', {error: null, dataContacts:dataContacts, dataGroups:dataGroups,
-           dataContacts_Groups:dataContacts_Groups})
+         res.render('contacts/contacts', {error: null, dataContacts:dataContacts, dataGroups:dataGroups,
+            dataContacts_Groups:dataContacts_Groups})
       })
     });
   })
@@ -23,10 +23,10 @@ router.get('/contacts', function (req, res) {
 router.post('/contacts', function(req,res){
 
   Contact.create(req,data =>{
+    console.log(data);
     let GroupId = req.body.GroupsId
     let ContactId = data.lastID
-  Contacts_Groups.create(ContactId,GroupId, dataContacts_Groups =>{
-    console.log();
+    Contacts_Groups.create(ContactId,GroupId, dataContacts_Groups =>{
       if(data == true){
         res.render('contacts/contacts', {error:error})
       }else{

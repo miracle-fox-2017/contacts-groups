@@ -6,15 +6,23 @@ const Contact = require('../models/contacts')
 router.get('/profile', (req, res) => {
   Profile.findAll(dataProfile =>{
     Contact.findAll(dataContacts =>{
-      res.render('profile/profile', {dataProfile:dataProfile, dataContacts:dataContacts})
+      res.render('profile/profile', {err:null,dataProfile:dataProfile, dataContacts:dataContacts})
     })
   })
 })
 
 router.post('/profile', (req, res) => {
-  Profile.create(req, dataProfile => {
-    console.log(dataProfile, '------------');
+  Profile.create(req, err => {
+    if(err){
+      Profile.findAll(dataProfile =>{
+        Contact.findAll(dataContacts =>{
+          res.render('profile/profile', { err:err,dataProfile:dataProfile, dataContacts:dataContacts})
+        })
+      })
+
+    }else{
     res.redirect('/profile')
+  }
   })
 })
 

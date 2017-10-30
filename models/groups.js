@@ -28,8 +28,8 @@ static create(req, callback){
 }
 
 
-static findById(req, callback){
-  db.each(`SELECT * FROM Groups WHERE ID = ${req.params.id}`, (err, rows) =>{
+static findById(id, callback){
+  db.each(`SELECT * FROM Groups WHERE ID = ${id}`, (err, rows) =>{
     if(err){
       console.log(err);
     }else {

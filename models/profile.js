@@ -22,12 +22,12 @@ class Profile {
   static create(req, callback){
 
     db.run(`INSERT INTO Profile (username, password, ContactId)
-    VALUES ('${req.body.username}','${req.body.password}', ${req.body.ContactId})`, (err, rows) => {
+    VALUES ('${req.body.username}','${req.body.password}', ${req.body.ContactId})`, (err) => {
       if(err){
-
-        console.log(err);
+        let msg = 'Contact sudah Terpakai'
+        callback(msg);
       }else{
-        callback(rows)
+        callback(err)
       }
     })
   }

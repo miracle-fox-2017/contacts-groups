@@ -39,7 +39,7 @@ class Contact {
           if(err){
             return callback(err)
           }else{
-            //console.log(rows, '000000');
+            // untuk ambil lastID
             callback(this)
           }
         })

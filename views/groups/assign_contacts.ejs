@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Groups</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  </head>
+  <body>
+<% include ../partials/nav.ejs%>
+    <h1>Groups</h1>
+
+  <div class="container">
+
+    <form class ="form" action="/groups/assign_contacts/<%=dataGroups.id%>" method="POST">
+      <input id="name_of_group" type="text" name="name_of_group" value="<%=dataGroups.name_of_group%>">
+      <br>
+    </div>
+    <div class="col-xs-4 col-md-2">
+      <select class="box" name="ContactId">
+      <% for(let i = 0; i < dataContacts.length; i++) {%>
+      <option value="<%=dataContacts[i].id%>"><%=dataContacts[i].name%></option>
+      <%}%>
+      </select>
+      <br>
+      <input type="submit" value ="Submit">
+      </div>
+  </div>
+
+  </body>
+  <style>
+  table#t01 tr:nth-child(even) {
+  background-color: #eee;
+}
+form#t01 tr:nth-child(odd) {
+  background-color: #fff;
+}
+form#t01 th {
+  color: white;
+  background-color: black;
+}
+  </style>
+</html>

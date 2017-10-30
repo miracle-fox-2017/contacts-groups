@@ -17,9 +17,17 @@ class Contacts_Groups {
     })
   }
   //
-  // static findById(req, callback){
+  // static findWhere(nameOfColumn, value, callback){
+  //   let leftJoin;
+  //   if(nameOfColumn === 'GroupsId') {
+  //     leftJoin = `Contacts ON Contacts_Groups.ContactsId = Contacts.id`
+  //   } else {
+  //     leftJoin = `Groups ON Contacts_Groups.GroupsId = Groups.id`
+  //   }
+  //   let query = `SELECT  * FROM Contacts_Groups
+  //               LEFT JOIN ${leftJoin} where ${nameOfColumn} = ${value}`
   //
-  //   db.each(`SELECT * FROM Contacts WHERE ID = ${req.params.id}`, (err, rows)=>{
+  //   db.all(query, (err, rows)=>{
   //     if(err){
   //       console.log(err);
   //     }else{
@@ -40,45 +48,7 @@ class Contacts_Groups {
     })
   }
 
-  // static insert (req, callback){
-  //   console.log(req.params.id);
-  //   db.run(`INSERT INTO Contacts_Groups (ContactsId)
-  //   VALUES(${req.params.id})`, (err, rows) =>{
-  //     if(err){
-  //       console.log(err);
-  //     }else{
-  //       callback(rows)
-  //     }
-  //   })
-  // }
 
-  // static update(req, callback){
-  //
-  //   db.run(`UPDATE Contacts SET
-  //     name = '${req.body.name}',
-  //     company = '${req.body.company}',
-  //     telp_number = '${req.body.telp_number}',
-  //     email = '${req.body.email}'
-  //     WHERE ID = ${req.params.id}
-  //     `, (err, rows)=>{
-  //       if(err){
-  //         console.log(err);
-  //       }else{
-  //         callback(rows)
-  //       }
-  //     })
-  // }
-  //
-  // static destroy(req, callback){
-  //   db.run(`DELETE FROM Contacts WHERE ID = ${req.params.id}`, (err,rows)=>{
-  //     if(err){
-  //       console.log(err);
-  //     }else{
-  //       callback(err, rows)
-  //     }
-  //   })
-  // }
-  //
 
 
 }

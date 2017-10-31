@@ -47,7 +47,7 @@
               </span>
               <span>Edit</span>
               </a>
-              <a onclick="myFunction()" class="button is-outlined is-small" href="/addresses/delete/<%=data_Addresses[i].id%>">
+              <a onclick="return confirm('are you sure to delete?!');" class="button is-outlined is-small" href="/addresses/delete/<%=data_Addresses[i].id%>">
               <span class="icon is-small">
                 <i class="fa fa-times"></i>
               </span>
@@ -101,15 +101,5 @@
 
   </div>
 
-
-  <script>
-        function myFunction() {
-          confirm("are you sure?!");
-          // swal ( "Oops" ,  "Something went wrong!" ,  "error" )
-          swal({
-            icon: "success",
-          });
-        }
-  </script>
 </body>
 </html>

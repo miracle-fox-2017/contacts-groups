@@ -4,53 +4,63 @@ const db         = new sqlite3.Database('data/database.db')
 
 class Groups{
 
-  static findAll(cb){
-    db.all(`select * from Groups`, function(err,data_Groups){
-      if(!err){
-        cb(null,data_Groups)
-      }else{
-        cb(err,null)
-      }
+  static findAll(){
+    return new Promise(function(resolve,reject){
+      db.all(`select * from Groups`, function(err,data_Groups){
+        if(!err){
+          resolve(data_Groups)
+        }else{
+          reject(err)
+        }
+      })
     })
   }
 
   static create(reqbody){
-    db.run(`insert into Groups(name_of_group) values ('${reqbody.name_of_group}')`, function(err){
-      if(!err){
-        console.log('success insert into Groups');
-      }else{
-        console.log(err);
-      }
+    return new Promise(function(resolve,reject){
+      db.run(`insert into Groups(name_of_group) values ('${reqbody.name_of_group}')`, function(err){
+        if(!err){
+          resolve()
+        }else{
+          reject(err)
+        }
+      })
     })
   }
 
-  static findById(reqparams,cb){
-    db.all(`select * from Groups where id=${reqparams.id}`, function(err,data_Groups){
-      if(!err){
-        cb(null,data_Groups[0])
-      }else{
-        cb(err,null)
-      }
+  static findById(reqparams){
+    return new Promise(function(resolve,reject){
+      db.all(`select * from Groups where id=${reqparams}`, function(err,data_Groups){
+        if(!err){
+          resolve(data_Groups[0])
+        }else{
+          reject(err)
+        }
+      })
     })
   }
 
   static update(reqbody,reqparams){
-    db.run(`update Groups set name_of_group="${reqbody.name_of_group}" where id="${reqparams.id}"`, function(err){
-      if(!err){
-        console.log(`success update Groups`);
-      }else{
-        console.log(err);
-      }
+    return new Promise(function(resolve,reject){
+      db.run(`update Groups set name_of_group="${reqbody.name_of_group}" where id="${reqparams.id}"`, function(err){
+        if(!err){
+          resolve()
+        }else{
+          reject(err)
+        }
+      })
     })
   }
 
   static reMove(reqparams){
-    db.run(`delete from Groups where id='${reqparams.id}'`,function(err){
-      if(!err){
-        console.log(`succes delete from Groups`);
-      }else{
-        console.log(err);
-      }
+    return new Promise(function(resolve,reject){
+      db.run(`delete from Groups where id='${reqparams.id}'`,function(err){
+        if(!err){
+          resolve()
+        }else{
+          reject(err)
+        }
+      })
     })
   }
 

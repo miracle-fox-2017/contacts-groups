@@ -8,31 +8,17 @@ const addresses = require('../models/addresses')
 
 // READ
 router.get('/',function(req,res){
-  profile.findAll(function(err,data_join){
-    if(!err){
-      groups.findAll(function(err,data_Groups){
-        if(!err){
-          contacts.findAll(function(err,data_Contacts){
-            if(!err){
-              addresses.findAll(function(err,data_Addresses){
-                if(!err){
-                  res.render('index',{data_Profile:data_join, data_Groups:data_Groups, data_Contacts:data_Contacts, data_Addresses:data_Addresses})
-                }else{
-                  console.log(err,'load from Addresses');
-                }
-              })
-            }else{
-              console.log(err,'load from Contacts');
-            }
-          })
-        }else{
-          console.log(err,'load from Groups');
-        }
-      })
-    }else{
-      console.log(err,'load from Profile');
-    }
-  })
+  Promise.all(
+    [
+      profile.findAll(),
+      groups.findAll(),
+      contacts.findAll(),
+      addresses.findAll()
+    ]).then(alldata =>{
+      res.render('index',{data_Profile:alldata[0], data_Groups:alldata[1], data_Contacts:alldata[2], data_Addresses:alldata[3]})
+    }).catch(err =>{
+      console.log(err,'promise all');
+    })
 })
 
 

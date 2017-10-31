@@ -6,56 +6,58 @@ const contacts_groups = require('../models/contacts_groups')
 
 // CREATE
 router.post('/', function(req,res){
-  contacts.create(req.body)
-  res.redirect('contacts')
+  contacts.create(req.body).then(()=>{
+    res.redirect('contacts')
+  }).catch((err)=>{
+    console.log(err,'insert into Contacts');
+  })
+
 })
 
 // READ
 router.get('/',function(req,res){
-  contacts.findAll(function(err,data_Contacts){
-    if(!err){
-      contacts_groups.findAll(data_Contacts,function(err,data_contacts_groups){
-        if(!err){
-          // console.log(data_contacts_groups);
-          if(data_contacts_groups){
-            groups.findAll(function(err,data_Groups){
-              if(!err){
+  contacts.findAll().then(data_Contacts=>{
+      contacts_groups.findAll(data_Contacts).then(data_contacts_groups=>{
+            // console.log(data_contacts_groups);
+            if(data_contacts_groups){
+              groups.findAll().then((data_Groups)=>{
                 res.render('contacts',{data_contacts_groups:data_contacts_groups, data_Contacts:data_Contacts,data_Groups:data_Groups})
-              }else{
-                console.log(err,'err load group in contact');
-              }
-            })
-          }
-        }else{
-          console.log(err,'load conjunction');
-        }
+              }).catch((err)=>{
+                console.log(err,'findAll from Groups in Contacts');
+              })
+            }
       })
-    }else{
-      console.log(err,'load data Contacts');
-    }
-  })
+    }).catch(err=>{
+        console.log(err);
+    })
 })
 
 // UPDATE
 router.get('/edit/:id', function(req,res){
-  contacts.findById(req.params, function(err,data_Contacts){
-    if(!err){
-      res.render('contacts-edit',{data_Contacts:data_Contacts})
-    }else{
-      console.log(err);
-    }
+  contacts.findById(req.params).then((data_Contacts)=>{
+    res.render('contacts-edit',{data_Contacts:data_Contacts})
+  }).catch((err)=>{
+    console.log(err,'findById from Contacts');
   })
 })
 
 router.post('/edit/:id', function(req,res){
-  contacts.update(req.body, req.params)
-  res.redirect('../../contacts')
+  contacts.update(req.body, req.params).then(()=>{
+    res.redirect('../../contacts')
+  }).catch((err)=>{
+    console.log(err,'update from Contacts');
+  })
+
 })
 
 // DELETE
 router.get('/delete/:id', function(req,res){
-  contacts.reMove(req.params)
-  res.redirect('../../contacts')
+  contacts.reMove(req.params).then(()=>{
+    res.redirect('../../contacts')
+  }).catch((err)=>{
+    console.log(err,'delete from Contacts');
+  })
+
 })
 
 module.exports = router

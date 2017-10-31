@@ -44,7 +44,7 @@
               </span>
               <span>Edit</span>
               </a>
-              <a onclick="myFunction()" class="button is-outlined is-small" href="/profile/delete/<%=data_Profile[i].id%>">
+              <a onclick="return confirm('are you sure to delete?!');" class="button is-outlined is-small" href="/profile/delete/<%=data_Profile[i].id%>">
               <span class="icon is-small">
                 <i class="fa fa-times"></i>
               </span>

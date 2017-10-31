@@ -27,18 +27,18 @@
   <h1>EDIT ADDRESS</h1>
 </div>
 <div class="container">
-<form class="form-inline" role="form" action="/addresses/edit/<%= data.id %>" method="post">
+<form class="form-inline" role="form" action="/addresses/edit/<%= dataAddress.id %>" method="post">
   <div class="form-group">
     <label for="street">Street</label>
-    <input type="TEXT" name="street" value="<%= data.street %>">
+    <input type="TEXT" name="street" value="<%= dataAddress.street %>">
   </div>
   <div class="form-group">
     <label for="city">City</label>
-    <input type="TEXT" name="city" value="<%= data.city %>">
+    <input type="TEXT" name="city" value="<%= dataAddress.city %>">
   </div>
   <div class="form-group">
     <label for="zipcode">Zipcode</label>
-    <input type="TEXT" name="zipcode" value="<%= data.zipcode %>">
+    <input type="TEXT" name="zipcode" value="<%= dataAddress.zipcode %>">
   </div>
   <select name="ContactId">
     <%for(let i=0; i< dataContacts.length; i++){%>

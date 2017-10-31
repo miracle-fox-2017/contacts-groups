@@ -9,7 +9,7 @@ router.get('/', function (req, res) {
 })
 
 router.get('/addresses_with_contact', function(req, res) {
-  Index.addressesWithContact().then((dataAddressesWithContact) => {
+  Index.addressWithContact().then((dataAddressesWithContact) => {
     res.render('addresses_with_contact', {title: 'My Contacts App | Addresses With Contact', dataAddresses: dataAddressesWithContact})
   })
 })

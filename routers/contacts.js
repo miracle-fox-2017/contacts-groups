@@ -7,22 +7,8 @@ const router = express.Router()
 
 // define the contacts page route
 router.get('/', function(req, res) {
-  Promise.all([
-    Contact.findAll(),
-    ContactGroup.findWithGroups()
-  ]).then((allData) => {
-    let dataContacts = allData[0]
-    let dataContactGroups = allData[1]
-    dataContacts.forEach((dataContact) => {
-      dataContact.name_of_group = []
-      dataContactGroups.forEach((dataContactGroup) => {
-        if(dataContact.id == dataContactGroup.contactId) {
-          dataContact.name_of_group.push(dataContactGroup.name_of_group)
-        }
-      })
-    })
-    res.render('contacts/index',{title: 'My Contacts App | Contacts Page', dataContacts: dataContacts})
-    // res.send(dataContacts)
+  Contact.contactWithGroup().then((dataContactWithGroup) => {
+    res.render('contacts/index',{title: 'My Contacts App | Contacts Page', dataContactWithGroup: dataContactWithGroup})
   })
 })
 

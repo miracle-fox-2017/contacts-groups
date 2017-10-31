@@ -3,37 +3,39 @@
   <% include ../partials/header %>
   <body>
     <div class="container">
-      <div class="">
-        <h1>Add Profile</h1>
+      <div class="row">
+        <div class="column column-50">
+          <h1>Add Profile</h1>
 
-        <table>
-          <thead>
-            <tr>
-              <th><a href="/">Home</a></th>
-              <th><a href="/contacts">Contacts</a></th>
-              <th><a href="/groups">Groups</a></th>
-              <th><a href="/profiles">Profile</a></th>
-              <th><a href="/addresses">Addresses</a></th>
-            </tr>
-          </thead>
-        </table><br>
+          <table>
+            <thead>
+              <tr>
+                <th><a href="/">Home</a></th>
+                <th><a href="/contacts">Contacts</a></th>
+                <th><a href="/groups">Groups</a></th>
+                <th><a href="/profiles">Profile</a></th>
+                <th><a href="/addresses">Addresses</a></th>
+              </tr>
+            </thead>
+          </table><br>
 
-        <form class="" action="/profiles/add" method="post">
-          Username:<br>
-          <input type="text" name="username" placeholder="input your username"><br>
-          <br>
-          Password:<br>
-          <input type="password" name="password" placeholder="input your password"><br>
-          <br>
-          Contact Name:<br>
-          <select name="contactId">
-            <% dataContacts.forEach((data) => { %>
-              <option value="<%= data.id %>"><%= data.name %></option>
-            <% }) %>
-          </select><br>
-          <br>
-          <input type="submit" value="Submit">
-        </form>
+          <form class="" action="/profiles/add" method="post">
+            Username:<br>
+            <input type="text" name="username" placeholder="input your username"><br>
+            <br>
+            Password:<br>
+            <input type="password" name="password" placeholder="input your password"><br>
+            <br>
+            Contact Name:<br>
+            <select name="contactId">
+              <% dataContacts.forEach((data) => { %>
+                <option value="<%= data.id %>"><%= data.name %></option>
+              <% }) %>
+            </select><br>
+            <br>
+            <input type="submit" value="Submit">
+          </form>
+        </div>
       </div>
     </div>
   </body>

@@ -7,22 +7,8 @@ const router = express.Router()
 
 // define the groups page route
 router.get('/', function(req, res) {
-  Promise.all([
-    Group.findAll(),
-    ContactGroup.findWithContacts()
-  ]).then((allData) => {
-    let dataGroups = allData[0]
-    let dataContactGroups = allData[1]
-    dataGroups.forEach((dataGroup) => {
-      dataGroup.name = []
-      dataContactGroups.forEach((dataContactGroup) => {
-        if(dataGroup.id == dataContactGroup.groupId) {
-          dataGroup.name.push(dataContactGroup.name)
-        }
-      })
-    })
-    res.render('groups', {title: 'My Contacts App | Groups Page', dataGroups: dataGroups})
-    // res.send(dataGroups)
+  Group.groupWithContact().then((dataGroupWithContact) => {
+    res.render('groups', {title: 'My Contacts App | Groups Page', dataGroupWithContact: dataGroupWithContact})
   })
 })
 

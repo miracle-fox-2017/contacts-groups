@@ -5,7 +5,7 @@ const Contact = require('../models/contacts')
 const db = new sqlite3.Database('database/data.db');
 
 class Index {
-  static addressesWithContact() {
+  static addressWithContact() {
     return new Promise((resolve, reject) => {
       Promise.all([
         Address.findAll(),

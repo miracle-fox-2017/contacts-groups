@@ -31,7 +31,7 @@
             </tr>
           </thead>
           <tbody>
-            <% dataContacts.forEach((data) => { %>
+            <% dataContactWithGroup.forEach((data) => { %>
               <tr>
                 <td><%= data.id %></td>
                 <td><%= data.name %></td>
@@ -48,7 +48,8 @@
           </tbody>
         </table>
 
-        <h4><a href="/contacts/add">Add Contact</a>&nbsp;&nbsp;<a href="/addresses_with_contact">Addresses With Contact</a></h4>
+        <a class="button button-outline" href="/contacts/add">Add Contact</a>
+        <a class="button" href="/addresses_with_contact">Addresses With Contact</a>
       </div>
     </div>
   </body>

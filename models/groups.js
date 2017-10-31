@@ -1,4 +1,6 @@
 const sqlite3 = require('sqlite3').verbose();
+const ContactGroup = require('../models/contactsGroups')
+
 const db = new sqlite3.Database('database/data.db');
 
 class Group {
@@ -58,6 +60,27 @@ class Group {
         } else {
           resolve()
         }
+      })
+    })
+  }
+
+  static groupWithContact() {
+    return new Promise((resolve, reject) => {
+      Promise.all([
+        Group.findAll(),
+        ContactGroup.findWithContacts()
+      ]).then((allData) => {
+        let dataGroups = allData[0]
+        let dataContactGroups = allData[1]
+        dataGroups.forEach((dataGroup) => {
+          dataGroup.name = []
+          dataContactGroups.forEach((dataContactGroup) => {
+            if(dataGroup.id == dataContactGroup.groupId) {
+              dataGroup.name.push(dataContactGroup.name)
+            }
+          })
+        })
+        resolve(dataGroups)
       })
     })
   }

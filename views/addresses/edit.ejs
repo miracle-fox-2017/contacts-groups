@@ -4,39 +4,41 @@
   <body>
     <div class="container">
       <div class="row">
-        <h1>Edit Address</h1>
+        <div class="column column-50">
+          <h1>Edit Address</h1>
 
-        <table>
-          <thead>
-            <tr>
-              <th><a href="/">Home</a></th>
-              <th><a href="/contacts">Contacts</a></th>
-              <th><a href="/groups">Groups</a></th>
-              <th><a href="/profiles">Profile</a></th>
-              <th><a href="/addresses">Addresses</a></th>
-            </tr>
-          </thead>
-        </table><br>
+          <table>
+            <thead>
+              <tr>
+                <th><a href="/">Home</a></th>
+                <th><a href="/contacts">Contacts</a></th>
+                <th><a href="/groups">Groups</a></th>
+                <th><a href="/profiles">Profile</a></th>
+                <th><a href="/addresses">Addresses</a></th>
+              </tr>
+            </thead>
+          </table><br>
 
-        <form class="" action="/addresses/edit/<%= dataAddress.id %>" method="post">
-          Street:<br>
-          <input type="text" name="street" value="<%= dataAddress.street %>"><br>
-          <br>
-          City:<br>
-          <input type="text" name="city" value="<%= dataAddress.city %>"><br>
-          <br>
-          Zipcode:<br>
-          <input type="text" name="zipcode" value="<%= dataAddress.zipcode %>"><br>
-          <br>
-          Contact Name:<br>
-          <select name="contactId">
-            <% dataContacts.forEach((data) => { %>
-              <option value="<%= data.id %>" <%= data.id == dataAddress.contactId ? "selected" : "" %>><%= data.name %></option>
-            <% }) %>
-          </select><br>
-          <br>
-          <input type="submit" value="Submit">
-        </form>
+          <form class="" action="/addresses/edit/<%= dataAddress.id %>" method="post">
+            Street:<br>
+            <input type="text" name="street" value="<%= dataAddress.street %>"><br>
+            <br>
+            City:<br>
+            <input type="text" name="city" value="<%= dataAddress.city %>"><br>
+            <br>
+            Zipcode:<br>
+            <input type="text" name="zipcode" value="<%= dataAddress.zipcode %>"><br>
+            <br>
+            Contact Name:<br>
+            <select name="contactId">
+              <% dataContacts.forEach((data) => { %>
+                <option value="<%= data.id %>" <%= data.id == dataAddress.contactId ? "selected" : "" %>><%= data.name %></option>
+              <% }) %>
+            </select><br>
+            <br>
+            <input type="submit" value="Submit">
+          </form>
+        </div>
       </div>
     </div>
   </body>

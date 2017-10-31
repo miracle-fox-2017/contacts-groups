@@ -5,9 +5,9 @@ const Contact = require('../models/contact')
 
 
 router.get('/', (req, res)=>{
-	Addresses.read(address=>{
-		Contact.read(contacts=>{
-			res.render('addresses/addresses_with_contact', {addresses : address, contacts})
+	Addresses.findAll().then(addresses=>{
+		Contact.findAll().then(contacts=>{
+			res.render('addresses/addresses_with_contact', {addresses, contacts})
 		})
 	})
 })

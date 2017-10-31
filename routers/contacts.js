@@ -5,28 +5,6 @@ const Group = require('../models/group')
 const ContactGroup = require('../models/contact_group')
 
 
-// router.get('/', (req, res)=>{
-// 	Contact.read(contacts=>{
-// 		ContactGroup.read(contact_group=>{
-// 			Group.read(groups =>{
-				
-// 				contacts.forEach(contact =>{
-// 					contact.groups = []
-// 					contact_group.forEach(cg =>{
-// 						groups.forEach(group =>{
-// 							if(contact.id == cg.id_contact && group.id == cg.id_group){	
-// 								contact.groups.push(group.name_of_group)
-// 							}
-// 						})
-// 					})
-// 				})
-// 				console.log(contacts)
-// 				res.render('contacts/list', {contacts})
-// 			})
-// 		})
-// 	})
-// })
-
 router.get('/', (req, res)=>{
 	Promise.all([
 		Contact.findAll(),
@@ -50,8 +28,7 @@ router.get('/', (req, res)=>{
 })
 
 router.get('/add', (req, res)=>{
-	Group.read(group=>{
-		console.log(group)
+	Group.findAll().then(group=>{
 		res.render('contacts/add', {group})
 	})
 })
@@ -66,13 +43,13 @@ router.post('/add', (req, res)=>{
 	}
 
 
-	Contact.insert(obj_contact, (id)=>{
+	Contact.create(obj_contact).then(id =>{
 		let obj_conj = {
 			id_contact : id.lastID,
 			id_group : req.body.id_group
 		}
 
-		ContactGroup.insert(obj_conj, ()=>{
+		ContactGroup.create(obj_conj)( tes=>{
 			res.redirect('/contacts')
 		})
 	})
@@ -82,8 +59,8 @@ router.post('/add', (req, res)=>{
 
 router.get('/edit/:id', (req, res)=>{
 
-	Contact.select_by_id(req.params.id, (data)=>{
-		res.render('contacts/edit', {contact : data})
+	Contact.findById(req.params.id).then(contact =>{
+		res.render('contacts/edit', {contact})
 	})
 })
 
@@ -96,7 +73,7 @@ router.post('/edit/:id', (req, res)=>{
 		email		: req.body.email 
 	}
 
-	Contact.update(obj, (data)=>{
+	Contact.update(obj).then(data =>{
 		res.redirect('/contacts')
 	})
 })

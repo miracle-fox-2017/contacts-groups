@@ -42,24 +42,26 @@ class Group{
 		
 	}
 
-	static update(sql, cb){
+	static update(sql){
 		let update = 
 			`UPDATE Groups SET name_of_group = "${sql.name_of_group}" `+
 			`WHERE id = ${sql.id};`
 
-			console.log(update) 
-
+		return new Promise((resolve, reject)=> { 
 			db.run(update, (err)=>{
 				if(err){
-					console.log(err)
+					reject(err)
 				}
 				else{
-					cb('data sudah di update')
+					resolve('data sudah di update')
 				}
 			})
+		})
+
+			
 	}
 
-	static remove(sql, cb){
+	static remove(sql){
 		let del  = `DELETE FROM Groups WHERE id = ${sql.id};`
 
 		return new Promise((resolve, reject)=> {

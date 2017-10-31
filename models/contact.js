@@ -25,7 +25,7 @@ class Contact{
 	static findById(sql){
 		let select = `SELECT * FROM Contacts WHERE id = ${sql}`
 		
-		new Promise((resolve, reject)=>{
+		return new Promise((resolve, reject)=>{
 			db.all(select, (err, rows)=>{
 				if(err){
 					reject(err)
@@ -46,7 +46,7 @@ class Contact{
 			`email = "${sql.email}" ` +
 			`WHERE id = ${sql.id};` 
 
-			new Promise((resolve, reject)=>{ 
+			return new Promise((resolve, reject)=>{ 
 				db.run(update, (err)=>{
 					if(err){
 						reject(err)
@@ -61,7 +61,7 @@ class Contact{
 	static remove(sql){
 		let del  = `DELETE FROM Contacts WHERE id = ${sql.id};`
 
-		new Promise((resolve, reject)=>{ 
+		return new Promise((resolve, reject)=>{ 
 			db.run(del, (err)=>{
 				if(err){
 					reject(err)
@@ -82,19 +82,16 @@ class Contact{
 			`"${sql.telp_number}", `+
 			`"${sql.email}");`
 
-		new Promise((resolve, reject)=>{ 
+		return new Promise((resolve, reject)=>{ 
 			db.run(insert, function(err){
 				if(err){
 					reject(err)
 				}
 				else{
-	
 					resolve(this)
 				}
 			})
-
-		})	
-			
+		})		
 	}
 }
 

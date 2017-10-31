@@ -12,8 +12,8 @@ app.use('/', index)
 const contacts = require('./routers/contacts')
 app.use('/contacts', contacts)
 
-// const groups = require('./routers/groups')
-// app.use('/groups', groups)
+const groups = require('./routers/groups')
+app.use('/groups', groups)
 
 const addresses = require('./routers/addresses')
 app.use('/addresses', addresses)

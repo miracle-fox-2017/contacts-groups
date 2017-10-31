@@ -18,7 +18,7 @@ class ContactGroup{
 					let cg = rows.map(item =>{
 						return new ContactGroup(item)
 					})
-
+					
 					resolve(cg)
 				}
 			})

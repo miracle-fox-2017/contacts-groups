@@ -1,27 +1,48 @@
 const db = require('../component/koneksi')
 
 class Profile{
-	
-	static read(cb){
+	constructor(data){
+		this.id = data['id']
+		this.username = data['username']
+		this.password = data['password']
+		this.id_contact = data['id_contact']
+	}
+
+	static findAll(){
 		let select = "SELECT * FROM Profile"
-		let data = []
-		db.all(select, (err, rows)=>{
-			cb(rows)
+
+		return new Promise((resolve, reject)=> {
+			db.all(select, (err, rows)=>{
+				if(err){
+					reject(err)
+				}
+				else{
+					let profile = rows.map(item =>{
+						return new Profile(item)
+					})
+					resolve(profile)
+				}
+			})
+
+		})		
+	}
+
+	static findById(sql){
+		let select = `SELECT * FROM Profile WHERE id = ${sql.id}`
+			
+		return new Promise((resolve, reject)=> { 
+			db.all(select, (err, rows)=>{
+				if(err){
+					reject(err)
+				}
+				else{
+					resolve(rows.pop())
+				}	
+			})	
 		})
 	}
 
-	static select_by_id(sql, cb){
-		let select = `SELECT * FROM Profile WHERE id = ${sql.id}`
-			
-		db.all(select, (err, rows)=>{
-			rows.forEach(item =>{
-				cb(item)
-			})
-			
-		})	
-	}
-
-	static update(sql, cb){
+	static update(sql){
 		let update = 
 			`UPDATE Profile SET username = "${sql.username}", `+
 			`password = "${sql.password}", `+ 
@@ -29,32 +50,36 @@ class Profile{
 			`WHERE id = ${sql.id};` 
 			console.log(update)
 
+		return new Promise((resolve, reject)=> { 
 			db.run(update, (err)=>{
 				if(err){
-					console.log(err)
+					reject(err)
 				}
 				else{
-					cb('data sudah di update')
+					resolve('data sudah di update')
 				}
 			})
+		})
 	}
 
-	static delete(sql, cb){
+	static remove(sql, cb){
 		let del  = `DELETE FROM Profile WHERE id = ${sql.id};`
 
-		console.log(del)
 
-		db.run(del, (err)=>{
-			if(err){
-				console.log(err)
-			}
-			else{
-				cb('data sudah didelete')
-			}
-		}) 
+		return new Promise((resolve, reject)=> { 
+			db.run(del, (err)=>{
+				if(err){
+					reject(err)
+				}
+				else{
+					resolve('data sudah didelete')
+				}
+			}) 
+		})
+		
 	}
 
-	static insert(sql, cb){
+	static create(sql, cb){
 
 		let	insert = '',
 			username = sql.username,
@@ -65,49 +90,49 @@ class Profile{
 				status : ''
 			}
 
-		if(username.length == 0){
+		return new Promise((resolve, reject)=>{
 
-			error = {
-				is_error : true,
-				status : 'username tidak boleh kosong'
+			if(username.length == 0){
+
+				error = {
+					is_error : true,
+					status : 'username tidak boleh kosong'
+				}
+
+				return reject(error)
+			}
+			else if(password.length == 0){
+				error = {
+					is_error : true,
+					status : 'password tidak boleh kosong'
+				}
+				return reject(error)
+			}
+			else if(id_contact.length == 0){
+				error = {
+					is_error : true,
+					status : 'contact tidak boleh kosong'
+				}
+				return reject(error)
+			}
+			else{
+
+			insert = `INSERT INTO Profile (username, password, id_contact) VALUES `+
+				`("${username}", `+
+				`"${password}", `+
+				`${id_contact});`
 			}
 
-			return cb(error)
-		}
-		else if(password.length == 0){
-			error = {
-				is_error : true,
-				status : 'password tidak boleh kosong'
-			}
-			return cb(error)
-		}
-		else if(id_contact.length == 0){
-			error = {
-				is_error : true,
-				status : 'contact tidak boleh kosong'
-			}
-			return cb(error)
-		}
-		else{
-
-		insert = `INSERT INTO Profile (username, password, id_contact) VALUES `+
-			`("${username}", `+
-			`"${password}", `+
-			`${id_contact});`
-		}
-
-			console.log(insert)
 			db.run(insert, (err)=>{
 				if(err){
-					console.log(err)
+					reject(err)
 				}
 				else{
-					 cb('berhasil insert')
+					 resolve('berhasil insert')
 				}
 			})
-			
+		})	
 	}
-
 }
 
 module.exports = Profile

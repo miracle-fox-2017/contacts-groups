@@ -31,12 +31,31 @@ const ContactGroup = require('../models/contact_group')
 		
 // 	})
 // })
+router.get('/', (req, res)=> {
+	Promise.all([
+		Group.findAll(),
+		ContactGroup.findAll(),
+		Contact.findAll()
+		
+		]).then(object =>{
 
-router.get()
+				object[0].forEach(group => {
+					group.contacts = []
+					object[1].forEach(cg => {
+						object[2].forEach(contact => {
+							if(contact.id == cg.id_contact && group.id == cg.id_group){
+								group.contacts.push(contact.name)
+							}
+						})
+					})
+				})
+				res.render('groups/list', {groups : object[0]})
+			})
+})
 
 router.get('/edit/:id', (req, res)=>{
 
-	Group.select_by_id(req.params, (data)=>{
+	Group.findById(req.params).then(data => { 
 		res.render('groups/edit', {group : data})
 	})
 })
@@ -47,21 +66,20 @@ router.post('/edit/:id', (req, res)=>{
 		name_of_group	: req.body.name_of_group,
 	}
 
-	console.log('ini di router', obj)
-	Group.update(obj, (data)=>{
+	Group.update(obj).then(data => {
 		res.redirect('/groups')
 	})
 })
 
 router.get('/delete/:id', (req, res)=>{
-	Group.delete(req.params, data=>{
+	Group.remove(req.params).then(data => {
+		res.redirect('/groups')
 	})
 })
 
 router.get('/assign_contacts/:id', (req, res)=>{
-	Group.select_by_id(req.params, hasil=>{
-		Contact.read(contact =>{
-			console.log(contact)
+	Group.findById(req.params).then(hasil=>{
+		Contact.findAll().then(contact =>{
 		res.render('groups/assign_contact', {groups : hasil, contact})
 		})
 	})
@@ -72,8 +90,8 @@ router.post('/assign_contacts/:id', (req, res)=>{
 		id_contact : req.body.id_contact,
 		id_group : req.params.id
 	}
-		// console.log(obj)
-	ContactGroup.insert(obj, hasil=>{
+	
+	ContactGroup.create(obj).then(hasil=>{
 		res.redirect('/groups')
 	})
 })

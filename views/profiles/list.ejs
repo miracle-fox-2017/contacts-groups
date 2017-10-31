@@ -17,12 +17,7 @@
         <td><%=item.id%></td>
         <td><%=item.username%></td>
         <td><%=item.password%></td>
-
-        <%contacts.forEach(contact=>{ %>
-            <%if(contact.id == item.id_contact){%>
-              <td><%=contact.name%></td>
-            <%}%>
-        <%})%>
+        <td><%=item.contact%></td>
 
         <td>
         	<a href="/profiles/add" class="btn btn-primary" role="button">Add</a>

@@ -4,16 +4,24 @@ const Profile = require('../models/profile')
 const Contact = require('../models/contact')
 
 router.get('/', (req, res)=>{
-	Profile.read(profile=>{
-		Contact.read(contact =>{
-			res.render('profiles/list', {profiles : profile, contacts : contact})
+	Profile.findAll().then((profiles)=>{
+		Contact.findAll().then(contacts =>{
+			
+			profiles.forEach(profile =>{
+				contacts.forEach(contact =>{
+					if(profile.id_contact == contact.id){
+						profile.contact = contact.name
+					}
+				})
+			})
+			res.render('profiles/list', {profiles, contacts})
 		})
 	})
 })
 
 router.get('/add', (req, res)=>{
-	Contact.read(data=>{
-		res.render('profiles/add', {contact : data, error : is_error = false})
+	Contact.findAll().then(contact=>{
+		res.render('profiles/add', {contact, error : is_error = false})
 	})
 })
 
@@ -23,28 +31,23 @@ router.post('/add', (req, res)=>{
 		password : req.body.password,
 		id_contact : req.body.id_contact
 	}
-	console.log(obj)
 
-	Profile.insert(obj, err=>{
-		
-		if(err.is_error){
-			console.log(err)
-			Contact.read(data=>{
-				res.render('profiles/add', {contact : data, error : err})
-			})
-		}
-		else{
+	Profile.create(obj).then(hasil=>{
 			res.redirect('/profiles')
-		}
+		
+	}).catch(error =>{
+		Contact.findAll().then(contact=>{ 
+			res.render('profiles/add', {contact, error})
+		})
 		
 	})
 })
 
 router.get('/edit/:id', (req, res)=>{
 
-	Profile.select_by_id(req.params, (profile)=>{
-		Contact.read(contact=>{
-			res.render('profiles/edit', {profiles : profile, contact})
+	Profile.findById(req.params).then(profiles =>{
+		Contact.findAll().then(contact=>{
+			res.render('profiles/edit', {profiles, contact})
 		})
 	})
 })
@@ -58,7 +61,7 @@ router.post('/edit/:id', (req, res)=>{
 	}
 
 	// console.log('ini di router', obj)
-	Profile.update(obj, (data)=>{
+	Profile.update(obj).then(data =>{
 		res.redirect('/profiles')
 	})
 })

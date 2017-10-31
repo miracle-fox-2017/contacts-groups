@@ -16,14 +16,16 @@ class Group{
 		});
 	}
 
-	static addGroup(data, cb){
-		db.run(`insert into Groups (name_of_group) values ("${data}")`, err=>{
-			if(err){
-				console.log(err)
-			}else{
-				cb()
-			}
-		})
+	static addGroup(data){
+		return new Promise((resolve, reject) => {
+			db.run(`insert into Groups (name_of_group) values ("${data}")`, err=>{
+				if(err){
+					reject(err)
+				}else{
+					resolve()
+				}
+			})
+		});
 	}
 
 	static getGroupById(data){
@@ -39,24 +41,28 @@ class Group{
 		})
 	}
 
-	static editGroup(data, cb){
-		db.run(`update Groups set name_of_group = "${data.name_of_group}" where id = "${data.id}"`, err=>{
-			if(err){
-				console.log(err)
-			}else{
-				cb()
-			}
-		})
+	static editGroup(data){
+		return new Promise((resolve, reject) => {
+			db.run(`update Groups set name_of_group = "${data.name_of_group}" where id = "${data.id}"`, err=>{
+				if(err){
+					reject(err)
+				}else{
+					resolve()
+				}
+			})
+		});
 	}
 
-	static deleteGroup(data, cb){
-		db.run(`delete from Groups where id = "${data}"`, err=>{
-			if(err){
-				console.log(err)
-			}else{
-				cb()
-			}
-		})
+	static deleteGroup(data){
+		return new Promise((resolve, reject) => {
+			db.run(`delete from Groups where id = "${data}"`, err=>{
+				if(err){
+					reject(err)
+				}else{
+					resolve()
+				}
+			})
+		});
 	}
 
 	static addContactGroup(data, cb){

@@ -36,11 +36,11 @@ class ContactGroup{
 		return new Promise((resolve, reject) => {
 			Group.getAllGroup().then(groups=>{
 				let result = groups.map(group=>{
-					group.name = ""
+					group.name = []
 					return new Promise((resolve, reject) => {
 						this.getContactKonjById(group.id).then(contact=>{
 							contact.forEach(kontak=>{
-								group.name = kontak.name	
+								group.name.push(kontak.name)	
 							})
 							resolve(group)
 						})
@@ -52,40 +52,6 @@ class ContactGroup{
 				})
 			})
 		});
-
-		// Group.findAll()
-		//   .then(data => {
-		//   	let arr = data.map(d => {
-		//   		return new Promise(resolve,reject) {
-		//   			ContactGroup.findWhere(dGroupid)
-		//   			data.name = conact.name
-		//   		}
-		//   	})
-
-		//   	promise.All(arr)
-		//   })
-		// return new Promise((resolve, reject) => {
-		// 	let groups    = Group.getAllGroup()
-		// 	let contacts  = Contact.getAllContact()
-		// 	let konjungsi = this.getAllKonjungsi() 
-
-		// 	Promise.all([groups, konjungsi]).then(result=>{
-		// 		result[0].forEach(group=>{
-		// 			group.name=""
-		// 			result[1].forEach(konj=>{
-		// 				if(group.id === konj.id_group){
-		// 					Contact.getContactById(konj.id_contact).then(contact=>{
-		// 						group.name += contact.name+' '
-		// 						console.log(group);
-		// 					})
-		// 				}
-		// 			})
-		// 		})
-
-		// 		resolve(result[0])
-		// 	})
-
-		// });
 	}
 
 	static getContactKonjById(data){

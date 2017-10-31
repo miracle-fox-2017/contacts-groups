@@ -6,6 +6,8 @@ db.serialize(function(){
   db.run("CREATE TABLE IF NOT EXISTS Groups (id INTEGER PRIMARY KEY AUTOINCREMENT, name_of_group varchar(20) )");
   db.run("CREATE TABLE IF NOT EXISTS Profile (id INTEGER PRIMARY KEY AUTOINCREMENT, username varchar(20), password vachar(20))");
   db.run("CREATE TABLE IF NOT EXISTS Addresses (id INTEGER PRIMARY KEY AUTOINCREMENT, street varchar(30), city varchar(10), zipcode INTEGER)");
+  db.run(`ALTER TABLE Profile ADD COLUMN contacts_id INTEGER REFERENCES Contacts (id)`)
+  db.run(`CREATE UNIQUE INDEX IF NOT EXISTS idContact ON Profile (contacts_id)`)
 })
 
 db.close()

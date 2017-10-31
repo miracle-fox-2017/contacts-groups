@@ -24,6 +24,7 @@
         <th>No</th>
         <th>Username</th>
         <th>Password</th>
+        <th>Contact Name</th>
         <th>Action</th>
       </tr>
         <% let i = 1 %>
@@ -32,6 +33,7 @@
             <td> <%= i %> </td>
             <td> <%= el.username %> </td>
             <td> <%= el.password %> </td>
+            <td> <%= el.name%> </td>
             <td><a href="/profiles/edit/<%=el.id%>">edit</a>
                 <a href="/profiles/delete/<%=el.id%>">delete</a>
             </td>
@@ -47,16 +49,34 @@
         Password:<br>
         <input type="text" name="password" required=true/>
         <br>
+        <select name="/profiles" required=true>
+          <option value="">--select contact--</option>
+          <% contactsRows.forEach(function(eq){%>
+              <option value="<%=eq.id%>"><%=eq.name %></option>
+            <%})%>
+        </select>
+        <br>
         <input type="submit" value="ADD">
       </form>
       <%}%>
       <% if (isEdit === true) {%>
         <form action="/profiles/edit/<%=profilesRows[0].id%>" method="post">
           Username:<br>
-          <input type="text" name="username" value="<%=profilesRows[0].name%>" required/>
+          <input type="text" name="username" value="<%=profilesRows[0].username%>" required/>
           <br>
           Password:<br>
-          <input type="text" name="password" value="<%=profilesRows[0].company%>" required=true/>
+          <input type="text" name="password" value="<%=profilesRows[0].password%>" required=true/>
+          <br>
+          <select name="contact" required=true>
+            <option value="">--select contact--</option>
+            <% contactsRows.forEach(function(eq){
+              if(eq.id===profilesRows[0].contacts_id){%>
+                <option value="<%=eq.id%>" selected><%=eq.name %></option>
+              <%}else{%>
+                <option value="<%=eq.id%>"><%=eq.name %></option>
+              <%}%>
+            <% }) %>
+          </select>
           <br>
           <input type="submit" value="EDIT">
         </form>

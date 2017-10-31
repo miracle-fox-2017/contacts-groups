@@ -4,7 +4,8 @@ const db = new sqlite3.Database('./database/data.db');
 
 class Profile{
   static findAll(cb){
-    let query = `SELECT * FROM Profile`;
+    let query = `SELECT Profile.*,Contacts.name FROM Profile LEFT JOIN
+                  Contacts ON Contacts.id = Profile.contacts_id`;
     db.all(query,function(err,profilesRows){
       if(!err){
         cb(null,profilesRows)
@@ -46,7 +47,8 @@ class Profile{
   static update(obj){
     let query = `UPDATE Profile
                SET username = "${obj.username}",
-               password = "${obj.password}"
+               password = "${obj.password}",
+               contacts_id = "${obj.contacts_id}"
                WHERE id = "${obj.id}"`;
    db.all(query)
   }

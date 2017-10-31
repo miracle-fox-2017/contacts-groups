@@ -110,6 +110,28 @@ class GroupsModel {
 		});
 		db.close();
 	}
+
+	static findAllJoinContactGroupsConjunction(allGroups, allContacts, allContactGroup) {
+		let arrJoinedGroups = [];
+
+		allGroups.forEach( function(group) {
+			let obj = {};
+			obj.id = group.id;
+			obj.name_of_group = group.name_of_group;
+			obj.contacts_name = [];
+
+			allContacts.forEach( function(contact) {
+				allContactGroup.forEach( function(item) {
+					if (group.id == item.groups_id && contact.id == item.contacts_id) {
+						obj.contacts_name.push(contact.name);
+					}
+				});
+			});
+
+			arrJoinedGroups.push(obj);
+		});
+
+	}
 }
 
 module.exports = GroupsModel;

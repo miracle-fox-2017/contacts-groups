@@ -23,6 +23,22 @@ class ContactsModel {
 		db.close();
 	}
 
+	static findAllPromise() {
+		return new Promise((resolve, reject) => {
+			let db = new sqlite3.Database(dbLocation);
+			let sql = `SELECT * FROM ${tableName}`;
+			db.all(sql, function(err, rows) {
+				if (err) {
+					reject({err: err, message: 'Something wrong with sql query!'});
+				} else {
+					resolve(rows);
+				}
+			})
+
+			db.close();
+		});
+	}
+
 	/* Method pengganti addData(data) */
 	static create(data, callback) {
 		let db = new sqlite3.Database(dbLocation);

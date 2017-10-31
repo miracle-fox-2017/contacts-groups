@@ -4,53 +4,63 @@ const ContactsModel = require('../models/contacts-model');
 const ProfilesModel = require('../models/profile-model');
 
 router.get('/', (req, res) => {
-	ProfilesModel.findAllDataInnerJoin('Contacts', function(err, allProfiles) {
-		ContactsModel.findAll(function(err, allcontacts) {
-			res.render('profile', { data: allProfiles, contacts: allcontacts });
-		});
-	});
+	ProfilesModel.findAllDataInnerJoinPromise('Contacts')
+		.then((allProfiles) => { 
+			ContactsModel.findAllPromise().then((allContacts) => {
+				res.render('profile', { data: allProfiles, contacts: allContacts });
+			}).catch((err) => {
+				res.send(err)
+			}); 
+		})
+		.catch((err) => {
+			res.send(err)
+		})
 });
 
 router.post('/', (req, res) => {
-	ProfilesModel.create(req.body, function(err, allProfiles, lastID) {
-		if (err === null) {
+	ProfilesModel.createPromise(req.body)
+		.then(function(success) {
 			res.redirect('/profiles');
-		} else {
-			res.send(err);
-		}
-	});
+		})
+		.catch(function(error){
+			res.send(error);
+		});
 });
 
 router.get('/edit/:id', (req, res) => {
-	ProfilesModel.findAllDataInnerJoin('Contacts', function(err, allProfiles) {
+	let arrModel = [
+		ProfilesModel.findAllDataInnerJoinPromise('Contacts'),
+		ContactsModel.findAllPromise(),
+		ProfilesModel.findByIdPromise({id: req.params.id})
+	];
 
-		ContactsModel.findAll((err, allContacts) => {
-			ProfilesModel.findById({id: req.params.id}, (err, editedRows) =>{
-				res.render('profile', { id: req.params.id, data: allProfiles, editItem: editedRows, contacts: allContacts});
-			});
-		});
-	});	
+	Promise.all(arrModel)
+		.then(function(success) {
+			res.render('profile', { id: req.params.id, data: success[0], editItem: success[2], contacts: success[1]});
+		})
+		.catch(function(error) {
+			res.send(error);
+		})
 });
 
 router.post('/edit/:id', (req, res) => {
-	ProfilesModel.update({id: req.params.id, editItem: req.body},
-		function(err, rows) {
-			if (err === null) {
-				res.redirect('/profiles/');
-			} else {
-				res.send(err);
-			}
-		});
+	ProfilesModel.updatePromise({id: req.params.id, editItem: req.body})
+		.then((success) => {
+			res.redirect('/profiles/');
+		})
+		.catch((error) => {
+			res.send(error);
+		})
 });
 
 router.get('/delete/:id', (req, res) => {
-	ProfilesModel.removeItem({id: req.params.id}, function(err, rows) {
-			if (err === null) {
-				res.redirect('/profiles/');
-			} else {
-				res.send(err);
-			}
-		});
+	ProfilesModel.removeItemPromise({id: req.params.id})
+		.then((success) => {
+			res.redirect('/profiles/');
+		})
+		.catch((err) => {
+			res.send(err);
+		})
 });
 
 module.exports = router;

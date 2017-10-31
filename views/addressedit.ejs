@@ -5,13 +5,11 @@
     <title></title>
   </head>
   <body>
-    <%for(var i = 0 ; i < dataAddress.length;i++){%>
     <form class="" action="/address/edit/<%=dataAddress[0].id%>" method="POST">
       <input type="text" name="street" placeholder="Street" value="<%=dataAddress.street%>">
       <input type="text" name="city" placeholder="City" value="<%=dataAddress.city%>">
       <input type="text" name="zipcode" placeholder="Zipcode" value="<%=dataAddress.zipcode%>">
       <button type="submit" name="submit">Submit</button>
     </form>
-  <%}%>
   </body>
 </html>

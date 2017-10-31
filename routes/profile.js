@@ -11,8 +11,6 @@ let query2=`SELECT * FROM Contacts`
 router.get('/',(req,res)=>{
   db.all(query,(err,row)=>{
   db.all(query2,(err,row2)=>{
-      // data2=kontak
-      //data=gabungan koontak profile
       if(err){
         console.log(err);
       }else{

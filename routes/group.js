@@ -35,16 +35,20 @@ router.post('/edit/:id',function(req,res){
     res.redirect('/group')
   })
 })
-  // db.run(`update Groups set name_of_group='${req.body.name_of_group}'
-  //  WHERE id= ${req.params.id}`,function(){
-// })
-// router.get('/groupedit',(req,res)=>{
-//   db.all(`SELECT * FROM Groups WHERE id=${req.params.id}`,(err,row)=>{
-//     res.render('groupedit',{data:row})
-//   })
-// })
+
+router.get('/groupedit',(req,res)=>{
+  db.all(`SELECT * FROM Groups WHERE id=${req.params.id}`,(err,row)=>{
+    res.render('groupedit',{data:row})
+  })
+})
 
 module.exports = router;
+
+
+// db.run(`update Groups set name_of_group='${req.body.name_of_group}'
+//  WHERE id= ${req.params.id}`,function(){
+// })
+
 //========================groups======================
 // app.get('/group',(req,res)=>{
 //   db.all("SELECT * FROM Groups",(err,row)=>{

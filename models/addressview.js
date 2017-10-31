@@ -31,8 +31,9 @@ class Address {
            cb()
          }else{
            cb(err);
-         }
-       })
+        }
+      }
+    )
   }
 }
 

@@ -5,24 +5,28 @@ class Groups {
 
     static findAll(callback) {
         let getData = "SELECT * FROM groups";
-        db.all(getData, function (err, rowsContacts) {
-            if (!err) {
-                return callback(null, rowsContacts);
-            } else {
-                return callback(err, null);
-            }
+        return new Promise((resolve,reject)=>{ 
+            db.all(getData, function (err, dataContacts) {
+                if (!err) {
+                    resolve(dataContacts);
+                } else {
+                    reject(err);
+                }
+            });
         });
     }
 
     static findAllWhere(id,callback) {
         let getData = `SELECT * FROM groups WHERE id = ${id}`;
-        db.get(getData, function (err, rowsContacts) {
-            if (!err) {
-                return callback(null, rowsContacts);
-            } else {
-                return callback(err, null);
-            }
-        });
+        return new Promise((resolve,reject)=>{
+            db.get(getData, function (err, rowsContacts) {
+                if (!err) {
+                    resolve(rowsContacts);
+                } else {
+                    reject(err);
+                }
+            });
+        });        
     }
 
     static createData(obj,callback) {

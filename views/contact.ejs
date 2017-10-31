@@ -18,6 +18,7 @@
             <th>Company</th>
             <th>Telp</th>
             <th>Email</th>
+            <th>Address</th>
             <th>Action</th>
         </tr>
         <% 
@@ -40,6 +41,9 @@
                 </td>
                 <td>
                     <%= row.email %>
+                </td>
+                <td>
+                    <a href="/addresses_with_contact/<%= row.id %>">Cek Address</a>
                 </td>
                 <td>
                     <a href="/contact/edit/<%= row.id %>">Edit</a> | <a href="/contact/hapus/<%= row.id %>">Hapus</a>

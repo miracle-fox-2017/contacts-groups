@@ -3,10 +3,11 @@ const Groups = require('../models/groups');
 const router = express.Router();
 
 router.get('/groups', function (req, res) {
-    Groups.findAll(function (err, rowsGroups) {
+    Groups.findAll().then((rowsGroups) => {
         res.render('groups', { rowsGroups });
-    })
-
+    }).catch((err) => {
+        res.send(err);
+    });        
 });
 
 router.get('/groups/add', function (req, res) {
@@ -23,13 +24,11 @@ router.post('/groups/add', function (req, res) {
 });
 
 router.get('/groups/edit/:id', function (req, res) {
-    Groups.findAllWhere(req.params.id, function (err, rowsGroups) {
-        if (!err) {
-            res.render('editgroups', { rowsGroups });
-        } else {
-            res.send(err);
-        }
-    });
+    Groups.findAllWhere(req.params.id).then((rowsGroups)=>{
+        res.render('editgroups', { rowsGroups });
+    }).catch((err)=>{
+        res.send(err);
+    }); 
 });
 
 router.post('/groups/edit/:id', function (req, res) {

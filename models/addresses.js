@@ -14,6 +14,17 @@ class Addresses {
         });
     }
 
+    static findAllWithContact(id,callback) {
+        let getData = `SELECT * FROM address WHERE idcontact = ${id} `;
+        db.all(getData, function (err, rowsContacts) {
+            if (!err) {
+                return callback(null, rowsContacts);
+            } else {
+                return callback(err, null);
+            }
+        });
+    }
+
     static findAllWhere(id,callback) {
         let getData = `SELECT address.*,contact.name FROM address INNER JOIN contact ON contact.id = address.idcontact WHERE address.id = ${id}`;
         db.all(getData, function (err, rowsContacts) {

@@ -22,10 +22,9 @@
     <table>
       <tr>
         <th>No</th>
-        <th>Nama</th>
-        <th>Company</th>
-        <th>Phone Number</th>
-        <th>Email</th>
+        <th>Street</th>
+        <th>City</th>
+        <th>Zipcode</th>
         <th>Action</th>
       </tr>
         <% let i = 1 %>
@@ -59,13 +58,13 @@
       <% if (isEdit === true) {%>
         <form action="/addresses/edit/<%=addressesRows[0].id%>" method="post">
           Street:<br>
-          <input type="text" name="name" value="<%=addressesRows[0].street%>" required/>
+          <input type="text" name="street" value="<%=addressesRows[0].street%>" required/>
           <br>
           City:<br>
-          <input type="text" name="city" value="<%=addressesRows[0].city%>" required=true/>
+          <input type="text" name="city" value="<%=addressesRows[0].city%>" required/>
           <br>
           Zipcode:<br>
-          <input type="text" name="zipcode" value="<%=addressesRows[0].zipcode%>" required=true/>
+          <input type="text" name="zipcode" value="<%=addressesRows[0].zipcode%>" required/>
           <br>
           <input type="submit" value="EDIT">
         </form>

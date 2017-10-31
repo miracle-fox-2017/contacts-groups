@@ -15,32 +15,44 @@ class Groups{
     })
   }
 
-  static create(obj,cb){
+  static create(obj){
     let query = `INSERT INTO Groups (name_of_group)
                  VALUES("${obj.name_of_group}")`;
-    db.all(query,function(err,GroupsRows){
-      if(!err){
-        cb(null,GroupsRows)
-      }else{
-        console.log(err)
-      }
+    return new Promise((resolve,reject)=>{
+      db.all(query,function(err,groupsRows){
+        if(err){
+          reject(err)
+        }else{
+          resolve(groupsRows)
+        }
+      })
     })
   }
 
   static delete(id){
     let query = `DELETE FROM Groups
                  WHERE id = ${id}`;
-    db.all(query)
+    return new Promise((resolve,reject)=>{
+      db.all(query,function(err,groupsRows){
+        if(err){
+          reject(err)
+        }else{
+          resolve(groupsRows)
+        }
+      })
+    })
   }
 
-  static findById(id,cb){
+  static findById(id){
     let query = `SELECT * FROM Groups where id = "${id}"`;
-    db.all(query,function(err,GroupsRows){
-      if(!err){
-        cb(null,GroupsRows)
-      }else{
-        console.log(err)
-      }
+    return new Promise((resolve,reject)=>{
+      db.all(query,function(err,groupsRows){
+        if(err){
+          reject(err)
+        }else{
+          resolve(groupsRows)
+        }
+      })
     })
   }
 
@@ -48,7 +60,15 @@ class Groups{
     let query = `UPDATE Groups
                SET name_of_group = "${obj.name_of_group}"
                WHERE id = "${obj.id}"`;
-   db.all(query)
+   return new Promise((resolve,reject)=>{
+     db.all(query,function(err,groupsRows){
+       if(err){
+         reject(err)
+       }else{
+         resolve(groupsRows)
+       }
+     })
+   })
   }
 }
 

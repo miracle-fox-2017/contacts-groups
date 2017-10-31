@@ -1,45 +1,59 @@
+
 const sqlite3 = require('sqlite3').verbose();
 const db = new sqlite3.Database('./database/data.db');
 
 
 class Addresses{
-  static findAll(cb){
+  static findAll(){
     let query = `SELECT * FROM Addresses`;
-    db.all(query,function(err,addressesRows){
-      if(!err){
-        cb(null,addressesRows)
-      }else{
-        console.log(err)
-      }
+    return new Promise((resolve,reject)=>{
+      db.all(query,(err,addressesRows)=>{
+        if(!err){
+          resolve(addressesRows)
+        }else{
+          reject(err)
+        }
+      })
     })
   }
-
-  static create(obj,cb){
-    let query = `INSERT INTO Addresses (street,city,zipcode)
+  static create(obj){
+    let query = `INSERT INTO Addresses (street, city, zipcode)
                  VALUES("${obj.street}", "${obj.city}", "${obj.zipcode}")`;
-    db.all(query,function(err,addressesRows){
-      if(!err){
-        cb(null,addressesRows)
-      }else{
-        console.log(err)
-      }
+    return new Promise((resolve,reject)=>{
+      db.all(query,(err,addressesRows)=>{
+        if(!err){
+          resolve(addressesRows)
+        }else{
+          reject(err)
+        }
+      })
     })
   }
 
   static delete(id){
     let query = `DELETE FROM Addresses
                  WHERE id = ${id}`;
-    db.all(query)
+    return new Promise((resolve,reject)=>{
+      db.all(query,(err,addressesRows)=>{
+        if(!err){
+          resolve(addressesRows)
+        }else{
+          reject(err)
+        }
+      })
+    })
   }
 
-  static findById(id,cb){
+  static findById(id){
     let query = `SELECT * FROM Addresses where id = "${id}"`;
-    db.all(query,function(err,addressesRows){
-      if(!err){
-        cb(null,addressesRows)
-      }else{
-        console.log(err)
-      }
+    return new Promise((resolve,reject)=>{
+      db.all(query,(err,addressesRows)=>{
+        if(!err){
+          resolve(addressesRows)
+        }else{
+          reject(err)
+        }
+      })
     })
   }
 
@@ -49,7 +63,15 @@ class Addresses{
                city = "${obj.city}",
                zipcode = "${obj.zipcode}"
                WHERE id = "${obj.id}"`;
-   db.all(query)
+   return new Promise((resolve,reject)=>{
+     db.all(query,(err,addressesRows)=>{
+       if(!err){
+         resolve(addressesRows)
+       }else{
+         reject(err)
+       }
+     })
+   })
   }
 }
 

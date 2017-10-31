@@ -30,7 +30,7 @@ class Contact {
     db.run(`UPDATE Contacts SET name = '${body.name}', company = '${body.company}', telp_number = '${body.telp_number}', email = '${body.email}' WHERE id = ${params}`);
   }
   
-  static remove(params, cb){
+  static remove(params){
     db.each(`DELETE FROM Contacts WHERE id = ${params}`);
   }
   

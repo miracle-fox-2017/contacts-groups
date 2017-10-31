@@ -23,7 +23,8 @@ db.serialize(function() {
                 street VARCHAR,
                 city VARCHAR,
                 zipcode INTEGER)`);
-
+  db.run(`ALTER TABLE Profiles ADD COLUMN id_contacts REFERENCES Contacts (id) `)
+  db.run(`CREATE UNIQUE INDEX id_contacts ON Profiles (id_contacts)`)
 });
  
 db.close();

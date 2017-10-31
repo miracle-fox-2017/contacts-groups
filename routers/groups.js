@@ -16,38 +16,46 @@ router.get('/', (req, res) => {
 })
 
 router.post('/', (req, res) => {
-  Groups.create(req.body)
-  res.redirect('/groups')
-})
-
-router.get('/edit/:id', (req, res) => {
-  Groups.findByid(req.params.id, (err, groupsedit) => {
-    res.render('groupsedit', {data:groupsedit})
+  Groups.create(req.body).then(() => {
+    res.redirect('/groups')
   })
 })
 
-router.post('/edit/:id', (req, res) => {
-  // db.all(`UPDATE Groups SET name_of_group = "${req.body.name_of_group}" WHERE id = "${req.params.id}"`)
-  Groups.update(req.params.id, req.body)
-  res.redirect('/groups')
+
+router.get('/edit/:id', (req, res) => {
+  Groups.findByid(req.params.id).then((group) => {
+    res.render('groupsedit', {data:group})
+  })
 })
+
+
+router.post('/edit/:id', (req, res) => {
+  Groups.update(req.params.id, req.body).then(() => {
+    res.redirect('/groups')
+  })
+})
+
 
 router.get('/delete/:id', (req, res) => {
-  Groups.remove(req.params.id)
-  res.redirect('/groups')
+  Groups.remove(req.params.id).then(() => {
+    res.redirect('/groups')
+  })
 })
 
+
 router.get('/assign_contacts/:id', (req, res) => {
-  Contact.findAll((err, contact) => {
-    Groups.findByid(req.params.id, (err, group) => {
+  Contact.findAll().then((contact) => {
+    Groups.findByid(req.params.id).then((group) => {
       res.render('groupassigned', {contact:contact, group:group})
     })
   })
 })
 
 router.post('/assign_contacts/:id', (req, res) => {
-  ContactGroup.assignedContact(req.params.id, req.body)
-  res.redirect('/groups')
+  ContactGroup.assignedContact(req.params.id, req.body).then(() => {
+    res.redirect('/groups')
+  })
 })
+
 
 module.exports = router;

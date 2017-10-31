@@ -9,12 +9,15 @@ const Addresses = require('../models/addresses')
 const db = new sqlite3.Database('database.db')
 
 router.get('/', (req, res) => {
-  Contact.findAll((err, contacts) => {
-    Groups.findAll((err, groupsname) => {
-      ContactGroup.findAllwithGroup(contacts, (err, contactsgroup) => {
-        res.render('contacts', {data: contactsgroup, groupsname: groupsname, error:''})
-      })
-    })
+  // Contact.findAll((err, contacts) => {
+  //   Groups.findAll((err, groupsname) => {
+  //     ContactGroup.findAllwithGroup(contacts, (err, contactsgroup) => {
+  //       res.render('contacts', {data: contactsgroup, groupsname: groupsname, error:''})
+  //     })
+  //   })
+  // })
+  ContactGroup.findAllwithGroup().then((group) => {
+    res.send(group)
   })
 })
 
@@ -37,32 +40,40 @@ router.post('/', (req, res) => {
 })
 
 router.get('/delete/:id', (req, res) => {
-  Contact.remove(req.params.id)
-  res.redirect('/contacts')
+  Contact.remove(req.params.id).then(() => {
+    res.redirect('/contacts')
+  })
 })
 
+
 router.get('/edit/:id', (req, res) => {
-  Contact.findById(req.params.id, (err, contactsbyid) => {
+  Contact.findById(req.params.id).then((contactsbyid) => {
     res.render('contactsedit', {data: contactsbyid})
   })
 })
 
+
 router.post('/edit/:id', (req, res) => {
-  Contact.update(req.params.id, req.body)
-  res.redirect('/contacts')
+  Contact.update(req.params.id, req.body).then(() => {
+    res.redirect('/contacts')
+  })
 })
 
+
 router.get('/addresses/:id', (req, res) => {
-  Contact.findById(req.params.id, (err, contact) => {
-    Addresses.findWhere('ContactId', req.params.id, (err, addresses) => {
+  Contact.findById(req.params.id).then((contact) => {
+    Addresses.findWhere('ContactId', 6)
+    .then((addresses) => {
       res.render('contactaddress', {contact: contact, addresses: addresses})
     })
   })
 })
 
 router.post('/addresses/:id', (req, res) => {
-  Addresses.createbycontact(req.params.id, req.body)
-  res.redirect('/contacts')
+  Addresses.createbycontact(req.params.id, req.body).then(() => {
+    res.redirect('/contacts')
+  })
 })
+
 
 module.exports = router

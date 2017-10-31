@@ -10,24 +10,57 @@ class Group {
     })
   }
 
-  static findByid(id, callback) {
-    db.all(`SELECT * FROM Groups WHERE id="${id}"`, (err, group) => {
-      callback(err, group)
+  static findByid(id) {
+    return new Promise((resolve, reject) => {
+      db.all(`SELECT * FROM Groups WHERE id = "${id}"`, (err, group) => {
+        if(!err) {
+          resolve(group)
+        }
+        else {
+          reject(err)
+        }
+      })
     })
   }
 
   static create(body) {
-    db.all(`INSERT INTO Groups (name_of_group) VALUES ("${body.name_of_group}")`)
+    return new Promise((resolve, reject) => {
+      db.all(`INSERT INTO Groups (name_of_group) VALUES ("${body.name_of_group}")`, (err) => {
+        if(!err) {
+          resolve()
+        }
+        else {
+          reject(err)
+        }
+      })
+    })
   }
 
   static remove(id) {
-    db.all(`DELETE FROM Groups WHERE id = "${id}"`)
+    return new Promise((resolve, reject) => {
+      db.all(`DELETE FROM Groups WHERE id = ${id}`, (err) => {
+        if(!err) {
+          resolve()
+        }
+        else {
+          reject(err)
+        }
+      })
+    })
   }
 
   static update(id, body) {
-    db.all(`UPDATE Groups SET name_of_group = "${body.name_of_group}" WHERE id = "${id}"`)
+    return new Promise((resolve, reject) => {
+      db.all(`UPDATE Groups SET name_of_group = "${body.name_of_group}" WHERE id = "${id}"`, (err) => {
+        if(!err) {
+          resolve()
+        }
+        else {
+          reject(err)
+        }
+      })
+    })
   }
-
 }
 
 module.exports = Group

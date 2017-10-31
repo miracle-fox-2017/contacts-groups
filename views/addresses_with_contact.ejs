@@ -8,29 +8,23 @@
     <a href="/contacts">contacts</a> | <a href="/groups">groups</a> | <a href="/addresses">address</a> | <a href="/profiles">profile</a>
     <h1>Addresses</h1>
     <div>
+      <h3>Name: <%= contact[0].name %></h3>
     <table>
       <tr>
         <th>id</th>
         <th>street</th>
         <th>city</th>
         <th>zipcode</th>
-        <th>contact name</th>
-        <th>company</th>
-        <th>telp_number</th>
-        <th>email</th>
         <th>Action</th>
       </tr>
       <!-- tampilkan semua data address -->
       
-      <% rows.forEach (address => { %>
+      <% addresses.forEach (address => { %>
         <tr>
           <td><%= address.id %></td>
           <td><%= address.street %></td>
           <td><%= address.city %></td>
           <td><%= address.zipcode %></td>
-          <td><%= address.name %></td>
-          <td><%= address.telp_number %></td>
-          <td><%= address.email %></td>
           </td>
           <td><a href="/addresses/edit/<%= address.id %>">edit</a> | <a href="/addresses/delete/<%= address.id %>">delete</a> </td>
         </tr>
@@ -42,16 +36,12 @@
   <!-- disini tambah form untuk tambah address -->
   <div>
     <h2>Tambah Address</h2>
-    <form class="" action="/addresses" method="post">
+    <form class="" action="" method="post">
+      name: <%= contact[0].name %><br>
       street:   <input type="text" name="street" value="" placeholder="street"><br>
       city: <input type="text" name="city" value="" placeholder="city"><br>
       zipcode: <input type="text" name="zipcode" value="" placeholder="zipcode"><br>
-      contacts: 
-      <select name="id_contacts">
-      <% contacts.forEach (contact => { %>
-        <option value="<%= contact.id %>"><%= contact.name %></option> 
-      <% }) %>
-      </select>
+      <input type="hidden" name="id_contacts" value="<%= contact[0].id %>">
       <br><input type="submit" name="" value="KIRIM">
     </form>
   </div>

@@ -10,55 +10,79 @@ const Address = require('../models/address');
 
 //GET ADDRESSES
 router.get('/', function (req, res) {
-  // let showAddresses = `SELECT * FROM Addresses`;
-  Contact.showContacts(function(contacts){
-    Address.addressJoin(function(addressjoin){
-        res.render('addresses',{"rows": addressjoin, "contacts": contacts});
+  Contact.showContacts()
+  .then(contacts=>{
+    Address.addressJoin()
+    .then(addressjoin=>{
+      res.render('addresses',{"rows": addressjoin, "contacts": contacts});
     })
   })
+  // Contact.showContacts(function(contacts){
+  //   Address.addressJoin(function(addressjoin){
+  //       res.render('addresses',{"rows": addressjoin, "contacts": contacts});
+  //   })
+  // })
   
 })
 
 //POST ADDRESSES
 router.post('/', function (req, res) {
-  Address.insertAddress(req.body, function(){
+  Address.insertAddress(req.body)
+  .then(()=>{
     res.redirect('/addresses');
   })
+  // Address.insertAddress(req.body, function(){
+  //   res.redirect('/addresses');
+  // })
 
 })
 
 //GET ADDRESSES EDIT
 router.get('/edit/:id', function (req, res) {
-  Contact.showContacts(function(contact){
-    Address.addressJoinId(req.params.id, function(addressjoin){
+  Contact.showContacts()
+  .then(contact=>{
+    Address.addressJoinId(req.params.id)
+    .then(addressjoin=>{
       res.render('addresses_edit',{"rows": addressjoin, "contacts": contact});
     })
   })
+  // Contact.showContacts(function(contact){
+  //   Address.addressJoinId(req.params.id, function(addressjoin){
+  //     res.render('addresses_edit',{"rows": addressjoin, "contacts": contact});
+  //   })
+  // })
 
 })
 
 //POST ADDRESSES EDIT
 router.post('/edit/:id', function (req, res){
-  Address.updateAddress(req.body, function(){
+  Address.updateAddress(req.body)
+  .then(()=>{
     res.redirect('/addresses');
   })
+  // Address.updateAddress(req.body, function(){
+  //   res.redirect('/addresses');
+  // })
   
 })
 
 //GET DELETE ID
 router.get('/delete/:id', function (req, res){
-  Address.deleteAddress(req.params.id, function(){
+  Address.deleteAddress(req.params.id)
+  .then(()=>{
     res.redirect('/addresses');
   })
+  // Address.deleteAddress(req.params.id, function(){
+  //   res.redirect('/addresses');
+  // })
 })
 
-router.get('/addresses_with_contact', function (req, res){
-  Contact.showContacts(function(contacts){
-    Address.addresses_with_contact(contacts, function(rows, contacts){
-      res.render('addresses_with_contact',{"rows": rows, "contacts": contacts});  
-    })
-  })
-  
-})
+// router.get('/addresses_with_contact', function (req, res){
+//   Contact.showContacts(function(contacts){
+//     Address.addresses_with_contact(contacts, function(rows, contacts){
+//       res.render('addresses_with_contact',{"rows": rows, "contacts": contacts});  
+//     })
+//   })
+// })
 
 module.exports = router;

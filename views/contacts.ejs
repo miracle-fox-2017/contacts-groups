@@ -7,7 +7,6 @@
   <body>
     <a href="/contacts">contacts</a> | <a href="/groups">groups</a> | <a href="/addresses">address</a> | <a href="/profiles">profile</a>
     <h1>Contacts</h1>
-    <a href="/addresses/addresses_with_contact">addresses_with_contact</a>
     <div>
     <table>
       <tr>
@@ -32,7 +31,7 @@
             <% for(let i = 0; i<cg.length; i++){ if(cg[i].id_contacts == contact.id){ result.push(cg[i].name_of_group) } }%>
             <%= result.join(', ')%>
           </td>
-          <td><a href="/contacts/edit/<%= contact.id %>">edit</a> | <a href="/contacts/delete/<%= contact.id %>">delete</a> </td>
+          <td><a href="/contacts/address/<%= contact.id %>">address</a> | <a href="/contacts/edit/<%= contact.id %>">edit</a> | <a href="/contacts/delete/<%= contact.id %>">delete</a> </td>
         </tr>
       <% }) %>
       

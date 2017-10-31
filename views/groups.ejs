@@ -1,0 +1,62 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+    table {
+      font-family: arial, sans-serif;
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    th {
+      background-color: white;
+    }
+    td, th {
+      /* border: 0.1px solid #817b7b; */
+      text-align: left;
+      padding: 7px;
+    }
+    </style>
+    <meta charset="utf-8">
+    <title>Groups</title>
+  </head>
+  <body>
+    <table>
+      <tr>
+        <th>No</th>
+        <th>Name</th>
+        <th>contacts</th>
+        <th>Involved</th>
+        <th>Action</th>
+      </tr>
+        <% let i = 1 %>
+      <% rowGroups.forEach(function(row){%>
+          <tr>
+            <td> <%= i %> </td>
+            <td> <%= row.name_of_group %> </td>
+            <td> <%= row.contacts %> </td>
+            <td> <%= row.Involved %> </td>
+            <td> <%= row.Action %> </td>
+            <td><a href="/groups/edit/<%=row.id%>">edit || </a>
+                <a href="/groups/delete/<%=row.id%>">delete ||</a>
+            </td>
+          </tr>
+        <% i++ })%>
+      </tr>
+    </table>
+    <br>
+      <%if(edit === false) {%>
+      <form action="/groups" method="post">      
+        <td><input type="text" name="name_of_group" required size="23" placeholder="name"></td> &nbsp;
+        <input type="submit" value="ADD" align="right">
+      </form>
+      <%}%>
+      <% if (edit === true) {%>
+        <form action="/groups/edit/<%=rowGroups[0].id%>" method="post">
+          <td><input type="text" name="name_of_group" value="<%=rowGroups[0].name_of_group%>" required size="23" placeholder="name"></td> &nbsp;
+          <input type="submit" value="EDIT" align="right">
+        </form>
+        <%}%>
+  </body>
+</html>

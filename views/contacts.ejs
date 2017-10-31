@@ -1,0 +1,69 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+    table {
+      font-family: arial, sans-serif;
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    th {
+      background-color: lightseagreen;
+    }
+    td, th {
+      /* border: 0.1px solid #817b7b; */
+      text-align: left;
+      padding: 7px;
+    }
+    </style>
+    <meta charset="utf-8">
+    <title>CONTACTS</title>
+  </head>
+  <body>
+    <table>
+      <tr>
+        <th>No</th>
+        <th>Nama</th>
+        <th>Company</th>
+        <th>Phone Number</th>
+        <th>Email</th>
+        <th>Action</th>
+      </tr>
+        <% let i = 1 %>
+      <% rowContacts.forEach(function(row){%>
+          <tr>
+            <td> <%= i %> </td>
+            <td> <%= row.name %> </td>
+            <td> <%= row.company %> </td>
+            <td> <%= row.telp_number %> </td>
+            <td> <%= row.email %> </td>
+            <td><a href="/contacts/edit/<%=row.id%>">edit || </a>
+                <a href="/contacts/delete/<%=row.id%>">delete ||</a>
+            </td>
+          </tr>
+        <% i++ })%>
+      </tr>
+    </table>
+    <br>
+      <%if(edit === false) {%>
+      <form action="/contacts" method="post">      
+        <td><input type="text" name="name" required size="23" placeholder="name"></td> &nbsp;
+        <td><input type="text" name="company" required size="23" placeholder="company"></td> &nbsp;        
+        <td><input type="text" name="telp_number" required size="23" placeholder="telp_number"></td> &nbsp;       
+        <td><input type="text" name="email" required size="23" placeholder="email"></td>
+        <input type="submit" value="ADD" align="right">
+      </form>
+      <%}%>
+      <% if (edit === true) {%>
+        <form action="/contacts/edit/<%=rowContacts[0].id%>" method="post">
+          <td><input type="text" name="name" value="<%=rowContacts[0].name%>" required size="23" placeholder="name"></td> &nbsp;
+          <td><input type="text" name="company" value="<%=rowContacts[0].company%>" required size="23" placeholder="name"></td> &nbsp;
+          <td><input type="text" name="telp_number" value="<%=rowContacts[0].telp_number%>" required size="23" placeholder="name"></td> &nbsp;
+          <td><input type="text" name="email" value="<%=rowContacts[0].email%>" required size="23" placeholder="name"></td> &nbsp;
+          <input type="submit" value="EDIT" align="right">
+        </form>
+        <%}%>
+  </body>
+</html>

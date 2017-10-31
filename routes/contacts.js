@@ -29,7 +29,6 @@ router.post('/', (req, res)=>{
 			res.redirect('/contacts')
 		})	
 	}
-	
 })
 
 router.get('/edit/:id', (req, res)=>{

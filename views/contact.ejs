@@ -10,6 +10,7 @@
 			<tr>
 				<td>ID</td>
 				<td>Name</td>
+				<td>Company</td>
 				<td>Telp Number</td>
 				<td>Email</td>
 				<td>List Address</td>
@@ -22,6 +23,7 @@
 			<tr>
 				<td><%=contact.id%></td>
 				<td><%=contact.name%></td>
+				<td><%=contact.company%></td>
 				<td><%=contact.telp_number%></td>
 				<td><%=contact.email%></td>
 				<td><a href="/addresses_with_contact/<%=contact.id%>">addresses</a></td>
@@ -38,6 +40,7 @@
 
 	<form action="/contacts" method="post">
   		<input type="text" name="name" placeholder="FullName">
+  		<input type="text" name="company" placeholder="Company">
   		<input type="text" name="telp_number" placeholder="Telp Number">
   		<input type="text" name="email" placeholder="Email">
   		<select name="group">

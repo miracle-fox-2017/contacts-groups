@@ -1,80 +1,107 @@
 const sqlite3 = require('sqlite3').verbose()
 const db = new sqlite3.Database('database.db');
 const Contact = require('./contactsModel')
+const Konjungsi = require('./contactGroup')
 
 
 class Profile{
 
-	static getAllProfile(cb){
-		db.all("select * from Profile", (err, rows)=>{
-			cb(rows)
+	static getAllProfile(){
+		return new Promise((resolve, reject) => {
+			db.all(`select * from Profile`, (err, profiles)=>{
+				if(!err){
+					resolve(profiles)
+				}else{
+					reject(err)
+				}
+			})
+		});
+	}
+
+	static addProfile(data){
+		return new Promise((resolve, reject) => {
+			db.run(`insert into Profile (username, password, id_contact) values ("${data.username}", "${data.password}", "${data.contact}")`, err=>{
+				if(err){
+					reject(err);
+				}else{
+					resolve()
+				}
+			})	
 		})
 	}
 
-	static getAllProfileContact(cb){
-		db.all(`select Profile.id, Profile.username, Profile.password, Contacts.name from Profile left join Contacts on Profile.id_contact = Contacts.id`, (err, profiles)=>{
-			if(err){
-				console.log(err)
-			}else{
-				Contact.getAllContact(contacts=>{
-					cb({profiles, contacts})
+	static getProfileById(data){
+
+		return new Promise((resolve, reject) => {
+			db.get(`select * from Profile where id = "${data}"`, (err, profiles)=>{
+				if(!err){
+					resolve(profiles)
+				}else{
+					reject(err)
+				}
+			})
+		});
+	}
+
+	static editProfile(data){
+
+		return new Promise((resolve, reject) => {
+			db.run(`update Profile set username = "${data.username}", password = "${data.password}", id_contact= "${data.contact}" where id = "${data.id}"`, err=>{
+				if(err){
+					reject(err)
+				}else{
+					resolve()
+				}
+			})
+		})
+	}
+
+	static deleteProfile(data){
+
+		return new Promise((resolve, reject) => {
+			db.run(`delete from Profile where id = "${data}"`, (err)=>{
+				if(err){
+					reject(err)
+				}else{
+					resolve()
+				}
+			})
+		});
+	}
+
+	static getAllProfileContact(){
+
+		return new Promise((resolve, reject) => {
+			let profiles = this.getAllProfile()
+			let contacts = Contact.getAllContact()
+
+			Promise.all([profiles, contacts]).then(result=>{
+				result[0].forEach(profile=>{
+					result[1].forEach(contact=>{
+						if(profile.id_contact === contact.id){
+						   profile.name = contact.name
+						}
+					})
 				})
-				// console.log(rows);
-			}
+				resolve(result)
+			})
 		})
 	}
 
-	static addProfile(data, cb){
-		db.run(`insert into Profile (username, password, id_contact) values ("${data.username}", "${data.password}", "${data.contact}")`, err=>{
-			if(err){
-				cb(err);
-			}else{
-				cb()
-			}
-		})
-	}
 
-	// static getProfileById(data, cb){
-	// 	db.get(`select * from Profile where id = "${data}"`, (err, row)=>{
-	// 		if(!err){
-	// 			cb(row)
-	// 		}else{
-	// 			console.log(err);
-	// 		}
-	// 	})
-	// }
+	static getProfileContactById(data){
 
-	static getProfileContactById(data, cb){
-		db.get(`select P.id, P.username, P.password, P.id_contact, C.name from Profile as P left join Contacts as C on P.id_contact = C.id where P.id = "${data}"`, (err, profile)=>{
-			if(err){
-				console.log(err)
-			}else{
-				Contact.getAllContact(contacts=>{
-					cb({profile, contacts})
+		return new Promise((resolve, reject) => {
+			this.getProfileById(data).then(result=>{
+				Contact.getContactById(result.id_contact).then(kontak=>{
+					result.name = kontak.name
+					resolve(result)
 				})
-			}
-		})
+			})
+		});
 	}
 
-	static editProfile(data, cb){
-		db.run(`update Profile set username = "${data.username}", password = "${data.password}", id_contact = "${data.contact}" where id = "${data.id}"`, err=>{
-			if(err){
-				console.log(err);
-			}else{
-				cb()
-			}
-		})
-	}
-
-	static deleteProfile(data, cb){
-		db.run(`delete from Profile where id = "${data}"`, err=>{
-			if(err){
-				console.log(err);
-			}else{
-				cb()
-			}
-		})
-	}
+	
 }
 
 module.exports = Profile

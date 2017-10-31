@@ -1,50 +1,46 @@
 const express = require('express')
 const router = express.Router()
 const Model = require('../models/profilesModel')
+const Contact = require('../models/contactsModel')
 
 router.get('/', (req, res)=>{
-	// Model.getAllProfile(rows=>{
-	// 	res.render('profile', {profiles : rows})
-	// })
-
-	Model.getAllProfileContact(result=>{
-		// console.log(result);
-		// res.send(result.profiles)
-		let message = ""
-		res.render('profile', {profiles : result.profiles, contacts : result.contacts, message})
+	let message = ""
+	Model.getAllProfileContact().then(result=>{
+		res.render('profile', {profiles : result[0], contacts : result[1], message})
 	})
 })
 
 router.post('/', (req, res)=>{
-	Model.addProfile(req.body, (err)=>{
-		if(!err){
-			res.redirect('/profiles')	
-		}else{
-			Model.getAllProfileContact(result=>{
-				let message = "Your contact already have profile"
-				res.render('profile', {profiles : result.profiles, contacts : result.contacts, message})
-			})
-		}
-		
+
+	Model.addProfile(req.body).then(()=>{
+		res.redirect('/profiles')
+	}).catch(err=>{
+		Model.getAllProfileContact().then(result=>{
+			let message = "Your contact already have profile"
+			res.render('profile', {profiles : result[0], contacts : result[1], message})
+		})
 	})
 })
 
 router.get('/edit/:id', (req, res)=>{
-	Model.getProfileContactById(req.params.id, result=>{
-		// res.send(result)
-		res.render('editProfile', {profile : result.profile, contacts : result.contacts})
-	})
+	Model.getProfileContactById(req.params.id).then(profile=>{
+		Contact.getAllContact().then(contacts=>{
+			res.render('editProfile', {profile, contacts})
+		})
+	}).catch(err=>{
+			console.log(err);
+		})
 })
 
 router.post('/edit/:id', (req, res)=>{
 	req.body.id = req.params.id
-	Model.editProfile(req.body, ()=>{
+	Model.editProfile(req.body).then(()=>{
 		res.redirect('/profiles')
 	})
 })
 
 router.get('/delete/:id', (req, res)=>{
-	Model.deleteProfile(req.params.id, ()=>{
+	Model.deleteProfile(req.params.id).then(()=>{
 		res.redirect('/profiles')
 	})
 })

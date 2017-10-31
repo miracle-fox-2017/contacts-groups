@@ -3,24 +3,17 @@ var db = new sqlite3.Database('database.db');
 
 class Group{
 
-	static getAllGroup(cb){
-		db.all(`select * from Groups`, (err, rows)=>{
-			if(err){
-				console.log(err)
-			}else{
-				cb(rows)
-			}
-		})
-	}
+	static getAllGroup(){
 
-	static getAllGroupContact(cb){
-		db.all(`select G.id, G.name_of_group, C.name from Groups as G left join ContactGroup as CG on G.id = CG.id_group left join Contacts as C on CG.id_contact = C.id`, (err, groups)=>{
-			if(err){
-				console.log(err)
-			}else{
-				cb(groups)
-			}
-		})
+		return new Promise((resolve, reject) => {
+			db.all(`select * from Groups`, (err, groups)=>{
+				if(err){
+					reject(err)
+				}else{
+					resolve(groups)
+				}
+			})
+		});
 	}
 
 	static addGroup(data, cb){
@@ -33,13 +26,16 @@ class Group{
 		})
 	}
 
-	static getGroupById(data, cb){
-		db.get(`select * from Groups where id = "${data}"`, (err, result)=>{
-			if(err){
-				console.log(err)
-			}else{
-				cb(result)
-			}
+	static getGroupById(data){
+
+		return new Promise((resolve, reject) => {
+			db.get(`select * from Groups where id = "${data}"`, (err, group)=>{
+				if(err){
+					reject(err)
+				}else{
+					resolve(group)
+				}
+			})
 		})
 	}
 

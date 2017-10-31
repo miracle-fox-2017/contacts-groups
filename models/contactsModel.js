@@ -2,10 +2,16 @@ const sqlite3 = require('sqlite3').verbose()
 const db 	  = new sqlite3.Database('database.db');
 
 class Contact{
-
-	static getAllContact(cb){
-		db.all("select * from Contacts", (err, row)=>{
-			cb(row)
+ 
+	static getAllContact(){
+		return new Promise((resolve, reject) => {
+			db.all(`select * from Contacts`, (err, contacts)=>{
+				if(!err){
+					resolve(contacts)
+				}else{
+					reject(err)
+				}
+			})
 		})
 	}
 
@@ -28,7 +34,7 @@ class Contact{
 
 
 	static addContact(data, cb){
-		db.run(`insert into Contacts (name, telp_number, email) values ("${data.name}", "${data.telp_number}", "${data.email}")`, function(err){
+		db.run(`insert into Contacts (name, company, telp_number, email) values ("${data.name}", "${data.company}", "${data.telp_number}", "${data.email}")`, function(err){
 			if(!err){
 				data.id = this.lastID
 				db.run(`insert into ContactGroup (id_contact, id_group) values ("${data.id}", "${data.group}")`, err=>{
@@ -42,14 +48,17 @@ class Contact{
 		})
 	}
 
-	static getContactById(data, cb){
-		db.get(`select * from Contacts where id = "${data}"`, (err, row)=>{
-			if(!err){
-				cb(row)
-			}else{
-				console.log(err);
-			}
-		})
+	static getContactById(data){
+		
+		return new Promise((resolve, reject) => {
+			db.get(`select * from Contacts where id = "${data}"`, (err, contact)=>{
+				if(!err){
+					resolve(contact)
+				}else{
+					reject(err)
+				}
+			})
+		});
 	}
 
 	static editContact(data, cb){

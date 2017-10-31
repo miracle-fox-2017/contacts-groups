@@ -1,16 +1,18 @@
-const express = require('express')
-const router = express.Router()
-const Model = require('../models/groupsModel')
-const Contact = require('../models/contactsModel')
+const express      = require('express')
+const router       = express.Router()
+const Model        = require('../models/groupsModel')
+const Contact      = require('../models/contactsModel')
+const ContactGroup = require('../models/contactGroup') 
 
 router.get('/', (req, res)=>{
-	// Model.getAllGroup(rows=>{
-	// 	res.render('group', {group : rows})
+
+	// Model.getAllGroupContact(groups=>{
+	// 	// res.send(groups)
+	// 	res.render('group', {groups})
 	// })
 
-	Model.getAllGroupContact(groups=>{
-		// res.send(groups)
-		res.render('group', {groups})
+	ContactGroup.getAllGroupContact().then(result=>{
+		res.send(result)
 	})
 })
 

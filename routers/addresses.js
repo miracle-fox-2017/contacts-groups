@@ -54,8 +54,8 @@ router.get('/delete/:id', function (req, res){
 
 router.get('/addresses_with_contact', function (req, res){
   Contact.showContacts(function(contacts){
-    Address.showAddress(function(address){
-      res.render('addresses_with_contact',{"rows": address, "contacts": contacts});
+    Address.addresses_with_contact(contacts, function(rows, contacts){
+      res.render('addresses_with_contact',{"rows": rows, "contacts": contacts});  
     })
   })
   

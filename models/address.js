@@ -96,7 +96,45 @@ class Address {
       }
     })
   }
+  
+  static addresses_with_contact(contact, cb){
+    this.showAddress(function(address){
+      let result = [];
+      for(let i = 0; i<address.length; i++){
+        for(let j = 0; j<contact.length; j++){
+          if(address[i].id_contacts == contact[j].id){
+            result.push(new AddressWithContact(
+              address[i].id,
+              address[i].street,
+              address[i].city,
+              address[i].zipcode,
+              contact[j].name,
+              contact[j].company,
+              contact[j].zipcode,
+              contact[j].email,
+              contact[j].id
+            ))
+          }
+        }
+      }
+      // console.log(result);
+      cb(result, contact)
+    })
+  }
+  
+}
 
+class AddressWithContact {
+  constructor(id, street, city, zipcode, name, company, telp_number, email, cid){
+    this.id = id;
+    this.street = street;
+    this.city = city;
+    this.zipcode = zipcode;
+    this.name = name;
+    this.telp_number = telp_number;
+    this.email = email;
+    this.cid = cid;
+  }
 }
 
 module.exports = Address;

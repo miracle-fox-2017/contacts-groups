@@ -28,25 +28,9 @@
           <td><%= address.street %></td>
           <td><%= address.city %></td>
           <td><%= address.zipcode %></td>
-          <td>
-            <% for(let i = 0; i<contacts.length; i++){ if(contacts[i].id == address.id_contacts){  %>
-                <%= contacts[i].name %> 
-            <% } } %>
-          </td>
-          <td>
-            <% for(let i = 0; i<contacts.length; i++){ if(contacts[i].id == address.id_contacts){  %>
-                <%= contacts[i].company %> 
-            <% } } %>
-          </td>
-          <td>
-            <% for(let i = 0; i<contacts.length; i++){ if(contacts[i].id == address.id_contacts){  %>
-                <%= contacts[i].telp_number %> 
-            <% } } %>
-          </td>
-          <td>
-            <% for(let i = 0; i<contacts.length; i++){ if(contacts[i].id == address.id_contacts){  %>
-                <%= contacts[i].email %> 
-            <% } } %>
+          <td><%= address.name %></td>
+          <td><%= address.telp_number %></td>
+          <td><%= address.email %></td>
           </td>
           <td><a href="/addresses/edit/<%= address.id %>">edit</a> | <a href="/addresses/delete/<%= address.id %>">delete</a> </td>
         </tr>

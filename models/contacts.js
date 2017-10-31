@@ -1,45 +1,59 @@
+"use strict"
 const sqlite3 = require('sqlite3').verbose();
 const db = new sqlite3.Database('./database/data.db');
 
 
 class Contacts{
-  static findAll(cb){
+  static findAll(){
     let query = `SELECT * FROM Contacts`;
-    db.all(query,function(err,contactsRows){
-      if(!err){
-        cb(null,contactsRows)
-      }else{
-        console.log(err)
-      }
+    return new Promise((resolve,reject)=>{
+      db.all(query,(err,contactsRows)=>{
+        if(!err){
+          resolve(contactsRows)
+        }else{
+          reject(err)
+        }
+      })
     })
   }
-
-  static create(obj,cb){
+  static create(obj){
     let query = `INSERT INTO Contacts (name,company,telp_number,email)
                  VALUES("${obj.name}", "${obj.company}", "${obj.telp_number}", "${obj.email}")`;
-    db.all(query,function(err,contactsRows){
-      if(!err){
-        cb(null,contactsRows)
-      }else{
-        console.log(err)
-      }
+    return new Promise((resolve,reject)=>{
+      db.all(query,(err,contactsRows)=>{
+        if(!err){
+          resolve(contactsRows)
+        }else{
+          reject(err)
+        }
+      })
     })
   }
 
   static delete(id){
     let query = `DELETE FROM Contacts
                  WHERE id = ${id}`;
-    db.all(query)
+    return new Promise((resolve,reject)=>{
+      db.all(query,(err,contactsRows)=>{
+        if(!err){
+          resolve(contactsRows)
+        }else{
+          reject(err)
+        }
+      })
+    })
   }
 
-  static findById(id,cb){
+  static findById(id){
     let query = `SELECT * FROM Contacts where id = "${id}"`;
-    db.all(query,function(err,contactsRows){
-      if(!err){
-        cb(null,contactsRows)
-      }else{
-        console.log(err)
-      }
+    return new Promise((resolve,reject)=>{
+      db.all(query,(err,contactsRows)=>{
+        if(!err){
+          resolve(contactsRows)
+        }else{
+          reject(err)
+        }
+      })
     })
   }
 
@@ -50,7 +64,15 @@ class Contacts{
                telp_number = "${obj.telp_number}",
                email = "${obj.email}"
                WHERE id = "${obj.id}"`;
-   db.all(query)
+   return new Promise((resolve,reject)=>{
+     db.all(query,(err,contactsRows)=>{
+       if(!err){
+         resolve(contactsRows)
+       }else{
+         reject(err)
+       }
+     })
+   })
   }
 }
 

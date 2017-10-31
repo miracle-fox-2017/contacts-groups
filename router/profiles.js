@@ -5,47 +5,45 @@ const Profile = require('../models/profiles')
 //menampilkan profile
 router.get('/profiles',function(req,res){
   let isEdit = false
-  Profile.findAll(function(err,profilesRows){
-    if(!err){
-      Contact.findAll(function(err,contactsRows){
-        if(!err){
-          res.render('profiles',{profilesRows, contactsRows, isEdit})
-        }
-      })
-
-    }
+  Profile.findAll().then((profilesRows)=>{
+    Contact.findAll().then((contactsRows)=>{
+      res.render('profiles',{profilesRows,contactsRows,isEdit})
+    }).catch((err)=>{
+      console.log(err)
+    })
   })
 })
 //menambahkan profile
 router.post('/profiles',function(req,res){
-  let isEdit = false;
+  //let isEdit = false;
   let obj = {username:req.body.username,
-             password:req.body.password}
-  Profile.create(obj,function(err,profilesRows){
-    if(!err){
-      res.redirect('/profiles')
-    }
+             password:req.body.password,
+             contacts_id:req.body.contact}
+  Profile.create(obj).then((profilesRows)=>{
+    res.redirect('/profiles')
+  }).catch((err)=>{
+    console.log(err)
   })
 })
 //delete profile
 router.get('/profiles/delete/:id',function(req,res){
   let id = req.params.id
-  Profile.delete(id)
-  res.redirect('/profiles')
+  Profile.delete(id).then((profilesRows)=>{
+    res.redirect('/profiles')
+  }).catch((err)=>{
+    console.log(err)
+  })
  })
 //edit profile get
 router.get('/profiles/edit/:id',function(req,res){
   let isEdit = true;
   let id = req.params.id;
-  Profile.findById(id,function(err,profilesRows){
-    if(!err){
-      Contact.findAll(function(err,contactsRows){
-        if(!err){
-          res.render('profiles',{profilesRows, contactsRows, isEdit})
-        }
-      })
-
-    }
+  Profile.findById(id).then((profilesRows)=>{
+    Contact.findAll().then((contactsRows)=>{
+      res.render('profiles',{profilesRows,contactsRows,isEdit})
+    }).catch((err)=>{
+      console.log(err)
+    })
   })
 })
 //edit profile post
@@ -55,7 +53,11 @@ router.post('/profiles/edit/:id',function(req,res){
              username:req.body.username,
              password:req.body.password,
              contacts_id:req.body.contact}
-  Profile.update(obj)
-  res.redirect('/profiles')
+  Profile.update(obj).then((profilesRows)=>{
+    res.redirect('/profiles')
+  }).catch((err)=>{
+    console.log(err)
+  })
 })
+
 module.exports = router

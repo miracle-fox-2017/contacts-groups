@@ -2,16 +2,16 @@ const express = require('express');
 const router = express.Router();
 
 const Group = require('../models/groups')
-//menampilkan contact
+//menampilkan groups
 router.get('/groups',function(req,res){
   let isEdit = false
-  Group.findAll(function(err,groupsRows){
-    if(!err){
-      res.render('groups',{groupsRows, isEdit})
-    }
+  Group.findAll().then((groupsRows)=>{
+    res.render('groups',{groupsRows, isEdit})
+  }).catch((err)=>{
+    console.log(err)
   })
 })
-//menambahkan contact
+//menambahkan groups
 router.post('/groups',function(req,res){
   let isEdit = false;
   let obj = {name_of_group:req.body.name_of_group}
@@ -21,13 +21,13 @@ router.post('/groups',function(req,res){
     }
   })
 })
-//delete contact
+//delete groups
 router.get('/groups/delete/:id',function(req,res){
   let id = req.params.id
   Group.delete(id)
   res.redirect('/groups')
  })
-//edit contact get
+//edit groups get
 router.get('/groups/edit/:id',function(req,res){
   let isEdit = true;
   let id = req.params.id;
@@ -37,7 +37,7 @@ router.get('/groups/edit/:id',function(req,res){
     }
   })
 })
-//edit contact post
+//edit groups post
 router.post('/groups/edit/:id',function(req,res){
   let isEdit = true;
   let obj = {id:req.params.id,

@@ -3,45 +3,59 @@ const db = new sqlite3.Database('./database/data.db');
 
 
 class Profile{
-  static findAll(cb){
+  static findAll(){
     let query = `SELECT Profile.*,Contacts.name FROM Profile LEFT JOIN
                   Contacts ON Contacts.id = Profile.contacts_id`;
-    db.all(query,function(err,profilesRows){
-      if(!err){
-        cb(null,profilesRows)
-      }else{
-        console.log(err)
-      }
+    return new Promise((resolve,reject)=>{
+      db.all(query,(err,profilesRows)=>{
+        if(!err){
+          resolve(profilesRows)
+        }else{
+          reject(err)
+        }
+      })
     })
   }
 
-  static create(obj,cb){
-    let query = `INSERT INTO Profile (username,password)
-                 VALUES("${obj.username}", "${obj.password}")`;
-    db.all(query,function(err,profilesRows){
-      if(!err){
-        cb(null,profilesRows)
-      }else{
-        console.log(err)
-      }
+  static create(obj){
+    let query = `INSERT INTO Profile (username,password,contacts_id)
+                 VALUES("${obj.username}", "${obj.password}","${obj.contacts_id}")`;
+     return new Promise((resolve,reject)=>{
+     db.all(query,(err,profilesRows)=>{
+       if(!err){
+         resolve(profilesRows)
+       }else{
+         reject(err)
+       }
+      })
     })
   }
 
   static delete(id){
     let query = `DELETE FROM Profile
                  WHERE id = ${id}`;
-    db.all(query)
+    return new Promise((resolve,reject)=>{
+    db.all(query,(err,profilesRows)=>{
+      if(!err){
+        resolve(profilesRows)
+      }else{
+        reject(err)
+      }
+     })
+   })
   }
 
-  static findById(id,cb){
+  static findById(id){
     let query = `SELECT * FROM Profile where id = "${id}"`;
-    db.all(query,function(err,profilesRows){
+    return new Promise((resolve,reject)=>{
+    db.all(query,(err,profilesRows)=>{
       if(!err){
-        cb(null,profilesRows)
+        resolve(profilesRows)
       }else{
-        console.log(err)
+        reject(err)
       }
-    })
+     })
+   })
   }
 
   static update(obj){
@@ -50,8 +64,16 @@ class Profile{
                password = "${obj.password}",
                contacts_id = "${obj.contacts_id}"
                WHERE id = "${obj.id}"`;
-   db.all(query)
-  }
+     return new Promise((resolve,reject)=>{
+     db.all(query,(err,profilesRows)=>{
+      if(!err){
+        resolve(profilesRows)
+      }else{
+        reject(err)
+      }
+     })
+   })
+ }
 }
 
 module.exports = Profile

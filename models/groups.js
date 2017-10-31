@@ -2,14 +2,16 @@ const sqlite3 = require('sqlite3').verbose();
 const db = new sqlite3.Database('./database/data.db');
 
 class Groups{
-  static findAll(cb){
+  static findAll(){
     let query = `SELECT * FROM Groups`;
-    db.all(query,function(err,GroupsRows){
-      if(!err){
-        cb(null,GroupsRows)
-      }else{
-        console.log(err)
-      }
+    return new Promise((resolve,reject)=>{
+      db.all(query,function(err,groupsRows){
+        if(err){
+          reject(err)
+        }else{
+          resolve(groupsRows)
+        }
+      })
     })
   }
 

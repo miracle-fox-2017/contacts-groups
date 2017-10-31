@@ -24,6 +24,7 @@
         <tr>
           <th><abbr title="id"></abbr>ID</th>
           <th>NAME OF GROUP</th>
+          <th>CONTACT NAME</th>
           <th>ASSIGN</th>
           <th><abbr title="actions">ACTIONS</abbr></th>
         </tr>
@@ -34,6 +35,7 @@
       <tr>
         <th><%=data_Groups[i].id%></th>
         <td><strong><%=data_Groups[i].name_of_group%></strong>
+          <td>#</td>
         </td>
         <td style="margin-left:-5px;">
               <a class="button is-outlined is-small" href='/groups/assign_contacts/<%=data_Groups[i].id%>'>

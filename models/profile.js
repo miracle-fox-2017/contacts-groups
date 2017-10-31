@@ -7,66 +7,75 @@ class Profile {
 
 
 
-  static findAll(callback){
-    db.all(`SELECT Profile.*, Contacts.name, Contacts.id as
-            ContactId FROM Profile LEFT JOIN
-            Contacts ON Contacts.id = Profile.ContactId`, (err, rows) => {
-      if(err){
-        console.log(err);
-      }else{
-        callback(rows)
-      }
+  static findAll(){
+    return new Promise ((resolve, reject) =>{
+      db.all(`SELECT Profile.*, Contacts.name, Contacts.id as
+              ContactId FROM Profile LEFT JOIN
+              Contacts ON Contacts.id = Profile.ContactId`, (err, rows) => {
+        if(err){
+          reject(err);
+        }else{
+          resolve(rows)
+        }
+      })
     })
   }
 
-  static create(req, callback){
-
-    db.run(`INSERT INTO Profile (username, password, ContactId)
-    VALUES ('${req.body.username}','${req.body.password}', ${req.body.ContactId})`, (err) => {
-      if(err){
-        let msg = 'Contact sudah Terpakai'
-        callback(msg);
-      }else{
-        callback(err)
-      }
+  static create(req){
+    return new Promise ((resolve, reject) =>{
+      db.run(`INSERT INTO Profile (username, password, ContactId)
+      VALUES ('${req.body.username}','${req.body.password}', ${req.body.ContactId})`, (err) => {
+        if(err){
+          let msg = 'Contact sudah Terpakai'
+          reject(msg);
+        }else{
+          resolve(err)
+        }
+      })
     })
   }
   //
-  static findById(req, callback){
-    db.each(`SELECT * FROM Profile WHERE ID = ${req.params.id}`, (err, rows) => {
-      if(err){
-        console.log(err);
-      }else{
-        callback(rows)
-      }
+  static findById(req){
+    return new Promise ((resolve, reject) =>{
+      db.each(`SELECT * FROM Profile WHERE ID = ${req.params.id}`, (err, rows) => {
+        if(err){
+          reject(err);
+        }else{
+          resolve(rows)
+        }
+      })
     })
   }
 
 
 
-  static update(req, callback){
-    console.log(req);
-    db.run(`UPDATE Profile SET
+  static update(req){
+    return new Promise ((resolve, reject) =>{
+      db.run(`UPDATE Profile SET
       username = '${req.body.username}',
       password = '${req.body.password}',
       ContactId = '${req.body.ContactId}'
       WHERE ID = ${req.params.id}`, (err, rows)=>{
         if(err){
-          console.log(err);
+          let msg = 'Contact Id Sudah Terpakai'
+          reject(msg);
         }else{
-          callback(rows)
+          resolve(err)
         }
+      })
     })
+
   }
 
-  static destroy(req, callback){
-    db.run(`DELETE FROM Profile WHERE ID = ${req.params.id}`, (err,rows) => {
-      if(!err){
-        callback(rows)
-      }
+  static destroy(req){
+    return new Promise ((resolve, reject) =>{
+      db.run(`DELETE FROM Profile WHERE ID = ${req.params.id}`, (err,rows) => {
+        if(!err){
+          resolve(rows)
+        }
+      })
     })
   }
-
 }
 
 

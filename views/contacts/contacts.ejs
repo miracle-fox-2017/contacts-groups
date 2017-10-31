@@ -13,10 +13,7 @@
     <h1>Contacts</h1>
 
   <div class="container">
-    <%if(error != null){%>
-    <h3 style="color:red">Nama Tidak Boleh Kosong</h3>
-    <a href="/contacts"><<</a>
-    <%} else{%>
+
     <table class="table">
       <thead>
         <tr>
@@ -61,6 +58,9 @@
     <div class="container">
 
     <h3>Add Contact</h3>
+    <%if(error){%>
+    <h4 style="color:red">Nama Tidak Boleh Kosong</h4>
+    <%}%>
       <form class ="form" action="/contacts" method="POST">
         <input id="name" type="text" name="name" placeholder="Name">
         <br>
@@ -81,7 +81,7 @@
         </div>
     </div>
   </div>
-    <%}%>
+
   </body>
   <style>
   table#t01 tr:nth-child(even) {

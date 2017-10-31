@@ -22,6 +22,9 @@
     </div>
     <div class="col-xs-4 col-md-2">
       <select class="box" name="ContactId">
+        <%if(err){%>
+          <h3 style="color:red"><%=err%></h3>
+        <%}%>
       <% for(let i = 0; i < dataContacts.length; i++) {%>
       <option value="<%=dataContacts[i].id%>"><%=dataContacts[i].name%></option>
       <%}%>

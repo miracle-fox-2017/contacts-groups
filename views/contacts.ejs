@@ -26,6 +26,7 @@
         <th>Company</th>
         <th>Phone Number</th>
         <th>Email</th>
+        <th>Address</th>
         <th>Action</th>
       </tr>
         <% let i = 1 %>
@@ -36,6 +37,7 @@
             <td> <%= el.company %> </td>
             <td> <%= el.telp_number %> </td>
             <td> <%= el.email %> </td>
+            <td><a href="/addresses_with_contact">view</a>
             <td><a href="/contacts/edit/<%=el.id%>">edit</a>
                 <a href="/contacts/delete/<%=el.id%>">delete</a>
             </td>

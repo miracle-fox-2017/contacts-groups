@@ -1,27 +1,46 @@
 const db = require('../component/koneksi')
 
 class Addresses{
+	constructor(data){
+		this.id = data['id']
+		this.street = data['street']
+		this.city = data['city']
+		this.zipcode = data['zipcode']
+		this.id_contact = data['id_contact']
+	}
 
-	static read(cb){
+
+	static findAll(){
 		let select = "SELECT * FROM Addresses"
-		let data = []
-		db.all(select, (err, rows)=>{
-			cb(rows)
+		return new Promise(resolve =>{
+			db.all(select, (err, rows)=>{
+				let address = rows.map(item=>{
+					return new Addresses(item)
+				})
+				resolve(address)
+			})
 		})
 	}
 
-	static select_by_id(sql, cb){
+	static findById(sql){
 		let select = `SELECT * FROM Addresses WHERE id = ${sql.id}`
 			
-		db.all(select, (err, rows)=>{
-			rows.forEach(item =>{
-				cb(item)
-			})
-			
-		})	
+		return new Promise((resolve, reject) =>{	
+			db.all(select, (err, rows)=>{
+				if(err){
+					reject(err)
+				}
+				else{
+					// let address = rows.map(item =>{
+					// 	return new Addresses(item)
+					// })
+					resolve(rows.pop())
+				}
+			})	
+		})
 	}
 
-	static update(sql, cb){
+	static update(sql){
 		let update = 
 			`UPDATE Addresses SET street = "${sql.street}", `+
 			`city = "${sql.city}", `+ 
@@ -29,32 +48,40 @@ class Addresses{
 			`id_contact = "${sql.id_contact}" `+
 			`WHERE id = ${sql.id};` 
 
+			console.log(update)
+
+		return new Promise((resolve, reject) => {
 			db.run(update, (err)=>{
 				if(err){
-					console.log(err)
-				}
-				else{
-					cb('data sudah di update')
+					reject(err)
+				}else{
+					resolve('done')
 				}
 			})
+		})
+			
 	}
 
-	static delete(sql, cb){
+	static remove(sql){
 		let del  = `DELETE FROM Addresses WHERE id = ${sql.id};`
 
 		console.log(del)
 
-		db.run(del, (err)=>{
-			if(err){
-				console.log(err)
-			}
-			else{
-				cb('data sudah didelete')
-			}
-		}) 
+		return new Promise((resolve, reject)=> {
+			db.run(del, (err)=>{
+				if(err){
+					reject(err)
+				}
+				else{
+					resolve('data sudah didelete')
+				}
+			}) 
+		})
+
+		
 	}
 
-	static insert(sql, cb){
+	static create(sql){
 
 		let insert = `INSERT INTO Addresses (street, city, zipcode, id_contact) VALUES `+
 			`("${sql.street}", `+
@@ -62,16 +89,17 @@ class Addresses{
 			`"${sql.zipcode}",`+
 			`${sql.id_contact});`
 
-			// console.log(sql)
+			
+		return new Promise((resolve, reject)=>{
 			db.run(insert, (err)=>{
 				if(err){
-					console.log(err)
+					reject(err)
 				}
 				else{
-					 cb('berhasil insert')
+					 resolve('berhasil insert')
 				}
 			})
-			
+		})		
 	}
 }
 

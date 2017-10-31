@@ -3,29 +3,43 @@ const db = require('../component/koneksi')
 class Group{
 	constructor(data){
 		this.id = data['id']
-		this.name = data['name']
-		this.company = data['company']
-		this.telp_number = data['telp_number']
-		this.email = data['email']
+		this.name_of_group = data['name_of_group']
 	}
 	
-	static read(cb){
+	static findAll(){
 		let select = "SELECT * FROM Groups"
-		let data = []
-		db.all(select, (err, rows)=>{
-			cb(rows)
+
+		return new Promise((resolve, reject)=> {
+			db.all(select, (err, rows)=>{
+				if(err){
+					reject(err)
+				}
+				else{
+					let group = rows.map(item => {
+						return new Group(item)
+					})
+					resolve(group)
+				}
+			})
 		})
+		
 	}
 
-	static select_by_id(sql, cb){
+	static findById(sql){
 		let select = `SELECT * FROM Groups WHERE id = ${sql.id}`
 			
-		db.all(select, (err, rows)=>{
-			rows.forEach(item =>{
-				cb(item)
+		return new Promise((resolve, reject)=> {
+			db.all(select, (err, rows)=>{
+				if(err){
+					reject(err)
+				}
+				else{
+					resolve(rows.pop())
+				}
 			})
-			
+				
 		})	
+		
 	}
 
 	static update(sql, cb){
@@ -45,19 +59,20 @@ class Group{
 			})
 	}
 
-	static delete(sql, cb){
+	static remove(sql, cb){
 		let del  = `DELETE FROM Groups WHERE id = ${sql.id};`
 
-		console.log(del)
-
-		db.run(del, (err)=>{
-			if(err){
-				console.log(err)
-			}
-			else{
-				return 'data sudah didelete'
-			}
-		}) 
+		return new Promise((resolve, reject)=> {
+			db.run(del, (err)=>{
+				if(err){
+					reject(err)
+				}
+				else{
+					resolve('data sudah didelete')
+				}
+			}) 
+		})
+		
 	}
 }
 

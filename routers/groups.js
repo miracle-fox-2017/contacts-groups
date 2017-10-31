@@ -5,32 +5,34 @@ const Contact = require('../models/contact')
 const ContactGroup = require('../models/contact_group')
 
 
-router.get('/', (req, res)=>{
-	Group.read(groups=>{
-		ContactGroup.read(contact_group =>{
-			Contact.read(contacts =>{
+// router.get('/', (req, res)=>{
+// 	Group.read(groups=>{
+// 		ContactGroup.read(contact_group =>{
+// 			Contact.read(contacts =>{
 
-				groups.forEach(group =>{
-					group.contacts = []
-					contact_group.forEach(cg =>{
-						contacts.forEach(contact =>{
+// 				groups.forEach(group =>{
+// 					group.contacts = []
+// 					contact_group.forEach(cg =>{
+// 						contacts.forEach(contact =>{
 							
-							if(group.id == cg.id_group && cg.id_contact == contact.id){
-								group.contacts.push(contact.name)
-								console.log(group)
-							}
-						})
-					})
-				})
-				console.log(groups)
-					
-				res.render('groups/list', {groups})			
-			})
-		})
+// 							if(group.id == cg.id_group && cg.id_contact == contact.id){
+// 								group.contacts.push(contact.name)
+// 								console.log(group)
+// 							}
+// 						})
+// 					})
+// 				})
+// 				console.log(groups)
+
+// 				res.render('groups/list', {groups})			
+// 			})
+// 		})
 		
 		
-	})
-})
+// 	})
+// })
+
+router.get()
 
 router.get('/edit/:id', (req, res)=>{
 

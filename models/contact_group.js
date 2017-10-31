@@ -1,33 +1,48 @@
 const db = require('../component/koneksi')
 
 class ContactGroup{
+	constructor(data){
+		this.id_contact = data['id_contact']
+		this.id_group = data['id_group']
+	}
 	
-	static read(cb){
+	static findAll(){
 		let select = "SELECT * FROM Contacts_Groups"
-		db.all(select, (err, rows)=>{
-			cb(rows)
+
+		return new Promise((resolve, reject) => {
+			db.all(select, (err, rows)=>{
+				if(err){
+					reject(err)
+				}
+				else{
+					let cg = rows.map(item =>{
+						return new ContactGroup(item)
+					})
+
+					resolve(cg)
+				}
+			})
 		})
 	}
 
 
-	static insert(sql, cb){
+	static create(sql){
 
 		let insert = `INSERT INTO Contacts_Groups (id_contact, id_group) VALUES `+
 			`("${sql.id_contact}", `+
 			`"${sql.id_group}");`
 
-			console.log(insert)
-			db.run(insert, (err)=>{
-				if(err){
-					console.log(err)
-				}
-				else{
-					 cb('berhasil insert')
-				}
+			return new Promise((resolve, reject) => {
+				db.run(insert, (err)=>{
+					if(err){
+						reject(err)
+					}
+					else{
+						 resolve('berhasil insert')
+					}
+				})
 			})
-
-			
-			
+	
 	}
 }
 

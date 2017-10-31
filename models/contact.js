@@ -1,28 +1,44 @@
 const db = require('../component/koneksi')
 
 class Contact{
-	
-	static read(cb){
+	constructor(data){
+		this.id = data['id']
+		this.name = data['name']
+		this.company = data['company']
+		this.telp_number = data['telp_number']
+		this.email = data['email']
+	}
+
+	static findAll(){
 		let select = "SELECT * FROM Contacts"
-		let data = []
-		db.all(select, (err, rows)=>{
-			cb(rows)
+
+		return new Promise(resolve =>{
+			db.all(select, (err, rows)=>{
+				let contact = rows.map(item =>{
+					return new Contact(item)
+				})
+				resolve(contact)
+			})
 		})
 	}
 
-	static select_by_id(sql, cb){
+	static findById(sql){
 		let select = `SELECT * FROM Contacts WHERE id = ${sql}`
-		console.log(select)
-			
-		db.all(select, (err, rows)=>{
-			rows.forEach(item =>{
-				cb(item)
-			})
-			
-		})	
+		
+		new Promise((resolve, reject)=>{
+			db.all(select, (err, rows)=>{
+				if(err){
+					reject(err)
+				}
+				else{
+					resolve(rows.pop())
+				}
+			})	
+		})
 	}
 
-	static update(sql, cb){
+
+	static update(sql){
 		let update = 
 			`UPDATE Contacts SET name = "${sql.name}", `+
 			`company = "${sql.company}", `+ 
@@ -30,32 +46,35 @@ class Contact{
 			`email = "${sql.email}" ` +
 			`WHERE id = ${sql.id};` 
 
-			db.run(update, (err)=>{
-				if(err){
-					console.log(err)
-				}
-				else{
-					cb('data sudah di update')
-				}
-			})
+			new Promise((resolve, reject)=>{ 
+				db.run(update, (err)=>{
+					if(err){
+						reject(err)
+					}
+					else{
+						resolve('data sudah di update')
+					}
+				})
+			})	
 	}
 
-	static delete(sql, cb){
+	static remove(sql){
 		let del  = `DELETE FROM Contacts WHERE id = ${sql.id};`
 
-		console.log(del)
-
-		db.run(del, (err)=>{
-			if(err){
-				console.log(err)
-			}
-			else{
-				cb('data sudah didelete')
-			}
-		}) 
+		new Promise((resolve, reject)=>{ 
+			db.run(del, (err)=>{
+				if(err){
+					reject(err)
+				}
+				else{
+					resolve('data sudah didelete')
+				}
+			}) 
+		})
+	
 	}
 
-	static insert(sql, cb){
+	static create(sql){
 
 		let insert = `INSERT INTO Contacts (name, company, telp_number, email) VALUES `+
 			`("${sql.name}", `+
@@ -63,20 +82,18 @@ class Contact{
 			`"${sql.telp_number}", `+
 			`"${sql.email}");`
 
-				
+		new Promise((resolve, reject)=>{ 
 			db.run(insert, function(err){
 				if(err){
-					console.log(err)
+					reject(err)
 				}
 				else{
-					//  db.get("SELECT last_insert_rowid() as id", function (err, row) {
-		   //   			cb(row)
-					// });
-					cb(this)
+	
+					resolve(this)
 				}
 			})
 
-
+		})	
 			
 	}
 }

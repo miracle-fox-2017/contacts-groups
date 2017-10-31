@@ -5,26 +5,48 @@ const Group = require('../models/group')
 const ContactGroup = require('../models/contact_group')
 
 
-router.get('/', (req, res)=>{
-	Contact.read(contacts=>{
-		ContactGroup.read(contact_group=>{
-			Group.read(groups =>{
+// router.get('/', (req, res)=>{
+// 	Contact.read(contacts=>{
+// 		ContactGroup.read(contact_group=>{
+// 			Group.read(groups =>{
 				
-				contacts.forEach(contact =>{
+// 				contacts.forEach(contact =>{
+// 					contact.groups = []
+// 					contact_group.forEach(cg =>{
+// 						groups.forEach(group =>{
+// 							if(contact.id == cg.id_contact && group.id == cg.id_group){	
+// 								contact.groups.push(group.name_of_group)
+// 							}
+// 						})
+// 					})
+// 				})
+// 				console.log(contacts)
+// 				res.render('contacts/list', {contacts})
+// 			})
+// 		})
+// 	})
+// })
+
+router.get('/', (req, res)=>{
+	Promise.all([
+		Contact.findAll(),
+		ContactGroup.findAll(),
+		Group.findAll()
+		]).then(object => {
+
+				object[0].forEach(contact =>{
 					contact.groups = []
-					contact_group.forEach(cg =>{
-						groups.forEach(group =>{
-							if(contact.id == cg.id_contact && group.id == cg.id_group){	
+					object[1].forEach(contact_group =>{
+						object[2].forEach(group =>{
+							if(contact.id == contact_group.id_contact && group.id == contact_group.id_group){
 								contact.groups.push(group.name_of_group)
 							}
 						})
 					})
 				})
-				console.log(contacts)
-				res.render('contacts/list', {contacts})
+				res.render('contacts/list', {contacts : object[0]})
 			})
-		})
-	})
+	
 })
 
 router.get('/add', (req, res)=>{

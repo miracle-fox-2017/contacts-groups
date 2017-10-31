@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<title>Address with Contact</title>
+</head>
+<body>
+	<nav class="main-menu">
+		<ul>
+			<li><a href="/contacts">Contacts</a></li>
+			<li><a href="/groups">Groups</a></li>
+			<li><a href="/addresses">Addresses</a></li>
+			<li><a href="/profiles">Profiles</a></li>
+		</ul>
+	</nav>
+	<style>
+		.main-menu {
+			text-align: center;
+			background: crimson;
+		}
+
+		.main-menu ul li {
+			display: inline-block;
+			padding: 10px;
+		}
+
+		.main-menu ul li a {
+			text-decoration: none;
+			color: #fff;
+			font-style: bold;
+		}
+
+		.main-menu ul li a:hover {
+			font-style: normal;
+			color: wheat;
+		}
+	</style>
+	
+	<h2><%=  contact.name %></h2>
+
+	<table style="width: 100%" border="1">
+		<tr>
+			<th>ID</th>
+			<th>STREET</th>
+			<th>City</th>
+			<th>Zip Code</th>
+		</tr>
+	
+		<% for (i = 0 ; i < allAddress.length; i++) { %>
+		<tr>
+			<td><%= allAddress[i].id %></td>
+			<td><%= allAddress[i].street %></td>
+			<td><%= allAddress[i].city %></td>
+			<td><%= allAddress[i].zipcode %></td>
+		</tr>
+		<% } %>
+	</table>
+</body>
+</html>

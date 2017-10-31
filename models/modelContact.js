@@ -3,55 +3,69 @@ const db = new sqlite3.Database('db/data.db')
 
 
 class Contact {
-    static getData(callback) {
-        let query = 'select * from contacts'
-        db.all(query, function (err, rows) {
-            if (err) {
-                callback(err)
-            } else {
-                callback(rows)
-            }
+
+    static findAll() {
+        let query = "select * from contacts"
+        return new Promise((resolve, reject) => {
+            db.all(query, function (err, rowscontact) {
+                if (err) {
+                    reject(err)
+                } else {
+                    resolve(rowscontact)
+                }
+            })
         })
     }
-    static addData(newData, callback) {
-        //console.log(newData)
-        let query = `insert into contacts (name, company, telp_number, email) values ('${newData.name}', '${newData.company}', '${newData.telp_number}', '${newData.email}')`
-        db.run(query, function (err) {
-            if (err) {
-                console.log(err)
-            } else {
-                callback(this.lastID)
-            }
+    static create(newData) {
+        return new Promise((resolve, reject) => {
+            let query = `insert into contacts(name, company, telp_number, email) values('${newData.name}', '${newData.company}', '${newData.telp_number}', '${newData.email}')`
+            db.run(query, function (err) {
+                if (err) {
+                    reject(err)
+                } else {
+                    resolve(this.lastID)
+                }
+            })
         })
+
     }
 
-    static getDataById(callback, id) {
-        let query = `select * from contacts where id = ${id}`
-        db.each(query, function (err, rows) {
-            if (err) {
-                callback(err)
-            } else {
-                callback(rows)
-            }
+    static findById(id) {
+        return new Promise((resolve, reject) => {
+            let query = `select * from contacts where id = ${id}`
+            db.each(query, function (err, rows) {
+                if (err) {
+                    reject(err)
+                } else {
+                    resolve(rows)
+                }
+            })
         })
     }
 
     static updateData(id, newData) {
-        let query = `update contacts set name = '${newData.name}', company = '${newData.company}', telp_number = '${newData.telp_number}', email= '${newData.email}' where id = ${id}`
-        db.run(query, function (err) {
-            if (err) {
-                console.log(err)
-            }
+        return new Promise((resolve, reject) => {
+            let query = `update contacts set name = '${newData.name}', company = '${newData.company}', telp_number = '${newData.telp_number}', email = '${newData.email}' where id = ${id}`
+            db.run(query, function (err) {
+                if (err) {
+                    reject(err)
+                } else {
+                    resolve()
+                }
+            })
         })
     }
-    static deleteData(id, callback) {
-        let query = `delete from contacts where id = ${id}`
-        db.run(query, function (err) {
-            if (err) {
-                console.log(err)
-            } else {
-                callback()
-            }
+
+    static removeData(id) {
+        return new Promise((resolve, reject) => {
+            let query = `delete from contacts where id = ${id}`
+            db.run(query, function (err) {
+                if (err) {
+                    reject(err)
+                } else {
+                    resolve()
+                }
+            })
         })
     }
 

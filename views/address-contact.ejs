@@ -34,13 +34,13 @@
 
                     <td>
                         <ol>
-                            <% dataAddress.forEach((address)=>{ %>
+                            <%dataContact.address.forEach((address)=>{%>
                                 <li>
-                                    <%=address.street%>,
-                                        <%=address.city%>,
-                                            <%=address.zipcode%>
+                                    <%= address.street%>,
+                                        <%= address.city%>,
+                                            <%= address.zipcode%>
                                 </li>
-                                <% })%>
+                                <%})%>
                         </ol>
 
                     </td>

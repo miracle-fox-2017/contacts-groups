@@ -30,11 +30,7 @@ app.use('/groups', group)
 
 
 app.get('/addresses-with-contact', function (req, res) {
-    Address.getData((err, dataAddress) => {
-        Contact.getData((dataContact) => {
-            res.render('address-with-contact', { dataAddress: dataAddress, dataContact: dataContact })
-        })
-    })
+ 
 })
 
 

@@ -5,45 +5,56 @@ const Contact = require('./../models/modelContact')
 const Profile = require('./../models/modelProfile')
 
 router.get('/', function (req, res) {
-    Address.getData((err, dataAddress) => {
-        if (err) {
-            res.render('address', { Error: err })
-
-        } else {
-            Contact.getData((dataContact) => {
-                res.render('address', { dataAddress: dataAddress, dataContact: dataContact })
-            })
-        }
+    Address.getDataContact().then((dataAddress) => {
+        res.render('address', { dataAddress: dataAddress })
+    }).catch((reason) => {
+        res.send(reason)
     })
 })
-router.get('/add', function (req, res) {
-    Contact.getData((dataContact) => {
-        res.render('address-add', { dataContact: dataContact })
-    })
 
+router.get('/add', function (req, res) {
+    Contact.findAll().then((dataContact) => {
+        res.render('address-add', { dataContact: dataContact })
+    }).catch((reason) => {
+        res.send(reason)
+    })
 })
 
 router.post('/add', function (req, res) {
-    Address.addData(req.body)
-    res.redirect('../../addresses')
+    Address.create(req.body).then(() => {
+        res.redirect('../addresses')
+    }).catch(reason => {
+        res.send(reason)
+    })
 })
 
 router.get('/edit/:id', function (req, res) {
-    Address.getDataById((data) => {
-        Contact.getData((dataContact) => {
-            res.render('address-edit', { dataAddress: data, dataContact: dataContact })
-        })
-    }, req.params.id)
+    Promise.all([
+        Address.findById(req.params.id),
+        Contact.findAll()
+    ]).then((result) => {
+        res.render('address-edit', { dataAddress: result[0], dataContact: result[1] })
+    }).catch((reason) => {
+        res.send(reason)
+    })
+
 })
 
 router.post('/edit/:id', function (req, res) {
-    Address.updateData(req.params.id, req.body)
-    res.redirect('../../addresses')
+    Address.updateData(req.params.id, req.body).then(() => {
+        res.redirect('../../addresses')
+    }).catch((reason) => {
+        res.send(reason)
+    })
+
 })
 
 router.get('/delete/:id', function (req, res) {
-    Address.deleteData(req.params.id)
-    res.redirect('../../addresses')
+    Address.removeData(req.params.id).then(() => {
+        res.redirect('../../addresses')
+    }).catch((reason) => {
+        res.send(reason)
+    })
 })
 
 module.exports = router

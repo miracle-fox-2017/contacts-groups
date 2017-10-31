@@ -37,32 +37,21 @@
                     <td>
                         <%= address.zipcode%>
                     </td>
-                    <%if(address.idContact){
-                        dataContact.forEach((contact)=>{
-                            if(contact.id === address.idContact){%>
-                        <td>
-                            <%= contact.name %>
-                        </td>
-                        <%}})%>
-                            <% } else {%>
-
-                                <td>
-
-                                </td>
-                                <% }%>
+                    <td>
+                        <%= address.name%>
+                    </td>
 
 
-
-                                    <td>
-                                        <a href="/addresses/edit/<%=address.id%>">
+                    <td>
+                        <a href="/addresses/edit/<%=address.id%>">
                             Edit
                            </a>
-                                    </td>
-                                    <td>
-                                        <a href="/addresses/delete/<%=address.id%>">
+                    </td>
+                    <td>
+                        <a href="/addresses/delete/<%=address.id%>">
                                 Delete
                                </a>
-                                    </td>
+                    </td>
 
                 </tr>
                 <%})%>

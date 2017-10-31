@@ -4,57 +4,63 @@ const Profile = require('./../models/modelProfile')
 const Contact = require('./../models/modelContact')
 
 router.get('/', function (req, res) {
-    Profile.getData((data) => {
-        res.render('profile', { dataProfile: data })
+    Profile.getDataContact().then((dataProfile) => {
+        res.render('profile', { dataProfile: dataProfile })
+    }).catch((reason) => {
+        res.send(reason)
     })
 })
 
 router.get('/add', function (req, res) {
-    Contact.getData((data) => {
-        res.render('profile-add', { dataContact: data, message: '' })
+    Contact.findAll().then((dataContact) => {
+        res.render('profile-add', { dataContact: dataContact, message: '' })
+    }).catch((reason) => {
+        res.send(reason)
     })
 
 })
 
 router.post('/add', function (req, res) {
-    Profile.addData((err) => {
-        if (err) {
-            Contact.getData((data) => {
-                res.render('profile-add', { dataContact: data, message: 'Your contact already has profile' })
-            })
-        } else {
-            res.redirect('../profiles')
-        }
-    }, req.body)
-
+    Profile.create(req.body).then(() => {
+        res.redirect('../../profiles')
+    }).catch((reason) => {
+        Contact.findAll().then((dataContact) => {
+            res.render('profile-add', { dataContact: dataContact, message: reason })
+        })
+    })
 })
 
 router.get('/edit/:id', function (req, res) {
-    Profile.getDataById((dataProfile) => {
-        Contact.getData((dataContact) => {
-            res.render('profile-edit', { dataProfile: dataProfile, dataContact: dataContact, message: '' })
-        })
+    Promise.all([
+        Profile.findById(req.params.id),
+        Contact.findAll()
+    ]).then((result) => {
+        res.render('profile-edit', { dataProfile: result[0], dataContact: result[1], message: '' })
+    }).catch((reason) => {
+        res.send(reason)
+    })
 
-    }, req.params.id)
 })
 
 router.post('/edit/:id', function (req, res) {
-    Profile.updateData((err) => {
-        if (err) {
-            Profile.getDataById((dataProfile) => {
-                Contact.getData((dataContact) => {
-                    res.render('profile-edit', { dataProfile: dataProfile, dataContact: dataContact, message: 'Your contact already has profile' })
-                })
-            }, req.params.id)
-        } else {
-            res.redirect('../../profiles')
-        }
-    }, req.params.id, req.body)
+    Profile.updateData(req.params.id, req.body).then(() => {
+        res.redirect('../../profiles')
+    }).catch(reason => {
+        Promise.all([
+            Profile.findById(req.params.id),
+            Contact.findAll()
+        ]).then((result) => {
+            res.render('profile-edit', { dataProfile: result[0], dataContact: result[1], message: reason })
+        })
+    })
 })
 
 router.get('/delete/:id', function (req, res) {
-    Profile.deleteData(req.params.id)
-    res.redirect('../../profiles')
+    Profile.removeData(req.params.id).then(() => {
+        res.redirect('../../profiles')
+    }).catch((reason) => {
+        res.send(reason)
+    })
 })
 
 module.exports = router

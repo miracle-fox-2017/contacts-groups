@@ -6,54 +6,56 @@ const Group = require('./../models/modelGroup')
 const Address = require('./../models/modelAddress')
 
 router.get('/', function (req, res) {
-    Contact.getData((data) => {
-        ContactGroup.getContactGroup((data), (dataResult) => {
-            res.render('contact', { dataContact: dataResult })
-        })
+    ContactGroup.findContactGroup().then((contactGroup) => {
+        res.render('contact', { dataContact: contactGroup })
+    }).catch((reason) => {
+        console.log(reason)
     })
 })
 
 router.get('/add', function (req, res) {
-    Group.getData((data) => {
-        res.render('contact-add', { message: '', dataGroup: data })
+    Group.findAll().then((dataGroup) => {
+        res.render('contact-add', { dataGroup: dataGroup, message: '' })
+    }).catch((err) => {
+        res.render('contact-add', { message: err })
     })
+
 })
 
 router.post('/add', function (req, res) {
-    if (req.body.name === '') {
-        res.render('contact-add', { message: "Name required!" })
-    } else {
-        Contact.addData(req.body, (lastId) => {
-            ContactGroup.addData(req.body.idGroup, lastId)
+    Contact.create(req.body).then((idContact) => {
+        ContactGroup.create(req.body.idGroup, idContact).then(() => {
             res.redirect('../contacts')
-        })
-    }
-})
-
-router.get('/edit/:id', function (req, res) {
-    Contact.getDataById((data) => {
-        res.render('contact-edit', { dataContact: data })
-    }, req.params.id)
-})
-
-router.post('/edit/:id', function (req, res) {
-    Contact.updateData(req.params.id, req.body)
-    res.redirect('../../contacts')
-})
-router.get('/delete/:id', function (req, res) {
-    Contact.deleteData(req.params.id, () => {
-        ContactGroup.removeDataByIdContact(req.params.id, () => {
-            res.redirect('../../contacts')
         })
     })
 })
 
+router.get('/edit/:id', function (req, res) {
+    Contact.findById(req.params.id).then((dataContact) => {
+        res.render('contact-edit', { dataContact: dataContact })
+    })
+})
+
+router.post('/edit/:id', function (req, res) {
+    Contact.updateData(req.params.id, req.body).then(() => {
+        res.redirect('../../contacts')
+    }).catch((reason) => {
+        res.send(reason)
+    })
+})
+router.get('/delete/:id', function (req, res) {
+    Contact.removeData(req.params.id).then(() => {
+        res.redirect('../../contacts')
+    }).catch((reason) => {
+        res.send(reason)
+    })
+
+})
+
 router.get('/addresses/:id', function (req, res) {
-    Contact.getDataById((data) => {
-        Address.getDataAddressContact((dataAddress) => {
-            res.render('address-contact', { dataContact: data, dataAddress: dataAddress })
-        }, data.id)
-    }, req.params.id)
+    Address.findContactAddress(req.params.id).then((dataContact) => {
+        res.render('address-contact', {dataContact : dataContact})
+    })
 })
 
 

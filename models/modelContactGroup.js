@@ -5,81 +5,91 @@ const Contact = require('./modelContact')
 
 class ContactGroup {
 
-    static getData(callback) {
-        let query = 'select * from  groups'
-        db.all(query, function (err, rows) {
-            if (err) {
-                callback(err)
-            } else {
-                callback(rows)
-            }
-        })
-    }
-    static addData(idGroup, idContact) {
-        let query = `insert into contactgroups (idContact, idGroup) values (${idContact}, ${idGroup})`
-        db.run(query, function (err) {
-            if (err) {
-                console.log(err)
-            }
-        })
-    }
-
-    static getContactGroup(dataContact, callback) {
-        let result = []
-        dataContact.forEach((contact) => {
-            contact.group = []
-            let query = `select * from contactgroups inner join groups on contactgroups.idGroup = groups.id where contactgroups.idContact = ${contact.id}`
-            db.all(query, function (err, rows) {
-                rows.forEach((row) => {
-                    contact.group.push(row.name_of_group)
-
-                })
-                result.push(contact)
-                // console.log(result)
-                if (result.length == dataContact.length) {
-                    callback(result)
-                }
-            })
-        });
-    }
-    static getGroupContact(dataGroup, callback) {
-        let result = []
-        dataGroup.forEach((group) => {
-            group.contact = []
-            let query = `select * from contactgroups inner join contacts on contactgroups.idContact = contacts.id where contactgroups.idGroup = ${group.id}`
-            db.all(query, function (err, rows) {
-                rows.forEach((row) => {
-                    group.contact.push(row.name)
-                })
-                result.push(group)
-                if (result.length == dataGroup.length) {
-                    callback(result)
+    static findAll() {
+        return new Promise((resolve, reject) => {
+            let query = `select * from contactgroups`
+            db.all(query, function (err, rowsContactGroup) {
+                if (err) {
+                    reject(err)
+                } else {
+                    resolve(rowsContactGroup)
                 }
             })
         })
     }
 
-    static removeDataByIdContact(idContact, callback) {
-        let query = `delete from contactgroups where idContact = ${idContact}`
-        db.run(query, function (err) {
-            if (err) {
-                console.log(err)
-            } else {
-                callback()
-            }
+    static findContactGroup() {
+
+        return new Promise((resolve, reject) => {
+            Promise.all([
+                Contact.findAll(),
+                ContactGroup.findAll(),
+                Group.findAll()
+            ]).then((dataContactGroup) => {
+                dataContactGroup[0].forEach((contact) => {
+                    contact.name_of_group = []
+                    dataContactGroup[1].forEach((contactgroup) => {
+                        if (contact.id == contactgroup.idContact) {
+                            dataContactGroup[2].forEach((group) => {
+                                if (contactgroup.idGroup == group.id) {
+                                    contact.name_of_group.push(group.name_of_group)
+                                }
+                            })
+
+                        }
+
+                    })
+                })
+                resolve(dataContactGroup[0])
+            }).catch((err) => {
+                reject(err)
+            })
+        })
+
+    }
+
+    static findGroupContact() {
+        return new Promise((resolve, reject) => {
+            Promise.all([
+                Contact.findAll(),
+                ContactGroup.findAll(),
+                Group.findAll()
+            ]).then((contactgroup) => {
+                contactgroup[2].forEach((group) => {
+                    group.name = []
+                    contactgroup[1].forEach((cg) => {
+                        if (cg.idGroup == group.id) {
+                            contactgroup[0].forEach((contact) => {
+                                if (cg.idContact == contact.id) {
+                                    group.name.push(contact.name)
+                                }
+                            })
+                        }
+                    })
+                })
+                resolve(contactgroup[2])
+            }).catch((reason) => {
+                reject(reason)
+            })
+        })
+
+    }
+
+    static create(idGroup, idContact) {
+        let query = `insert into contactgroups(idGroup, idContact) values(${idGroup}, ${idContact})`
+        return new Promise((resolve, reject) => {
+            db.run(query, function (err) {
+                if (err) {
+                    reject(err)
+                } else {
+                    resolve()
+                }
+            })
         })
     }
 
-    static removeDataByIdGroup(idGroup, callback) {
-        let query = `delete from contactgroups where idGroup = ${idGroup}`
-        db.run(query, function (err) {
-            if (err) {
-                console.log(err)
-            } else {
-                callback()
-            }
-        })
-    }
 }
+
+
 
 module.exports = ContactGroup

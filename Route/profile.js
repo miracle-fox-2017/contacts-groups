@@ -6,10 +6,10 @@ const Contact = require ('../Model/contacts')
 var route = express.Router()
 
 route.get('/',(req,res)=>{
-  Contact.getall(rowstable =>{
-    Profile.getall(rows=>{
+  Contact.getall().then(rowstable =>{
+     Profile.getall().then(rows=>{
       // res.send({profile : rows,contact :rowstable})
-      res.render('profile',{profile : rows,contact :rowstable,error:[]})
+       res.render('profile',{profile : rows,contact :rowstable,error:[]})
     })
   })
 })
@@ -17,9 +17,9 @@ route.get('/',(req,res)=>{
 route.post('/',(req,res)=>{
   if (req.body.username === ""){
         // res.send({profile : rows,contact :rowstable,error:["Error namasudah ada"]})
-    Contact.getall(rowstable =>{
-      Profile.getall(rows=>{
-        res.render('profile',{profile : rows,contact :rowstable,error:["Error Username / Password Tidak Boleh Kosong"]})
+    Contact.getall().then(rowstable =>{
+       Profile.getall().then(rows=>{
+         res.render('profile',{profile : rows,contact :rowstable,error:["Error Username / Password Tidak Boleh Kosong"]})
       })
     })
   }
@@ -30,10 +30,10 @@ route.post('/',(req,res)=>{
     contactid : req.body.contact_id
   }
   // res.send(profile)
-  Profile.addnew(profile,call =>{
+  Profile.addnew(profile).then(call =>{
     if(call != null){
-      Contact.getall(rowstable =>{
-        Profile.getall(rows=>{
+      Contact.getall().then(rowstable =>{
+         Profile.getall().then(rows=>{
           res.render('profile',{profile : rows,contact :rowstable,error:["Error Nama Telah Digunakan"]})
         })
       })
@@ -48,10 +48,10 @@ route.post('/',(req,res)=>{
 })
 
 route.get('/edit/:id',(req,res)=>{
-  Contact.getall(rowstable =>{
-    Profile.edit(req.params.id,row=>{
+  Contact.getall().then(rowstable =>{
+     Profile.edit(req.params.id).then(row=>{
       // res.send(rowstable[0])
-      res.render('profileEdit',{rowProfile:row,contact :rowstable})
+       res.render('profileEdit',{rowProfile:row,contact :rowstable})
     })
   })
 })
@@ -63,9 +63,9 @@ route.post('/edit/:id',(req,res) =>{
       password : req.body.password,
       contactid : req.body.contact_id
     }
-    res.send(update)
-    // Profile.update(id,update)
-    // res.redirect('/profile')
+    // res.send(update)
+    Profile.update(id,update)
+    res.redirect('/profile')
 })
 
 route.get('/delete/:id',(req,res)=>{

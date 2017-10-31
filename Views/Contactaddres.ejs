@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <style media="screen">
+    h2{
+      text-align: center;
+    }
+    table {
+    border-collapse: collapse;
+    width: 100%;
+    padding: 20px
+  }
+
+  th, td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+    }
+  form{
+    text-align: center;
+    padding: 20px
+  }
+    </style>
+  </head>
+  <body>
+    <div>
+      <h3>Nama :</h3>
+      <h4><%=contact[0].Name%></h4>
+    </div>
+    <div>
+    <table>
+      <thead>
+        <td>Street</td>
+        <td>City</td>
+        <td>Zipcode</td>
+      </thead>
+      <%Address.forEach(data=>{%>
+        <tr>
+          <td><%=data.Street%></td>
+          <td><%=data.City%></td>
+          <td><%=data.Zipcode%></td>
+        </tr>
+      <%})%>
+
+    </table>
+    </div>
+    <form class="" action="" method="post">
+      <input type="text" name="street" placeholder="Street">
+      <input type="text" name="city" placeholder="City">
+      <input type="text" name="zipcode" placeholder="Zip Code">
+      <input type="submit" value="Submit">
+    </form>
+  </body>
+</html>

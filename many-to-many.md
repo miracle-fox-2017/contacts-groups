@@ -10,6 +10,7 @@ Release 10
 
 Pada saat melakukan add di halaman contacts, tambahkanlah input fields berupa select-options(dropdown/combobox) yang isinya merupakan nama dari semua group yang sudah ada. Ketika user/client menekan tombol save maka data contact dan group akan tersimpan pada tabel contact maupun tabel conjunctionnya.
 Pada halaman list contacts tambahkan column group dimana pada coloum tersebut berisi nama-nama group yang telah di-assign untuk contact tersebut menggunakan callback. Di release ini table contact tidak boleh di join dengan table manapun, namun table Contacts_Groups boleh join dengan table Groups.
+
 Release 11
 
 Tambahak route '/groups/assign_contacts/:id_group' (GET dan POST) dimana route ini berfungsi untuk menyimpan data relasi antara group dan contact-nya

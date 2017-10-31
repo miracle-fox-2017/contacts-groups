@@ -3,9 +3,12 @@ const sqlite3 = require('sqlite3').verbose();
 const db = new sqlite3.Database('./database/person.db')
 
 class Groups {
-  static getall(cb){
-    db.all(`SELECT * FROM Grups`,(err,rows)=>{
-      cb(rows)
+  static getall(){
+    return new Promise ((resolve,reject)=>{
+      db.all(`SELECT * FROM Grups`,(err,rows)=>{
+        if(err){ reject(err) }
+        else{ resolve(rows) }
+      })
     })
   }
 
@@ -14,10 +17,14 @@ class Groups {
             VALUES('${add.nama}')`)
   }
 
-  static edit (id,cb){
-    db.get(`SELECT * FROM Grups WHERE Id_grup = ${id}`,(err,row)=>{
-      cb(row)
+  static edit (id){
+    return new Promise((resolve,reject)=>{
+      db.get(`SELECT * FROM Grups WHERE Id_grup = ${id}`,(err,row)=>{
+        if(err){ reject(err) }
+        else{ resolve(row) }
+      })
     })
+
   }
 
   static update (id,edit){

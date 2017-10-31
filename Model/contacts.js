@@ -3,25 +3,47 @@
 const sqlite3 = require('sqlite3').verbose();
 
 const db = new sqlite3.Database('./database/person.db')
-class Contacts {
-  static getall (cb){
-    db.all(`SELECT * FROM Contacts`,(err,rows) => {
 
-      // let data = rows
-      // console.log(rows);
-      cb(rows)
+class Contacts {
+  static getall (){
+    return new Promise ((resolve,reject)=>{
+      db.all(`SELECT * FROM Contacts`,(err,rows) => {
+        if(err){ reject(err) }
+        else{ resolve(rows) }
+      })
     })
+
   }
 
   static addnew (add){
-    db.run(`INSERT INTO Contacts (Name,Company,Telp_Number,Email)
-            VALUES('${add.nama}','${add.company}','${add.telp}','${add.email}')`)
+    return new Promise((resolve,reject)=>{
+      db.run(`INSERT INTO Contacts (Name,Company,Telp_Number,Email)
+              VALUES('${add.nama}','${add.company}','${add.telp}','${add.email}')`,function(err){
+                if (!err){ resolve(this) };
+                // else{ resolve(this) }
+              })
+    })
+
   }
 
-  static edit (id,cb){
-    db.get(`SELECT * FROM Contacts WHERE ID = ${id}`,(err,row) =>{
-      cb(row)
+  static findbyid(id){
+    return new Promise ((resolve,reject)=>{
+      db.all(`SELECT * FROM Contacts WHERE ID ='${id}'`,(err,rowsbyid) => {
+        if(err){
+          reject(err)
+        } else { resolve(rowsbyid) }
+      })
     })
+  }
+
+  static edit (id){
+    return new Promise ((resolve,reject)=>{
+      db.get(`SELECT * FROM Contacts WHERE ID = ${id}`,(err,row) =>{
+        if (err){ reject(err) }
+        else{ resolve(row) }
+      })
+    })
+
   }
 
   static update (id,edit){

@@ -9,28 +9,35 @@ class Profile {
   //   })
   // }
 
-  static getall(cb){ //buat join table bisa pake left atau inner
+  static getall(){ //buat join table bisa pake left atau inner
     //dicoba dlu takut masih salah
-    db.all(`SELECT Profile.Id_profile, Profile.Username, Profile.Password, Contacts.Name
-      FROM Profile LEFT JOIN Contacts ON Profile.ContactID=Contacts.ID`,(err,rows)=>{
-      // console.log(rows);
-      if(err){cb(err)}
-      else{cb(rows)}
+    return new Promise((resolve,reject)=>{
+      db.all(`SELECT Profile.Id_profile, Profile.Username, Profile.Password, Contacts.Name
+        FROM Profile LEFT JOIN Contacts ON Profile.ContactID=Contacts.ID`,(err,rows)=>{
+        // console.log(rows);
+        if(err){ reject(err) }
+        else{ resolve(rows) }
+      })
     })
   }
 
-  static addnew(add,cb){
-
+  static addnew(add){
+    return new Promise((resolve,reject)=>{
     db.run(`INSERT INTO Profile(Username,Password,ContactID)
-            VALUES('${add.username}','${add.password}','${add.contactid}')`,err =>{
-              if (err){cb(err)}
+            VALUES('${add.username}','${add.password}','${add.contactid}')`,function(err){
+              if (err){resolve(err)}
             })
+    })
   }
 
-  static edit (id,cb){
-    db.get(`SELECT * FROM Profile WHERE Id_profile = ${id}`,(err,row)=>{
-      cb(row)
+  static edit (id){
+    return new Promise((reject,resolve)=>{
+      db.get(`SELECT * FROM Profile WHERE Id_profile = ${id}`,(err,row)=>{
+        if (err){ reject(err) }
+        else{ resolve(row) }
+      })
     })
+
   }
 
   static update (id,edit){

@@ -47,14 +47,14 @@
           <td><%=d.Street%></td>
           <td><%=d.City%></td>
           <td><%=d.Zipcode%></td>
-          <% contact.forEach(c=>{ %>
-          <% if(d.ContactID === c.ID){%>
-              <td><%=c.Name%></td>
-              <td><%=c.Company%></td>
-              <td><%=c.Telp_Number%></td>
-              <td><%=c.Email%></td>
-          <%  }%>
-        <%  })%>
+
+              <td><%=d.Name%></td>
+              <td><%=d.Company%></td>
+              <td><%=d.Telp_Number%></td>
+              <td><%=d.Email%></td>
+
+        <td><a href="/contacts/edit/<%=d.ID%>">Edit</a>
+        <a href="/contacts/delete/<%=d.ID%>">Delete</a></td>
         </tr>
         <%})%>
 

@@ -6,20 +6,25 @@ const Contact = require('../Model/contacts');
 var route = express.Router()
 
 route.get('/',(req,res)=>{
-  Contact.getall(rowstable =>{
-    Address.getall(rows=>{
-      res.render('addresses',{address : rows,contact :rowstable,error:[]})
-    // res.send(rows)
+  Contact.getall().then(rowstable =>{
+    Address.getall().then(data =>{
+        res.render('addresses',{address : data,contact :rowstable,error:[]})
+    }).catch(gagal =>{
+      return res.send(gagal)
     })
+    // Address.getall(rows=>{
+    //   res.render('addresses',{address : rows,contact :rowstable,error:[]})
+    // res.send(rows)
+    // })
   })
 })
 
 route.post('/',(req,res)=>{
   if (req.body.street === "" || req.body.street === ""){
         // res.send({profile : rows,contact :rowstable,error:["Error namasudah ada"]})
-    Contact.getall(rowstable =>{
-      Address.getall(rows=>{
-        res.render('addresses',{address : rows,contact :rowstable,error:["Error Tidak Boleh Kosong"]})
+    Contact.getall().then(rowstable =>{
+       Address.getall().then(rows=>{
+         res.render('addresses',{address : rows,contact :rowstable,error:["Error Tidak Boleh Kosong"]})
       })
     })
   }
@@ -36,13 +41,13 @@ route.post('/',(req,res)=>{
 })
 
 route.get('/edit/:id',(req,res)=>{
-  Address.gettable('Contacts',rowstable =>{
-    Address.edit(req.params.id,row=>{
+  Contact.getall().then(rowstable =>{
+     Address.edit(req.params.id).then(row=>{
       res.render('addressEdit',{rowAddress:row,contact :rowstable,error:[]})
     })
   })
 })
-
+//
 route.post('/edit/:id',(req,res) =>{
     let id = req.params.id
     let update = {
@@ -55,11 +60,11 @@ route.post('/edit/:id',(req,res) =>{
     Address.update(id,update)
     res.redirect('/address')
 })
-
+//
 route.get('/delete/:id',(req,res)=>{
   Address.addDelete(req.params.id)
   res.redirect('/address')
 })
-
+//
 
 module.exports = route;

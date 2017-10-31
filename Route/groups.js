@@ -5,8 +5,8 @@ const Groups = require('../Model/groups');
 var route = express.Router()
 
 route.get('/',(req,res)=>{
-  Groups.getall(rows=>{
-    res.render('groups',{group : rows})
+  Groups.getall().then(rows=>{
+     res.render('groups',{group : rows})
   })
 })
 
@@ -19,7 +19,7 @@ route.post('/',(req,res)=>{
 })
 
 route.get('/edit/:id',(req,res)=>{
-  Groups.edit(req.params.id,row=>{
+  Groups.edit(req.params.id).then(row=>{
     res.render('groupEdit',{rowGroup:row})
   })
 })

@@ -8,15 +8,26 @@ class ContactGroup {
     })
   }
 
-  static create(data, callback) {
-    db.run(`INSERT INTO contactsGroups (contactId, groupId) VALUES
-    (${data.contactId}, ${data.groupId})`, (err, rows) => {
-      callback(err)
+  static findWithGroups(callback) {
+    let query = `SELECT ContactsGroups.*, Groups.name_of_group FROM ContactsGroups
+    LEFT JOIN Groups ON ContactsGroups.groupId = Groups.id`
+    db.all(query, (err, rows) => {
+      callback(err, rows)
     })
   }
 
-  static delete(contactGroupsId, callback) {
-    db.run(`DELETE FROM contactsGroups WHERE id = ${contactGroupsId}`, (err) => {
+  static findWithContacts(callback) {
+    let query = `SELECT ContactsGroups.*, Contacts.name FROM ContactsGroups
+    LEFT JOIN Contacts ON ContactsGroups.contactId = Contacts.id`
+    db.all(query, (err, rows) => {
+      callback(err, rows)
+    })
+  }
+
+  static create(contactId, groupId, callback) {
+    // console.log(contactId + ' & ' + groupId);
+    db.run(`INSERT INTO contactsGroups (contactId, groupId) VALUES
+    (${contactId}, ${groupId})`, (err, rows) => {
       callback(err)
     })
   }

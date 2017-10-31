@@ -1,39 +1,49 @@
 const express = require('express')
 const Contact = require('../models/contacts')
-const Address = require('../models/addresses')
+const Group = require('../models/groups')
 const ContactGroup = require('../models/contactsGroups')
 
 const router = express.Router()
 
 // define the contacts page route
 router.get('/', function(req, res) {
-  Contact.findAll((err1, rows1) => {
-    Address.findAll((err2, rows2) => {
-      ContactGroup.findAll((err3, rows3) => {
-        // res.send(rows3)
-        res.render('contacts/index',{error: err1, dataContacts: rows1})
+  Contact.findAll((errContact, rowsContacts) => {
+    ContactGroup.findWithGroups((errContactGroup, rowsContactGroups) => {
+      rowsContacts.forEach((rowsContact) => {
+        rowsContact.name_of_group = []
+        rowsContactGroups.forEach((rowsContactGroup) => {
+          if(rowsContact.id == rowsContactGroup.contactId) {
+            rowsContact.name_of_group.push(rowsContactGroup.name_of_group)
+          }
+        })
       })
+      // res.send(rowsContacts)
+      res.render('contacts/index',{title: 'My Contacts App | Contacts Page', dataContacts: rowsContacts})
     })
   })
 })
 
 router.get('/add', function(req, res) {
-  res.render('contacts/add', {error: false})
+  Group.findAll((err, rows) => {
+    res.render('contacts/add', {title: 'My Contacts App | Add Contact', error: false, dataGroups: rows})
+  })
 })
 
 router.post('/add', function(req, res) {
   if(req.body.name == '') {
     res.render('contacts/add', {error: true})
   } else {
-    Contact.create(req.body, (err) => {
-      res.redirect('/contacts')
+    Contact.create(req.body, (err, contactId) => {
+      ContactGroup.create(contactId, req.body.groupId, (err) => {
+        res.redirect('/contacts')
+      })
     })
   }
 })
 
 router.get('/edit/:id', function(req, res) {
   Contact.findById(req.params.id, (err, rows) => {
-    res.render('contacts/edit', {error: err, dataContact: rows})
+    res.render('contacts/edit', {title: 'My Contacts App | Edit Contact', dataContact: rows})
   })
 })
 

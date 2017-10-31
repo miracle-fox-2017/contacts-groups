@@ -2,7 +2,7 @@
 <html>
   <% include ../partials/header %>
   <body>
-    <h1>Add Group</h1>
+    <h1>Assign Contacts</h1>
 
     <table>
       <thead>
@@ -14,12 +14,15 @@
           <th><a href="/addresses">Addresses</a></th>
         </tr>
       </thead>
-    </table><br>
+    </table>
 
-    <form class="" action="/groups/add" method="post">
-      Name:<br>
-      <input type="text" name="name" placeholder="input your group name"><br>
-      <br>
+    <form class="" action="/groups/assign_contacts/<%= dataGroup.id %>" method="post">
+      <h4>Assign contacts for group: <%= dataGroup.name_of_group %></h4>
+      <select name="contactId">
+        <% dataContacts.forEach((data) => { %>
+          <option value="<%= data.id %>"><%= data.name %></option>
+        <% }) %>
+      </select>
       <input type="submit" value="Submit">
     </form>
   </body>

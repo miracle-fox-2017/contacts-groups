@@ -26,7 +26,7 @@ class Group {
     })
   }
 
-  static delete(groupId, callback) {
+  static remove(groupId, callback) {
     db.run(`DELETE FROM Groups WHERE id = ${groupId}`, (err) => {
       callback(err)
     })

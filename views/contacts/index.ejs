@@ -1,52 +1,53 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <title>My Contacts App</title>
-  </head>
+  <% include ../partials/header %>
   <body>
-    <h1>Contacts Page</h1>
+    <div class="container">
+      <h1>Contacts Page</h1>
 
-    <table>
-      <thead>
-        <tr>
-          <th><a href="/">Home</a></th>
-          <th><a href="/contacts">Contacts</a></th>
-          <th><a href="/groups">Groups</a></th>
-          <th><a href="/profiles">Profile</a></th>
-          <th><a href="/addresses">Addresses</a></th>
-        </tr>
-      </thead>
-    </table><br>
-
-    <table border="1px">
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Name</th>
-          <th>Company</th>
-          <th>Telp</th>
-          <th>Email</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% dataContacts.forEach((data) => { %>
+      <table>
+        <thead>
           <tr>
-            <td><%= data.id %></td>
-            <td><%= data.name %></td>
-            <td><%= data.company %></td>
-            <td><%= data.telp_number %></td>
-            <td><%= data.email %></td>
-            <td>
-              <a href="/contacts/edit/<%= data.id %>">Edit</a>
-              <a href="/contacts/delete/<%= data.id %>">Delete</a>
-            </td>
+            <th><a href="/">Home</a></th>
+            <th><a href="/contacts">Contacts</a></th>
+            <th><a href="/groups">Groups</a></th>
+            <th><a href="/profiles">Profile</a></th>
+            <th><a href="/addresses">Addresses</a></th>
           </tr>
-        <% }) %>
-      </tbody>
-    </table>
+        </thead>
+      </table><br>
 
-    <h4><a href="/contacts/add">Add Contact</a>&nbsp;&nbsp;<a href="/addresses_with_contact">Addresses With Contact</a></h4>
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Company</th>
+            <th>Telp</th>
+            <th>Email</th>
+            <th>Group</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% dataContacts.forEach((data) => { %>
+            <tr>
+              <td><%= data.id %></td>
+              <td><%= data.name %></td>
+              <td><%= data.company %></td>
+              <td><%= data.telp_number %></td>
+              <td><%= data.email %></td>
+              <td><%= data.name_of_group.join(', ') %></td>
+              <td>
+                <a class="button button-outline" href="/contacts/edit/<%= data.id %>">Edit</a>
+                <a class="button" href="/contacts/delete/<%= data.id %>">Delete</a>
+              </td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+
+      <h4><a href="/contacts/add">Add Contact</a>&nbsp;&nbsp;<a href="/addresses_with_contact">Addresses With Contact</a></h4>
+    </div>
   </body>
 </html>

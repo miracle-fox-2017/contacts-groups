@@ -10,8 +10,9 @@ class Contact {
 
   static create(data, callback) {
     db.run(`INSERT INTO Contacts (name, company, telp_number, email) VALUES (
-      '${data.name}', '${data.company}', '${data.telp_number}', '${data.email}')`, (err) => {
-      callback(err)
+      '${data.name}', '${data.company}', '${data.telp_number}', '${data.email}')`, function(err) {
+        // console.log(this.lastID);
+      callback(err, this.lastID)
     })
   }
 

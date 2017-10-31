@@ -7,21 +7,21 @@ const router = express.Router()
 // define the profiles page route
 router.get('/', function(req, res) {
   Profile.findWithContacts((err, rows) => {
-    res.render('profiles/index', {error: err, dataProfiles: rows})
+    res.render('profiles/index', {title: 'My Contacts App | Profiles Page', dataProfiles: rows})
   })
 })
 
 router.get('/add', function(req, res) {
   Contact.findAll((err, rows) => {
-    res.render('profiles/add', {error: false, dataContacts: rows})
+    res.render('profiles/add', {title: 'My Contacts App | Add Profile', error: false, dataContacts: rows})
   })
 })
 
 router.post('/add', function(req, res) {
-  Contact.findAll((errFindAll, rows) => {
-    Profile.create(req.body, (errCreate) => {
+  Contact.findAll((errContacts, rowsContacts) => {
+    Profile.create(req.body, (errProfile) => {
       if(errCreate) {
-        res.render('profiles/add', {error: true, dataContacts: rows})
+        res.render('profiles/add', {title: 'My Contacts App | Add Profile', error: true, dataContacts: rowsContacts})
       } else {
         res.redirect('/profiles')
       }
@@ -30,9 +30,9 @@ router.post('/add', function(req, res) {
 })
 
 router.get('/edit/:id', function(req, res) {
-  Profile.findById(req.params.id, (err1, rows1) => {
-    Contact.findAll((err2, rows2) => {
-      res.render('profiles/edit', {errorProfile: err1, errorContacts: err2, dataProfile: rows1, dataContacts: rows2})
+  Profile.findById(req.params.id, (errProfile, rowsProfile) => {
+    Contact.findAll((errContacts, rowsContacts) => {
+      res.render('profiles/edit', {title: 'My Contacts App | Edit Profile', dataProfile: rowsProfile, dataContacts: rowsContacts})
     })
   })
 })

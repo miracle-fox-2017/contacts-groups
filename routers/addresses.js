@@ -7,13 +7,13 @@ const router = express.Router()
 // define the addresses page route
 router.get('/', function(req, res) {
   Address.findWithContact((err, rows) => {
-    res.render('addresses/index', {error: err, dataAddresses: rows})
+    res.render('addresses/index', {title: 'My Contacts App | Addresses Page', dataAddresses: rows})
   })
 })
 
 router.get('/add', function(req, res) {
   Contact.findAll((err, rows) => {
-    res.render('addresses/add', {error: err, dataContacts: rows})
+    res.render('addresses/add', {title: 'My Contacts App | Add Address', dataContacts: rows})
   })
 })
 
@@ -25,10 +25,9 @@ router.post('/add', function(req, res) {
 })
 
 router.get('/edit/:id', function(req, res) {
-  Address.findById(req.params.id, (err1, rows1) => {
-    Contact.findAll((err2, rows2) => {
-      // res.send(rows2)
-      res.render('addresses/edit', {errorAddress: err1, errorContacts: err2, dataAddress: rows1, dataContacts: rows2})
+  Address.findById(req.params.id, (errAddress, rowsAddress) => {
+    Contact.findAll((errContacts, rowsContacts) => {
+      res.render('addresses/edit', {title: 'My Contacts App | Edit Address', dataAddress: rowsAddress, dataContacts: rowsContacts})
     })
   })
 })

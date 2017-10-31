@@ -8,7 +8,12 @@
 </head>
 <body>
     <section class="other-page">
-        <div class="header">Daftar Alamat</div>
+        <div class="header">
+            <span>Daftar Alamat</span>
+            <ul class="link-list">
+                <li><a href="/addresses/with-contact">Address & Owner</a></li>
+            </ul>
+        </div>
         <div class="content">
             <%if(address.length === 0){%>
                 <div class="empty">Data Kosong!</div>
@@ -28,7 +33,7 @@
                         <td><%=value.street%></td>
                         <td><%=value.city%></td>
                         <td><%=value.zipcode%></td>
-                        <td><%=value.name%></td>
+                        <td><%=value.name === null ? 'Kosong' : value.name%></td>
                         <td>
                             <a href="/addresses/edit/<%=value.id%>"><button type="button">Edit</button></a>
                             <a href="/addresses/delete/<%=value.id%>"><button type="button">Hapus</button></a>
@@ -40,7 +45,9 @@
         </div>
     </section>
     <section class="other-page">
-        <div class="header">Alamat Baru</div>
+        <div class="header">
+            <span>Alamat Baru</span>
+        </div>
         <div class="content">
             <form action="/addresses" method="post">
                 <table border="1">

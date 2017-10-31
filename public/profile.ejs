@@ -7,8 +7,10 @@
     <title>Profile Page</title>
 </head>
 <body>
-    <section>
-        <div class="header">Daftar Profile</div>
+    <section class="other-page">
+        <div class="header">
+            <span>Daftar Profile</span>
+        </div>
         <div class="content">
             <%if(profile.length === 0){%>
                 <div class="empty">Data Kosong!</div>
@@ -26,7 +28,7 @@
                         <td><%=i + 1%></td>
                         <td><%=value.username%></td>
                         <td><%=value.password%></td>
-                        <td><%=value.name%></td>
+                        <td><%=value.name === null ? "Kosong" : value.name%></td>
                         <td>
                             <a href="/profiles/edit/<%=value.id%>"><button type="button">Edit</button></a>
                             <a href="/profiles/delete/<%=value.id%>"><button type="button">Hapus</button></a>
@@ -38,7 +40,9 @@
         </div>
     </section>
     <section class="other-page">
-        <div class="header">Profile Baru</div>
+        <div class="header">
+            <span>Profile Baru</span>
+        </div>
         <div class="content">
             <form action="/profiles" method="post">
                 <table border="1">

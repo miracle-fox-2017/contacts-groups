@@ -2,12 +2,31 @@ const express = require('express');
 const router = express.Router();
 
 const Profile = require('../models/profile')
+const Contact = require('../models/contact')
+
+// router.get('/profiles', function (req, res) {
+//   Profile.findAll(function(rows)
+//   {
+//     // console.log(rows);
+//     res.render('profiles', {rows})
+//   })
+// })
+
+// router.get('/contacts', function (req, res) {
+//   Contact.findAll(function(rows){
+//       res.render('contacts', {rows})
+//   })
+// })
 
 router.get('/profiles', function (req, res) {
-  Profile.findAll(function(rows)
+  Profile.findAllWithContact(function(profilesdata)
   {
+    Contact.findAll(function(contactsdata){
+      // console.log(row);
+        res.render('profiles', {profilesdata,contactsdata})
+    })
     // console.log(rows);
-    res.render('profiles', {rows})
+    // res.render('profiles', {rows})
   })
 })
 

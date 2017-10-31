@@ -12,8 +12,19 @@ class Profile {
     })
   }
   
+  static findAllWithContact(cb) {
+      db.all(`SELECT Profiles.id, Profiles.username, Profiles.password, Contacts.name FROM Profiles INNER JOIN Contacts ON Profiles.id_contacts = Contacts.id`, function(err, rows){
+        if(!err){
+          cb(rows)
+        } else {
+          console.log(err);
+        }
+      });
+  }
+  
   static create(body){
-    db.run(`INSERT INTO Profiles (username, password) VALUES ('${body.username}','${body.password}')` );
+    console.log(body);
+    db.run(`INSERT INTO Profiles (username, password, id_contacts) VALUES ('${body.username}','${body.password}','${body.contactsid}')` );
   }
   
   static findID(params, cb){

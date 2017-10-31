@@ -27,29 +27,26 @@ router.get('/', (req, res)=>{
 })
 
 router.post('/', function(req, res){
-  Contact.create(req.body, function(err, idContact){
-    if(!err){
-      ContactsGroups.create(idContact, req.body.GroupsId, (err)=>{
-        if(!err){
+  Contact.create(req.body)
+    .then(idContact =>{
+      return ContactsGroups.create(idContact, req.body.GroupsId)
+        .then(()=>{
           res.redirect('/contacts')
-        } else {
-          res.send(err)
-        }
+        })
+    })
+      .catch(()=>{
+        res.redirect('/contacts/?msgError=true')
       })
-    } else {
-      res.redirect('/contacts/?msgError=true')
-    }
-  })
 })
 
 router.get('/delete/:id', (req, res)=>{
-  Contact.remove(req.params.id, (err)=>{
-    if(!err){
+  Contact.remove(req.params.id)
+    .then(()=>{
       res.redirect('/contacts')
-    } else {
-      res.send(err)
-    }
-  })
+    })
+      .catch(err=>{
+        res.send(err)
+      })
 })
 
 module.exports = router;

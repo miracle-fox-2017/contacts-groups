@@ -35,37 +35,46 @@ router.get('/', (req, res)=>{
 })
 
 router.post('/', (req, res)=>{
-  // console.log('-----------',req.body);
   Address.create(req.body)
-  res.redirect('/addresses')
+    .then(()=>{
+      res.redirect('/addresses')
+    })
+      .catch(err=>{
+        res.send(err)
+      })
 })
 
 router.get('/edit/:id', (req, res)=>{
-  Address.getById(req.params.id ,(err, dataAddress)=>{
-    if(!err){
-      Contact.findAll((err, dataContacts)=>{
-        if(!err){
+  Address.getById(req.params.id)
+    .then(dataAddress=>{
+      return Contact.findAll()
+        .then(dataContacts=>{
           res.render('editAddresses', {dataAddresses:dataAddress,dataContacts:dataContacts})
-        }
+        })
+    })
+      .catch(err=>{
+        res.send(err)
       })
-    }
-  })
 })
 
 router.post('/edit/:id', (req, res)=>{
-  Address.update(req.params.id, req.body, (err)=>{
-    if(!err){
+  Address.update(req.params.id, req.body)
+    .then(()=>{
       res.redirect('/addresses')
-    }
-  })
+    })
+      .catch(err=>{
+        res.send(err)
+      })
 })
 
 router.get('/delete/:id', (req, res)=>{
-  Address.remove(req.params.id, err =>{
-    if(!err){
+  Address.remove(req.params.id)
+    .then(()=>{
       res.redirect('/addresses')
-    }
-  })
+    })
+      .catch(err=>{
+        res.rend(err)
+      })
 })
 
 

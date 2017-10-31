@@ -39,13 +39,13 @@ router.get('/', (req, res)=>{
 })
 
 router.post('/', (req, res)=>{
-  Profile.create(req.body, (err)=>{
-    if(!err){
+  Profile.create(req.body)
+    .then(()=>{
       res.redirect('/profiles')
-    } else  {
-      res.redirect('/profiles/?msgError=true')
-    }
-  })
+    })
+      .catch(()=>{
+        res.redirect('/profiles/?msgError=true')
+      })
 })
 
 router.get('/edit/:id', (req, res)=>{
@@ -53,41 +53,36 @@ router.get('/edit/:id', (req, res)=>{
   if(req.query.hasOwnProperty('msgError')){
     msgError = "Username sudah ada atau nama Kontack sudah digunakan"
   }
-  Contact.findAll((err, dataContacts)=>{
-    if(!err){
-      Profile.getById(req.params.id, (err, dataProfile) =>{
-        if(!err){
-            res.render('editProfile', {msgError:msgError,dataProfiles:dataProfile, dataContacts:dataContacts})
-        } else {
-          console.log(err);
-          res.send(err)
-        }
+  Contact.findAll()
+    .then(dataContacts=>{
+      return Profile.getById(req.params.id)
+        .then(dataProfile =>{
+          res.render('editProfile', {msgError:msgError,dataProfiles:dataProfile, dataContacts:dataContacts})
+        })
+    })
+      .catch(err=>{
+        res.send(err)
       })
-    } else {
-      res.send(err)
-      console.log(err);
-    }
-  })
 })
 
 router.post('/edit/:id', (req, res)=>{
-  Profile.update(req.params.id, req.body, (err)=>{
-    if(!err){
+  Profile.update(req.params.id, req.body)
+    .then(()=>{
       res.redirect('/profiles')
-    } else {
-      res.redirect(`/profiles/edit/${req.params.id}?msgError=true`)
-    }
-  })
+    })
+      .catch(()=>{
+        res.redirect(`/profiles/edit/${req.params.id}?msgError=true`)
+      })
 })
 
 router.get('/delete/:id', (req, res)=>{
-  Profile.remove(req.params.id, (err)=>{
-    if(!err){
+  Profile.remove(req.params.id)
+    .then(()=>{
       res.redirect('/profiles')
-    } else {
-      res.send(err)
-    }
-  })
+    })
+      .catch(err=>{
+        res.send(err)
+      })
 })
 
 

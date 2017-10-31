@@ -4,60 +4,68 @@ const db = new sqlite3.Database('./data/database.db');
 //username, password
 class Profile {
 
-  static findAll(cb){
-    let query = `SELECT * FROM Profile`
-    db.all(query, (err, rowGroups)=>{
-      if(!err){
-        cb(null, rowGroups)
-      } else {
-        cb(err, null)
-      }
-
-    })
+  static findAll(){
+    return new Promise(function(resolve, reject) {
+      let query = `SELECT * FROM Profile`
+      db.all(query, (err, rowProfiles)=>{
+        if(!err){
+          resolve(rowProfiles)
+        } else {
+          reject(err)
+        }
+      })
+    });
   }
-  static getById(id, cb){
-    let query = `SELECT * FROM Profile WHERE id = '${id}'`
-    db.get(query, (err, rows)=>{
-      if(!err){
-        cb(null,rows)
-      } else {
-        cb(err)
-        console.log(err);
-      }
-    })
+  static getById(id){
+    return new Promise(function(resolve, reject) {
+      let query = `SELECT * FROM Profile WHERE id = '${id}'`
+      db.get(query, (err, rows)=>{
+        if(!err){
+          resolve(rows)
+        } else {
+          reject(err)
+        }
+      })
+    });
   }
   static findWhere(){
 
   }
-  static update(id,data,cb){
-    let query = `UPDATE Profile SET username = '${data.username}', password = '${data.password}', ContactsId = '${data.ContactsId}' WHERE id = '${id}'`
-    db.run(query, err=>{
-      if(!err){
-        cb()
-      } else {
-        cb(err)
-      }
-    })
+  static update(id,data){
+    return new Promise(function(resolve, reject) {
+      let query = `UPDATE Profile SET username = '${data.username}', password = '${data.password}', ContactsId = '${data.ContactsId}' WHERE id = '${id}'`
+      db.run(query, err=>{
+        if(!err){
+          resolve()
+        } else {
+          reject(err)
+        }
+      })
+    });
   }
-  static create(data, cb){
-    let query = `INSERT INTO Profile (username, password, ContactsId) VALUES ('${data.username}', '${data.password}','${data.ContactsId}')`
-    db.run(query, (err)=>{
-      if(!err){
-        cb()
-      } else {
-        cb(err)
-      }
-    })
+  static create(data){
+    return new Promise(function(resolve, reject) {
+      let query = `INSERT INTO Profile (username, password, ContactsId) VALUES ('${data.username}', '${data.password}','${data.ContactsId}')`
+      db.run(query, (err)=>{
+        if(!err){
+          resolve()
+        } else {
+          reject(err)
+        }
+      })
+    });
   }
-  static remove(id, cb){
-    let query = `DELETE FROM Profile WHERE id = '${id}'`
-    db.run(query, err =>{
-      if(!err){
-        cb()
-      } else {
-        cb(err)
-      }
-    })
+  static remove(id){
+    new Promise(function(resolve, reject) {
+      let query = `DELETE FROM Profile WHERE id = '${id}'`
+      db.run(query, err =>{
+        if(!err){
+          resolve()
+        } else {
+          reject(err)
+        }
+      })
+    });
   }
 
   //END

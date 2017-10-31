@@ -5,94 +5,86 @@ const GroupsModel = require('../models/groups-model');
 const ContactsGroupsModel = require('../models/contacts-groups-model');
 
 router.get('/', (req, res) => {
-	GroupsModel.findAll(function(err, allGroups) {
-		if (err == null) {
-			ContactsModel.findAll(function(err, allContacts) {
-				ContactsGroupsModel.findAll(function(err, allContactGroup) {	
-					
-					let arrJoinedGroups = [];
+	let arrModel = [
+		GroupsModel.findAll(), ContactsModel.findAll(),
+		ContactsGroupsModel.findAll()
+	];
 
-					allGroups.forEach( function(group) {
-						let obj = {};
-						obj.id = group.id;
-						obj.name_of_group = group.name_of_group;
-						obj.contacts_name = [];
+	Promise.all(arrModel).then((allModelData) => {
+		let allGroups = allModelData[0];
+		let allContacts = allModelData[1];
+		let allContactGroup = allModelData[2];
+		let arrJoinedGroups = GroupsModel.findAllJoinConjunction(allGroups, allContacts, allContactGroup);
 
-						allContacts.forEach( function(contact) {
-							allContactGroup.forEach( function(item) {
-								if (group.id == item.groups_id && contact.id == item.contacts_id) {
-									obj.contacts_name.push(contact.name);
-								}
-							});
-						});
-
-						arrJoinedGroups.push(obj);
-					});
-
-
-					res.render('groups', {data: allGroups, joinedGroups:arrJoinedGroups });
-				});
-			});
-			
-		} else {
-			res.send(err);
-		}
-	});
+		res.render('groups', {
+			data: allGroups,
+		 	joinedGroups: arrJoinedGroups 
+		});
+	})
+	.catch((err) => { res.send(err) });
 });
 
 router.post('/', (req, res) => {
-	GroupsModel.create(req.body, function(err, rows) {
-		if (err == null) {
-			res.redirect('/groups');
-		} else {
-			res.send(err);
-		}
-	});
+	GroupsModel.create(req.body).then((allGroupsData) => {
+		res.redirect('/groups');
+	}).catch((err) => { res.send(err); });
 });
 
 router.get('/edit/:id', (req, res) => {
-	GroupsModel.findAll(function(err, rows) {
-		GroupsModel.findById({id: req.params.id}, function(err, editedRows){
-			if (err == null) {
-				res.render('groups', { id: req.params.id, data: rows, editItem: editedRows });
-			} else {
-				res.send(err);
-			}
-		});
-	});	
+	let arrModel = [
+		GroupsModel.findAll(), GroupsModel.findById({id: req.params.id}),
+		ContactsModel.findAll(), ContactsGroupsModel.findAll()
+	];
+
+	Promise.all(arrModel)
+		.then((allModelData) => {
+			let allGroupsData = allModelData[0];
+			let editedGroupRow = allModelData[1];
+			let allContactsData = allModelData[2];
+			let allContactGroupData = allModelData[3];
+			let arrJoinedGroups = GroupsModel.findAllJoinConjunction(allGroupsData, allContactsData, allContactGroupData);
+
+			res.render('groups', { 
+				id: req.params.id, data: allGroupsData, 
+				editItem: editedGroupRow, joinedGroups : arrJoinedGroups 
+			});
+		})
+		.catch(err => res.send(err));
 });
 
 router.post('/edit/:id', (req, res) => {
-	GroupsModel.update({id: req.params.id, editItem: req.body}, function(err, rows, lastId){
-		if (err == null) {
+	GroupsModel.update({id: req.params.id, editItem: req.body})
+		.then((allGroupsModel) => {
 			res.redirect('/groups/');
-		} else {
-			res.send(err);
-		}
-	});
+		})
+		.catch(err => res.send(err));
 });
 
 router.get('/delete/:id', (req, res) => {
-	GroupsModel.removeItem({id: req.params.id}, function(err, rows, obj) {
-		if (err == null) {
+	GroupsModel.removeItem({id: req.params.id})
+		.then((allGroupsData) => {
 			res.redirect('/groups/');
-		} else {
-			res.send(err);
-		}
-	});
+		}) .catch((err) => { res.send(err) })
 });
 
 router.get('/assign_contacts/:id', (req, res) => {
-	GroupsModel.findById({id: req.params.id}, function(err, editedGroups) {
-		ContactsModel.findAll(function(err, allContacts) {
-			res.render('assign-contacts', { id: req.params.id, editedItem: editedGroups, contacts: allContacts});
+	GroupsModel.findById({id: req.params.id})
+		.then((editedGroupRow) => {
+			ContactsModel.findAll()
+				.then((allContacts) => {
+					res.render('assign-contacts', { id: req.params.id, editedItem: editedGroupRow, contacts: allContacts});
+				})
+				.catch(err => res.send(err));
 		})
-	});
+		.catch((err) => res.send(err));
 });
 
 router.post('/assign_contacts/:id', (req, res) => {
-	ContactsGroupsModel.create(req.body);
-	res.redirect('/groups/');
+	ContactsGroupsModel.create(req.body)
+		.then((allContactGroupData) => {
+			res.redirect('/groups/');
+		})
+		.catch(err => res.send(err));
 });
 
 module.exports = router; 

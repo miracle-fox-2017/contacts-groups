@@ -4,9 +4,9 @@ const ContactsModel = require('../models/contacts-model');
 const ProfilesModel = require('../models/profile-model');
 
 router.get('/', (req, res) => {
-	ProfilesModel.findAllDataInnerJoinPromise('Contacts')
+	ProfilesModel.findAllDataInnerJoin('Contacts')
 		.then((allProfiles) => { 
-			ContactsModel.findAllPromise().then((allContacts) => {
+			ContactsModel.findAll().then((allContacts) => {
 				res.render('profile', { data: allProfiles, contacts: allContacts });
 			}).catch((err) => {
 				res.send(err)
@@ -18,7 +18,7 @@ router.get('/', (req, res) => {
 });
 
 router.post('/', (req, res) => {
-	ProfilesModel.createPromise(req.body)
+	ProfilesModel.create(req.body)
 		.then(function(success) {
 			res.redirect('/profiles');
 		})
@@ -29,9 +29,9 @@ router.post('/', (req, res) => {
 
 router.get('/edit/:id', (req, res) => {
 	let arrModel = [
-		ProfilesModel.findAllDataInnerJoinPromise('Contacts'),
-		ContactsModel.findAllPromise(),
-		ProfilesModel.findByIdPromise({id: req.params.id})
+		ProfilesModel.findAllDataInnerJoin('Contacts'),
+		ContactsModel.findAll(),
+		ProfilesModel.findById({id: req.params.id})
 	];
 
 	Promise.all(arrModel)
@@ -44,7 +44,7 @@ router.get('/edit/:id', (req, res) => {
 });
 
 router.post('/edit/:id', (req, res) => {
-	ProfilesModel.updatePromise({id: req.params.id, editItem: req.body})
+	ProfilesModel.update({id: req.params.id, editItem: req.body})
 		.then((success) => {
 			res.redirect('/profiles/');
 		})
@@ -54,7 +54,7 @@ router.post('/edit/:id', (req, res) => {
 });
 
 router.get('/delete/:id', (req, res) => {
-	ProfilesModel.removeItemPromise({id: req.params.id})
+	ProfilesModel.removeItem({id: req.params.id})
 		.then((success) => {
 			res.redirect('/profiles/');
 		})

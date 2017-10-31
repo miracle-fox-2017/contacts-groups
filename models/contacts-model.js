@@ -7,23 +7,7 @@ class ContactsModel {
 
 	}
 
-	/* Method pengganti getAllData(callback) */
-	static findAll(callback) {
-		let db = new sqlite3.Database(dbLocation);
-		let sql = `SELECT * FROM ${tableName}`;
-		db.all(sql, function(err, rows) {
-			if (err) {
-				console.error(err);
-				callback({err: err, message: 'Something wrong with sql query!'}, null);
-			} else {
-				callback(null, rows);
-			}
-		})
-
-		db.close();
-	}
-
-	static findAllPromise() {
+	static findAll() {
 		return new Promise((resolve, reject) => {
 			let db = new sqlite3.Database(dbLocation);
 			let sql = `SELECT * FROM ${tableName}`;
@@ -40,36 +24,38 @@ class ContactsModel {
 	}
 
 	/* Method pengganti addData(data) */
-	static create(data, callback) {
-		let db = new sqlite3.Database(dbLocation);
-		let sql = `INSERT INTO ${tableName} (name, company, telp_number, email) VALUES ("${data.name}", "${data.company}", "${data.telp_number}", "${data.email}")`;
+	static create(data) {
+		return new Promise((resolve, reject) => {
+			let db = new sqlite3.Database(dbLocation);
+			let sql = `INSERT INTO ${tableName} (name, company, telp_number, email) VALUES ("${data.name}", "${data.company}", "${data.telp_number}", "${data.email}")`;
 
-		db.run(sql, function(err, rows) {
-			if (err) {
-				console.error(err);
-				callback(err, null, null);
-			} else {
-				callback(null, rows, this.lastID);
-			}
+			db.run(sql, function(err, rows) {
+				if (err) {
+					reject(err);
+				} else {
+					resolve({rows: rows, lastID: this.lastID});
+				}
+			});
+
+			db.close();
 		});
-
-		db.close();
 	}
 
 	/* Method pengganti getById(data, callback) */
 	static findById(data, callback) {
-		let db = new sqlite3.Database(dbLocation);
-		let sql = `SELECT * FROM ${tableName} WHERE id = ${data.id}`;
-		db.get(sql, (err, rows) =>{
-			if (err) {
-				console.error(err);
-				callback(err, null);
-			} else {
-				callback(null, rows);
-			}
-		});
+		return new Promise((resolve, reject) => {
+			let db = new sqlite3.Database(dbLocation);
+			let sql = `SELECT * FROM ${tableName} WHERE id = ${data.id}`;
+			db.get(sql, (err, rows) =>{
+				if (err) {
+					reject(err);
+				} else {
+					resolve(rows);
+				}
+			});
 
-		db.close();
+			db.close();
+		});
 	}
 
 	/* Method pengganti getAllDataArrayJoinContactsGroups(contact, contactsGroups) */
@@ -129,35 +115,38 @@ class ContactsModel {
 	}
 
 	/* Method pengganti updateDataById(data) */
-	static update(data, callback) {
-		let db = new sqlite3.Database(dbLocation);
-		let sql = `UPDATE ${tableName} SET name = "${data.editItem.name}", company = "${data.editItem.company}", telp_number = "${data.editItem.telp_number}", email = "${data.editItem.email}" WHERE id = ${data.id}`;
-		db.run(sql, function(err, rows){
-			if (err) {
-				console.error(err);
-				callback(err, null, null);
-			} else {
-				callback(null, rows, this.lastID);
-			}
-		});
+	static update(data) {
+		return new Promise((resolve, reject) => {
+			let db = new sqlite3.Database(dbLocation);
+			let sql = `UPDATE ${tableName} SET name = "${data.editItem.name}", company = "${data.editItem.company}", telp_number = "${data.editItem.telp_number}", email = "${data.editItem.email}" WHERE id = ${data.id}`;
+			db.run(sql, function(err, rows){
+				if (err) {
+					reject(err);
+				} else {
+					resolve({rows: rows, lastID: this.lastID});
+				}
+			});
 
-		db.close();
+			db.close();
+		});
 	}
 
 
 	/* Method pengganti deleteDataById(data) */
-	static removeItem(data, callback) {
-		let db = new sqlite3.Database(dbLocation);
-		let sql = `DELETE FROM ${tableName} WHERE id = ${data.id}`;
+	static removeItem(data) {
+		return new Promise((resolve, reject) => {
+			let db = new sqlite3.Database(dbLocation);
+			let sql = `DELETE FROM ${tableName} WHERE id = ${data.id}`;
 
-		db.run(sql, function(err, rows) {
-			if (err) {
-				callback(err, null, null);
-			} else {
-				callback(null, rows, this);
-			}
+			db.run(sql, function(err, rows) {
+				if (err) {
+					reject(err);
+				} else {
+					resolve();
+				}
+			});
+			db.close();
 		});
-		db.close();
 	}
 }
 

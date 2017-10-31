@@ -54,25 +54,29 @@ div {
             <td> <%= el.username %> </td>
             <td> <%= el.password %> </td>
             <td> <%= el.name %> </td>
-            <td> <a href="/profile/edit/<%=el.id%>">edit</a>
-            <td> <a href="/profile/delete/<%=el.id%>">delete</a>
+            <td> <a href="/profiles/edit/<%=el.id%>">edit</a>
+            <td> <a href="/profiles/delete/<%=el.id%>">delete</a>
           </tr>
         <% i++ })%>
       </tr>
     </table>
     <% if (isEdit === false) {%>
-    <form action="/profile" method="post">
+    <form action="/profiles" method="post">
       username:<br>
       <input type="text" name="username" >
       <br>
       password:<br>
       <input type="text" name="password" >
       <br>
-      <input type="submit" value="ADD"=>
-  </form>
+      <select name="id_contact">
+        <% data.forEach(function(row){%>
+        <option value="<%= row.id %>"><%= row.name %> </option>
+        <% })%>
+      </select>
+      <input type="submit" value="ADD">
+      </form>
     <% } %>
   <% if (isEdit === true) {%>
-  <form action="/profile/edit/<%=rows[0].id%>" method="post">
     username:<br>
     <input type="text" name="username" value="<%=rows[0].username%>">
     <br>
@@ -80,7 +84,13 @@ div {
     <input type="text" name="password" value="<%=rows[0].password%>">
     <br>
     <input type="submit" value="EDIT"=>
+    <select>
+      <% data.forEach(function(row){%>
+      <option value="name"><%= row.name %> </option>
+      <% })%>
+    </select>
   </form>
   <% } %>
+  <form action="/profiles/edit/<%=rows[0].id%>" method="post">
   </body>
 </html>

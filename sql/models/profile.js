@@ -2,15 +2,27 @@ const sqlite3 = require('sqlite3').verbose();
 const db = new sqlite3.Database('database.db');
 
 
+
 class Profile {
   static leftJoin(callback) {
-    let query = `SELECT Profile.username, Profile.password, Contacts.name FROM Profile LEFT JOIN Contacts ON Profile.id_contacts = Contacts.id`;
+    let query = `SELECT Profile.username, Profile.id, Profile.password, Contacts.name FROM Profile LEFT JOIN Contacts ON Profile.id_contacts = Contacts.id`;
     db.all(query,function(err,rows){
       if(err){
         callback(err, null)
       }
       else{
         callback(null,rows)
+      }
+    })
+  }
+  static findWhere(Obj,callback){
+    let query = `SELECT * FROM Profile WHERE id_contacts = "${Obj.id}"`;
+    db.all(query, function(err,rows){
+      if(err){
+        callback (err, null)
+      }
+      else{
+        callback(null, rows)
       }
     })
   }
@@ -28,13 +40,13 @@ class Profile {
 
   static profileCreate(Obj, callback){
 
-    let query = (`INSERT INTO Profile (username, password) VALUES("${Obj.username}", "${Obj.password}")`)
-    db.all(query, function(err,rows){
+    let query = (`INSERT INTO Profile (username, password, id_contacts) VALUES('${Obj.username}', '${Obj.password}',${Obj.id_contact})`);
+    db.run(query, function(err){
       if(err){
-        callback(err, null)
+        callback(err)
       }
       else{
-        callback(null,rows)
+        callback(null)
       }
     })
   }

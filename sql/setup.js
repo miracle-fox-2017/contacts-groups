@@ -32,16 +32,20 @@ db.serialize(()=>{
 
   //create table!!!
   db.run(contacts);
-  db.run(groups); 
+  db.run(groups);
   db.run(profile);
   db.run(addresses);
   //release 3
+  let createUniqe = `CREATE UNIQUE INDEX contacts_id_unique ON Profiles(id_contacts)`;
+
   let foreignProfile = `ALTER TABLE Profile
                           ADD COLUMN id_contacts INTEGER
                           FOREIGNKEY id_contacts
                           REFERENCES Contacts (id)`;
 
-  db.run(foreignProfile,(err)=>{
+
+
+  db.run(createUniqe,(err)=>{
      console.log('udah jadi tablenya nih')
   });
 })

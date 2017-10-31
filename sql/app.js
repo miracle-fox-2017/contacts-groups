@@ -12,8 +12,7 @@ app.use('/groups', groupsRouter)
 const addressesRouter = require('./routers/addresses')
 app.use('/addresses', addressesRouter)
 const profileRouter = require('./routers/profile')
-app.use('/profile', profileRouter)
-
+app.use('/profiles', profileRouter)
 app.listen(3000, function () {
   console.log('Example app listening on port 3000!')
 })

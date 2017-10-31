@@ -39,7 +39,6 @@ app.get('/addresses_with_contact', (req, res) => {
       res.render('addresses_with_contact', {rowsAddressesContacts:rows})
     } else {
       res.send(err)
-      console.log(err);
     }
   })
 })

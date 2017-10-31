@@ -8,34 +8,16 @@ router.get('/', (req, res)=>{
   if(req.query.hasOwnProperty('msgError')){
     msgError = "Username sudah ada atau nama Kontack sudah digunakan"
   }
-  Contact.findAll((err, dataContacts)=>{
-    if(!err){
-      Profile.findAll((err, dataProfiles)=>{
-        if(!err){
-          dataProfiles.forEach((rows, index)=>{
-            Contact.getById(rows.ContactsId, (err, Contacts)=>{
-              if(!err){
-                if(rows.ContactsId){
-                  rows.name = Contacts.name
-                }
-                if(dataProfiles.length -1 == index){
-                  // console.log(dataProfiles);
-                  res.render('profiles', {msgError:msgError,rowsProfiles:dataProfiles, dataContacts:dataContacts})
-                }
-              }else {
-                res.send(err)
-              }
-            })
+    Contact.findAll()
+      .then(dataContacts=>{
+        return Profile.findAllProfileContacts()
+          .then(dataProfiles=>{
+              res.render('profiles', {msgError:msgError,rowsProfiles:dataProfiles, dataContacts:dataContacts})
           })
-        } else {
-          console.log(err);
-          res.send(err)
-        }
+            .catch(err=>{
+              res.send(err)
+            })
       })
-    } else {
-      res.send(err)
-    }
-  })
 })
 
 router.post('/', (req, res)=>{

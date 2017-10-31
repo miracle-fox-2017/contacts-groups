@@ -1,9 +1,60 @@
 const sqlite3 = require('sqlite3').verbose();
 const db = new sqlite3.Database('./data/database.db');
-
+const Contact = require('./contacts');
 //sreet, city, zipcode
 class Address {
+  static findAllName(){
+    return new Promise((resolve, reject)=>{
+      let hasil = []
+      this.findAll()
+        .then(dataAddresses =>{
+          dataAddresses.forEach((address, index)=>{
+            Contact.getById(address.ContactsId)
+              .then(dataContacts=>{
+                if(address.ContactsId){
+                  address.name = dataContacts.name
+                  hasil.push(address)
+                }
 
+                if(index == dataAddresses.length -1){
+                  resolve(hasil)
+                }
+              })
+          })
+        })
+          .catch(err=>{
+            console.log(err);
+            reject(err)
+          })
+    });
+    // Address.findAll((err, dataAddresses)=>{
+    //   if(!err){
+    //     let count = 0
+    //         dataAddresses.forEach((row, index) => {
+    //           // get contact by row.contact_id
+    //           Contact.getById(row.ContactsId, (err, dataContact)=>{
+    //             if(row.ContactsId){
+    //               row.name = dataContact.name
+    //             }
+    //             Contact.findAll((err, dataContacts)=>{
+    //               if(!err){
+    //                 if(index == dataAddresses.length - 1){
+    //                   res.render('addresses', {rowsAddresses:dataAddresses, dataContacts:dataContacts})
+    //                 }
+    //               } else {
+    //                 console.log(err);
+    //                 res.send(err)
+    //               }
+    //             })
+    //           })
+    //         })
+    //   } else {
+    //     console.log(err);
+    //     res.send(err)
+    //   }
+    //
+    // })
+  }
   static findAll(){
     return new Promise(function(resolve, reject) {
       let query = `SELECT * FROM Addresses`
@@ -21,7 +72,7 @@ class Address {
       let query = `SELECT * FROM Addresses WHERE id = '${id}'`
       db.get(query, (err, rows)=>{
         if(!err){
-          resolve(null,rows)
+          resolve(rows)
         } else {
           reject(err)
         }

@@ -37,7 +37,7 @@
                         <i class="fa fa-pencil-square-o"></i>
                       </span>
                     </a></td>
-                    <td><a href="addresses/delete/<%=Addresses.id%>">
+                    <td><a onclick="return confirm('Delete this address?');" href="addresses/delete/<%=Addresses.id%>">
                       <span class="icon has-text-success">
                         <i class="fa fa-trash"></i>
                       </span>

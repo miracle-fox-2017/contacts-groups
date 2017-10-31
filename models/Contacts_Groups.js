@@ -5,79 +5,81 @@ const Group = require('./groups');
 //ContactId, GroupsId
 class ContactsGroups {
 
-  static findContacts_Groups(dataContacts){
-    Promise.all(
-      [
-        Contact.findAll(),
-        this.findAll(),
-        Group.findAll()
-      ])
-        .then(allData=>{
-          allData[0].map(contact =>{
-            contact.getIdgroup = []
-            allData[1].map(contacts_groups =>{
-              if(contact.id === contacts_groups.ContactsId){
-                contact.getIdgroup.push(contacts_groups.GroupsId)
-              }
-            })
-            contact.name_of_groups = []
-            contact.getIdgroup.map(id =>{
-              allData[2].map(group =>{
-                if(id === group.id){
-                  contact.name_of_groups.push(' '+group.name_of_group)
+  static findContacts_Groups(){
+    return new Promise((resolve, reject) =>  {
+      Promise.all(
+        [
+          Contact.findAll(),
+          this.findAll(),
+          Group.findAll()
+        ])
+          .then(allData=>{
+            // console.log(allData);
+            allData[0].map(contact =>{
+              // console.log(contact);
+              contact.getIdgroup = []
+              allData[1].map(contacts_groups =>{
+                if(contact.id === contacts_groups.ContactsId){
+                  contact.getIdgroup.push(contacts_groups.GroupsId)
                 }
               })
+              contact.name_of_groups = []
+              contact.getIdgroup.map(id =>{
+                allData[2].map(group =>{
+                  if(id === group.id){
+                    contact.name_of_groups.push(' '+group.name_of_group)
+                  }
+                })
+              })
             })
+            // console.log(allData[0]);
+            resolve(allData[0]);
           })
-          console.log(allData[0]);
-        })
-          .catch()
-    // let hasil = []
-    // // console.log(dataContacts);
-    // dataContacts.forEach(Contact=>{
-    //   Contact.name_of_groups = []
-    //   let query = `SELECT * FROM Contacts_Groups INNER JOIN Groups
-    //   ON Contacts_Groups.GroupsId = Groups.id WHERE Contacts_Groups.ContactsId = ${Contact.id}`
-    //   db.all(query, (err, dataAll)=>{
-    //     dataAll.forEach(dataJadi=>{
-    //       Contact.name_of_groups.push(' '+dataJadi.name_of_group)
-    //     })
-    //     hasil.push(Contact)
-    //     if(hasil.length === dataContacts.length - 1){
-    //       cb(null, hasil)
-    //     } else {
-    //       cb(err, null)
-    //     }
-    //   })
-    // })
+            .catch(err=>{
+              reject(err)
+            })
+    });
   }
 
-  static findGroups_Contacts(dataGroups, cb){
-    let hasil = []
-    // console.log(dataContacts);
-    dataGroups.forEach(Group=>{
-      Group.name = []
-      let query = `SELECT * FROM Contacts_Groups INNER JOIN Contacts
-      ON Contacts_Groups.ContactsId = Contacts.id WHERE Contacts_Groups.GroupsId = ${Group.id}`
-      db.all(query, (err, dataAll)=>{
-        dataAll.forEach(dataJadi=>{
-          Group.name.push(' '+dataJadi.name)
-        })
-        hasil.push(Group)
-        if(hasil.length === dataGroups.length - 1){
-          cb(null, hasil)
-        } else {
-          cb(err, null)
-        }
-      })
-    })
+  static findGroups_Contacts(){
+    return new Promise((resolve, reject)=> {
+      Promise.all(
+        [
+            Group.findAll(),
+            this.findAll(),
+            Contact.findAll()
+        ])
+          .then(allData =>{
+            allData[0].map(group =>{
+              group.id_contact = []
+              allData[1].map(groups_contacts =>{
+                if(group.id === groups_contacts.GroupsId){
+                  group.id_contact.push(groups_contacts.ContactsId)
+                }
+              })
+              group.name = []
+              group.id_contact.map(id =>{
+                allData[2].map(contact =>{
+                  if(id === contact.id){
+                    group.name.push(' '+contact.name)
+                  }
+                })
+              })
+            })
+            resolve(allData[0])
+          })
+            .catch(err=>{
+              reject(err)
+            })
+    });
   }
   static findAll(){
     return new Promise(function(resolve, reject) {
       let query = `SELECT * FROM Contacts_Groups`
-      db.all(query, (err)=>{
+      db.all(query, (err, dataCon)=>{
+
         if(!err){
-          resolve()
+          resolve(dataCon)
         } else {
           reject(err)
         }

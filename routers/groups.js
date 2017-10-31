@@ -10,11 +10,11 @@ router.get('/', (req, res)=>{
   if(req.query.hasOwnProperty('msgError')){
     msgError = "Nama grup sudah ada, coba nama lainya"
   }
-  Group.findAll()
-    .then(rowGroups =>{
-    res.render('groups', {msgError:msgError,rowsGroups:rowGroups})
+  ContactsGroups.findGroups_Contacts()
+    .then(rowGroupsContacts=>{
+      res.render('groups', {msgError:msgError,rowsGroups:rowGroupsContacts})
     })
-      .catch(err =>{
+      .catch(err=>{
         res.send(err)
       })
 })

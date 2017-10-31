@@ -18,6 +18,7 @@
                 <tr>
                   <th>Id</th>
                   <th>Name Group</th>
+                  <th>Name</th>
                   <th>Assign</th>
                   <th colspan="2">Actions</th>
                 </tr>
@@ -27,6 +28,7 @@
                   <tr>
                     <th><%=Groups.id%></th>
                     <td><%=Groups.name_of_group%></td>
+                    <td><%=Groups.name%></td>
                     <td><a href="groups/assign_contacts/<%=Groups.id%>" class="has-text-success">
                         Assign Contacts
                     </a></td>
@@ -35,7 +37,7 @@
                         <i class="fa fa-pencil-square-o"></i>
                       </span>
                     </a></td>
-                    <td><a href="groups/delete/<%=Groups.id%>">
+                    <td><a onclick="return confirm('Delete this group?');" href="groups/delete/<%=Groups.id%>">
                       <span class="icon has-text-success">
                         <i class="fa fa-trash"></i>
                       </span>

@@ -9,21 +9,18 @@ router.get('/', (req, res)=>{
   if(req.query.hasOwnProperty('msgError')){
     msgError = "Nama Email sudah ada, coba Email lainya"
   }
-  Contact.findAll((err, dataContacts)=>{
-    if(!err){
-      ContactsGroups.findContacts_Groups(dataContacts,(err, AlldataContacts)=>{
-        if(!err){
-          Group.findAll((err, dataGroups)=>{
-            if(!err){
-              if(AlldataContacts){
-                res.render('contacts',{msgError:msgError,rowsContacts:AlldataContacts,dataGroups:dataGroups})
-              }
-            }
-          })
-        }
+  ContactsGroups.findContacts_Groups()
+    .then( AlldataContacts =>{
+      return Group.findAll()
+        .then(dataGroups =>{
+          if(AlldataContacts){
+            res.render('contacts',{msgError:msgError,rowsContacts:AlldataContacts,dataGroups:dataGroups})
+          }
+        })
+    })
+      .catch(err=>{
+        res.send(err)
       })
-    }
-  })
 })
 
 router.post('/', function(req, res){

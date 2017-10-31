@@ -23,7 +23,7 @@ let columnNames = ``;
   creating statement to be passed on to execute function
 */
 
-let add = (Obj) =>
+let add = (Obj, callback) =>
 {
   for (let i = 0; i < properties.length - 1 ; i++)
   {
@@ -39,7 +39,18 @@ let add = (Obj) =>
   
   console.log(statement);
   
-  db.run(statement);
+  db.run(statement,[],function(report)
+    {
+      if (!report.hasOwnProperty(`lastID`))
+      {
+        callback(false);
+      }
+      else
+      {
+        callback(true);
+      }
+    }
+);
   resetAll();
 }
 

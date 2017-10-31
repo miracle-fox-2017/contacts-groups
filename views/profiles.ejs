@@ -5,10 +5,11 @@
     <meta charset="utf-8">
     <title>Groups</title>
   </head>
-  
   <body>
-    <%if (report){%>
-      <%=()%>
+    <%if (error) {%>
+      <script>
+        alert('Your contact already have profile')
+      </script>
     <%}%>
     <div class="container">
       <div class="row">
@@ -26,7 +27,7 @@
               </tr>
             </thead>
             <tbody>
-              <%profilesData.forEach( (profile) => { %>
+              <%profilesData.map( (profile) => { %>
                 <tr>
                   <td> <%= profile.username %> </td>
                   <td> <%= profile.password %> </td>

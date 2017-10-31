@@ -17,6 +17,60 @@ let properties = ['name', `company`, 'telp_number', 'email'];
 let fill = ``;
 let columnNames = ``;
 
+
+class Contact
+{
+  constructor()
+  {
+    
+  }
+  
+  static select(column = `*`, id, callback)
+  {
+    command = `SELECT`;
+    statement = `SELECT ${column} FROM ${tableName}`
+    if (id)
+    {
+      command = `WHERE`
+      statement += ` WHERE ID = ${id}`;
+    }
+    
+    if (command === `SELECT`)
+   {
+     db.all(statement, (err, rows) =>
+       {
+         if (err)
+         {
+           console.log(err);
+         }
+         else
+         {
+           callback(rows);
+         }
+       }
+     )
+   }
+   else if (command === `WHERE`)
+   {
+     //  console.log(`STATEMENT NYA ADALAH ${statement}`);
+     db.each(statement, (err, row) =>
+       {
+         if (err)
+         {
+           console.log(err);
+         }
+         else
+         {
+           callback(row);
+         }
+       }
+     )
+   }
+   resetAll();
+  }
+}
+
+
 /*
   function add
   parameter : group object

@@ -8,32 +8,54 @@ const Group   =	require('../models/group')
 const Address =	require('../models/address')
 
 	router.get('/', function(req, res){
-		Group.findAll(function(err,rowGroup){
+		Group.findAll()
+		.then(rowGroup =>{
 			res.render('groups',{ edited : undefined, rowGroup : rowGroup})
+		})
+		.catch(err =>{
+			res.send(err);
 		})		
 	})
+
 	router.post('/edit', function(req, res){
-		Group.update(req.body, function(err, rowGroup){
+		Group.update(req.body)
+		.then(rowGroup =>{
 			res.redirect('/groups')
-		})			
+		})
+		.catch(err =>{
+			res.send(err);
+		})
 	})	
 	router.post('/', function(req, res){
-		Group.create(req.body, function(err, rowGroup){
-			res.redirect('/groups')	
+		Group.create(req.body)
+		.then(rowGroup =>{
+			res.redirect('/groups')
+		})
+		.catch(err =>{
+			res.send(err);
 		})
 	})	
 
 	router.get('/edit/:id', function(req, res){	
-		Group.findAll(function(err,rowGroup){
-			Group.findById(req.params.id, function(err,editedGroup){
+		Group.findAll()
+		.then(rowGroup =>{
+			Group.findById(req.params.id)
+			.then(editedGroup =>{
 				res.render('groups',{ edited : editedGroup , rowGroup : rowGroup})
-			})					
+			})
+		})
+		.catch(err =>{
+			res.send(err);
 		})
 	})
 
 	router.get('/delete/:id', function(req, res){		
-		Group.remove(req.params.id, function(err){
+		Group.remove(req.params.id)
+		.then(()=>{
 			res.redirect('/groups')
+		})
+		.catch(err =>{
+			res.send(err);
 		})
 	})		
 

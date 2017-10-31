@@ -47,9 +47,9 @@
 	<tbody align ="center">	
 		<tr>
 		<form action="/groups/edit" method="post">
-			<td><input type="text" name="name_of_group" value="<%= edited[0].name_of_group %>"></td>
+			<td><input type="text" name="name_of_group" value="<%= edited.name_of_group %>"></td>
 			<td><input type="submit" value="replace"></td>
-			<input type="hidden" name="id" value="<%= edited[0].id %>">
+			<input type="hidden" name="id" value="<%= edited.id %>">
 		</form>	
 		</tr>
 	</tbody>	

@@ -56,13 +56,13 @@
 	<tbody align ="center">	
 		<tr>
 		<form action="/addresses/edit" method="post">
-			<td><input type="text" name="street" value="<%= edited[0].street %>"></td>
-			<td><input type="text" name="city" value="<%= edited[0].city %>"></td>
-			<td><input type="text" name="zipcode" value="<%= edited[0].zipcode %>"></td>
+			<td><input type="text" name="street" value="<%= edited.street %>"></td>
+			<td><input type="text" name="city" value="<%= edited.city %>"></td>
+			<td><input type="text" name="zipcode" value="<%= edited.zipcode %>"></td>
 			<td>
 			<select id="contact_id" name="contact_id">
 				<%for (let i = 0 ; i<contacts.length ;i++ ){%>
-				 <% if(edited[0].contact_id == contacts[i].id ){%>
+				 <% if(edited.contact_id == contacts[i].id ){%>
 					<option value= <%= contacts[i].id %> selected > <%= contacts[i].name %> </option>
 					 <%}else{%>
 						<option value= <%= contacts[i].id %> > <%= contacts[i].name %> </option>
@@ -71,7 +71,7 @@
 			</select>				
 			</td>
 			<td><input type="submit" value="replace"></td>
-			<input type="hidden" name="id" value="<%= edited[0].id %>">
+			<input type="hidden" name="id" value="<%= edited.id %>">
 		</form>	
 		</tr>
 	</tbody>	

@@ -7,15 +7,20 @@ const Group   =	require('../models/group')
 const Address =	require('../models/address')
 
 router.get('/', function(req, res){
-	Contact.findAll(function(err,rowContact){
-		rowContact.forEach((data, index) =>{
-			Address.findByContact(data.id,function (err, address){
-				data['address'] = address
-				if(index == rowContact.length -1){
-					res.render('addresses_with_contact', {contact : rowContact})
+	Address.findAll()
+	.then(rowAddress =>{
+		rowAddress.forEach((data, index) =>{
+			Contact.findById(data.contact_id)
+			.then(contactAddress =>{
+				data['contact'] = contactAddress;
+				if(index == rowAddress.length-	1){
+					res.render('addresses_with_contact', {address : rowAddress})
 				}
 			})
 		})
+	})
+	.catch(err =>{
+		res.send(err)
 	})
 })	
 

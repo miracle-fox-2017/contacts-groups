@@ -4,14 +4,18 @@ const Profile = require('../models/profiles')
 const Contact = require('../models/contacts')
 
 router.get('/', (req, res) => {
-  Profile.getAll((err, profilesData) => {
+  Profile.getAll().then(profilesData => {
     res.render('profiles', {title:'Profiles', profiles:profilesData})
+  }).catch(err => {
+    res.send(err)
   })
 })
 
 function addRender(req, res, errMsg) {
-  Contact.getAll((err, contactsData) => {
+  Contact.getAll().then(contactsData => {
     res.render('profiles/add', {title:'Add Profile', contacts:contactsData, err:errMsg})
+  }).catch(err => {
+    res.send(err)
   })
 }
 
@@ -20,24 +24,21 @@ router.get('/add', (req, res) => {
 })
 
 router.post('/add', (req, res) => {
-  Profile.create(req.body, err => {
-    if(!err){
-      res.redirect('/profiles')
-    }else{
-      addRender(req, res, err)
-    }
+  Profile.create(req.body).then(() => {
+    res.redirect('/profiles')
+  }).catch(err => {
+    addRender(req, res, err)
   })
 })
 
 function editRender(req, res, err) {
-  Profile.getOne(req.params.id, (err, profile) => {
-    if(!err){
-      Contact.getAll((err, contactsData) => {
-        res.render('profiles/edit', {title:'Edit Profile', profile:profile, contacts:contactsData, err:err});
-      })
-    }else{
-      res.send(err)
-    }
+  Promise.all([
+    Profile.getOne(req.params.id),
+    Contact.getAll()
+  ]).then(rows => {
+    res.render('profiles/edit', {title:'Edit Profile', profile:rows[0], contacts:rows[1], err:err});
+  }).catch(err => {
+    res.send(err)
   })
 }
 
@@ -46,22 +47,18 @@ router.get('/edit/:id', (req, res) => {
 })
 
 router.post('/edit/:id', (req, res) => {
-  Profile.update(req.body, req.params.id, err => {
-    if(!err){
-      res.redirect('/profiles')
-    }else{
-      editRender(req, res, err)
-    }
+  Profile.update(req.body, req.params.id).then(() => {
+    res.redirect('/profiles')
+  }).catch(err => {
+    editRender(req, res, err)
   })
 })
 
 router.get('/delete/:id', (req, res) => {
-  Profile.destroy(req.params.id, err => {
-    if(!err){
-      res.redirect('/profiles')
-    }else{
-      res.send(err)
-    }
+  Profile.destroy(req.params.id).then(() => {
+    res.redirect('/profiles')
+  }).catch(err => {
+    res.send(err)
   })
 })
 

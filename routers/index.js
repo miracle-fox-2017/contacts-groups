@@ -8,18 +8,10 @@ router.get('/', (req, res) => {
 })
 
 router.get('/addresses_with_contact', (req,res) => {
-  Address.getAll((err, addressesData) => {
-    Contact.getAll((err, contactsData) => {
-      addressesData.forEach(address => {
-        contactsData.forEach(contact => {
-          if(address.contact_id == contact.id){
-            address.name = contact.name
-            address.company = contact.company
-          }
-        })
-      })
-      res.render('addresses/addresses_with_contact', {title:'Addresses Detail', addresses:addressesData})
-    })
+  Contact.addressWithContact().then(addressesData => {
+    res.render('addresses/addresses_with_contact', {title:'Addresses Detail', addresses:addressesData})
+  }).catch(err => {
+    res.send(err)
   })
 })
 

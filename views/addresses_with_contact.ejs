@@ -2,48 +2,52 @@
 <html>
   <% include ./partials/header %>
   <body>
-    <h1>Addresses With Contact</h1>
+    <div class="container">
+      <div class="">
+        <h1>Addresses With Contact</h1>
 
-    <table>
-      <thead>
-        <tr>
-          <th><a href="/">Home</a></th>
-          <th><a href="/contacts">Contacts</a></th>
-          <th><a href="/groups">Groups</a></th>
-          <th><a href="/profiles">Profile</a></th>
-          <th><a href="/addresses">Addresses</a></th>
-        </tr>
-      </thead>
-    </table>
+        <table>
+          <thead>
+            <tr>
+              <th><a href="/">Home</a></th>
+              <th><a href="/contacts">Contacts</a></th>
+              <th><a href="/groups">Groups</a></th>
+              <th><a href="/profiles">Profile</a></th>
+              <th><a href="/addresses">Addresses</a></th>
+            </tr>
+          </thead>
+        </table>
 
-    <table border="1px">
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Street</th>
-          <th>City</th>
-          <th>Zipcode</th>
-          <th>Contact Name</th>
-          <th>Company</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% dataAddresses.forEach((data) => { %>
-          <tr>
-            <td><%= data.id %></td>
-            <td><%= data.street %></td>
-            <td><%= data.city %></td>
-            <td><%= data.zipcode %></td>
-            <td><%= data.name %></td>
-            <td><%= data.company %></td>
-            <td>
-              <a href="/addresses/edit/<%= data.id %>">Edit</a>
-              <a href="/addresses/delete/<%= data.id %>">Delete</a>
-            </td>
-          </tr>
-        <% }) %>
-      </tbody>
-    </table>
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Street</th>
+              <th>City</th>
+              <th>Zipcode</th>
+              <th>Contact Name</th>
+              <th>Company</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% dataAddresses.forEach((data) => { %>
+              <tr>
+                <td><%= data.id %></td>
+                <td><%= data.street %></td>
+                <td><%= data.city %></td>
+                <td><%= data.zipcode %></td>
+                <td><%= data.name %></td>
+                <td><%= data.company %></td>
+                <td>
+                  <a class="button button-outline" href="/addresses/edit/<%= data.id %>">Edit</a>
+                  <a class="button" href="/addresses/delete/<%= data.id %>">Delete</a>
+                </td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+    </div>
   </body>
 </html>

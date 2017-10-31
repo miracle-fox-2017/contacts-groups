@@ -2,36 +2,65 @@ const sqlite3 = require('sqlite3').verbose();
 const db = new sqlite3.Database('database/data.db');
 
 class Contact {
-  static findAll(callback) {
-    db.all(`SELECT * FROM Contacts`, (err, rows) => {
-      callback(err, rows)
+  static findAll() {
+    return new Promise((resolve, reject) => {
+      db.all(`SELECT * FROM Contacts`, (err, rows) => {
+        if(err) {
+          reject(err)
+        } else {
+          resolve(rows)
+        }
+      })
     })
   }
 
-  static create(data, callback) {
-    db.run(`INSERT INTO Contacts (name, company, telp_number, email) VALUES (
-      '${data.name}', '${data.company}', '${data.telp_number}', '${data.email}')`, function(err) {
-        // console.log(this.lastID);
-      callback(err, this.lastID)
+  static create(data) {
+    return new Promise((resolve, reject) => {
+      db.run(`INSERT INTO Contacts (name, company, telp_number, email) VALUES (
+        '${data.name}', '${data.company}', '${data.telp_number}', '${data.email}')`, function(err) {
+        if(err) {
+          reject(err)
+        } else {
+          resolve(this.lastID)
+        }
+      })
     })
   }
 
-  static findById(contactId, callback) {
-    db.get(`SELECT * FROM Contacts WHERE id = ${contactId}`, (err, rows) => {
-      callback(err, rows)
+  static findById(contactId) {
+    return new Promise((resolve, reject) => {
+      db.get(`SELECT * FROM Contacts WHERE id = ${contactId}`, (err, rows) => {
+        if(err) {
+          reject(err)
+        } else {
+          resolve(rows)
+        }
+      })
     })
   }
 
-  static update(data, contactId, callback) {
-    db.run(`UPDATE Contacts SET name = '${data.name}', company = '${data.company}',
-    telp_number = '${data.telp_number}', email = '${data.email}' WHERE id = ${contactId}`, (err) => {
-      callback(err)
+  static update(data, contactId) {
+    return new Promise((resolve, reject) => {
+      db.run(`UPDATE Contacts SET name = '${data.name}', company = '${data.company}',
+      telp_number = '${data.telp_number}', email = '${data.email}' WHERE id = ${contactId}`, (err) => {
+        if(err) {
+          reject(err)
+        } else {
+          resolve()
+        }
+      })
     })
   }
 
-  static remove(contactId, callback) {
-    db.run(`DELETE FROM Contacts WHERE id = ${contactId}`, (err) => {
-      callback(err)
+  static remove(contactId) {
+    return new Promise((resolve, reject) => {
+      db.run(`DELETE FROM Contacts WHERE id = ${contactId}`, (err) => {
+        if(err) {
+          reject(err)
+        } else {
+          resolve()
+        }
+      })
     })
   }
 }

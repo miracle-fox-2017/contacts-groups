@@ -7,19 +7,22 @@ const router = express.Router()
 
 // define the groups page route
 router.get('/', function(req, res) {
-  Group.findAll((errGroups, rowsGroups) => {
-    ContactGroup.findWithContacts((errContactGroups, rowsContactGroups) => {
-      rowsGroups.forEach((rowsGroup) => {
-        rowsGroup.name = []
-        rowsContactGroups.forEach((rowsContactGroup) => {
-          if(rowsGroup.id == rowsContactGroup.groupId) {
-            rowsGroup.name.push(rowsContactGroup.name)
-          }
-        })
+  Promise.all([
+    Group.findAll(),
+    ContactGroup.findWithContacts()
+  ]).then((allData) => {
+    let dataGroups = allData[0]
+    let dataContactGroups = allData[1]
+    dataGroups.forEach((dataGroup) => {
+      dataGroup.name = []
+      dataContactGroups.forEach((dataContactGroup) => {
+        if(dataGroup.id == dataContactGroup.groupId) {
+          dataGroup.name.push(dataContactGroup.name)
+        }
       })
-      // res.send(rowsGroups)
-      res.render('groups', {title: 'My Contacts App | Groups Page', dataGroups: rowsGroups})
     })
+    res.render('groups', {title: 'My Contacts App | Groups Page', dataGroups: dataGroups})
+    // res.send(dataGroups)
   })
 })
 
@@ -28,42 +31,39 @@ router.get('/add', function(req, res) {
 })
 
 router.post('/add', function(req, res) {
-  Group.create(req.body, (err) => {
-    if(err) res.send(err)
+  Group.create(req.body).then(() => {
     res.redirect('/groups')
   })
 })
 
 router.get('/edit/:id', function(req, res) {
-  Group.findById(req.params.id, (err, rows) => {
-    res.render('groups/edit', {title: 'My Contacts App | Edit Group', dataContact: rows})
+  Group.findById(req.params.id).then((rowGroup) => {
+    res.render('groups/edit', {title: 'My Contacts App | Edit Group', dataGroup: rowGroup})
   })
 })
 
 router.post('/edit/:id', function(req, res) {
-  Group.update(req.body, req.params.id, (err) => {
-    if(err) res.send(err)
+  Group.update(req.body, req.params.id).then(() => {
     res.redirect('/groups')
   })
 })
 
 router.get('/delete/:id', function(req, res) {
-  Group.remove(req.params.id, (err) => {
-    if(err) res.send(err)
+  Group.remove(req.params.id).then(() => {
     res.redirect('/groups')
   })
 })
 
 router.get('/assign_contacts/:id_group', function(req, res) {
-  Group.findById(req.params.id_group, (errGroup, rowsGroup) => {
-    Contact.findAll((errContacts, rowsContacts) => {
-      res.render('groups/assign_contacts', {title: 'My Contacts App | Assign Contacts', dataGroup: rowsGroup, dataContacts: rowsContacts})
+  Group.findById(req.params.id_group).then((rowGroup) => {
+    Contact.findAll().then((rowContacts) => {
+      res.render('groups/assign_contacts', {title: 'My Contacts App | Assign Contacts', dataGroup: rowGroup, dataContacts: rowContacts})
     })
   })
 })
 
 router.post('/assign_contacts/:id_group', function(req, res) {
-  ContactGroup.create(req.body.contactId, req.params.id_group, (err) => {
+  ContactGroup.create(req.body.contactId, req.params.id_group).then(() => {
     res.redirect('/groups')
   })
 })

@@ -2,25 +2,29 @@
 <html>
   <% include ../partials/header %>
   <body>
-    <h1>Edit Group</h1>
+    <div class="container">
+      <div class="row">
+        <h1>Edit Group</h1>
 
-    <table>
-      <thead>
-        <tr>
-          <th><a href="/">Home</a></th>
-          <th><a href="/contacts">Contacts</a></th>
-          <th><a href="/groups">Groups</a></th>
-          <th><a href="/profiles">Profile</a></th>
-          <th><a href="/addresses">Addresses</a></th>
-        </tr>
-      </thead>
-    </table><br>
+        <table>
+          <thead>
+            <tr>
+              <th><a href="/">Home</a></th>
+              <th><a href="/contacts">Contacts</a></th>
+              <th><a href="/groups">Groups</a></th>
+              <th><a href="/profiles">Profile</a></th>
+              <th><a href="/addresses">Addresses</a></th>
+            </tr>
+          </thead>
+        </table><br>
 
-    <form class="" action="/groups/edit/<%= dataContact.id %>" method="post">
-      Name:<br>
-      <input type="text" name="name" value="<%= dataContact.name_of_group %>"><br>
-      <br>
-      <input type="submit" value="Submit">
-    </form>
+        <form class="" action="/groups/edit/<%= dataGroup.id %>" method="post">
+          Name:<br>
+          <input type="text" name="name" value="<%= dataGroup.name_of_group %>"><br>
+          <br>
+          <input type="submit" value="Submit">
+        </form>
+      </div>
+    </div>
   </body>
 </html>

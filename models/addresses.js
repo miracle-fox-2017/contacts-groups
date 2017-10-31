@@ -5,7 +5,8 @@ const db = new sqlite3.Database('./database/data.db');
 
 class Addresses{
   static findAll(){
-    let query = `SELECT * FROM Addresses`;
+    let query = `SELECT Addresses.*,Contacts.name FROM Addresses LEFT JOIN
+                  Contacts ON Contacts.id = Addresses.contacts_id`;
     return new Promise((resolve,reject)=>{
       db.all(query,(err,addressesRows)=>{
         if(!err){
@@ -17,8 +18,8 @@ class Addresses{
     })
   }
   static create(obj){
-    let query = `INSERT INTO Addresses (street, city, zipcode)
-                 VALUES("${obj.street}", "${obj.city}", "${obj.zipcode}")`;
+    let query = `INSERT INTO Addresses (street, city, zipcode, contacts_id)
+                 VALUES("${obj.street}", "${obj.city}", "${obj.zipcode}","${obj.contacts_id}")`;
     return new Promise((resolve,reject)=>{
       db.all(query,(err,addressesRows)=>{
         if(!err){
@@ -61,7 +62,8 @@ class Addresses{
     let query = `UPDATE Addresses
                SET street = "${obj.street}",
                city = "${obj.city}",
-               zipcode = "${obj.zipcode}"
+               zipcode = "${obj.zipcode}",
+               contacts_id = "${obj.contacts_id}"
                WHERE id = "${obj.id}"`;
    return new Promise((resolve,reject)=>{
      db.all(query,(err,addressesRows)=>{

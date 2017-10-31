@@ -1,14 +1,16 @@
 const express = require('express');
 const router = express.Router();
-
+const Contact = require('../models/contacts')
 const Address = require('../models/addresses')
-//menampilkan contact
+
 router.get('/addresses',function(req,res){
   let isEdit = false
   Address.findAll().then((addressesRows)=>{
-    res.render('addresses',{addressesRows, isEdit})
-  }).catch((err)=>{
-    console.log(err)
+    Contact.findAll().then((contactsRows)=>{
+      res.render('addresses',{addressesRows,contactsRows,isEdit})
+    }).catch((err)=>{
+      console.log(err)
+    })
   })
 })
 //menambahkan contact
@@ -16,7 +18,8 @@ router.post('/addresses',function(req,res){
   let isEdit = false;
   let obj = {street:req.body.street,
              city:req.body.city,
-             zipcode:req.body.zipcode}
+             zipcode:req.body.zipcode,
+             contacts_id:req.body.contact}
   Address.create(obj).then((addressesRows)=>{
     res.redirect('/addresses')
   }).catch((err)=>{
@@ -37,9 +40,11 @@ router.get('/addresses/edit/:id',function(req,res){
   let isEdit = true;
   let id = req.params.id;
   Address.findById(id).then((addressesRows)=>{
-    res.render('addresses',{addressesRows, isEdit})
-  }).catch((err)=>{
-    console.log(err)
+    Contact.findAll().then((contactsRows)=>{
+      res.render('addresses',{addressesRows,contactsRows,isEdit})
+    }).catch((err)=>{
+      console.log(err)
+    })
   })
 })
 //edit contact post
@@ -48,7 +53,8 @@ router.post('/addresses/edit/:id',function(req,res){
   let obj = {id:req.params.id,
              street:req.body.street,
              city:req.body.city,
-             zipcode:req.body.zipcode}
+             zipcode:req.body.zipcode,
+             contacts_id:req.body.contact}
   Address.update(obj).then((addressesRows)=>{
     console.log(obj)
     res.redirect('/addresses')

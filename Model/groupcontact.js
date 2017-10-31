@@ -8,8 +8,17 @@ class GroupContact {
       cb(rows)
     })
   }
-  static addnew (idgroup,idcontact){
 
+  static gettableall(table){
+    return new Promise ((resolve,reject)=>{
+      db.all(`SELECT * FROM ${table}`,(err,row)=>{
+        if (err) { reject(err) }
+        else { resolve(row) }
+      })
+    })
+  }
+
+  static addnew (idgroup,idcontact){
   db.run(`INSERT INTO GroupContact (groupId,ContactID)
           VALUES('${idgroup}','${idcontact}')`)
   }

@@ -13,11 +13,11 @@
         <select class="" name="contactid">
           <%let address = rowAddress.ContactID %>
           <%for (let i = 0; i<contact.length;i++) {%>
-            <%if (address === contact[i].ID) {%>
-              <option value="<%=contact[i].ID%>" selected><%=contact[i].Name%></option>
+            <%if (address === contact[i].Id) {%>
+              <option value="<%=contact[i].Id%>" selected><%=contact[i].Name%></option>
             <%}%>
-            <%if (address !== contact[i].ID) {%>
-            <option value="<%=contact[i].ID%>"><%=contact[i].Name%></option>
+            <%if (address !== contact[i].Id) {%>
+            <option value="<%=contact[i].Id%>"><%=contact[i].Name%></option>
             <%}%>
 
           <%}%>

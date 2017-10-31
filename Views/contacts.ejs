@@ -41,15 +41,15 @@
         </thead>
         <%contact.forEach(dt => { %>
         <tr>
-          <td><%= dt.ID %></td>
+          <td><%= dt.Id %></td>
           <td><%= dt.Name %></td>
           <td><%= dt.Company %></td>
           <td><%= dt.Telp_Number %></td>
           <td><%= dt.Email %></td>
           <td></td>
-          <td><a href="/contacts/edit/<%=dt.ID%>">Edit</a>
-          <a href="/contacts/delete/<%=dt.ID%>">Delete</a>
-        <a href="/contacts/address/<%=dt.ID%>">Address</a></td>
+          <td><a href="/contacts/edit/<%=dt.Id%>">Edit</a>
+          <a href="/contacts/delete/<%=dt.Id%>">Delete</a>
+        <a href="/contacts/address/<%=dt.Id%>">Address</a></td>
         </tr>
         <% })%>
       </table>
@@ -64,7 +64,7 @@
         <input type="text" name="telp">
         Email   :
         <input type="text" name="email">
-        <select class="" name="groupcon">
+        <select class="" name="groupcontact">
           <%groups.forEach(data =>{%>
             <option value="<%=data.Id_grup%>"><%=data.name_of_group%></option>
           <%})%>

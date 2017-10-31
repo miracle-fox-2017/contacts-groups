@@ -13,8 +13,13 @@ var route = express.Router()
 
 route.get('/',(req,res)=>{
   Contacts.getall().then(rows =>{
-     GroupContact.gettable().then(rowgroups=>{
-
+    // GroupContact.gettable().then(data=>{
+    //   for (var i = 0; i < row.length; i++) {
+    //
+    //   }
+    // })
+     Groups.getall().then(rowgroups=>{
+      //  res.send(rows[0].Id)
        res.render('contacts',{contact : rows,groups:rowgroups,error:[]})
     })
     // console.log(rows);

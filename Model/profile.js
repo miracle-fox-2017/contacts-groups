@@ -13,7 +13,7 @@ class Profile {
     //dicoba dlu takut masih salah
     return new Promise((resolve,reject)=>{
       db.all(`SELECT Profile.Id_profile, Profile.Username, Profile.Password, Contacts.Name
-        FROM Profile LEFT JOIN Contacts ON Profile.ContactID=Contacts.ID`,(err,rows)=>{
+        FROM Profile LEFT JOIN Contacts ON Profile.ContactID=Contacts.Id`,(err,rows)=>{
         // console.log(rows);
         if(err){ reject(err) }
         else{ resolve(rows) }

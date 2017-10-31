@@ -23,7 +23,7 @@ class Address {
     //dicoba dlu takut masih salah
     return new Promise ((resolve,reject)=>{
       db.all(`SELECT Addresses.Id_address, Addresses.Street, Addresses.City, Addresses.Zipcode, Contacts.Name
-        FROM Addresses LEFT JOIN Contacts ON Addresses.ContactID=Contacts.ID`,(err,rows)=>{
+        FROM Addresses LEFT JOIN Contacts ON Addresses.ContactID=Contacts.Id`,(err,rows)=>{
         if (err){ reject(err) }
         else{ resolve(rows) }
     })

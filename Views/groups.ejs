@@ -32,6 +32,7 @@
       <thead>
          <td>ID</td>
          <td>Name Of Groups</td>
+         <td>Name Of Contacts</td>
          <td>Action</td>
       </thead>
       <tr>
@@ -39,7 +40,9 @@
 
         <td><%=dt.Id_grup%></td>
         <td><%=dt.name_of_group%></td>
-        <td><a href="/groups/edit/<%=dt.Id_grup%>">Edit<a>
+        <td></td>
+        <td><a href="/groups/assign_contacts/<%=dt.Id_grup%>">Assign<a> ||
+        <a href="/groups/edit/<%=dt.Id_grup%>">Edit<a> ||
         <a href="/groups/delete/<%=dt.Id_grup%>">Delete</a></td>
       </tr>
         <% })%>

@@ -28,7 +28,7 @@ class Contacts {
 
   static findbyid(id){
     return new Promise ((resolve,reject)=>{
-      db.all(`SELECT * FROM Contacts WHERE ID ='${id}'`,(err,rowsbyid) => {
+      db.all(`SELECT * FROM Contacts WHERE Id ='${id}'`,(err,rowsbyid) => {
         if(err){
           reject(err)
         } else { resolve(rowsbyid) }
@@ -38,7 +38,7 @@ class Contacts {
 
   static edit (id){
     return new Promise ((resolve,reject)=>{
-      db.get(`SELECT * FROM Contacts WHERE ID = ${id}`,(err,row) =>{
+      db.get(`SELECT * FROM Contacts WHERE Id = ${id}`,(err,row) =>{
         if (err){ reject(err) }
         else{ resolve(row) }
       })
@@ -49,12 +49,12 @@ class Contacts {
   static update (id,edit){
     db.run(`UPDATE Contacts
       SET Name = '${edit.name}', Company = '${edit.company}',Telp_Number = '${edit.telp}',Email ='${edit.email}'
-      WHERE ID = '${id}';`)
+      WHERE Id = '${id}';`)
   }
 
   static addDelete(id){
     db.get(`DELETE FROM Contacts
-              WHERE ID ='${id}';`)
+              WHERE Id ='${id}';`)
   }
 
 }

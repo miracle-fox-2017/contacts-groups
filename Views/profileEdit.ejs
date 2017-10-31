@@ -12,11 +12,11 @@
         <select class="" name="contact_id">
           <%let profile = rowProfile.ContactID %>
           <%for (let i = 0; i<contact.length;i++) {%>
-            <%if (profile === contact[i].ID) {%>
-              <option value="<%=contact[i].ID%>" selected><%=contact[i].Name%></option>
+            <%if (profile === contact[i].Id) {%>
+              <option value="<%=contact[i].Id%>" selected><%=contact[i].Name%></option>
             <%}%>
-            <%if (profile !== contact[i].ID) {%>
-            <option value="<%=contact[i].ID%>"><%=contact[i].Name%></option>
+            <%if (profile !== contact[i].Id) {%>
+            <option value="<%=contact[i].Id%>"><%=contact[i].Name%></option>
             <%}%>
 
           <%}%>

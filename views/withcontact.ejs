@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Addresses</title>
+</head>
+
+<body>
+    <% include menu.ejs %>
+        <table>
+            <tr>
+                <th>No</th>
+                <th>Nama</th>
+                <th>Street</th>
+                <th>City</th>
+                <th>Zipcode</th>
+                <th>Action</th>
+            </tr>
+            <% 
+            let no = 0;
+            rowsAddresses.forEach(function(row){ 
+            no++;
+        %>
+                <tr>
+                    <td>
+                        <%= no %>
+                    </td>
+                    <td>
+                        <%= row.nama %>
+                    </td>
+                    <td>
+                        <%= row.street %>
+                    </td>
+                    <td>
+                        <%= row.city %>
+                    </td>
+                    <td>
+                        <%= row.zipcode %>
+                    </td>
+                    <td>
+                        <a href="/addresses/edit/<%= row.id %>">Edit</a> | <a href="/addresses/hapus/<%= row.id %>">Hapus</a>
+                    </td>
+                </tr>
+                <% }) %>
+        </table>
+</body>
+
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Add Contact</title>
+</head>
+<body>
+    <% include menu.ejs %>
+    <table>
+        <% if(error) { %>
+            <%= error.error %>
+        <% } %>
+        <form action="/contact/add" method="post">
+            <tr>
+                <td><input type="text" name="nama" placeholder="Isi Nama"></td>
+            </tr>
+            <tr>
+                <td><input type="text" name="company" placeholder="Isi company"></td>
+            </tr>
+            <tr>
+                <td><input type="text" name="telp" placeholder="Isi Telpon/Hp"></td>
+            </tr>
+            <tr>
+                <td><input type="email" name="email" placeholder="Isi Email"></td>
+            </tr>
+            <tr>
+                <td><input type="submit" value="Simpan"></td>
+            </tr>
+        </form>
+    </table>
+</body>
+</html>

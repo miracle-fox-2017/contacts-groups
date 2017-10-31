@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Profile</title>
+</head>
+<body>
+    <% include menu.ejs %>
+    <br />
+    <a href="/profile/add">Add</a>
+    <table>
+        <tr>
+            <th>No</th>
+            <th>Username</th>
+            <th>Nama</th>
+            <th>Action</th>
+        </tr>
+        <% 
+            let no = 0;
+             rowsProfile.forEach(function(row){ 
+            no++;
+        %>
+            <tr>
+                <td>
+                    <%= no %>
+                </td>
+                <td>
+                    <%= row.username %>
+                </td>
+                <td>
+                    <%= row.name %>
+                </td>
+                <td>
+                    <a href="/profile/edit/<%= row.id %>">Edit</a> | <a href="/profile/hapus/<%= row.id %>">Hapus</a>
+                </td>
+            </tr>
+        <% }) %>
+    </table>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Groups</title>
+</head>
+
+<body>
+    <% include menu.ejs %>
+    <a href="/groups/add">Add</a>
+    <table>
+        <tr>
+            <th>No</th>
+            <th>Groups</th>
+            <th>Action</th>
+        </tr>
+        <% 
+            let no = 0;
+            rowsGroups.forEach(function(row){ 
+            no++;
+        %>
+            <tr>
+                <td>
+                    <%= no %>
+                </td>
+                <td>
+                    <%= row.name_of_group %>
+                </td>
+                <td>
+                    <a href="/groups/edit/<%= row.id %>">Edit</a> | <a href="/groups/hapus/<%= row.id %>">Hapus</a>
+                </td>
+            </tr>
+            <% }) %>
+    </table>
+</body>
+
+</html>

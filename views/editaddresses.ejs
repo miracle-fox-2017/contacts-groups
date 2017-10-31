@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Edit Addresses</title>
+</head>
+<body>
+    <% include menu.ejs %>
+    <table>
+        <form action="/addresses/edit/<%= rowsAddresses[0].id %>" method="post">
+            <tr>
+                <td>
+                    <select name="idcontact">
+                    <% 
+                    
+                    rowsContacts.forEach(function(row){ 
+                    
+                    if(row.id == rowsAddresses[0].idcontact){
+                        
+                    %>
+                        <option value="<%=row.id%>" selected><%=row.name%></option>
+                    <% 
+                    
+                    }else{
+
+                     %>
+                    <option value="<%=row.id%>">
+                        <%=row.name%>
+                    </option>
+                    <%
+
+                    }
+                        
+                    }) 
+                        
+                    %>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td><input type="text" name="street" placeholder="Isi Street" value="<%= rowsAddresses[0].street %>"></td>
+            </tr>
+            <tr>
+                <td><input type="text" name="city" placeholder="Isi City" value="<%= rowsAddresses[0].city %>"></td>
+            </tr>
+            <tr>
+                <td><input type="text" name="zipcode" placeholder="Isi Zipcode" value="<%= rowsAddresses[0].zipcode %>"></td>
+            </tr>
+            <tr>
+                <td><input type="submit" value="Simpan"></td>
+            </tr>
+        </form>
+    </table>
+</body>
+</html>

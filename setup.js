@@ -13,7 +13,7 @@ db.serialize(function() {
     ID INTEGER PRIMARY KEY AUTOINCREMENT,
     name_of_group VARCHAR(20)
   )`)
-  db.run(`CREATE TABLE IF NOT EXISTS Profile(
+  db.run(`CREATE TABLE IF NOT EXISTS Profiles(
     ID INTEGER PRIMARY KEY AUTOINCREMENT,
     username VARCHAR(20),
     password VARCHAR(20)
@@ -24,5 +24,11 @@ db.serialize(function() {
     city VARCHAR(20),
     zipcode INTEGER
   )`)
+  db.run(`ALTER TABLE Profiles ADD id_contact INTEGER(50)
+    REFERENCES Contacts(ID) `)
+  db.run(`CREATE UNIQUE INDEX IF NOT EXISTS 'id_contact' ON Profiles (id_contact)`)
+  // db.run(`SELECT Profiles.ID,Profiles.username,Profiles.password, Contacts.Name FROM Profiles INNER JOIN Contacts ON Profiles.id_contact=Contacts.ID` );
 })
+
+
 db.close()

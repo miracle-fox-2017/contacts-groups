@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Profiles</title>
+  </head>
+  <body>
+    <%=console.log(rowProfiles)%>
+    <table>
+      <tr>
+        <th>ID</th>
+        <th>USERNAME</th>
+        <th>PASSWORD</th>
+      </tr>
+
+    <% for(let i=0;i<rowProfiles.length;i++){ %>
+      <tr>
+      <td><%=rowProfiles[i].ID%></td>
+      <td><%=rowProfiles[i].username%></td>
+      <td><%=rowProfiles[i].password%></td>
+      <td><a href="/profiles/edit/<%=rowProfiles[i].ID%>"> Edit </td>
+      <td><a href="/profiles/delete/<%=rowProfiles[i].ID%>"> Delete </td>
+      </tr>
+    <%}%>
+    <tr>
+    <form class="" action="/profiles" method="post">
+      <td></td>
+      <td><input type="text" name="username" value=""></td>
+      <td><input type="password" name="password" value=""></td>
+      <td> <input type="submit" name="" value="Submit!"></td>
+    </form>
+    </tr>
+    </table>
+  </body>
+</html>

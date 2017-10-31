@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Addresses</title>
+  </head>
+  <body>
+    <table>
+      <tr>
+        <th>ID</th>
+        <th>CITY</th>
+        <th>STREET</th>
+        <th>ZIPCODE</th>
+      </tr>
+
+    <% for(let i=0;i<rowAddresses.length;i++){ %>
+      <tr>
+      <td><%=rowAddresses[i].ID%></td>
+      <td><%=rowAddresses[i].city%></td>
+      <td><%=rowAddresses[i].street%></td>
+      <td><%=rowAddresses[i].zipcode%></td>
+      <td><a href="/addresses/edit/<%=rowAddresses[i].ID%>"> Edit </td>
+      <td><a href="/addresses/delete/<%=rowAddresses[i].ID%>"> Delete </td>
+      </tr>
+      <%}%>
+
+    <tr>
+      <form class="" action="/addresses" method="post">
+        <td></td>
+        <td><input type="text" name="city" value=""></td>
+        <td><input type="text" name="street" value=""></td>
+        <td><input type="text" name="zipcode" value=""></td>
+        <td> <input type="submit" name="" value="Submit!"></td>
+      </form>
+    </tr>
+    </table>
+  </body>
+</html>

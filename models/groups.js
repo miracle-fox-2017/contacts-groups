@@ -52,6 +52,7 @@ class Group {
 
   // Menampilkan data group spesifik untuk diubah
   static editById(params) {
+    // console.log("MASUK KE MODEL");
     return new Promise((resolve, reject) => {
       db.each(`SELECT * FROM Groups WHERE id = ${params}`, (err, rows) => {
         if (!err) {

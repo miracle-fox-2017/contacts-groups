@@ -44,9 +44,19 @@ class ContactsGroups {
     });
   }
 
-  static create() {
+  static create(body, params) {
     return new Promise((resolve, reject) => {
       db.run(`INSERT into ContactsGroups (ContactId, GroupId) VALUES ('${body.name}', '${params.id}')`, (err, rows) => {
+        if (!err) {
+          resolve();
+        } else { reject(err); }
+      });
+    });
+  }
+
+  static createContact(body, params) {
+    return new Promise((resolve, reject) => {
+      db.run(`INSERT into ContactsGroups (ContactId, GroupId) VALUES ('${body}', '${params}')`, (err, rows) => {
         if (!err) {
           resolve();
         } else { reject(err); }

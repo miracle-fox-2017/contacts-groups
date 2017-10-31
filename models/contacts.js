@@ -43,11 +43,12 @@ class Contact {
     });
   }
 
-  static create() {
+  static create(body) {
     return new Promise((resolve, reject) => {
-      db.run(`INSERT into Contacts (name, company, telp_number, email) VALUES ("${body.name}", "${body.company}", "${body.telp_number}", "${body.email}")`, (err) => {
+      db.run(`INSERT into Contacts (name, company, telp_number, email) VALUES ("${body.name}", "${body.company}", "${body.telp_number}", "${body.email}")`, function (err) {
         if (!err) {
-          resolve();
+          // console.log(this.lastID);
+          resolve(this.lastID);
         } else { reject(err); }
       });
     });

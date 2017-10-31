@@ -45,6 +45,16 @@ class Address {
     });
   }
 
+  static createContactId(body, params) {
+    return new Promise((resolve, reject) => {
+      db.run(`INSERT into Addresses (street, city, zipcode, ContactId) VALUES ("${body.street}", "${body.city}", "${body.zipcode}", "${params.id}")`, function (err) {
+        if (!err) {
+          resolve();
+        } else { reject(err); }
+      });
+    });
+  }
+
   // static createForContact(body) {
   //   return new Promise((resolve, reject) => {
   //     db.run(`INSERT into Addresses (street, city, zipcode, ContactId) VALUES ("${body.street}", "${body.city}", "${body.zipcode}", "${body.ContactId}") WHERE id = '${params.id}'`, (err) => {

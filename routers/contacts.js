@@ -57,10 +57,28 @@ router.get('/address/:id', (req, res) => {
 
 // menerima input contact address
 router.post('/address/:id', function (req, res) {
-  Address.create(req.body).then(function (result) {
+  Address.createContactId(req.body, req.params).then(function (result) {
     res.redirect(`/addresses`);
   });
 });
+
+//menerima input data contacts
+router.post('/', function (req, res) {
+  Contact.create(req.body).then(function (lastID) {
+    // console.log(lastID);
+    ContactsGroups.createContact(lastID, req.body.GroupId).then(function () {
+      res.redirect('contacts');
+    });
+  });
+});
+// app.post('/contacts', function (req, res) {
+//   db.run(`INSERT into Contacts (name, company, telp_number, email) VALUES ('${req.body.name}', '${req.body.company}', '${req.body.telp_number}', '${req.body.email}')`, function (err, rows) {
+//     let id = this.lastID;
+//     db.run(`INSERT into ContactsGroups (ContactId, GroupId) VALUES ('${id}', '${req.body.GroupId}')`, (err, rows) => {
+//       res.redirect('contacts');
+//     });
+//   });
+// });
 
 // app.post('/contacts/address/:id', (req, res) => {
 //   db.run(`INSERT INTO Addresses (street, city, zipcode, ContactId) VALUES ('${req.body.street}', '${req.body.city}','${req.body.zipcode}', '${req.body.ContactId}')`, (err) => {

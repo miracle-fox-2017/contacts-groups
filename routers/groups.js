@@ -7,14 +7,22 @@ const ContactsGroups = require('../models/contacts_groups');
 // menampilkan data groups
 //PROMISE
 router.get('/', function (req, res) {
-  Group.findAll(req.body).then((resultGroup) => {
-    ContactsGroups.findName(req.body).then((resultContactGroup) => {
-      Contact.findAll(req.body).then((resultContact) => {
-        res.render('groups.ejs', { dataGroups: resultGroup, dataContacts: resultContact, dataContactsGroups: resultContactGroup });
-      });
-    });
+  Promise.all([Group.findAll(), ContactsGroups.findName(), Contact.findAll()]).then(function (rows) {
+    res.render('groups.ejs', { dataGroups: rows[0], dataContacts: rows[2], dataContactsGroups: rows[1] });
+  }).catch(function (err) {
+    console.log(err);
   });
 });
+
+// router.get('/', function (req, res) {
+//   Group.findAll(req.body).then((resultGroup) => {
+//     ContactsGroups.findName(req.body).then((resultContactGroup) => {
+//       Contact.findAll(req.body).then((resultContact) => {
+//         res.render('groups.ejs', { dataGroups: resultGroup, dataContacts: resultContact, dataContactsGroups: resultContactGroup });
+//       });
+//     });
+//   });
+// });
 
 // Delete data group
 router.get('/delete/:id', (req, res) => {
@@ -43,18 +51,32 @@ router.post('/edit/:id', function (req, res) {
 });
 
 // Menampilkan data groupsContact spesifik untuk diubah
+router.get('/assign_contacts/:id', (req, res) => {
+  Promise.all([Group.editById(req.params.id), ContactsGroups.findConjunction()]).then(function (rows) {
+    res.render('assign_contacts', { data: rows[0], dataContacts: rows[1] });
+  }).catch(function (err) {
+    console.log(err);
+  });
+});
+
 // router.get('/assign_contacts/:id', (req, res) => {
-//   Group.editById(req.params.id).then((resultGroup) => {
-//     ContactsGroups.findConjunction((resultContactGroup) => {
+//   // console.log("MASUK ASSIGN");
+//   Group.editById(req.params.id)
+//    .then((resultGroup) => {
+//     ContactsGroups.findConjunction()
+//      .then((resultContactGroup) => {
+//       // console.log("masuk ContactsGroups");
 //       res.render('assign_contacts', { data: resultGroup, dataContacts: resultContactGroup });
 //     });
+//   }).catch(function (err) {
+//     console.log(err);
 //   });
 // });
-// router.post('/assign_contacts/:id', function (req, res) {
-//   ContactsGroups.create(req.body).then((resultContactGroup) => {
-//     res.redirect('../../groups');
-//   });
-// });
+router.post('/assign_contacts/:id', function (req, res) {
+  ContactsGroups.create(req.body, req.params).then((resultContactGroup) => {
+    res.redirect('../../groups');
+  });
+});
 
 // app.get('/groups/assign_contacts/:id', function (req, res) {
 //   db.each(`SELECT * FROM Groups WHERE id = ${req.params.id}`, (err, rows) => {

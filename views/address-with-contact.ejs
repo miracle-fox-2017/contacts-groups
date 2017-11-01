@@ -35,8 +35,10 @@
 			color: wheat;
 		}
 	</style>
-	
-	<h2><%=  contact.name %></h2>
+
+	<h2>Hi <%=  contact.name %></h2>
+	<h2><%= contact.company %></h2>
+
 
 	<table style="width: 100%" border="1">
 		<tr>
@@ -55,5 +57,39 @@
 		</tr>
 		<% } %>
 	</table>
+
+	
+	<br><br>
+	<form onsubmit="return validateAddressForm();" method="post" action="/addresses">
+		
+		<input type="hidden" id="id" name="id" value="<%= (typeof editItem != 'undefined') ? editItem.id  : '' %>">
+		<input type="text" id="street" name="street"  placeholder="Street" value="<%= (typeof editItem != 'undefined') ? editItem.street  : '' %>">
+		<input type="text" id="city" name="city"  placeholder="City" value="<%= (typeof editItem != 'undefined') ? editItem.city  : '' %>">
+		<input type="text" id="zipcode" name="zipcode"  placeholder="Zipcode" value="<%= (typeof editItem != 'undefined') ? editItem.zipcode  : '' %>">
+		
+		<input type="hidden" id="contacts_id" name="contacts_id" value="<%= contact.id %>">
+
+		<input type="submit" value="Tambah">
+	</form>
+
+	<script>
+		function validateAddressForm() {
+			let hiddenId = document.getElementById('id').value;
+			let streetField = document.getElementById('street').value;
+			let contactNameDropdown = document.getElementById('contacts_id');
+			let arrExistingContactId = contactNameDropdown.getAttribute('data-exists-contactid').split(',');
+			let selectedOptions = contactNameDropdown.options[contactNameDropdown.selectedIndex].value;
+			
+			if (streetField.length < 1) {
+				alert('Street harus diisi');
+		
+				return false;
+			}
+
+			return true;
+			
+		}
+	</script>
+
 </body>
 </html>

@@ -2,33 +2,33 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title> addresses</title>
+    <title>Addresses</title>
   </head>
   <body>
-    <table>
+    <table border="1">
       <tr>
-        <td>ID</td>
-        <td>Street</td>
-        <td>City</td>
-        <td>Zipcode</td>
+        <td> <strong> ID </strong> </td>
+        <td> <strong> Street </strong> </td>
+        <td> <strong> City </strong> </td>
+        <td> <strong> Zipcode </strong> </td>
       </tr>
-      <% for(var i = 0; i < rows.length; i++){ %>
+    <%rowsAddress.forEach(function(list){%>
       <tr>
-        <td><%= rows[i].id %></td>
-        <td><%= rows[i].street %></td>
-        <td><%= rows[i].city %></td>
-        <td><%= rows[i].zipcode %></td>
-        <td><a href="/addresses/edit/<%=rows[i].id%>"> Edit</td>
-        <td><a href="/addresses/delete/<%=rows[i].id%>"> Delete</td>
+        <td> <%= list.id %> </td>
+        <td> <%= list.street %> </td>
+        <td> <%= list.city %> </td>
+        <td> <%= list.zipcode %> </td>
+        <td> <a href="/addresses/edit/<%= list.id %>" > Edit </td>
+        <td> <a href="/addresses/delete/<%= list.id %>" > Delete </td>
       </tr>
-    <% } %>
+    <% }) %>
+  </table>
+  <br>
     <form class="" action="/addresses" method="post">
-      <td> Street <input type="text" name="street"> </td>
-      <td>City<input type="text" name="city"></td>
-      <td>Zipcode<input type="text" name="zipcode"></td>
-      <td><input type="submit" value="Submit"></td>
+      Street <br> <input type="text" name="street"> <br>
+      City <br> <input type="text" name="city"><br>
+      Zipcode <br> <input type="text" name="zipcode"><br>
+      <input type="submit" value="Send"><br>
     </form>
-    </table>
-
   </body>
 </html>

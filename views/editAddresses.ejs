@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title> Edit Addresses </title>
+  </head>
+  <body>
+    <table>
+      <tr>
+      <form class="" action="/addresses/edit/ <%= rowsEditAddress.id %>" method="post">
+        <td> Street <br> <input type="text" name="street" value="<%= rowsEditAddress.street %>"> </td>
+        <td>City <br> <input type="text" name="city" value="<%= rowsEditAddress.city %>"></td>
+        <td>Zipcode <br> <input type="text" name="zipcode" value="<%= rowsEditAddress.zipcode %>"></td>
+        <td><input type="submit" value="Submit"></td>
+      </form>
+    </tr>
+    </table>
+  </body>
+</html>

@@ -104,7 +104,45 @@ html, body {
     -webkit-transform: translateY(-50%);
     transform: translateY(-50%); }
     .other-page .header .link-list li {
-      list-style: none; }
-.other-page .content {
-  padding-top: 20px;
-  padding-bottom: 20px; }
+      float: left;
+      list-style: none;
+      padding-left: 10px;
+      padding-right: 10px; }
+    .other-page .header .link-list a {
+      color: #FFF;
+      font-size: 18px;
+      position: relative;
+      text-decoration: none;
+      font-family: "Open Sans Condensed",sans-serif; }
+    .other-page .header .link-list a::before {
+      left: 0;
+      right: 0;
+      bottom: 0;
+      opacity: 0;
+      width: 25%;
+      height: 1px;
+      content: "";
+      margin: auto;
+      background: #FFF;
+      position: absolute;
+      -webkit-transition-duration: 0.5s;
+      transition-duration: 0.5s; }
+    .other-page .header .link-list a:hover::before {
+      opacity: 1;
+      width: 100%; }
+.other-page .content table {
+  margin-top: 25px;
+  margin-bottom: 25px; }
+.other-page .content .empty {
+  width: 100%;
+  height: 150px; }
+  .other-page .content .empty span {
+    top: 50%;
+    left: 50%;
+    color: #999;
+    font-size: 35px;
+    position: relative;
+    display: inline-block;
+    font-family: "Roboto",sans-serif;
+    -webkit-transform: translateX(-50%) translateY(-50%);
+    transform: translateX(-50%) translateY(-50%); }

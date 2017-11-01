@@ -45,22 +45,23 @@ router.get('/', function (req, res) {
 
 //POST PROFILES
 router.post('/', function (req, res) {
-  Profile.checkId(req.body.id_contacts)
-    .then(avail=>{
+  // Profile.checkId(req.body.id_contacts)
+  //   .then(avail=>{
         Profile.insertProfile(req.body)
-          .then(()=>{ 
+          .then((msg)=>{
+            // console.log(msg.changes); 
             Contact.showContacts()
               .then(contacts =>{
                 Profile.showProfilesJoin()
                   .then(profiles => {
-                    if(avail == 0){
+                    if(msg.changes != 0){
                       res.render('profiles',{"profiles": profiles, "contacts": contacts, "msg": ""});
                     } else {
                       res.render('profiles',{"profiles": profiles, "contacts": contacts, "msg": "Your contact already have profile"});  
                     }
                   })
               })
-          })
+          // })
     }).catch(err=>{
       console.log(err);
     })

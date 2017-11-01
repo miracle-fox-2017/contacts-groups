@@ -47,10 +47,9 @@ db.serialize(()=>{
   db.run(foreignProfile, (err)=>{
     console.log('coloumn id_contacts added to Profile');
   
-  
   }); 
   
-  //set unique Profile          
+  //set unique Profile
   let renameProfile = `ALTER TABLE Profile RENAME TO old_table;`
   let crNewProfile = `
                       CREATE TABLE IF NOT EXISTS Profile
@@ -61,13 +60,18 @@ db.serialize(()=>{
                         id_contacts INT  UNIQUE
                         CONSTRAINT id_contacts REFERENCES Contacts (id)
                       );`
-  let delOldTableProfile = `DROP TABLE old_table`;
   let copyDataFromOld = `INSERT INTO Profile SELECT * FROM old_table`;
+  let delOldTableProfile = `DROP TABLE old_table`;
+  
   db.run(renameProfile);
   db.run(crNewProfile);
   db.run(copyDataFromOld, ()=>{console.log('Profile updated');});
   db.run(delOldTableProfile);
   // db.run(copyDataFromOld, ()=>{console.log('Profile updated');});
+  
+  //uniqueIndex:
+  // let uniqueIndex = `CREATE UNIQUE INDEX IF NOT EXISTS id_contacts ON Profile (id_contacts)`;
+  // db.run(uniqueIndex);
   
   
   //release 6

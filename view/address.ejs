@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>
+            
+        </title>
+
+    </head>
+    <body>
+            <form class="" action="" method="post">
+                Street:<br>
+                <input type="text" name="street" >
+                <br>
+                City:<br>
+                <input type="text" name="city" >
+                <br>
+                Zip Code:<br>
+                <input type="text" name="zipcode" >
+                <br>
+                <select name='Contact'>
+                        <%contacts.forEach(function(name){%>
+                            
+                        
+                        <option value="<%=name.id%>">
+                            <%=name.name%>
+                        </option>
+                    <%})%>
+                </select>
+                
+                <input type="submit" value="Submit">
+              </form> 
+        <table>
+            <thead></thead>
+            <tr>
+              <th>ID</th>
+              <th>Street</th>
+              <th>City</th>
+              <th>ZipCode</th>
+              <th>ContactName</th>
+            </tr>
+        </thead>
+            <tbody>
+
+            <tr>
+                <%rows.forEach(function(add){%>
+
+              <td><%=add.id%></td>
+              <td><%=add.street%></td>
+              <td><%=add.city%></td>
+              <td><%=add.zipcode%></td>
+              <td><%=add.name%></td>
+              <td> <a href="address/edit/<%=add.id %>"> Edit</a> </td>
+              <td> <a href="address/delete/<%=add.id %>"> Delete</a> </td>
+              
+            </tr>
+            <%})%>
+        </tbody>
+
+           
+          <br>  
+    </body>
+</html>

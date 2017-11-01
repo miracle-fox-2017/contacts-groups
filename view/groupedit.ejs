@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>
+            
+        </title>
+
+    </head>
+    <body>
+            <form class="" action="/groups/edit/<%=data.id%>" method="post">
+                Name of Group:<br>
+                <input type="text" name="name_of_group" value="<%=data.name_of_group%>" >
+                <br>
+                
+                <input type="submit" value="Edit">
+              </form> 
+        <table>
+            <thead></thead>
+            <tr>
+              <th>ID</th>
+              <th>Name of Group</th>
+              
+            </tr>
+        </thead>
+            <tbody>
+
+            <tr>
+                    <tr>
+                           
+            
+                          <td><%=data.id%></td>
+                          <td><%=data.name_of_group%></td>
+                          
+                         
+                          
+                        </tr>
+                       
+              
+            </tr>
+            
+        </tbody>
+          </table>
+          <br>  
+    </body>
+</html>

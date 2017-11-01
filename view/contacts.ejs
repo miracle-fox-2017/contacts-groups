@@ -33,7 +33,7 @@
             </tr>
         </thead>
             <tbody>
-
+               <%=msgObj%>
             <tr>
                 <%rows.forEach(function(contact){%>
 
@@ -44,11 +44,13 @@
               <td><%=contact.email%></td>
               <td> <a href="/contacts/edit/<%=contact.id %>"> Edit</a> </td>
               <td> <a href="/contacts/delete/<%=contact.id %>"> Delete</a> </td>
+              <td><a href="address/contacts/addresses_with_contact/<%=contact.id%>"> Addresses</a></td>
               
             </tr>
             <%})%>
         </tbody>
-          </table>
+
+           
           <br>  
     </body>
 </html>

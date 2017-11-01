@@ -7,11 +7,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="assets/css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="../../assets/css/bootstrap.min.css" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet">
 
     <!-- Custome CSS -->
-    <link rel="stylesheet" href="assets/css/custom/style.css" type="text/css">
+    <link rel="stylesheet" href="../../assets/css/custom/style.css" type="text/css">
 
   </head>
   <body>
@@ -21,8 +21,8 @@
           <div class="row">
             <div class="col-xl-4 col-md-4 col-sm-12">
               <div class="logo">
-                <a href="/">
-                  <img src="assets/img/logo.png" alt="rnp-studio-logo" class="img-fluid">
+                <a href="index.html">
+                  <img src="../../assets/img/logo.png" alt="rnp-studio-logo" class="img-fluid">
                   <span><h2 class="studio">Studio</h2></span>
                 </a>
               </div>
@@ -50,59 +50,39 @@
           <h1 class="text-center">CONTACTS</h1>
         </div>
 
-        <div class="col-md-12 col-xs-12">
-          <p align="right"><a href="/addresses_with_contact">Address With Contacts</a></p>
-        </div>
-
         <div class="col-md-12 col-xs-12" id="add">
-          <% if (message){ %>
-          <div class="alert alert-danger">
-            <%= message %>
-          </div>
-          <%}%>
-          <form class="" action="/contacts" method="post" >
+          <p>Name : <%= rows[0].name %></p>
+          <!-- <form class="" action="" method="post">
             <fieldset>
-              <legend>Add Contacts</legend>
-              <input type="text" name="name" placeholder="Masukkan Nama">
-              <input type="text" name="company" placeholder="Masukkan Company">
-              <input type="text" name="telp" placeholder="Masukkan Telp">
-              <input type="text" name="email" placeholder="Masukkan Email" >
-              <select class="" name="id_groups">
-                <option selected disabled>Click to Choose -----</option>
-                <% data.forEach (group => { %>
-                    <option value="<%= group.id %>"><%= group.name_of_group %></option>
-                <% }); %>
-              </select>
+              <legend>Add Address</legend>
+              <input type="text" name="street" placeholder="Masukkan Street">
+              <input type="text" name="city" placeholder="Masukkan City">
+              <input type="text" name="zipcode" placeholder="Masukkan Zip Code">
+              <input type="text" name="id_contacts" placeholder="Contact Name" value="<%= rows[0].id %>">
               <input type="submit" name="submit" value="SUBMIT" class="btn btn-primary">
             </fieldset>
 
-          </form>
+          </form> -->
         </div>
-        <hr>
+
         <div class="col-md-12 col-xs-12" id="show">
           <table class="table table-bordered">
             <thead>
               <tr>
                 <th class="text-center">ID</th>
-                <th class="text-center">NAME</th>
-                <th class="text-center">COMPANY</th>
-                <th class="text-center">TELP</th>
-                <th class="text-center">EMAIL</th>
-                <th class="text-center">GROUPS</th>
-                <th class="text-center">OPTION</th>
+                <th class="text-center">STREET</th>
+                <th class="text-center">CITY</th>
+                <th class="text-center">ZIP CODE</th>
               </tr>
             </thead>
             <!-- tampilkan semua data contacts -->
-            <% rows.forEach (contact => { %>
+            <% data.forEach (address => { %>
               <tbody>
                 <tr>
-                  <td class="text-center"><%= contact.id %></td>
-                  <td><%= contact.name %></td>
-                  <td><%= contact.company %></td>
-                  <td><%= contact.telp %></td>
-                  <td><%= contact.email %></td>
-                  <td><%= contact.groups %></td>
-                  <td class="text-center"><a href="/contacts/edit/<%= contact.id %>">Edit</a> | <a href="/contacts/delete/<%= contact.id %>">Delete</a> | <a href="/contacts/address/<%= contact.id %>">Address</a> </td>
+                  <td class="text-center"><%= address.id %></td>
+                  <td><%= address.street %></td>
+                  <td><%= address.city %></td>
+                  <td><%= address.zipcode %></td>
                 </tr>
               </tbody>
             <% }) %>

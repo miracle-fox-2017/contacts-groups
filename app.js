@@ -1,13 +1,17 @@
-const bodyParser = require('body-parser');
-const express = require('express');
-const sqlite3=require("sqlite3").verbose();
+const bodyParser  = require('body-parser'); // Plugin untuk mengambil data dari form
+const express     = require('express');
+const app         = express();
 
-const app = express();
-const db=new sqlite3.Database("./database/database.db");
-
+const index = require('./routers/index');
+const contact = require('./routers/contact');
+const groups = require('./routers/groups');
+const address = require('./routers/address');
+const addresses_with_contact = require('./routers/addresses_with_contact');
+const profiles = require('./routers/profile');
 
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());
+
 app.use('/assets', express.static('assets'));
 // app.use(express.static(__dirname));
 app.use(express.static("./views"));
@@ -17,315 +21,21 @@ app.set('view engine', 'ejs') // register the template engine
 
 
 // ------- INDEX ------
-app.get('/', function(req, res) {
-  res.render('index', {error: false})
-})
+app.use('/', index);
 
 // ----- CONTACTS -----
-// SELECT
-app.get('/contacts', function (req, res) {
-  let query = `SELECT * FROM contacts`;
-  db.all(query, (err, rows)=>{
-    res.render('contacts',{"rows" : rows, "message":''});
-  })
+app.use('/contacts', contact);
 
-})
+app.use('/addresses_with_contact', addresses_with_contact);
 
-// INSERT
-app.post('/contacts', function(req, res) {
-  let name = req.body.name;
-  let company = req.body.company;
-  let telp = req.body.telp;
-  let email = req.body.email;
-  let msg = 'Nama Tidak Boleh Kosong ..!!'
+// ----- GROUPS -----
+app.use('/groups', groups);
 
-  // db.run(`INSERT INTO contacts (name, company, telp, email) VALUES ('${name}', '${company}', '${telp}', '${email}')`, ()=>{
-  //   res.redirect('/contacts');
-  // });
+// ------ ADDRESS ------
+app.use('/address', address);
 
-  if (name != ''){
-    db.run(`INSERT INTO contacts (name, company, telp, email) VALUES ('${name}', '${company}', '${telp}', '${email}')`, ()=>{
-      res.redirect('/contacts');
-    });
-  }else{
-    db.all(`SELECT * FROM contacts`, (err, rows)=>{
-      res.render('contacts', {"rows":rows, "message": msg})
-    })
-  }
-})
-
-// UPDATE
-app.get('/contacts/edit/:id', (req, res)=>{
-  let query = `SELECT * FROM contacts WHERE id = '${req.params.id}'`
-  db.all(query, (err, rows)=>{
-    res.render('contacts-edit',{rows});
-  });
-})
-
-app.post('/contacts/edit/:id', (req, res)=>{
-  let id = req.body.id;
-  let name = req.body.name;
-  let company = req.body.company;
-  let telp = req.body.telp;
-  let email = req.body.email;
-
-  db.run(`UPDATE contacts SET
-              name = '${name}',
-              company = '${company}',
-              telp = '${telp}',
-              email = '${email}'
-              WHERE
-              id = '${id}' `);
-  res.redirect('/contacts');
-})
-
-// DELETE
-app.get('/contacts/delete/:id', (req, res)=>{
-  let id = req.params.id;
-  let query = `DELETE FROM contacts where id = ${id}`
-
-  db.run(query, ()=>{
-    res.redirect('/contacts')
-  })
-})
-
-
-// ----------- GROUPS --------------
-// SELECT
-app.get('/groups', (req, res)=>{
-  let query = `SELECT * FROM groups`;
-
-  db.all(query, (err, rows)=>{
-    res.render('groups', {rows})
-  })
-})
-
-// INSERT
-app.post('/groups', (req, res)=>{
-  let name = req.body.name;
-  let query = `INSERT INTO
-               groups (name_of_group)
-               VALUES
-               ('${name}')`
-
-  db.run(query, ()=>{
-    res.redirect('/groups')
-  })
-})
-
-// UPDATE
-app.get('/groups/edit/:id', (req, res)=>{
-  let query = `SELECT * FROM groups WHERE id = '${req.params.id}'`
-
-  db.all(query, (err, rows)=>{
-    res.render('groups-edit', {rows}) // groups-edit adalah nama_file
-  })
-})
-
-app.post('groups/edit/:id', (req, res)=>{
-  let id    = req.body.id;
-  let name  = req.body.name;
-  let query = `UPDATE groups SET name = '${name}' where id = '${id}'`
-
-  db.run(query, ()=>{
-    res.redirect('/groups')
-  })
-})
-
-
-// DELETE
-app.get('/groups/delete/:id', (req, res)=>{
-  let id = req.params.id;
-  let query = `DELETE FROM groups WHERE id = '${id}'`
-  db.run(query,()=>{
-    res.redirect('/groups')
-  })
-})
-
-// -------- ADDRESS ----------
-// SELECT
-app.get('/address', (req, res)=>{
-  let query = `SELECT a.*, c.name as contacts FROM address as a
-              LEFT JOIN contacts as c
-              ON a.id_contacts = c.id`;
-
-  db.all(query, (err, rows)=>{
-    db.all(`SELECT * FROM contacts`, (err, data)=>{
-      res.render('address', {"data":data, "rows":rows, "message" : ''})
-    })
-  })
-})
-
-// INSERT
-app.post('/address', (req, res)=>{
-  let street = req.body.street;
-  let city = req.body.city;
-  let zipcode = req.body.zipcode;
-  let id_contacts = req.body.id_contacts;
-
-  let query = `INSERT INTO address
-              (street, city, zipcode, id_contacts)
-              VALUES
-              ('${street}', '${city}' , '${zipcode}', '${id_contacts}') `;
-
-  db.run(query, ()=>{
-    res.redirect('/address');
-  })
-
-})
-
-// UPDATE
-app.get('/address/edit/:id', (req, res)=>{
-  let query = `SELECT a.*, c.name as contacts FROM address as a
-              LEFT JOIN contacts as c
-              ON a.id_contacts = c.id WHERE a.id = '${req.params.id}'`
-
-  db.all(query, (err, rows)=>{
-    db.all(`SELECT * FROM contacts`, (err, data)=>{
-      res.render('address-edit', {"data":data, "rows":rows, "message" : ''})
-    })
-  })
-
-})
-
-app.post('/address/edit/:id', (req, res)=>{
-  let id = req.body.id;
-  let street = req.body.street;
-  let city = req.body.city;
-  let zipcode = req.body.zipcode;
-  let id_contacts = req.body.id_contacts;
-
-
-  let query = `UPDATE address SET street = '${street}', city = '${city}', zipcode = '${zipcode}', id_contacts = '${id_contacts}' WHERE id = '${id}'`;
-
-  db.run(query, ()=>{
-    res.redirect('/address');
-  });
-
-})
-
-// DELETE
-app.get('/address/delete/:id', (req, res)=>{
-  let id = req.params.id;
-  let query = `DELETE FROM address WHERE id = '${id}'`
-
-  db.run(query,()=>{
-    res.redirect('/address')
-  })
-})
-
-app.get('/addresses_with_contact', (req, res)=>{
-
-  db.all(`SELECT * FROM Addresses`, (err, data) => {
-    db.all(`SELECT * FROM Contacts`, (err, rows) =>{
-      res.render('addresses_with_contact',{"data":data, "rows": rows});
-
-    })
-  })
-
-})
-
-
-// --------PROFILE-------
-// SELECT
-app.get('/profiles', (req, res)=>{
-  let query = `SELECT p.*, c.name as contacts FROM profile as p
-              INNER JOIN contacts as c
-              ON p.id_contacts = c.id`;
-
-  db.all(query, (err, rows)=>{
-    db.all(`SELECT * FROM contacts`, (err, data)=>{
-      res.render('profile', {"data":data, "rows":rows, "message" : ''})
-    })
-  })
-})
-
-
-// INSERT
-app.post('/profiles', (req, res)=>{
-  let username = req.body.username;
-  let password = req.body.password;
-  let contacts = req.body.id_contacts;
-
-  let count = `SELECT COUNT(*) FROM profile WHERE id_contacts = '${contacts}'`
-
-  let query = `INSERT INTO
-              profile (username, password, id_contacts)
-              VALUES
-              ('${username}', '${password}', '${contacts}')`;
-  let queryProfile = `SELECT p.*, c.name as contacts FROM profile as p
-              INNER JOIN contacts as c
-              ON p.id_contacts = c.id`;
-
-  let msg = 'Your contact already have profile'
-
-  db.all(count, (err, rows)=>{
-    let check = rows[0]['COUNT(*)'];
-
-    if (check == 0) {
-      db.run(query, ()=>{
-        db.all(`SELECT * FROM contacts`, (err, data)=>{
-          db.all(queryProfile, (err, rows)=>{
-            res.render('profile', {"data":data, "rows":rows, "message" : ''})
-          })
-        })
-      })
-    }else{
-      db.all(queryProfile, (err, rows)=>{
-        db.all(`SELECT * FROM contacts`, (err, data)=>{
-          res.render('profile', {"data":data, "rows":rows, "message":msg})
-        })
-      })
-    }
-  })
-
-})
-
-// UPDATE
-app.get('/profiles/edit/:id', (req, res)=>{
-  let id = req.params.id;
-  let query = `SELECT p.*, c.name as contacts FROM profile as p
-              INNER JOIN contacts as c
-              ON p.id_contacts = c.id
-              WHERE p.id = '${id}'`;
-
-  db.all(query, (err, rows)=>{
-    db.all(`SELECT * FROM contacts`, (err, data)=>{
-      res.render('profile-edit', {"rows": rows, "data":data});
-    })
-  })
-})
-
-app.post('/profiles/edit/:id', (req, res)=>{
-  let id = req.body.id;
-  let username = req.body.username;
-  let password = req.body.password;
-  let id_contacts = req.body.id_contacts;
-
-  let query = `UPDATE profile
-              SET
-              username = '${username}',
-              password = '${password}',
-              id_contacts = '${id_contacts}'
-              WHERE
-              id = '${id}'`;
-
-  db.run(query, ()=>{
-    res.redirect('/profiles');
-  })
-
-  // DELETE
-  app.get('/profiles/delete/:id', (req, res)=>{
-    let id = req.params.id;
-    let query = `DELETE FROM profile WHERE id = '${id}'`
-
-    db.run(query, ()=>{
-      res.redirect('/profiles')
-    })
-  })
-
-})
-
+// ------ PROFILE ------
+app.use('/profiles', profiles)
 
 // LOCALHOST CONNECTION
 app.listen(3000, function() {

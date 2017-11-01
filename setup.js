@@ -24,8 +24,13 @@ db.serialize(function() {
     city VARCHAR(20),
     zipcode INTEGER)`)
 
-  db.run(`ALTER TABLE address
-    ADD id_contacts INTEGER`)
+  db.run(`CREATE TABLE IF NOT EXISTS consContactGroups (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    id_contacts INTEGER
+    FOREIGNKEY id_contacts REFERENCES contacts(id),
+    id_groups INTEGER
+    FOREIGNKEY id_contacts REFERENCES contacts(id)
+  )`)
 
 });
 

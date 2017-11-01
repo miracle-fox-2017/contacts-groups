@@ -7,11 +7,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="assets/css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="../../assets/css/bootstrap.min.css" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet">
 
     <!-- Custome CSS -->
-    <link rel="stylesheet" href="assets/css/custom/style.css" type="text/css">
+    <link rel="stylesheet" href="../../assets/css/custom/style.css" type="text/css">
 
   </head>
   <body>
@@ -21,8 +21,8 @@
           <div class="row">
             <div class="col-xl-4 col-md-4 col-sm-12">
               <div class="logo">
-                <a href="/">
-                  <img src="assets/img/logo.png" alt="rnp-studio-logo" class="img-fluid">
+                <a href="index.html">
+                  <img src="../../assets/img/logo.png" alt="rnp-studio-logo" class="img-fluid">
                   <span><h2 class="studio">Studio</h2></span>
                 </a>
               </div>
@@ -47,59 +47,24 @@
       <div class="row" id="contacts">
 
         <div class="col-md-12 col-xs-12" id="sub-title">
-          <h1 class="text-center">PROFILE</h1>
+          <h1 class="text-center">GROUPS</h1>
         </div>
 
         <div class="col-md-12 col-xs-12" id="add">
-          <% if (message){ %>
-          <div class="alert alert-danger">
-            <%= message %>
-          </div>
-          <%}%>
+          <p>Group Name : <u><%= rows[0].name_of_group %></u></p>
           <form class="" action="" method="post">
             <fieldset>
-              <legend>Add Profile</legend>
-              <input type="text" name="username" placeholder="Masukkan Username">
-              <input type="text" name="password" placeholder="Masukkan Password">
+              <legend>Add Contacts</legend>
+              <input type="text" name="id_groups" value="<%= rows[0].id %>" readonly>
               <select class="" name="id_contacts">
                 <option selected disabled>Click to Choose -----</option>
                 <% data.forEach (contact => { %>
                     <option value="<%= contact.id %>"><%= contact.name %></option>
                 <% }); %>
               </select>
-
               <input type="submit" name="submit" value="SUBMIT" class="btn btn-primary">
-
             </fieldset>
-
           </form>
-        </div>
-        <hr>
-        <div class="col-md-12 col-xs-12" id="show">
-          <table class="table table-bordered">
-            <thead>
-              <tr>
-                <th class="text-center">ID</th>
-                <th class="text-center">USERNAME</th>
-                <th class="text-center">PASSWORD</th>
-                <th class="text-center">CONTATCS</th>
-                <th class="text-center">OPTION</th>
-              </tr>
-            </thead>
-            <!-- tampilkan semua data contacts -->
-            <% rows.forEach (profile => { %>
-              <tbody>
-                <tr>
-                  <td class="text-center"><%= profile.id %></td>
-                  <td><%= profile.username %></td>
-                  <td><%= profile.password %></td>
-                  <td><%= profile.contacts %></td>
-                  <td class="text-center"><a href="/profiles/edit/<%= profile.id %>">Edit</a> | <a href="/profiles/delete/<%= profile.id %>">Delete</a> </td>
-                </tr>
-              </tbody>
-            <% }) %>
-
-          </table>
         </div>
       </div>
     </div>

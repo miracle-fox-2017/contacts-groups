@@ -1,5 +1,5 @@
-const sqlite3 = require('sqlite3');
-const db = new sqlite3.Database('./database.db');
+var sqlite3 = require('sqlite3').verbose();
+var db = new sqlite3.Database('./database.db');
 
 db.serialize(function() {
   db.run(`CREATE TABLE IF NOT EXISTS Contacts(id INTEGER PRIMARY KEY AUTOINCREMENT, name VARCHAR(40), company VARCHAR(40), telp VARCHAR(15), email VARCHAR(40))`);

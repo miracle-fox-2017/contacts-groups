@@ -16,20 +16,13 @@ app.set('views', './views');
 app.set('view engine', 'ejs');
 
 app.get('/', function (req, res) {
-  res.send('Hello World! This is my first website !')
+  res.send('Hello World!')
 })
 
 app.get('/contacts', function (req, res) {
   let queryContact = `SELECT * FROM Contacts`
   db.all(queryContact, function(err, rowContacts){
     res.render('contacts',{rowContacts})
-  })
-})
-
-app.get('/contacts/edit/:id', function (req, res) {
-  let getEdit = `SELECT * FROM Contacts WHERE id = ${req.params.id}`
-  db.all(getEdit, function(err, rowContacts) {
-    res.render('editContacts',{rowContacts})
   })
 })
 
@@ -136,6 +129,13 @@ app.get('/addresses/delete/:id', function (req, res) {
   db.run(`DELETE FROM Addresses
    WHERE id = ${req.params.id}`);
    res.redirect('/addresses')
+})
+
+app.post('/contacts', function (req, res) {
+  let queryContact = ` * FROM Contacts`
+  db.all(queryContact, function(err, rowContacts){
+    res.render('contacts',{rowContacts})
+  })
 })
 
 app.listen(3000, function () {

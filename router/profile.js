@@ -38,13 +38,15 @@ router.post('/profiles', function (req, res) {
 
 router.get('/profiles/edit/:id', function (req, res) {
   // console.log(req.params);
-  Profile.findID(req.params.id, function(rows){
-    res.render('profileedit', {rows})
+  Profile.findID(req.params.id, function(profilesdata){
+    Contact.findAll(function(contactsdata){
+        res.render('profileedit', {profilesdata, contactsdata})
+    })
   })
 })
 
 router.post('/profiles/edit/:id', function (req, res){
-  // console.log('masuk UPDATE');
+  // console.log(req.body);
   Profile.update(req.body,req.params.id)
   res.redirect('/profiles');
 })

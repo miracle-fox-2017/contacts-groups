@@ -33,5 +33,10 @@ db.serialize(function () {
         zipcode VARCHAR(50)
         )`);
 
+        //relasi
+      //  db.run(`ALTER TABLE Profile ADD COLUMN contacts_id INTEGER REFERENCES Contacts(id)`);
+        db.run(`CREATE UNIQUE INDEX IF NOT EXISTS contacts_id ON Profile(contacts_id)`)
+
+
 })
 db.close()

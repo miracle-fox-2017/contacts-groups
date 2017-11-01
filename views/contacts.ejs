@@ -27,7 +27,17 @@
       <%}%>
 
     <tr>
-    <form class="" action="/contacts" method="post">
+      <script type="text/javascript">
+        function validasi_input(form){
+          if (form.Name.value == ""){
+          alert("Nama masih kosong!");
+          form.Name.focus();
+          return (false);
+          }
+        return (true);
+        }
+      </script>
+    <form class="" action="/contacts" method="post" onsubmit="return validasi_input(this)">
       <td></td>
       <td><input type="text" name="Name" value=""></td>
       <td><input type="text" name="Company" value=""></td>

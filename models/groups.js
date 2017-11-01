@@ -1,48 +1,66 @@
 const sqlite3 = require('sqlite3').verbose();
 const db = new sqlite3.Database('./database/database.db', err => {
-  if (err) throw err;
+  if (err) console.error(err);
 });
 
 class Groups {
-  static findAllGroups(callback) {
-    db.all(`SELECT * FROM Groups`, (err, records) => {
-      if (err) callback(err, null);
-      callback(null, records);
+  static findAllGroups() {
+    return new Promise((resolve, reject) => {
+      db.all(`SELECT * FROM Groups`, (err, records) => {
+        if (err) reject(err);
+        resolve(records);
+      });
     });
   }
 
-  static createGroups(data, callback) {
-    const queryPut = `INSERT INTO Groups (name_of_group)
-            VALUES ('${data.name}')`;
-    db.run(queryPut, err => {
-      callback(err);
+  static createGroups(data) {
+    const queryPut = `
+      INSERT INTO Groups (name_of_group)
+      VALUES ('${data.name}')
+    `;
+
+    return new Promise((resolve, reject) => {
+      db.run(queryPut, err => {
+        if (err) reject(err);
+        resolve();
+      });
     });
   }
 
-  static editGroups(data, callback) {
+  static editGroups(data) {
     const queryEdit = `SELECT * FROM Groups WHERE id IS ${data.id}`;
-    db.get(queryEdit, (err, records) => {
-      if (err) callback(err, null);
-      callback(null, records)
+
+    return new Promise((resolve, reject) => {
+      db.get(queryEdit, (err, records) => {
+        if (err) reject(err);
+        resolve(records)
+      });
     });
   }
 
-  static updateGroups(data, callback) {
+  static updateGroups(data) {
     const queryUpdate = `
       UPDATE Groups
       SET name_of_group = '${data.name}'
-      WHERE id IS ${data.id}`;
+      WHERE id IS ${data.id}
+    `;
     
-    db.run(queryUpdate, err => {
-      callback(err);
+    return new Promise((resolve, reject) => {
+      db.run(queryUpdate, err => {
+        if (err) reject(err);
+        resolve();
+      });
     });
   }
 
-  static deleteGroups(data, callback) {
+  static deleteGroups(data) {
     const queryDelete = `DELETE FROM Groups WHERE id IS ${data.id}`;
 
-    db.run(queryDelete, err => {
-      callback(err);
+    return new Promise((resolve, reject) => {
+      db.run(queryDelete, err => {
+        if(err) reject(err);
+        resolve();
+      });
     });
   }
 }

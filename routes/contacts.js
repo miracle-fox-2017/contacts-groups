@@ -2,10 +2,14 @@ const router = require('express').Router();
 const Contacts = require('../models/contacts');
 
 router.get('/', (req, res) => {
-  Contacts.findAllContacts((err, records) => {
-    if (err) throw err;
-    res.render('contacts', {contacts: records});
-  });
+  Contacts.findAllContacts()
+    .then(records => {
+      res.render('contacts', {
+        contacts: records
+      });
+    }).catch(err => {
+      console.error(err);
+    });
 });
 
 router.post('/',  (req, res) => {
@@ -16,21 +20,23 @@ router.post('/',  (req, res) => {
     company: req.body.company
   };
 
-  Contacts.createContacts(dataBody, err => {
-    if (err) throw err;
-    res.redirect('/contacts');
-  });
+  Contacts.createContacts(dataBody)
+    .then(() => {
+      res.redirect('/contacts');
+    }).catch(err => {
+      console.error(err);
+    });
 });
 
 router.get('/edit/:id', (req, res) => {
-  const dataBody = {
-    id: req.params.id
-  }
+  const dataBody = { id: req.params.id };
 
-  Contacts.editContacts(dataBody, (err, data) => {
-    if (err) throw err;
-    res.render('contacts-edit', data);
-  });
+  Contacts.editContacts(dataBody)
+    .then(data => {
+      res.render('contacts-edit', data);
+    }).catch(err => {
+      console.error(err);
+    });
 });
 
 router.post('/edit/:id', (req, res) => {
@@ -40,23 +46,25 @@ router.post('/edit/:id', (req, res) => {
     phone: req.body.phone,
     email: req.body.email,
     company: req.body.company
-  }
+  };
 
-  Contacts.updateContacts(dataBody, err => {
-    if (err) throw err;
-    res.redirect('/contacts');
-  });
+  Contacts.updateContacts(dataBody)
+    .then(() => {
+      res.redirect('/contacts');
+    }).catch(err => {
+      console.error(err);
+    });
 });
 
 router.get('/delete/:id', (req, res) => {
-  const dataBody = {
-    id: req.params.id
-  }
+  const dataBody = { id: req.params.id };
 
-  Contacts.deleteContacts(dataBody, err => {
-    if (err) throw err;
-    res.redirect('/contacts');
-  });
+  Contacts.deleteContacts(dataBody)
+    .then(() => {
+      res.redirect('/contacts');
+    }).catch(err => {
+      console.error(err);
+    });
 });
 
 module.exports = router;

@@ -3,40 +3,47 @@ const Address = require('../models/address');
 const Contacts = require('../models/contacts');
 
 router.get('/', (req, res) => {
-  Contacts.findAllContacts((err, contactRecords) => {
-    Address.findAllAddress((err, addressRecords) => {
-      if (err) throw err;
-      res.render('address', {
-        addresses: addressRecords,
-        contacts: contactRecords
-      });
+  Contacts.findAllContacts()
+    .then(contactRecords => {
+      Address.findAllAddress()
+        .then(addressRecords => {
+          res.render('address', {
+            addresses: addressRecords,
+            contacts: contactRecords
+          });
+        }).catch(err => {
+          console.error(err);
+        });
+    }).catch(err => {
+      console.error(err);
     });
-  });
 });
 
 router.post('/', (req, res) => {
   const dataBody = {
+    id: req.body.id,
     street: req.body.street,
     city: req.body.city,
-    zipcode: req.body.zipcode,
-    id: req.body.id
+    zipcode: req.body.zipcode
   };
 
-  Address.createAddress(dataBody, err => {
-    if (err) throw err;
-    res.redirect('/address');
-  });
+  Address.createAddress(dataBody)
+    .then(() => {
+      res.redirect('/address');
+    }).catch(err => {
+      console.error(err);
+    });
 });
 
 router.get('/edit/:id', (req, res) => {
-  const dataBody = {
-    id: req.params.id
-  }
+  const dataBody = { id: req.params.id };
 
-  Address.editAddress(dataBody, (err, data) => {
-    if (err) throw err;
-    res.render('address-edit', data);
-  });
+  Address.editAddress(dataBody)
+    .then(data => {
+      res.render('address-edit', data);
+    }).catch(err => {
+      console.error(err);
+    });
 });
 
 router.post('/edit/:id', (req, res) => {
@@ -45,29 +52,31 @@ router.post('/edit/:id', (req, res) => {
     street: req.body.street,
     city: req.body.city,
     zipcode: req.body.zipcode
-  }
+  };
 
-  Address.updateAddress(dataBody, err => {
-    if (err) throw err;
-    res.redirect('/address');
-  });
+  Address.updateAddress(dataBody)
+    .then(() => {
+      res.redirect('/address');
+    }).catch(err => {
+      console.error(err);
+    });
 });
 
 router.get('/delete/:id', (req, res) => {
-  const dataBody = {
-    id: req.params.id
-  }
-  
-  Address.deleteAddress(dataBody, err => {
-    if (err) throw err;
-    res.redirect('/address');
-  });
+  const dataBody = { id: req.params.id };
+
+  Address.deleteAddress(dataBody)
+    .then(() => {
+      res.redirect('/address');
+    }).catch(err => {
+      console.error(err);
+    });
 });
 
 router.get('/with-contact', (req, res) => {
-  Address.findAddressWithContacts((err, recordsObj) => {
-    if (err) console.log(err);
-    
+  /* Address.findAddressWithContacts((err, recordsObj) => {
+    if (err) console.error(err);
+
     const contactAddress = [];
     for (let i = 0; i < recordsObj.address.length; i++) {
       for (let j = 0; j < recordsObj.contacts.length; j++) {
@@ -89,7 +98,41 @@ router.get('/with-contact', (req, res) => {
     res.render('address-with-contact', {
       contactAddresses: contactAddress
     });
-  });
+  }); */
+
+  Address.findAllAddress()
+    .then(addressRecords => {
+      // console.log(addressRecords);
+      const contactAddress = [];
+
+      addressRecords.forEach(address => {
+        const adr = {
+          id: address.id_contact
+        };
+
+        Contacts.editContacts(adr)
+          .then(contactRecords => {
+            // console.log(contactRecords);
+            const dataObj = {
+              id: address.id,
+              name: contactRecords.name,
+              street: address.street,
+              city: address.city,
+              zipcode: address.zipcode,
+              company: contactRecords.company
+            };
+
+            contactAddress.push(dataObj);
+            // console.log(contactAddress);
+
+            res.render('address-with-contact', { contactAddresses : contactAddress });
+          }).catch(err => {
+            console.error(err);
+          });
+      });
+    }).catch(err => {
+      console.error(err);
+    });
 });
 
 module.exports = router;

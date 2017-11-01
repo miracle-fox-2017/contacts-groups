@@ -11,6 +11,7 @@
         <th>ID</th>
         <th>USERNAME</th>
         <th>PASSWORD</th>
+        <th>CONTACT NAME</th>
       </tr>
 
     <% for(let i=0;i<rowProfiles.length;i++){ %>
@@ -18,6 +19,7 @@
       <td><%=rowProfiles[i].ID%></td>
       <td><%=rowProfiles[i].username%></td>
       <td><%=rowProfiles[i].password%></td>
+      <td><%=rowProfiles[i].Name%></td>
       <td><a href="/profiles/edit/<%=rowProfiles[i].ID%>"> Edit </td>
       <td><a href="/profiles/delete/<%=rowProfiles[i].ID%>"> Delete </td>
       </tr>
@@ -27,6 +29,11 @@
       <td></td>
       <td><input type="text" name="username" value=""></td>
       <td><input type="password" name="password" value=""></td>
+      <td><select name="contactsID">
+        <%for(let i=0;i<rowContacts.length;i++){%>
+        <option value="<%=rowContacts[i].ID%>"><%=rowContacts[i].Name%></option>
+        <%}%>
+      </select></td>
       <td> <input type="submit" name="" value="Submit!"></td>
     </form>
     </tr>

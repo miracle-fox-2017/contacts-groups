@@ -3,10 +3,11 @@ const router = express.Router();
 
 //require FILE models
 const Profile = require('../models/profile');
+const Contact= require('../models/contact')
 
 
 
-// //Menampilkan semua data profiles
+// // Menampilkan semua data profiles
 // router.get('/profiles',function(req,res){
 //   Profile.findAll(function(rowProfiles){
 //     res.render('profiles',{rowProfiles})
@@ -15,7 +16,9 @@ const Profile = require('../models/profile');
 //Menampilkan semua data profiles
 router.get('/profiles',function(req,res){
   Profile.findAllwithContact(function(rowProfiles){
-    res.render('profiles',{rowProfiles})
+    Contact.findAll(function(rowContacts){
+      res.render('profiles',{rowProfiles,rowContacts})
+    })
   })
 })
 // Menerima data form untuk input profile
@@ -26,7 +29,9 @@ router.post('/profiles',function(req,res){
 //Menampilkan data profile spesifik untuk diubah
 router.get('/profiles/edit/:id',function(req,res){
   Profile.findProfile(req.params.id,function(rowProfiles){
-    res.render('editprofiles',{rowProfiles})
+    Contact.findAll(function(rowContacts){
+    res.render('editprofiles',{rowProfiles,rowContacts})
+    })
   })
 })
 //Menerima data form untuk update profile

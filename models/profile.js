@@ -9,13 +9,18 @@ class Profile{
   //   })
   // }
   static findAllwithContact(callback){
-    db.all(`SELECT Profiles.ID,Profiles.username,Profiles.password, Contacts.Name FROM Profiles INNER JOIN Contacts ON Profiles.id_contact=Contacts.ID`, function(err, rowProfiles){
+    // console.log(rowProfiles);
+    db.all(`SELECT Profiles.ID,Profiles.username,Profiles.password, Contacts.Name FROM Profiles INNER JOIN Contacts ON Profiles.id_contact = Contacts.ID`, function(err, rowProfiles){
+      if(!err){
       callback(rowProfiles)
+    }else{
+        console.log(err)
+      }
     } );
   }
   static inputProfile(request){
-    db.run(`INSERT INTO Profiles(username, password)
-    VALUES ('${request.username}','${request.password}')` );
+    db.run(`INSERT INTO Profiles(username, password, id_contact)
+    VALUES ('${request.username}','${request.password}',${request.contactsID})` );
   }
   static findProfile(requestparams,callback){
     db.each(`SELECT * FROM Profiles WHERE id = ${requestparams}`, function(err,rowProfiles){

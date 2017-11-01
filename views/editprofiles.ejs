@@ -6,8 +6,13 @@
   </head>
   <body>
     <form class="" action="/profiles/edit/<%=rowProfiles.ID%>" method="post">
-      <td>City <input type="text" name="city" value="<%=rowProfiles.username%>"></td>
-      <td>Street <input type="text" name="street" value="<%=rowProfiles.password%>"></td>
+      <td>Username <input type="text" name="Username" value="<%=rowProfiles.username%>"></td>
+      <td>Password <input type="text" name="Password" value="<%=rowProfiles.password%>"></td>
+      <td><select name="contactsID">
+        <%for(let i=0;i<rowContacts.length;i++){%>
+        <option value="<%=rowContacts[i].ID%>"><%=rowContacts[i].Name%></option>
+        <%}%>
+      </select></td>
       <td> <input type="submit" value="Submit Edit!"></td>
   </body>
 </html>

@@ -98,6 +98,46 @@ app.get('/groups/delete/:id', function (req, res) {
    res.redirect('/groups')
 })
 
+//ADRESSESS
+
+app.get('/addresses', function(req, res) {
+  let queryAddresses = `SELECT * FROM Addresses`
+  db.all(queryAddresses, function(err, rowAddresses){
+    res.render('addresses',{rowAddresses})
+  })
+})
+
+app.post('/addresses', function (req, res) {
+  let addressesStreet = req.body.street;
+  let addressesCity = req.body.city;
+  let addressesZipcode = req.body.zipcode;
+    db.run(`INSERT INTO Addresses (street,city,zipcode) VALUES('${addressesStreet}','${addressesCity}','${addressesZipcode}')`);
+      res.redirect('/addresses');
+})
+
+app.get('/addresses/edit/:id', function (req, res) {
+  let getEdit = `SELECT * FROM Addresses WHERE id = ${req.params.id}`
+  db.all(getEdit, function(err, rowAddresses) {
+    res.render('editAddresses',{rowAddresses})
+  })
+})
+
+app.post('/addresses/edit/:id', function (req, res) {
+  let id = req.params.id;
+  let addressesStreet = req.body.street;
+  let addressesCity = req.body.city;
+  let addressesZipcode = req.body.zipcode;
+  db.run(`UPDATE Addresses
+    SET street = '${addressesStreet}', city = '${addressesCity}', zipcode = '${addressesZipcode}' WHERE id = "${id}"`)
+    res.redirect('/addresses')
+})
+
+app.get('/addresses/delete/:id', function (req, res) {
+  db.run(`DELETE FROM Addresses
+   WHERE id = ${req.params.id}`);
+   res.redirect('/addresses')
+})
+
 app.listen(3000, function () {
   console.log('Example app listening on port 3000!')
 })

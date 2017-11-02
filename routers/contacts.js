@@ -9,32 +9,30 @@ const Addresses = require('../models/addresses')
 const db = new sqlite3.Database('database.db')
 
 router.get('/', (req, res) => {
-  // Contact.findAll((err, contacts) => {
-  //   Groups.findAll((err, groupsname) => {
-  //     ContactGroup.findAllwithGroup(contacts, (err, contactsgroup) => {
-  //       res.render('contacts', {data: contactsgroup, groupsname: groupsname, error:''})
-  //     })
-  //   })
-  // })
-  ContactGroup.findAllwithGroup().then((group) => {
-    res.send(group)
+  Contact.findAll().then((contacts) => {
+    Groups.findAll().then((groupsname) => {
+      ContactGroup.findAllwithGroup(contacts).then((contactsgroup) => {
+        res.render('contacts', {data: contactsgroup, groupsname: groupsname, error:''})
+      })
+    })
   })
 })
 
 router.post('/', (req, res) => {
   if(req.body.name == "") {
-    Contact.findAll((err, contacts) => {
-      Groups.findAll((err, groupsname) => {
-        ContactGroup.findAllwithGroup(contacts, (err, contactsgroup) => {
-          res.render('contacts', {data: contactsgroup, groupsname: groupsname, error:'nama tidak boleh kosong'})
+    Contact.findAll().then((contacts) => {
+      Groups.findAll().then((groupsname) => {
+        ContactGroup.findAllwithGroup(contacts).then((contactsgroup) => {
+          res.render('contacts', {data: contactsgroup, groupsname: groupsname, error:'nama isi dulu'})
         })
       })
     })
   }
   else {
-    Contact.create(req.body, (err, last) => {
-      ContactGroup.create(last, req.body)
-      res.redirect('/contacts')
+    Contact.create(req.body).then((last) => {
+      ContactGroup.create(last, req.body).then(() => {
+        res.redirect('/contacts')
+      })
     })
   }
 })

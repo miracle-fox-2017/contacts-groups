@@ -8,8 +8,8 @@ const router = express.Router()
 const db = new sqlite3.Database('database.db')
 
 router.get('/', (req, res) => {
-  Groups.findAll((err, groups) => {
-    ContactGroup.findAllwithContact(groups, (group) => {
+  Groups.findAll().then((groups) => {
+    ContactGroup.findAllwithContact(groups).then((group) => {
       res.render('groups', {data: group})
     })
   })

@@ -4,11 +4,19 @@ const Contact = require('./addresses')
 
 class Group {
 
-  static findAll(callback) {
-    db.all(`SELECT * FROM Groups`, (err, groups) => {
-      callback(err, groups)
+  static findAll() {
+    return new Promise((resolve, reject) => {
+      db.all(`SELECT * FROM Groups`, (err, groups) => {
+        if(!err) {
+          resolve(groups)
+        }
+        else {
+          reject(err)
+        }
+      })
     })
   }
+
 
   static findByid(id) {
     return new Promise((resolve, reject) => {

@@ -30,11 +30,29 @@ class Contact {
     })
   }
 
-  static create(body, callback) {
-    db.run(`INSERT INTO Contacts (name, company, telp_number, email) VALUES ('${body.name}', '${body.company}', '${body.telp_number}', '${body.email}')`, function(err) {
-      callback(err, this.lastID)
+  static create(body) {
+    // return new Promise((resolve, reject) => {
+    //   db.run(`INSERT INTO Contacts (name, company, telp_number, email) VALUES ('${body.name}', '${body.company}', '${body.telp_number}', '${body.email}')`, function(err) {
+    //     if(!err) {
+    //       resolve(this.lastID)
+    //     }
+    //     else {
+    //       reject(err)
+    //     }
+    //   })
+    // })
+    return new Promise(function(resolve, reject) {
+      db.run(`INSERT INTO Contacts (name, company, telp_number, email) VALUES ('${body.name}', '${body.company}', '${body.telp_number}', '${body.email}')`, function(err) {
+        if(!err) {
+          resolve(this.lastID)
+        }
+        else {
+          reject(err)
+        }
+      })
     })
   }
+
 
   static remove(id) {
     return new Promise((resolve, reject) => {

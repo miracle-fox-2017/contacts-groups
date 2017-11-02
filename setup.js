@@ -19,5 +19,9 @@ db.serialize( () => {
           street VARCHAR(150),
           city VARCHAR(30),
           zipcode INTEGER)`);
+
+  // db.run(`ALTER TABLE Profiles ADD COLUMN Contacts_id INTEGER REFERENCES Contacts(id)`)
+  db.run(`CREATE UNIQUE INDEX IF NOT EXISTS idContacts ON profiles(Contacts_id)`)
+
 });
   db.close();

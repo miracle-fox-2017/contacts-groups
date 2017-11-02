@@ -10,12 +10,16 @@
         <td> <strong> ID </strong> </td>
         <td> <strong> Username </strong> </td>
         <td> <strong> Password </strong> </td>
+        <td> <strong> Contacts_id </strong> </td>
+        <td> <strong> Name </strong> </td>
       </tr>
-    <%rowsProfiles.forEach(function(list){%>
+    <%dataProfile.forEach(function(list){%>
       <tr>
         <td> <%= list.id %> </td>
         <td> <%= list.username %> </td>
         <td> <%= list.password %> </td>
+        <td> <%= list.Contacts_id %> </td>
+        <td> <%= list.name %> </td>
         <td> <a href="/profiles/edit/<%= list.id %>" > Edit </td>
         <td> <a href="/profiles/delete/<%= list.id %>" > Delete </td>
       </tr>
@@ -25,7 +29,13 @@
     <form class="" action="/profiles" method="post">
       Username <br> <input type="text" name="username"> <br>
       Password <br> <input type="password" name="password"><br>
+      <select name="contact">
+        <% dataContact.forEach(function(listContact){ %>
+          <option value="<%= listContact.id%>"> <%= listContact.name %> </option>
+        <%})%>
+      </select>
       <input type="submit" value="Send"><br>
     </form>
+
   </body>
 </html>

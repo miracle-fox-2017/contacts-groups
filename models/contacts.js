@@ -5,18 +5,20 @@ class Contact{
   static findAll(callBack){
     let queryContacts = `SELECT * FROM Contacts`
     db.all(queryContacts, function(err, rowsContacts){
-      callBack(rowsContacts)
+      callBack(err, rowsContacts)
     })
   }
 
-  static addContact(body){
+  static addContact(body, callBack){
     let name = body.name
     let company = body.company
     let telp = body.telp
     let email = body.email
     let queryPostContacts = `INSERT INTO contacts(name, company, telp, email)
                             VALUES('${name}', '${company}', '${telp}', '${email}')`
-    db.run(queryPostContacts)
+    db.run(queryPostContacts, err =>{
+      callBack(queryPostContacts, err)
+    })
   }
 
   static formEditContact(params, callBack){

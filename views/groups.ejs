@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Groups page</title>
+  </head>
+  <body>
+    <table>
+      <tr>
+        <form action="/groups" method="post">
+          <td><input type="text" name="groups" placeholder="ADD GROUP"></td>
+          <td><button type="submit">ADD</button></td>
+        </form>
+      </tr>
+    </table>
+    <table border="1">
+      <tr>
+        <th>ID</th>
+        <th>NAME_OF_GROUP</th>
+      </tr>
+      <% for(let i = 0;i<rows.length;i++) {%>
+        <tr>
+          <td><%=rows[i].id%></td>
+          <td><%=rows[i].name_of_group%></td>
+          <td><a href="/groups/delete/<%= rows[i].id %>">delete</a></td>
+          <td><a href="/groups/edit/<%= rows[i].id %>">edit</a></td>
+        </tr>
+      <%}%>
+    </table>
+  </body>
+</html>

@@ -37,7 +37,7 @@
             <td> <%= el.company %> </td>
             <td> <%= el.telp_number %> </td>
             <td> <%= el.email %> </td>
-            <td><a href="/addresses_with_contact">view</a>
+            <td><a href="/addresses_with_contact/<%=el.id%>">view</a>
             <td><a href="/contacts/edit/<%=el.id%>">edit</a>
                 <a href="/contacts/delete/<%=el.id%>">delete</a>
             </td>

@@ -41,7 +41,7 @@
         <% i++ })%>
       </tr>
     </table>
-      <% if (isEdit === false) {%>
+      <% if (isEdit === false ) {%>
       <form action="/profiles" method="post">
         Username:<br>
         <input type="text" name="username" required/>
@@ -78,8 +78,9 @@
             <% }) %>
           </select>
           <br>
-          <input type="submit" value="EDIT">
+          <button>SEARCH</button>
         </form>
         <%}%>
+        <h5><%= errMess %></h5>
   </body>
 </html>

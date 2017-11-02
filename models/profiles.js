@@ -11,7 +11,7 @@ class Profile{
         if(!err){
           resolve(profilesRows)
         }else{
-          reject(err)
+          reject(err,profilesRows)
         }
       })
     })

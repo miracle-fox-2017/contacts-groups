@@ -12,6 +12,8 @@
               <th><b>Id</b></th>
               <th><b>Username</b></th>
               <th><b>Password</b></th>
+              <th><b>Contact_Id</b></th>
+              <th><b>Name</b></th>
             </thead>
 
             <tbody style = "font-size : 10pt">
@@ -20,6 +22,8 @@
                   <td><%= rowProfiles[i].id %></td>
                   <td><%= rowProfiles[i].username %></td>
                   <td><%= rowProfiles[i].password %></td>
+                  <td><%= rowProfiles[i].Contacts_id %></td>
+                  <td><%= rowProfiles[i].name %></td>
                   <td><a href = "/profiles/edit/<%= rowProfiles[i].id %>">EDIT</a></td>
                   <td><a href = "/profiles/delete/<%= rowProfiles[i].id %>">DELETE</a></td>
               </tr>
@@ -40,10 +44,21 @@
             <tr>
               <td width = "200px" style = "font-size : 10pt"><b>Password</b></td> <td width = "10px">:</td> <td><input type= "text" name= "password"></td>
             </tr>
+          </table>
 
+          <table border = "0">
             <tr>
               <td width = "200px" style = "font-size : 10pt"></td><td></td><td><input type= "submit" value = "Submit"></td>
+
+              <td width = "200px" style = "font-size : 10pt">
+                <select name ="contact">
+                <% for (var i = 0 ; i < rowContacts.length ; i++) { %>
+                  <option value ="<%= rowContacts[i].id %>"><%= rowContacts[i].name %></option>
+                <%}%>
+                </select>
+              </td>
             </tr>
+          </table>
           </form>
       </fieldset>
       </div>

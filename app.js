@@ -24,16 +24,26 @@ app.get('/contacts', function (req, res) {
   })
 })
 
+app.get('/contacts/edit/:id', function (req, res) {
+  let getEdit = `SELECT * FROM Contacts WHERE id = ${req.params.id}`
+  db.all(getEdit, function(err, rowContacts) {
+    res.render('editContacts',{rowContacts})
+  })
+})
+
 app.post('/contacts/edit/:id', function (req, res) {
   let id = req.params.id;
   let name = req.body.name
   let company = req.body.company;
   let telepon = req.body.telp;
   let email = req.body.email;
-
-  db.run(`UPDATE Contacts
-    SET name = '${name}', company = '${company}', telp = '${telepon}', email = '${email}' WHERE id = "${id}"`)
-    res.redirect('/contacts')
+  if(name === '') {
+    res.send('Name Must Be Filled')
+  } else {
+    db.run(`UPDATE Contacts
+      SET name = '${name}', company = '${company}', telp = '${telepon}', email = '${email}' WHERE id = "${id}"`)
+          res.redirect('/contacts')
+  }
 })
 
 app.get('/contacts/delete/:id', function (req, res) {
@@ -47,10 +57,15 @@ app.post('/contacts',function (req, res) {
   let company = req.body.company;
   let telepon = req.body.telp;
   let email = req.body.email;
+
+  if(name === "") {
+    res.send('Name Must Be Filled')
+  } else {
     db.run(`INSERT INTO Contacts
       (name,company,telp,email)
       VALUES('${name}','${company}','${telepon}','${email}')`);
       res.redirect('/contacts')
+    }
 })
 
 // GROUPPP
@@ -133,22 +148,42 @@ app.get('/addresses/delete/:id', function (req, res) {
 
 app.get('/profiles', function (req, res) {
   let queryProfile = `SELECT * FROM Profile`
-  db.all(queryProfile, function(err, rowProfiles) {
-    res.render('profiles', {rowProfiles})
+  let queryJoin = `SELECT Profile.*, Contacts.name FROM Profile LEFT JOIN Contacts ON Profile.Contacts_id = Contacts.id `
+  let queryGetContact = `SELECT * FROM Contacts`
+  db.all(queryJoin, function(err, rowProfiles) {
+    if(err) {
+        res.send(err)
+    } else {
+        db.all(queryGetContact, function(err, rowContacts) {
+          res.render('profiles', {rowProfiles: rowProfiles, rowContacts: rowContacts})
+        })
+    }
   })
 })
 
+
 app.post('/profiles', function (req, res) {
+  // console.log(req.body);
   let profileUsername = req.body.username;
   let profilePassword = req.body.password;
-  db.run(`INSERT INTO Profile (username,password) VALUES('${profileUsername}','${profilePassword}')`);
-  res.redirect('/profiles');
+  let contactId = req.body.contact
+  db.run(`INSERT INTO Profile (username,password,Contacts_id) VALUES('${profileUsername}','${profilePassword}','${contactId}')`, function(err) {
+    if(err) {
+      res.send('Your contact already have profile');
+    } else {
+      res.redirect('/profiles');
+    }
+  });
+
 })
 
 app.get('/profiles/edit/:id', function (req, res) {
-  let getEdit = `SELECT * FROM Profile WHERE id = ${req.params.id}`
+  let getEdit = `SELECT * FROM Profile WHERE id = ${req.params.id}`;
+  let queryContact = `SELECT id,name FROM Contacts`;
   db.all(getEdit, function(err, rowProfiles) {
-    res.render('editProfiles',{rowProfiles})
+      db.all(queryContact, function(err, rowContacts) {
+            res.render('editProfiles',{rowProfiles:rowProfiles, rowContacts:rowContacts})
+      })
   })
 })
 
@@ -156,9 +191,15 @@ app.post('/profiles/edit/:id', function (req, res) {
   let id = req.params.id;
   let profileUsername = req.body.username;
   let profilePassword = req.body.password;
+  let contactId = req.body.Contacts_id;
   db.run(`UPDATE Profile
-    SET username = '${profileUsername}', password = '${profilePassword}' WHERE id = "${id}"`)
-    res.redirect('/profiles')
+    SET username = '${profileUsername}', password = '${profilePassword}', Contacts_id = '${contactId}' WHERE id = "${id}"`, function(err) {
+      if(err) {
+        res.send('Your contact already have profile');
+      } else {
+        res.redirect('/profiles')
+      }
+    })
 })
 
 app.get('/profiles/delete/:id', function (req, res) {

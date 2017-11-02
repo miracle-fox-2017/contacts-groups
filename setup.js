@@ -9,6 +9,12 @@ db.serialize(function() {
   db.run(`CREATE TABLE IF NOT EXISTS Profile(id INTEGER PRIMARY KEY AUTOINCREMENT, username VARCHAR(50), password VARCHAR(20))`)
 
   db.run(`CREATE TABLE IF NOT EXISTS Addresses(id INTEGER PRIMARY KEY AUTOINCREMENT, street VARCHAR(40), city VARCHAR(20), zipcode INTEGER)`)
-});
 
+  // db.run(`ALTER TABLE Profile ADD COLUMN Contacts_id INTEGER REFERENCES Contacts(id)`)
+
+  //  db.run(`ALTER TABLE Addresses ADD COLUMN contacts_id INTEGER REFERENCES Contacts(id)`)
+
+  // db.run(`CREATE UNIQUE INDEX IF NOT EXISTS kontakAlamat_unik ON Profile(Contacts_id) `)
+
+});
 db.close();

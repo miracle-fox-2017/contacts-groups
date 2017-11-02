@@ -3,18 +3,41 @@
   <head>
     <meta charset="utf-8">
     <title>HALAMAN EDIT Profiles</title>
+    <style type="text/css">
+      a {
+        text-decoration: none;
+        color: black;
+      }
+
+      a:hover {
+        color: brown;
+      }
+
+    </style>
   </head>
   <body>
       <fieldset>
         <legend><b>Silahkan Edit Data Profiles</b></legend>
           <form action="/profiles/edit/<%= rowProfiles[0].id %>" method="post">
-            <table border = "1">
+            <table border = "0">
               <tr>
                 <td><input type="text" name = "username" value="<%= rowProfiles[0].username %>"></td>
                 <td><input type="text" name = "password" value="<%= rowProfiles[0].password %>"></td>
                 <td><button><a href = "/profiles" %>>EDIT</a></button</td>
+
+                <td>
+                  <select name ="Contacts_id">
+                    <% for(var i = 0 ; i < rowContacts.length ; i++)  { %>
+                      <% if(rowProfiles[0].Contacts_id === rowContacts[i].id) { %>
+                          <option value = "<%= rowContacts[i].id %>" selected><%= rowContacts[i].name %></option>
+                      <%} else {%>
+                        <option value = "<%= rowContacts[i].id %>"><%= rowContacts[i].name %></option>
+                    <%}}%>
+                  </select>
+                </td>
               </tr>
             </table>
+
           </form>
       </fieldset>
   </body>

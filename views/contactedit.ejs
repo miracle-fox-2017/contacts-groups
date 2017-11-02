@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<% console.log(rows) %>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Edit <%= rows.name %></title>
+  </head>
+  <body>
+    <table>
+      <tr>
+      <form class="" action="/contacts/edit/ <%= rows.id %>" method="post">
+        <td>Name <input type="text" name="name" value="<%= rows.name %>"></td>
+        <td>Company <input type="text" name="company" value="<%= rows.company %>"></td>
+        <td>Phone Number <input type="text" name="telp_number" value="<%= rows.telp_number %>"></td>
+        <td>Email <input type="text" name="email" value="<%= rows.email %>"></td>
+        <td><input type="submit" value="Submit"></td>
+      </form>
+      </tr>
+    </table>
+  </body>
+</html>

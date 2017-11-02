@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <% include ../partial/head.ejs %>
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="two-third column" style="margin-top: 10%; margin-bottom: 10%">
+          <h2><%= title %></h2>
+          <p>Express Contacts Groups</p>
+          <% include ../partial/menu.ejs %>
+          <form action="/groups/add" method="post">
+            <div class="row">
+              <div class="four columns">
+                <input class="u-full-width" placeholder="Group Name" name="name_of_group" type="text">
+              </div>
+            </div>
+            <input class="button-primary" value="Submit" type="submit">
+          </form>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

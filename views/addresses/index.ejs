@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+  <% include ../partial/head.ejs %>
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="two-third column" style="margin-top: 10%; margin-bottom: 10%">
+          <h2><%= title %></h2>
+          <p>Express Contacts Groups</p>
+          <% include ../partial/menu.ejs %>
+          <table class="u-full-width">
+            <thead>
+              <tr>
+                <th>No</th>
+                <th>Id</th>
+                <th>Street</th>
+                <th>City</th>
+                <th>Zipcode</th>
+                <th>Name</th>
+                <th>Option</th>
+              </tr>
+            </thead>
+            <tbody>
+              <%addresses.forEach((address,i) => {%>
+                <tr>
+                  <td><%=i+1%></td>
+                  <td><%=address.id%></td>
+                  <td><%=address.street%></td>
+                  <td><%=address.city%></td>
+                  <td><%=address.zipcode%></td>
+                  <td><%=address.name%></td>
+                  <td>
+                    <a href="/addresses/edit/<%=address.id%>"><code>Edit</code></a>
+                    <a href="/addresses/delete/<%=address.id%>"><code>Delete</code></a>
+                  </td>
+                </tr>
+              <%})%>
+            </tbody>
+          </table>
+          <a class="button button-primary" href="/addresses/add">+ Add Address</a>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

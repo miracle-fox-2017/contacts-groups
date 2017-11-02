@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <% include ../partial/head.ejs %>
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="two-third column" style="margin-top: 10%; margin-bottom: 10%">
+          <h2><%= title %></h2>
+          <p>Express Contacts Groups</p>
+          <% include ../partial/menu.ejs %>
+          <form action="/addresses/add" method="post">
+            <div class="row">
+              <div class="four columns">
+                <input class="u-full-width" placeholder="Street" name="street" type="text">
+                <input class="u-full-width" placeholder="City" name="city" type="text">
+                <input class="u-full-width" placeholder="Zipcode" name="zipcode" type="text">
+                <label>Select Contact :</label>
+                <select class="u-full-width" name="contact_id">
+                  <%contacts.forEach(contact => {%>
+                    <option value="<%=contact.id%>"><%=contact.name%></option>
+                  <%})%>
+                </select>
+              </div>
+            </div>
+            <input class="button-primary" value="Submit" type="submit">
+          </form>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

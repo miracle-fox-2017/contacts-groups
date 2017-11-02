@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <% include ../partial/head.ejs %>
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="two-third column" style="margin-top: 10%; margin-bottom: 10%">
+          <h2><%= title %></h2>
+          <p>Express Contacts Groups</p>
+          <% include ../partial/menu.ejs %>
+          <table class="u-full-width">
+            <thead>
+              <tr>
+                <th>No</th>
+                <th>Id</th>
+                <th>Street</th>
+                <th>City</th>
+                <th>Zipcode</th>
+                <th>Name</th>
+                <th>Company</th>
+              </tr>
+            </thead>
+            <tbody>
+              <%addresses.forEach((address,i) => {%>
+                <tr>
+                  <td><%=i+1%></td>
+                  <td><%=address.id%></td>
+                  <td><%=address.street%></td>
+                  <td><%=address.city%></td>
+                  <td><%=address.zipcode%></td>
+                  <td><%=address.name%></td>
+                  <td><%=address.company%></td>
+                </tr>
+              <%})%>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

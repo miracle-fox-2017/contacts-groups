@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <% include ../partial/head.ejs %>
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="two-third column" style="margin-top: 10%; margin-bottom: 10%">
+          <h2><%= title %></h2>
+          <p>Express Contacts Groups</p>
+          <% include ../partial/menu.ejs %>
+          <form action="/contacts/add" method="post">
+            <div class="row">
+              <div class="four columns">
+                <label style="color:red;"><%=err%></label>
+                <input class="u-full-width" placeholder="Full Name" name="name" type="text">
+                <input class="u-full-width" placeholder="Company" name="company" type="text">
+                <input class="u-full-width" placeholder="Phone Number" name="telp_number" type="text">
+                <input class="u-full-width" placeholder="Email" name="email" type="email">
+                <label>Select Group :</label>
+                <select class="u-full-width" name="group_id">
+                  <%groups.forEach(group => {%>
+                    <option value="<%=group.id%>"><%=group.name_of_group%></option>
+                  <%})%>
+                </select>
+              </div>
+            </div>
+            <input class="button-primary" value="Submit" type="submit">
+          </form>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,10 @@
+alter table set nique
+ **create index**
+many to many
+ //contacts
+ select contacts ==> dapat id yang banyak
+  //didalam scope
+  selct conjunction dimana id_contact yang di conjunction === id contact yang telahdi select
+  left join dengan groups on ID_GROUPS === ID GROUPS
+
+  MANIPULASI OBJEK

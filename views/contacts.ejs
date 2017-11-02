@@ -1,0 +1,83 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+    table {
+      font-family: arial, sans-serif;
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    td, th {
+      border: 1px solid #dddddd;
+      text-align: left;
+      padding: 8px;
+    }
+    </style>
+    <meta charset="utf-8">
+    <title>CONTACTS</title>
+  </head>
+  <body>
+    <table>
+      <tr>
+        <th>No</th>
+        <th>Nama</th>
+        <th>Company</th>
+        <th>Phone Number</th>
+        <th>Email</th>
+        <th>Address</th>
+        <th>Action</th>
+      </tr>
+        <% let i = 1 %>
+      <% contactsRows.forEach(function(el){%>
+          <tr>
+            <td> <%= i %> </td>
+            <td> <%= el.name %> </td>
+            <td> <%= el.company %> </td>
+            <td> <%= el.telp_number %> </td>
+            <td> <%= el.email %> </td>
+            <td><a href="/addresses_with_contact/<%=el.id%>">view</a>
+            <td><a href="/contacts/edit/<%=el.id%>">edit</a>
+                <a href="/contacts/delete/<%=el.id%>">delete</a>
+            </td>
+          </tr>
+        <% i++ })%>
+      </tr>
+    </table>
+      <% if (isEdit === false) {%>
+      <form action="/contacts" method="post">
+        Name:<br>
+        <input type="text" name="name" required/>
+        <br>
+        Company:<br>
+        <input type="text" name="company" required=true/>
+        <br>
+        Phone Number:<br>
+        <input type="text" name="telp_number" required=true/>
+        <br>
+        Email:<br>
+        <input type="text" name="email" required=true/>
+        <br><br>
+        <input type="submit" value="ADD">
+      </form>
+      <%}%>
+      <% if (isEdit === true) {%>
+        <form action="/contacts/edit/<%=contactsRows[0].id%>" method="post">
+          Name:<br>
+          <input type="text" name="name" value="<%=contactsRows[0].name%>" required/>
+          <br>
+          Company:<br>
+          <input type="text" name="company" value="<%=contactsRows[0].company%>" required=true/>
+          <br>
+          Phone Number:<br>
+          <input type="text" name="telp_number" value="<%=contactsRows[0].telp_number%>" required=true/>
+          <br>
+          Email:<br>
+          <input type="text" name="email" value="<%=contactsRows[0].email%>" required=true/>
+          <br><br>
+          <input type="submit" value="EDIT">
+        </form>
+        <%}%>
+  </body>
+</html>

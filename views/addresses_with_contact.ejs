@@ -1,0 +1,44 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+    table {
+      font-family: arial, sans-serif;
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    td, th {
+      border: 1px solid #dddddd;
+      text-align: left;
+      padding: 8px;
+    }
+    </style>
+    <meta charset="utf-8">
+    <title>CONTACTS</title>
+  </head>
+  <body>
+    <table>
+      <tr>
+        <th>No</th>
+        <th>Street</th>
+        <th>City</th>
+        <th>Zipcode</th>
+        <th>Name</th>
+        <th>Company</th>
+      </tr>
+        <% let i = 1 %>
+      <% addresses_with_contactRows.forEach(function(el){%>
+          <tr>
+            <td> <%= i %> </td>
+            <td> <%= el.street %> </td>
+            <td> <%= el.city %> </td>
+            <td> <%= el.zipcode %> </td>
+            <td> <%= el.name %> </td>
+            <td> <%= el.company %> </td>
+          </tr>
+        <% i++ })%>
+      </tr>
+  </body>
+</html>

@@ -1,0 +1,86 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+    table {
+      font-family: arial, sans-serif;
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    td, th {
+      border: 1px solid #dddddd;
+      text-align: left;
+      padding: 8px;
+    }
+    </style>
+    <meta charset="utf-8">
+    <title>CONTACTS</title>
+  </head>
+  <body>
+    <table>
+      <tr>
+        <th>No</th>
+        <th>Username</th>
+        <th>Password</th>
+        <th>Contact Name</th>
+        <th>Action</th>
+      </tr>
+        <% let i = 1 %>
+      <% profilesRows.forEach(function(el){%>
+          <tr>
+            <td> <%= i %> </td>
+            <td> <%= el.username %> </td>
+            <td> <%= el.password %> </td>
+            <td> <%= el.name%> </td>
+            <td><a href="/profiles/edit/<%=el.id%>">edit</a>
+                <a href="/profiles/delete/<%=el.id%>">delete</a>
+            </td>
+          </tr>
+        <% i++ })%>
+      </tr>
+    </table>
+      <% if (isEdit === false ) {%>
+      <form action="/profiles" method="post">
+        Username:<br>
+        <input type="text" name="username" required/>
+        <br>
+        Password:<br>
+        <input type="text" name="password" required=true/>
+        <br>
+        <select name="contact" required=true>
+          <option value="">--select contact--</option>
+          <% contactsRows.forEach(function(eq){%>
+              <option value="<%=eq.id%>"><%=eq.name %></option>
+            <%})%>
+        </select>
+        <br>
+        <input type="submit" value="ADD">
+      </form>
+      <%}%>
+      <% if (isEdit === true) {%>
+        <form action="/profiles/edit/<%=profilesRows[0].id%>" method="post">
+          Username:<br>
+          <input type="text" name="username" value="<%=profilesRows[0].username%>" required/>
+          <br>
+          Password:<br>
+          <input type="text" name="password" value="<%=profilesRows[0].password%>" required=true/>
+          <br>
+          <select name="contact" required=true>
+            <option value="">--select contact--</option>
+            <% contactsRows.forEach(function(eq){
+              if(eq.id===profilesRows[0].contacts_id){%>
+                <option value="<%=eq.id%>" selected><%=eq.name %></option>
+              <%}else{%>
+                <option value="<%=eq.id%>"><%=eq.name %></option>
+              <%}%>
+            <% }) %>
+          </select>
+          <br>
+          <button>SEARCH</button>
+        </form>
+        <%}%>
+        <h5><%= errMess %></h5>
+  </body>
+</html>

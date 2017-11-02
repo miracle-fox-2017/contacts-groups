@@ -9,14 +9,16 @@
       width: 100%;
     }
 
-    th {
-      background-color: white;
-    }
     td, th {
-      /* border: 0.1px solid #817b7b; */
+      border: 1px solid #dddddd;
       text-align: left;
-      padding: 7px;
+      padding: 5px;
     }
+
+    th {
+      background-color: lightseagreen;
+    }
+    
     </style>
     <meta charset="utf-8">
     <title>Groups</title>
@@ -25,38 +27,33 @@
     <table>
       <tr>
         <th>No</th>
-        <th>Name</th>
-        <th>contacts</th>
-        <th>Involved</th>
+        <th>Name Group</th>
         <th>Action</th>
       </tr>
         <% let i = 1 %>
-      <% rowGroups.forEach(function(row){%>
+      <% dataGroup.forEach(function(rows){%>
           <tr>
             <td> <%= i %> </td>
-            <td> <%= row.name_of_group %> </td>
-            <td> <%= row.contacts %> </td>
-            <td> <%= row.Involved %> </td>
-            <td> <%= row.Action %> </td>
-            <td><a href="/groups/edit/<%=row.id%>">edit || </a>
-                <a href="/groups/delete/<%=row.id%>">delete ||</a>
+            <td> <%= rows.name_of_group %> </td>
+            <td><a href="/groups/edit/<%=rows.id%>">edit</a>
+                <a href="/groups/delete/<%=rows.id%>">delete</a>
             </td>
           </tr>
         <% i++ })%>
       </tr>
     </table>
     <br>
-      <%if(edit === false) {%>
-      <form action="/groups" method="post">      
-        <td><input type="text" name="name_of_group" required size="23" placeholder="name"></td> &nbsp;
-        <input type="submit" value="ADD" align="right">
-      </form>
+      <% if (isEdit === false) {%>
+        <form action="/groups" method="post">      
+          <td><input type="text" name="name_of_group" required size="23" placeholder="name"></td> &nbsp;
+          <input type="submit" value="ADD" align="right">
+        </form>
       <%}%>
-      <% if (edit === true) {%>
-        <form action="/groups/edit/<%=rowGroups[0].id%>" method="post">
-          <td><input type="text" name="name_of_group" value="<%=rowGroups[0].name_of_group%>" required size="23" placeholder="name"></td> &nbsp;
+      <% if (isEdit === true) {%>
+        <form action="/groups/edit/<%=dataGroup[0].id%>" method="post">
+          <td><input type="text" name="name_of_group" value="<%=dataGroup[0].name_of_group%>" required size="23" placeholder="name"></td>
           <input type="submit" value="EDIT" align="right">
         </form>
         <%}%>
   </body>
-
+</html>

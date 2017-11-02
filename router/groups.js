@@ -1,56 +1,54 @@
-
 const express = require('express');
 const router = express.Router();
 
-const Groups = require('../models/groups')
-
-
+const Group = require('../models/groups')
+//menampilkan groups
 router.get('/groups',function(req,res){
-  let edit = false;
-  Groups.findAll(function(err,rowGroups){
-    if(!err){
-      res.render('groups',{rowGroups, edit})
-    }
+  let isEdit = false
+  Group.findAll().then((dataGroup)=>{
+    res.render('groups',{dataGroup, isEdit})
+  }).catch((err)=>{
+    console.log(err)
   })
 })
-
+//menambahkan groups
 router.post('/groups',function(req,res){
-  let edit = false;
+  let isEdit = false;
   let obj = {name_of_group:req.body.name_of_group}
-  Groups.create(obj,function(err,rowGroups){
-    if(!err){
-      res.redirect('groups')
-    }
+  Group.create(obj).then((dataGroup)=>{
+    res.redirect('/groups')
+  }).catch((err)=>{
+    console.log(err)
   })
 })
-
-
+//delete groups
 router.get('/groups/delete/:id',function(req,res){
-  Groups.remove(req.params.id, function() {
+  let id = req.params.id
+  Group.delete(id).then((dataGroup)=>{
     res.redirect('/groups')
-  })    
-})
-
+  }).catch((err)=>{
+    console.log(err)
+  })
+ })
+//edit groups get
 router.get('/groups/edit/:id',function(req,res){
-  let request = {params: req.params.id};
-  let edit = true;
-
-  Groups.Update(request, (err, rowGroups)=>{
-    if(err){console.log(err)}
-    console.log(rowGroups);
-    res.render('groups', {rowGroups:rowGroups, edit:true})
+  let isEdit = true;
+  let id = req.params.id;
+  Group.findById(id).then((dataGroup)=>{
+    res.render('groups',{dataGroup, isEdit})
+  }).catch((err)=>{
+    console.log(err)
   })
 })
-
-router.post('/groups/edit/:id', function(req,res){
-  let Obj = {
-    id : req.params.id,
-    name_of_group : req.body.name_of_group,
-  }
-  Groups.EditPost(Obj,(err,rowGroups)=>{
-    if(!err){console.log(err)}
+//edit groups post
+router.post('/groups/edit/:id',function(req,res){
+  let isEdit = true;
+  let obj = {id:req.params.id,
+             name_of_group:req.body.name_of_group}
+  Group.update(obj).then((dataGroup)=>{
     res.redirect('/groups')
+  }).catch((err)=>{
+    console.log(err)
   })
 })
-
 module.exports = router

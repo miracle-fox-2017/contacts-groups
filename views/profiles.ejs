@@ -21,28 +21,26 @@
 
     </style>
     <meta charset="utf-8">
-    <title>Address</title>
+    <title>Profiles</title>
   </head>
   <body>
     <table>
       <tr>
         <th>No</th>
-        <th>Street</th>
-        <th>City</th>
-        <th>Zipcode</th>
-        <th>Name<th>
+        <th>Username</th>
+        <th>Password</th>
+        <th>Contact Name</th>
         <th>Action</th>
       </tr>
         <% let i = 1 %>
-      <% dataAddress.forEach(function(rows){%>
+      <% dataProfile.forEach(function(rows){%>
           <tr>
             <td> <%= i %> </td>
-            <td> <%= rows.street %> </td>
-            <td> <%= rows.city %> </td>
-            <td> <%= rows.zipcode %> </td>
-            <td> <%= rows.name %> </td>
-            <td><a href="/addresses/edit/<%=rows.id%>">edit</a>
-                <a href="/addresses/delete/<%=rows.id%>">delete</a>
+            <td> <%= rows.username %> </td>
+            <td> <%= rows.password %> </td>
+            <td> <%= rows.name%> </td>
+            <td><a href="/profiles/edit/<%=rows.id%>">edit</a>
+                <a href="/profiles/delete/<%=rows.id%>">delete</a>
             </td>
           </tr>
         <% i++ })%>
@@ -50,15 +48,12 @@
     </table>
     <br>
       <% if (isEdit === false) {%>
-      <form action="/addresses" method="post">
-        Street:<br>
-        <input type="text" name="street" required/>
+      <form action="/profiles" method="post">
+        Username:<br>
+        <input type="text" name="username" required/>
         <br><br>
-        City:<br>
-        <input type="text" name="city" required=true/>
-        <br><br>
-        Zipcode:<br>
-        <input type="text" name="zipcode" required=true/>
+        Password:<br>
+        <input type="text" name="password" required=true/>
         <br><br>
         <select name="contact" required=true>
           <option value="">--select contact--</option>
@@ -71,20 +66,17 @@
       </form>
       <%}%>
       <% if (isEdit === true) {%>
-        <form action="/addresses/edit/<%=dataAddress[0].id%>" method="post">
-          Street:<br>
-          <input type="text" name="street" value="<%=dataAddress[0].street%>" required/>
+        <form action="/profiles/edit/<%=dataProfile[0].id%>" method="post">
+          Username:<br>
+          <input type="text" name="username" value="<%=dataProfile[0].username%>" required/>
           <br><br>
-          City:<br>
-          <input type="text" name="city" value="<%=dataAddress[0].city%>" required/>
-          <br><br>
-          Zipcode:<br>
-          <input type="text" name="zipcode" value="<%=dataAddress[0].zipcode%>" required/>
+          Password:<br>
+          <input type="text" name="password" value="<%=dataProfile[0].password%>" required=true/>
           <br><br>
           <select name="contact" required=true>
             <option value="">--select contact--</option>
             <% dataContact.forEach(function(rows){
-              if(rows.id===dataAddress[0].contacts_id){%>
+              if(rows.id===dataProfile[0].contacts_id){%>
                 <option value="<%=rows.id%>" selected><%=rows.name %></option>
               <%}else{%>
                 <option value="<%=rows.id%>"><%=rows.name %></option>

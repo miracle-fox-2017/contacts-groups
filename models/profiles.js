@@ -1,57 +1,79 @@
 const sqlite3 = require('sqlite3').verbose();
+const db = new sqlite3.Database('./database/data.db');
 
-class ProfilesModel {
-	constructor(file) {
-		this.tablename = 'Profile';
-		this.file = file;
-	}
 
-	getAllData(callback) {
-		let db = new sqlite3.Database(this.file);
-		let query = `SELECT * FROM ${this.tablename}`;
-		db.all(query, (err, rows) => {
-			if (err) {
-				throw err;
-			} 
-			callback(rows);
-		})
+class Profile{
+  static findAll(){
+    let query = `SELECT Profile.*,Contacts.name FROM Profile LEFT JOIN
+                  Contacts ON Contacts.id = Profile.contacts_id`;
+    return new Promise((resolve,reject)=>{
+      db.all(query,(err,dataProfile)=>{
+        if(!err){
+          resolve(dataProfile)
+        }else{
+          reject(err)
+        }
+      })
+    })
+  }
 
-		db.close();
-	}
+  static create(obj){
+    let query = `INSERT INTO Profile (username,password,contacts_id)
+                 VALUES("${obj.username}", "${obj.password}","${obj.contacts_id}")`;
+     return new Promise((resolve,reject)=>{
+     db.all(query,(err,dataProfile)=>{
+       if(!err){
+         resolve(dataProfile)
+       }else{
+         reject(err)
+       }
+      })
+    })
+  }
 
-	tamkbahData(data) {
-		let db = new sqlite3.Database(this.file);
-		let query = `INSERT INTO ${this.tablename} (username, password, contacts_id) VALUES ("${data.username}", "${data.password}", ${+data.contacts_id})`;
-		db.run(query);
-		db.close();
-	}
+  static delete(id){
+    let query = `DELETE FROM Profile
+                 WHERE id = ${id}`;
+    return new Promise((resolve,reject)=>{
+    db.all(query,(err,dataProfile)=>{
+      if(!err){
+        resolve(dataProfile)
+      }else{
+        reject(err)
+      }
+     })
+   })
+  }
 
-	updateDataById(data) {
-		let db = new sqlite3.Database(this.file);
-		let query = `UPDATE ${this.tablename} SET username = "${data.edited.username}", password = "${data.edited.password}" WHERE id = ${data.id}`;
-		db.run(query);
-		db.close();
-	}
+  static findById(id){
+    let query = `SELECT * FROM Profile where id = "${id}"`;
+    return new Promise((resolve,reject)=>{
+    db.all(query,(err,dataProfile)=>{
+      if(!err){
+        resolve(dataProfile)
+      }else{
+        reject(err)
+      }
+     })
+   })
+  }
 
-	hapusDataById(data) {
-		let db = new sqlite3.Database(this.file);
-		let query = `DELETE FROM ${this.tablename} WHERE id = ${data.id}`;
-		db.run(query);
-		db.close();
-	}
-
-	getById(data, callback) {
-		let db = new sqlite3.Database(this.file);
-		let query = `SELECT * FROM ${this.tablename} WHERE id = ${data.id}`;
-		db.get(query, (err, rows) =>{
-			if (err) {
-				throw err;
-			} 
-			callback(rows);
-		});
-		
-		db.close();
-	}
+  static update(obj){
+    let query = `UPDATE Profile
+               SET username = "${obj.username}",
+               password = "${obj.password}",
+               contacts_id = "${obj.contacts_id}"
+               WHERE id = "${obj.id}"`;
+     return new Promise((resolve,reject)=>{
+     db.all(query,(err,dataProfile)=>{
+      if(!err){
+        resolve(dataProfile)
+      }else{
+        reject(err)
+      }
+     })
+   })
+ }
 }
 
-module.exports = ProfilesModel;
+module.exports = Profile

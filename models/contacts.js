@@ -1,78 +1,78 @@
+"use strict"
 const sqlite3 = require('sqlite3').verbose();
-
 const db = new sqlite3.Database('./database/data.db');
 
+
 class Contacts{
-  static findAll(cb){
+  static findAll(){
     let query = `SELECT * FROM Contacts`;
-    db.all(query,function(err,rowContacts){
-      if(!err){
-        cb(null,rowContacts)
-      }else{
-        console.log(err)
-      }
+    return new Promise((resolve,reject)=>{
+      db.all(query,(err,dataContact)=>{
+        if(!err){
+          resolve(dataContact)
+        }else{
+          reject(err)
+        }
+      })
     })
   }
-  
-  static create(obj,cb){
+  static create(obj){
     let query = `INSERT INTO Contacts (name,company,telp_number,email)
                  VALUES("${obj.name}", "${obj.company}", "${obj.telp_number}", "${obj.email}")`;
-    db.all(query,function(err,rowContacts){
-      if(!err){
-        cb(null,rowContacts)
-      }else{
-        console.log(err)
-      }
+    return new Promise((resolve,reject)=>{
+      db.all(query,(err,dataContact)=>{
+        if(!err){
+          resolve(dataContact)
+        }else{
+          reject(err)
+        }
+      })
     })
   }
 
-  static findById(id,cb) {
-    let query = `SELECT * FROM Contacts where id = "${id}`;
-    db.all(query, function(err, rowContacts) {
-      if(!err) {
-        cb(null, rowContacts)
-      } else {
-        console.log(err)
-      }
-    })
-  } 
-
-  static Update(request, callback){
-    db.all(`SELECT * FROM Contacts where id = "${request.params}"`,function(err,rowContacts){
-      if(err){
-        callback(err,null)
-      }
-      else{
-        callback(null, rowContacts)
-      }
-  })
-}
-static EditPost(Obj, callback){
-db.all(`UPDATE Contacts SET name = "${Obj.name}",
-        company = "${Obj.company}",
-        telp_number = "${Obj.telp_number}",
-        email = "${Obj.email}" WHERE id = "${Obj.id}"`, function (err,rowContacts){
-    if(err){
-      callback(err,null)
-    }
-    else{
-      callback(null, rowContacts)
-    }
-  })
-}
-
-  
-
-  static remove(id,cb){
+  static remove(id){
     let query = `DELETE FROM Contacts
                  WHERE id = ${id}`;
-    db.all(query,function(err,rowContacts){
-      if(!err){
-        cb(null,rowContacts)
-      }else{
-        console.log(err)
-      }
+    return new Promise((resolve,reject)=>{
+      db.all(query,(err,dataContact)=>{
+        if(!err){
+          resolve(dataContact)
+        }else{
+          reject(err)
+        }
+      })
     })
+  }
+
+  static findById(id){
+    let query = `SELECT * FROM Contacts where id = "${id}"`;
+    return new Promise((resolve,reject)=>{
+      db.all(query,(err,dataContact)=>{
+        if(!err){
+          resolve(dataContact)
+        }else{
+          reject(err)
+        }
+      })
+    })
+  }
+
+  static update(obj){
+    let query = `UPDATE Contacts
+               SET name = "${obj.name}",
+               company = "${obj.company}",
+               telp_number = "${obj.telp_number}",
+               email = "${obj.email}"
+               WHERE id = "${obj.id}"`;
+   return new Promise((resolve,reject)=>{
+     db.all(query,(err,dataContact)=>{
+       if(!err){
+         resolve(dataContact)
+       }else{
+         reject(err)
+       }
+     })
+   })
   }
 }
 

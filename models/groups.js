@@ -1,75 +1,74 @@
 const sqlite3 = require('sqlite3').verbose();
-
 const db = new sqlite3.Database('./database/data.db');
 
 class Groups{
-  static findAll(cb){
+  static findAll(){
     let query = `SELECT * FROM Groups`;
-    db.all(query,function(err,rowGroups){
-      if(!err){
-        cb(null,rowGroups)
-      }else{
-        console.log(err)
-      }
+    return new Promise((resolve,reject)=>{
+      db.all(query,function(err,dataGroup){
+        if(err){
+          reject(err)
+        }else{
+          resolve(dataGroup)
+        }
+      })
     })
   }
-  
-  static create(obj,cb){
+
+  static create(obj){
     let query = `INSERT INTO Groups (name_of_group)
                  VALUES("${obj.name_of_group}")`;
-    db.all(query,function(err,rowGroups){
-      if(!err){
-        cb(null,rowGroups)
-      }else{
-        console.log(err)
-      }
+    return new Promise((resolve,reject)=>{
+      db.all(query,function(err,dataGroup){
+        if(err){
+          reject(err)
+        }else{
+          resolve(dataGroup)
+        }
+      })
     })
   }
 
-  static findById(id,cb) {
-    let query = `SELECT * FROM Groups where id = "${id}`;
-    db.all(query, function(err, rowGroups) {
-      if(!err) {
-        cb(null, rowGroups)
-      } else {
-        console.log(err)
-      }
-    })
-  } 
-
-  static Update(request, callback){
-    db.all(`SELECT * FROM Groups where id = "${request.params}"`,function(err,rowGroups){
-      if(err){
-        callback(err,null)
-      }
-      else{
-        callback(null, rowGroups)
-      }
-  })
-}
-static EditPost(Obj, callback){
-db.all(`UPDATE Groups SET name_of_group = "${Obj.name_of_group}" WHERE id = "${Obj.id}"`, function (err,rowGroups){
-    if(err){
-      callback(err,null)
-    }
-    else{
-      callback(null, rowGroups)
-    }
-  })
-}
-
-  
-
-  static remove(id,cb){
+  static delete(id){
     let query = `DELETE FROM Groups
                  WHERE id = ${id}`;
-    db.all(query,function(err,rowGroups){
-      if(!err){
-        cb(null,rowGroups)
-      }else{
-        console.log(err)
-      }
+    return new Promise((resolve,reject)=>{
+      db.all(query,function(err,dataGroup){
+        if(err){
+          reject(err)
+        }else{
+          resolve(dataGroup)
+        }
+      })
     })
+  }
+
+  static findById(id){
+    let query = `SELECT * FROM Groups where id = "${id}"`;
+    return new Promise((resolve,reject)=>{
+      db.all(query,function(err,dataGroup){
+        if(err){
+          reject(err)
+        }else{
+          resolve(dataGroup)
+        }
+      })
+    })
+  }
+
+  static update(obj){
+    let query = `UPDATE Groups
+               SET name_of_group = "${obj.name_of_group}"
+               WHERE id = "${obj.id}"`;
+   return new Promise((resolve,reject)=>{
+     db.all(query,function(err,dataGroup){
+       if(err){
+         reject(err)
+       }else{
+         resolve(dataGroup)
+       }
+     })
+   })
   }
 }
 

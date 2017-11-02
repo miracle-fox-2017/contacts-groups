@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title> Edit <%= rowsEdit.name %> </title>
+  </head>
+  <body>
+    <table>
+      <tr>
+      <form class="" action="/contacts/edit/ <%= rowsEdit.id %>" method="post">
+        <td> Name <br> <input type="text" name="name" value="<%= rowsEdit.name %>"> </td>
+        <td>Company <br> <input type="text" name="company" value="<%= rowsEdit.company %>"></td>
+        <td>Phone number <br> <input type="text" name="telp" value="<%= rowsEdit.telp %>"></td>
+        <td>Email <br> <input type="text" name="email" value="<%= rowsEdit.email %>"></td>
+        <td><input type="submit" value="Submit"></td>
+      </form>
+    </tr>
+    </table>
+  </body>
+</html>

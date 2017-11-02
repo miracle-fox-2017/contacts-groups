@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Addresses</title>
+  </head>
+  <body>
+    <table border="1">
+      <tr>
+        <td> <strong> ID </strong> </td>
+        <td> <strong> Street </strong> </td>
+        <td> <strong> City </strong> </td>
+        <td> <strong> Zipcode </strong> </td>
+        <td> <strong> Name </strong> </td>
+      </tr>
+    <%dataAddress.forEach(function(list){%>
+      <tr>
+        <td> <%= list.id %> </td>
+        <td> <%= list.street %> </td>
+        <td> <%= list.city %> </td>
+        <td> <%= list.zipcode %> </td>
+        <td> <%= list.name %> </td>
+        <td> <a href="/addresses/edit/<%= list.id %>" > Edit </td>
+        <td> <a href="/addresses/delete/<%= list.id %>" > Delete </td>
+      </tr>
+    <% }) %>
+  </table>
+  <br>
+    <form class="" action="/addresses" method="post">
+      Street <br> <input type="text" name="street"> <br>
+      City <br> <input type="text" name="city"><br>
+      Zipcode <br> <input type="text" name="zipcode"><br>
+        <select name="contact">
+          <option> ---- SELECT----</option>
+          <% dataContact.forEach(function(listContact){ %>
+            <option value="<%= listContact.id%>"> <%= listContact.name %> </option>
+          <%})%>
+        </select>
+      <input type="submit" value="Send"><br>
+    </form>
+  </body>
+</html>

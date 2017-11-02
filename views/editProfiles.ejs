@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title> Edit Profiles </title>
+  </head>
+  <body>
+    <table>
+      <tr>
+      <form class="" action="/profiles/edit/ <%= dataProfile.id %>" method="post">
+        <td> username <br> <input type="text" name="username" value="<%= dataProfile.username %>"> </td>
+        <td>password <br> <input type="password" name="password" value="<%= dataProfile.password %>"></td>
+        <td> <select name="contact">
+          <% dataContact.forEach(function(listContact){ %>
+            <% if(listContact.id === dataProfile.Contacts_id){ %>
+              <option value="<%= listContact.id%>" selected> <%= listContact.name %> </option>
+            <%} else {%>
+              <option value="<%= listContact.id%>"> <%= listContact.name %> </option>
+            <% } %>
+          <%})%>
+        </select> </td>
+        <td><input type="submit" value="Submit"></td>
+      </form>
+    </tr>
+    </table>
+  </body>
+</html>

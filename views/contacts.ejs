@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Contacts</title>
+  </head>
+  <body>
+    <table border="1">
+      <tr>
+        <td> <strong> ID </strong> </td>
+        <td> <strong> Nama </strong> </td>
+        <td> <strong> company </strong> </td>
+        <td> <strong> telephone </strong> </td>
+        <td> <strong> email </strong> </td>
+      </tr>
+    <%rowsContacts.forEach(function(list){%>
+      <tr>
+        <td> <%= list.id %> </td>
+        <td> <%= list.name %> </td>
+        <td> <%= list.company %> </td>
+        <td> <%= list.telp %> </td>
+        <td> <%= list.email %> </td>
+        <td> <a href="/contacts/edit/<%= list.id %>" > Edit </td>
+        <td> <a href="/contacts/delete/<%= list.id %>" > Delete </td>
+      </tr>
+    <% }) %>
+  </table>
+  <br>
+    <form class="" action="/contacts" method="post">
+      Name <br> <input type="text" name="name"> <br>
+      Company <br> <input type="text" name="company"><br>
+      Phone number <br> <input type="text" name="telp"><br>
+      Email <br> <input type="text" name="email"><br>
+      <input type="submit" value="Submit"><br>
+    </form>
+    <br>
+    <td> <a href="/addresses_with_contact/" > Address dan Contact </td>
+  </body>
+</html>

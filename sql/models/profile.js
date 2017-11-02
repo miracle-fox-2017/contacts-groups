@@ -15,17 +15,7 @@ class Profile {
       }
     })
   }
-  static findWhere(Obj,callback){
-    let query = `SELECT * FROM Profile WHERE id_contacts = "${Obj.id}"`;
-    db.all(query, function(err,rows){
-      if(err){
-        callback (err, null)
-      }
-      else{
-        callback(null, rows)
-      }
-    })
-  }
+
   static findAllProfile(callback) {
     let query = `SELECT * FROM Profile`;
     db.all(query,function(err,rows){

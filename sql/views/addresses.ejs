@@ -47,6 +47,7 @@ div {
         <th>Street</th>
         <th>City</th>
         <th>Zipcode</th>
+        <th>Name</th>
         <% let i = 1 %>
       <% rows.forEach(function(row){%>
           <tr>
@@ -54,7 +55,8 @@ div {
             <td> <%= row.street %> </td>
             <td> <%= row.city %> </td>
             <td> <%= row.zipcode %> </td>
-            <td> <a href="/addresses/edit/<%=row.id%>">edit</a>
+            <td> <%= row.name %> </td>
+            <td> <a href="/addresses/edit/<%=row.id_%>">edit</a>
             <td> <a href="/addresses/delete/<%=row.id%>">delete</a>
           </tr>
         <% i++ })%>
@@ -66,6 +68,12 @@ div {
       City:<input type="text" name="city">
       Zipcode:<input type="text" name="zipcode">
       <input type="submit" value="ADD"=>
+      <select name="id_contact">
+        <% data.forEach(function(row){%>
+          console.log(data)
+        <option value="<%= row.id %>"><%= row.name %> </option>
+        <% })%>
+      </select>
   </form>
     <% } %>
   <% if (edit === true) {%>

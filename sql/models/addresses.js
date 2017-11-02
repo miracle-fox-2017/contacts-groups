@@ -3,6 +3,17 @@ const db = new sqlite3.Database('database.db');
 
 
 class Addresses {
+  static leftJoinAddresses(callback) {
+    let query = `SELECT Addresses.*, Contacts.name FROM Addresses LEFT JOIN Contacts ON Addresses.id_contacts = Contacts.id`;
+    db.all(query,function(err,rows){
+      if(err){
+        callback(err, null)
+      }
+      else{
+        callback(null,rows)
+      }
+    })
+  }
 
   static findAllAdresses(callback) {
     let query = `SELECT * FROM Addresses`
@@ -44,10 +55,18 @@ class Addresses {
         callback(err, null)
       }
       else{
+        Contacts.findAll((err,data)=>{
+          if(err){
+            console.log(err);
+          }
+          else {
+            res.render('profile', {rows: rows, data : data, isEdit : true})
+          }
         callback(null, rows)
-      }
-    })
-  }
+      })
+    }
+  })
+}
   static Remove(Obj,callback){
     let query = (`DELETE FROM Addresses WHERE id = "${Obj.id}"`)
     db.all(query, function(err,rows){
@@ -56,6 +75,17 @@ class Addresses {
       }
       else{
         callback(null, rows)
+      }
+    })
+  }
+  static addressesWithContact(Obj, callback){
+    let query = `SELECT * FROM Addresses LEFT JOIN Contacts ON Addresses.id_contacts = Contacts.id WHERE id = "${Obj}"`
+    db.all(query, function(err,rows){
+      if(err){
+        callback(err, null)
+      }
+      else{
+        callback(null,rows)
       }
     })
   }

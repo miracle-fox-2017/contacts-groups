@@ -42,9 +42,15 @@ db.serialize(()=>{
                           ADD COLUMN id_contacts INTEGER
                           FOREIGNKEY id_contacts
                           REFERENCES Contacts (id)`;
+  //release 6
 
-
-
+  let foreignContacts = `ALTER TABLE Addresses
+                          ADD COLUMN id_contacts INTEGER AUTOINCREMENT
+                          FOREIGNKEY id_contacts
+                          REFERENCES Contacts (id)`;
+  db.run(foreignContacts,(err)=>{
+    console.log('udah jadi table foreign contacts');
+  })
   db.run(createUniqe,(err)=>{
      console.log('udah jadi tablenya nih')
   });

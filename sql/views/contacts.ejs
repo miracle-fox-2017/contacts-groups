@@ -58,6 +58,7 @@ div {
             <td> <%= row.email %> </td>
             <td> <a href="/contacts/edit/<%=row.id%>">edit</a>
             <td> <a href="/contacts/delete/<%=row.id%>">delete</a>
+            <td><a href="/addresses/addresses_with_contact/<%=row.id%>">address_contacts</a></td>
           </tr>
         <% i++ })%>
       </tr>

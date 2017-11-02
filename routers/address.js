@@ -69,9 +69,16 @@ router.post('/edit/:id',(req,res)=>{
 
 
 router.get('/contacts/addresses_with_contact/:id',(req,res)=>{
-    address.findAddressWithContact(req,(err,rows)=>{
-        res.render('addresswithcontact',{data:rows})
-    })
+    address.findWhere(req.params.id,(rowAddress =>{
+        // console.log(rowAddress)
+        
+        res.render('addresswithcontact',{rows:rowAddress})
+    }))
+
+
+    // address.findAddressWithContact(req.params.id,(err,rows)=>{
+    //     res.render('addresswithcontact',{data:rows})
+    // })
 })
 
 

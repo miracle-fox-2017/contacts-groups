@@ -62,10 +62,35 @@ class Address{
         })
     }
 
+    findWhere(id,cb){
+        let find = `SELECT Addresses.*, Contacts.name, Contacts.company 
+        FROM Addresses 
+        left join Contacts on Contacts.id = Addresses.ContactID 
+        WHERE Addresses.ContactID = "${id}"`
+        this.db.all(find,(err,rows)=>{
+            if(!err){
+                console.log(rows)
+                cb(rows)
+            }
+            else{
+                console.log('hello')
+            }
+            
+        })
+    }
+
     //release 8
     findAddressWithContact(req,cb){
         let arrName = [];
-        contact.getDataById(req.params.id,contactData =>{
+        // langsung address.findWhere()
+
+        // select address.* , contact.name from address 
+        // left join contacts on contact.id = address.contactId
+        // where address.contactId = req.paramsId
+
+        
+
+        contact.getDataById(id,contactData =>{
             this.getDatabase(data =>{
                 console.log(contactData)
                 data.forEach(dataIndex=>{
@@ -76,7 +101,7 @@ class Address{
                       
             })
             console.log(arrName)
-            cb(arrName);
+            cb(null,arrName);
         })
         
     }

@@ -13,11 +13,14 @@
         <table>
             <thead></thead>
             <tr>
-                <%=data.name%>
+                <%=rows.name%>
               <th>ID</th>
               <th>Street</th>
               <th>City</th>
               <th>ZipCode</th>
+              <th>Name</th>
+              <th>Company</th>
+              <th>ContactID</th>
               
             </tr>
         </thead>
@@ -26,16 +29,21 @@
             <tr>
                     <tr>
                            
-            
-                          <td><%=data.id%></td>
-                          <td><%=data.street%></td>
-                          <td><%=data.city%></td>
-                          <td><%=data.zipcode%></td>
+                        <%rows.forEach(rowsA=>{%>
+                            <td><%=rowsA.id%></td>
+                            <td><%=rowsA.street%></td>
+                            <td><%=rowsA.city%></td>
+                            <td><%=rowsA.zipcode%></td>
+                            <td><%=rowsA.name%></td>
+                            <td><%=rowsA.company%></td>
+                            <td><%=rowsA.ContactID%></td>
+                        
+                         
                           
                          
                           
                         </tr>
-                       
+                        <%})%>
               
             </tr>
             

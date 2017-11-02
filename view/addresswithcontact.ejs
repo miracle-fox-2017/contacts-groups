@@ -1,0 +1,54 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>
+            
+        </title>
+
+    </head>
+    <body>
+           
+            
+        <table>
+            <thead></thead>
+            <tr>
+                <%=rows.name%>
+              <th>ID</th>
+              <th>Street</th>
+              <th>City</th>
+              <th>ZipCode</th>
+              <th>Name</th>
+              <th>Company</th>
+              <th>ContactID</th>
+              
+            </tr>
+        </thead>
+            <tbody>
+
+            <tr>
+                    <tr>
+                           
+                        <%rows.forEach(rowsA=>{%>
+                            <td><%=rowsA.id%></td>
+                            <td><%=rowsA.street%></td>
+                            <td><%=rowsA.city%></td>
+                            <td><%=rowsA.zipcode%></td>
+                            <td><%=rowsA.name%></td>
+                            <td><%=rowsA.company%></td>
+                            <td><%=rowsA.ContactID%></td>
+                        
+                         
+                          
+                         
+                          
+                        </tr>
+                        <%})%>
+              
+            </tr>
+            
+        </tbody>
+          </table>
+          <br>  
+    </body>
+</html>

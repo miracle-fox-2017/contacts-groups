@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>
+            
+        </title>
+
+    </head>
+    <body>
+            <form class="" action="/contacts/edit/<%=data.id%>" method="post">
+                Name:<br>
+                <input type="text" name="name" value="<%=data.name%>" >
+                <br>
+                Company:<br>
+                <input type="text" name="company" value="<%=data.company%>" >
+                <br>
+                Nomer Telpon:<br>
+                <input type="text" name="telp_number" value="<%=data.telp_number%>" >
+                <br>
+                Email:<br>
+                <input type="text" name="email"value="<%=data.email%>" >
+                <br>
+                <input type="submit" value="Edit">
+              </form> 
+        <table>
+            <thead></thead>
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Company</th>
+              <th>telp_number</th>
+              <th>email</th>
+            </tr>
+        </thead>
+            <tbody>
+
+            <tr>
+                    <tr>
+                           
+            
+                          <td><%=data.id%></td>
+                          <td><%=data.name%></td>
+                          <td><%=data.company%></td>
+                          <td><%=data.telp_number%></td>
+                          <td><%=data.email%></td>
+                         
+                          
+                        </tr>
+                       
+              
+            </tr>
+            
+        </tbody>
+          </table>
+          <br>  
+    </body>
+</html>

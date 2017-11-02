@@ -1,0 +1,54 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>
+            
+        </title>
+
+    </head>
+    <body>
+            <form class="" action="/profile/edit/<%=data.id%>" method="post">
+                Username:<br>
+                <input type="text" name="username" value="<%=data.username%>" >
+                <br>
+                Password:<br>
+                <input type="text" name="password" value="<%=data.password%>" >
+                <br>
+                
+                
+                <input type="submit" value="Edit">
+              </form> 
+        <table>
+            <thead></thead>
+            <tr>
+              <th>ID</th>
+              <th>Username</th>
+              <th>Password</th>
+              
+              
+            </tr>
+        </thead>
+            <tbody>
+
+            <tr>
+                    <tr>
+                           
+            
+                          <td><%=data.id%></td>
+                          <td><%=data.username%></td>
+                          <td><%=data.password%></td>
+                          
+                          
+                         
+                          
+                        </tr>
+                       
+              
+            </tr>
+            
+        </tbody>
+          </table>
+          <br>  
+    </body>
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>
+            
+        </title>
+
+    </head>
+    <body>
+            <form action="" method="post">
+                Username:<br>
+                <input type="text" name="username" >
+                <br>
+                Password:<br>
+                <input type="text" name="password" >
+                <br>
+                <select name='contact_option'>
+                        <%contacts.forEach(function(name){%>
+                            
+                        
+                        <option value="<%=name.id%>">
+                            <%=name.name%>
+                        </option>
+                    <%})%>
+                </select>
+                
+                <input type="submit" value="Submit">
+               <%=msgObj%>
+
+              </form> 
+        <table>
+            <thead></thead>
+            <tr>
+              <th>ID</th>
+              <th>Username</th>
+              <th>Password</th>
+              <th>Contact</th>
+              <th>Name</th>
+            </tr>
+
+        </thead>
+            <tbody>
+                
+
+            
+            <tr>
+                    
+                        
+                <%rows.forEach(function(add){%>
+
+              <td><%=add.id%></td>
+              <td><%=add.username%></td>
+              <td><%=add.password%></td>
+              
+              <td><%=add.ContactID%></td>
+              <td><%=add.name%></td>
+              <td> <a href="profile/edit/<%=add.id %>"> Edit</a> </td>
+              <td> <a href="profile/delete/<%=add.id %>"> Delete</a> </td>
+              
+            </tr>
+            <%})%>
+            
+        </tbody>
+
+           
+          <br>
+          <table>
+                <thead></thead>
+               
+            </thead>
+            <tbody>
+                    
+    
+                
+
+            </tbody>
+        
+        
+        </table>  
+
+    </body>
+</html>

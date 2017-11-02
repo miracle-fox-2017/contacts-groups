@@ -13,7 +13,6 @@
               <th><b>Street</b></th>
               <th><b>City</b></th>
               <th><b>Zip Code</b></th>
-              <th><b>Contact_Id</b></th>
               <th><b>Name</b></th>
             </thead>
 
@@ -24,7 +23,6 @@
                   <td><%= rowAddresses[i].street %></td>
                   <td><%= rowAddresses[i].city %></td>
                   <td><%= rowAddresses[i].zipcode %></td>
-                  <td><%= rowAddresses[i].contacts_id %></td>
                   <td><%= rowAddresses[i].name %></td>
                   <td><a href = "/addresses/edit/<%= rowAddresses[i].id %>">EDIT</a></td>
                   <td><a href = "/addresses/delete/<%= rowAddresses[i].id %>">DELETE</a></td>
@@ -50,11 +48,22 @@
             <tr>
               <td width = "200px" style = "font-size : 10pt"><b>Zip Code</b></td> <td width = "10px">:</td> <td><input type= "text" name= "zipcode"></td>
             </tr>
+          </table>
 
+          <table border = "0">
             <tr>
               <td width = "200px" style = "font-size : 10pt"></td><td></td><td><input type= "submit" value = "Submit"></td>
-            </tr>
 
+              <td width = "200px" style = "font-size : 10pt">
+                <select name ="contact">
+                  <option>-----------SELECT-----------</option>
+                <% for (var i = 0 ; i < rowContacts.length ; i++) { %>
+                  <option value ="<%= rowContacts[i].id %>"><%= rowContacts[i].name %></option>
+                <%}%>
+                </select>
+              </td>
+            </tr>
+          </table>
           </form>
       </fieldset>
       </div>

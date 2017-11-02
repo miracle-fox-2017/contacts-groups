@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>HALAMAN ADDRESSES</title>
+
+  </head>
+      <body style = "background-color : aquamarine">
+        <div>
+          <table border = "1" style = "padding: 5px 10px; font-family : sans-serif">
+            <thead>
+              <th><b>Id</b></th>
+              <th><b>Street</b></th>
+              <th><b>City</b></th>
+              <th><b>Zip Code</b></th>
+              <th><b>Name</b></th>
+              <th><b>Company</b></th>
+            </thead>
+
+            <tbody style = "font-size : 10pt">
+            <% for (var i = 0 ; i < rowAddresses.length ; i++) { %>
+              <tr>
+                  <td><%= rowAddresses[i].id %></td>
+                  <td><%= rowAddresses[i].street %></td>
+                  <td><%= rowAddresses[i].city %></td>
+                  <td><%= rowAddresses[i].zipcode %></td>
+                  <td><%= rowAddresses[i].name %></td>
+                  <td><%= rowAddresses[i].company %></td>
+                  <td><a href = "/addresses/edit/<%= rowAddresses[i].id %>">EDIT</a></td>
+                  <td><a href = "/addresses/delete/<%= rowAddresses[i].id %>">DELETE</a></td>
+              </tr>
+            <%}%>
+            </tbody>
+          </table>
+      </div>
+
+  </body>
+</html>

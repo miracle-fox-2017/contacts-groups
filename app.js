@@ -106,10 +106,18 @@ app.get('/groups/delete/:id', function (req, res) {
 
 //ADRESSESS
 
-app.get('/addresses', function(req, res) {
+app.get('/addresses', function (req, res) {
   let queryAddresses = `SELECT * FROM Addresses`
-  db.all(queryAddresses, function(err, rowAddresses){
-    res.render('addresses',{rowAddresses})
+  let queryJoin = `SELECT Addresses.*, Contacts.name FROM Addresses LEFT JOIN Contacts ON Addresses.contacts_id = Contacts.id `
+  let queryGetContact = `SELECT * FROM Contacts`
+  db.all(queryJoin, function(err, rowAddresses) {
+    if(err) {
+        res.send(err)
+    } else {
+        db.all(queryGetContact, function(err, rowContacts) {
+          res.render('addresses', {rowAddresses: rowAddresses, rowContacts: rowContacts})
+        })
+    }
   })
 })
 
@@ -117,25 +125,33 @@ app.post('/addresses', function (req, res) {
   let addressesStreet = req.body.street;
   let addressesCity = req.body.city;
   let addressesZipcode = req.body.zipcode;
-    db.run(`INSERT INTO Addresses (street,city,zipcode) VALUES('${addressesStreet}','${addressesCity}','${addressesZipcode}')`);
+  let contactId = req.body.contact_id
+  db.run(`INSERT INTO Addresses (street,city,zipcode,contact_id) VALUES('${addressesStreet}','${addressesCity}','${addressesZipcode}','${contactId}')`, function(err) {
       res.redirect('/addresses');
+  });
 })
 
 app.get('/addresses/edit/:id', function (req, res) {
   let getEdit = `SELECT * FROM Addresses WHERE id = ${req.params.id}`
+  let queryContact = `SELECT id,name FROM Contacts`;
   db.all(getEdit, function(err, rowAddresses) {
-    res.render('editAddresses',{rowAddresses})
+    db.all(queryContact, function(err, rowContacts) {
+          res.render('editAddresses',{rowAddresses:rowAddresses, rowContacts:rowContacts})
+    })
   })
 })
+
 
 app.post('/addresses/edit/:id', function (req, res) {
   let id = req.params.id;
   let addressesStreet = req.body.street;
   let addressesCity = req.body.city;
   let addressesZipcode = req.body.zipcode;
+  let contactId = req.body.contacts_id;
   db.run(`UPDATE Addresses
-    SET street = '${addressesStreet}', city = '${addressesCity}', zipcode = '${addressesZipcode}' WHERE id = "${id}"`)
-    res.redirect('/addresses')
+    SET street = '${addressesStreet}', city = '${addressesCity}',zipcode = '${addressesZipcode}', contacts_id = '${contactId}' WHERE id = "${id}"`, function(err) {
+        res.redirect('/addresses');
+    })
 })
 
 app.get('/addresses/delete/:id', function (req, res) {
@@ -143,6 +159,17 @@ app.get('/addresses/delete/:id', function (req, res) {
    WHERE id = ${req.params.id}`);
    res.redirect('/addresses')
 })
+
+app.get('/addresses_with_contact', function (req, res) {
+  let queryJoin = `SELECT Addresses.*, Contacts.name, Contacts.company FROM Addresses LEFT JOIN Contacts ON Addresses.contacts_id = Contacts.id `
+  let queryGetContact = `SELECT * FROM Contacts`
+  db.all(queryJoin, function(err, rowAddresses) {
+    db.all(queryGetContact, function(err, rowContacts) {
+      res.render('addresses_with_contact', {rowAddresses: rowAddresses, rowContacts: rowContacts})
+      })
+    })
+  })
+
 
 // PROFILE
 
@@ -163,7 +190,6 @@ app.get('/profiles', function (req, res) {
 
 
 app.post('/profiles', function (req, res) {
-  // console.log(req.body);
   let profileUsername = req.body.username;
   let profilePassword = req.body.password;
   let contactId = req.body.contact
@@ -174,7 +200,6 @@ app.post('/profiles', function (req, res) {
       res.redirect('/profiles');
     }
   });
-
 })
 
 app.get('/profiles/edit/:id', function (req, res) {

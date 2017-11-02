@@ -14,6 +14,19 @@
                 <td><input type="text" name = "city" value="<%= rowAddresses[0].city %>"></td>
                 <td><input type="text" name = "zipcode" value="<%= rowAddresses[0].zipcode %>"></td>
                 <td><button><a href = "/addresses" %>>EDIT</a></button</td>
+
+                  <td>
+                    <select name ="contacts_id">
+                      <% for(var i = 0 ; i < rowContacts.length ; i++)  { %>
+                        <% if(rowAddresses[0].contacts_id === rowContacts[i].id) { %>
+                            <option value = "<%= rowContacts[i].id %>" selected><%= rowContacts[i].name %></option>
+                        <%} else {%>
+                          <option value = "<%= rowContacts[i].id %>"><%= rowContacts[i].name %></option>
+                      <%}
+                    }%>
+                    </select>
+                  </td>
+
               </tr>
             </table>
           </form>

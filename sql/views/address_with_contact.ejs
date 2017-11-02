@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>addresses_with_contact</title>
+	</head>
+	<body>
+		<table>
+			<tr>
+				<th>id</th>
+				<th>street</th>
+				<th>city</th>
+				<th>zipcode</th>
+				<th>contact name</th>
+				<th>company</th>
+				<th>telp Number</th>
+				<th>email</th>
+				<% let i = 1 %>
+      <% rows.forEach(function(row){%>
+				<tr>
+					<td><%= i %></td>
+					<td> <%= row.street %> </td>
+					<td> <%= row.city %> </td>
+					<td> <%= row.zipcode %> </td>
+					<td> <%= row.name %> </td>
+					<td> <%= row.company %> </td>
+					<td> <%= row.telp_number %> </td>
+					<td> <%= row.email %> </td>
+				</tr>
+			<% i++ })%>
+			</tr>
+		</table>
+
+
+
+	</body>
+</html>

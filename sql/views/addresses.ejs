@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <style>
+    table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;}
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;}
+tr:nth-child(even) {
+  background-color: #dddddd;}
+  input[type=text], select {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;}
+input[type=submit] {
+  font-family: arial, sans-serif;
+  width: 100%;
+  background-color: #4CAF50;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;}
+input[type=submit]:hover {
+  background-color: #45a049;}
+div {
+  border-radius: 5px;
+  background-color: #f2f2f2;
+  padding: 20px;}
+  </style>
+    <meta charset="utf-8">
+    <title>ADDRESSES</title>
+  </head>
+  <body>
+    <table>
+      <tr>
+        <th>No</th>
+        <th>Street</th>
+        <th>City</th>
+        <th>Zipcode</th>
+        <th>Name</th>
+        <% let i = 1 %>
+      <% rows.forEach(function(row){%>
+          <tr>
+            <td> <%= i %> </td>
+            <td> <%= row.street %> </td>
+            <td> <%= row.city %> </td>
+            <td> <%= row.zipcode %> </td>
+            <td> <%= row.name %> </td>
+            <td> <a href="/addresses/edit/<%=row.id_%>">edit</a>
+            <td> <a href="/addresses/delete/<%=row.id%>">delete</a>
+          </tr>
+        <% i++ })%>
+      </tr>
+    </table>
+    <% if (edit === false) {%>
+    <form action="/addresses" method="post">
+      Street:<input type="text" name="street">
+      City:<input type="text" name="city">
+      Zipcode:<input type="text" name="zipcode">
+      <input type="submit" value="ADD"=>
+      <select name="id_contact">
+        <% data.forEach(function(row){%>
+          console.log(data)
+        <option value="<%= row.id %>"><%= row.name %> </option>
+        <% })%>
+      </select>
+  </form>
+    <% } %>
+  <% if (edit === true) {%>
+    <form action="/addresses/edit/<%=rows[0].id%>" method="post">
+      Street: <input type="text" name="street" value = "<%=rows[0].street%>" >
+      City: <input type="text" name="city" value = "<%=rows[0].city%>">
+      Zipcode:<input type="text" name="zipcode" value = "<%=rows[0].zipcode%>">
+      <input type="submit" value="EDIT"=>
+    </form>
+  <% } %>
+  </body>
+</html>

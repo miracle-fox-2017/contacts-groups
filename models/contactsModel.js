@@ -13,63 +13,9 @@ const tableName = `Contacts`;
 
 let statement = ``;
 let command = ``;
-let properties = ['name', `company`, 'telp_number', 'email'];
+let properties = ['name', `company`, 'telp_number', 'email', `contactID`];
 let fill = ``;
 let columnNames = ``;
-
-
-class Contact
-{
-  constructor()
-  {
-    
-  }
-  
-  static select(column = `*`, id, callback)
-  {
-    command = `SELECT`;
-    statement = `SELECT ${column} FROM ${tableName}`
-    if (id)
-    {
-      command = `WHERE`
-      statement += ` WHERE ID = ${id}`;
-    }
-    
-    if (command === `SELECT`)
-   {
-     db.all(statement, (err, rows) =>
-       {
-         if (err)
-         {
-           console.log(err);
-         }
-         else
-         {
-           callback(rows);
-         }
-       }
-     )
-   }
-   else if (command === `WHERE`)
-   {
-     //  console.log(`STATEMENT NYA ADALAH ${statement}`);
-     db.each(statement, (err, row) =>
-       {
-         if (err)
-         {
-           console.log(err);
-         }
-         else
-         {
-           callback(row);
-         }
-       }
-     )
-   }
-   resetAll();
-  }
-}
-
 
 /*
   function add
@@ -103,8 +49,7 @@ let add = (Obj) =>
   creating a query to be passed on to execute function, the callback is used to retrieve the data, the colum field is optional, default option is '*', id is used to find specific record
 */
 
-let select = (callback, column = `*`, id) =>
-{
+let select = (callback, column = `*`, id) => {
   command = `SELECT`;
   statement = `SELECT ${column} FROM ${tableName}`
   if (id)
@@ -113,10 +58,11 @@ let select = (callback, column = `*`, id) =>
     statement += ` WHERE ID = ${id}`;
   }
   
+  console.log(`STATEMENT NYA ADALAH ${statement}`);
+  
   if (command === `SELECT`)
- {
-   db.all(statement, (err, rows) =>
-     {
+  {
+    db.all(statement, (err, rows) => {
        if (err)
        {
          console.log(err);
@@ -130,7 +76,6 @@ let select = (callback, column = `*`, id) =>
  }
  else if (command === `WHERE`)
  {
-   //  console.log(`STATEMENT NYA ADALAH ${statement}`);
    db.each(statement, (err, row) =>
      {
        if (err)

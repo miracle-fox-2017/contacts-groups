@@ -19,6 +19,16 @@
             <td> <input type="hidden" name="ID" value="<%=addressesData.ID%>"> <input type="text" name="street" value="<%=addressesData.street%>"> </td>
             <td> <input type="text" name="city value="<%=addressesData.city%>"> </td>
             <td> <input type="text" name="zipcode" value="<%=addressesData.zipcode%>"> </td>
+            <td><select name="ContactID">
+              <% contactsData.map( (contact) => { %>
+                <% if (profileData.ContactID === contact.ID) { %>
+                  <option value="<%= contact.ID %>" selected><%= contact.name %></option>
+                <%}else {%>
+                  <option value="<%= contact.ID %>"><%= contact.name %></option>
+                <%}%>
+                <%})%>
+            </select></td>
+
             <td><input type="submit" value="Simpan Edit"></td>
           </tr>
         </tbody>

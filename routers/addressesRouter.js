@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const addresses = require('../models/addressModel');
+const contacts = require('../models/contactsModel');
 
 
 // ADDRESSES ROUTER
@@ -8,9 +9,13 @@ const addresses = require('../models/addressModel');
 
 router.get('/', (req, res) =>
   {
-    addresses.select( (addressesData) =>
+    addresses.leftJoin( (addressesData) =>
       {
-        res.render('addresses', {addressesData})
+        contacts.select( (contactsData) =>
+          {
+            res.render('addresses', {addressesData : addressesData, contactsData : contactsData, error : false});
+          }
+        )
       }
     );
   }
@@ -31,6 +36,22 @@ router.get('/edit/:id', (req, res) =>
       },`*`,req.params.id);
   }
 );
+
+router.get(`/addresses_with_contact/`, (req,res) =>{
+  addresses.select((addressesData) => {
+    let arrObj = [];
+    addressesData.forEach((addressData, index) => {
+      contacts.select((contactData) => {
+        addressData.name = contactData.name;
+        addressData.company = contactData.company;
+        arrObj.push(addressData);
+        if (index === addressesData.length - 1) {
+          res.render('addresses_with_contact', {boom : arrObj});
+        }
+      },`name, company`, addressData.ContactID)
+    })
+  })
+});
 
 router.post('/edit/:id', (req, res) =>
   {

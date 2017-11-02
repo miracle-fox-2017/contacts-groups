@@ -28,11 +28,19 @@ router.post(`/`, (req, res) =>
       {
         if (!status)
         {
-          res.render(`profiles`, {profilesData : [], contactsData : [], error : true});
+            profiles.leftJoin( (profilesData) =>
+              {
+                contacts.select( (contactsData) =>
+                  {
+                    res.render('profiles', {profilesData : profilesData, contactsData : contactsData, error : true});
+                  }
+                )
+              }
+            );
         }
         else
         {
-          res.redirect(`/back`)
+          res.redirect(`back`)
         }
       }
     );
@@ -68,7 +76,7 @@ router.post('/edit/:id', (req, res) =>
 router.get('/delete/:id', (req, res) =>
   {
     profiles.deleteQuery(req.params.id);
-    res.redirect('/profile');
+    res.redirect('/profiles');
   }
 )
 

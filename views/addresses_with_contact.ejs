@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    
+    <table>
+      <th>
+        <td>Street</td>
+        <td>City</td>
+        <td>zipcode</td>
+        <td>Contact Name</td>
+        <td>Company</td>
+      </th>
+      
+      <tbody>
+        <%boom.forEach((obj) => {%>
+          <tr>
+          <td><%=obj.street%></td>
+          <td><%=obj.city%></td>
+          <td><%=obj.zipcode%></td>
+          <td><%=obj.name%></td>
+          <td><%=obj.company%></td>
+          </tr>
+        <%})%>
+      </tbody>
+    </table>
+  </body>
+</html>

@@ -118,6 +118,25 @@ let deleteQuery = (id) =>
 }
 
 
+let leftJoin = (callback) =>
+{
+  statement = `SELECT Addresses.street, Addresses.city, Addresses.zipcode, Contacts.name FROM Profiles LEFT JOIN Contacts on Addresses.ContactID = Contacts.ID`
+  db.all(statement, (err, rows) =>
+    {
+      if (err)
+      {
+        console.log(err);
+      }
+      else
+      {
+        callback(rows);
+      }
+    }
+  )
+  resetAll();
+}
+
+
 let resetAll = () =>
 {
   statement = ``;

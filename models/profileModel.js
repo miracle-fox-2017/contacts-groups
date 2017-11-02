@@ -41,13 +41,13 @@ let add = (Obj, callback) =>
   
   db.run(statement,[],function(report)
     {
-      if (!report.hasOwnProperty(`lastID`))
+      if (report === null)
       {
-        callback(false);
+        callback(true);
       }
       else
       {
-        callback(true);
+        callback(false);
       }
     }
 );

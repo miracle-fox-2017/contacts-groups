@@ -5,21 +5,6 @@
     <title>Addresses page</title>
   </head>
   <body>
-    <table>
-      <tr>
-        <form action="/Addresses" method="post">
-          <td><input type="text" name = "street" placeholder="STREET"></td>
-          <td><input type="text" name = "city" placeholder="CITY"></td>
-          <td><input type="text" name = "zipcode" placeholder="ZIPCODE"></td>
-          <td><select name="contactName">
-            <option>--SELECT--</option>
-              <%for(let j = 0;j< dataCon.length;j++){%>
-              <option value="<%=dataCon[j].id%>"><%=dataCon[j].name%></option>
-              <%}%></td>
-          <td><button type="submit">SAVE</button></td>
-        </form>
-      </tr>
-    </table>
     <table border="1">
       <tr>
       <th>ID</th>
@@ -27,6 +12,7 @@
       <th>CITY</th>
       <th>ZIPCODE</th>
       <th>YANG PUNYA RUMAH</th>
+      <th>COMPANY</th>
     </tr>
   <%for(let i = 0;i<rows.length;i++){%>
     <tr>
@@ -35,6 +21,7 @@
       <td><%= rows[i].city %></td>
       <td><%= rows[i].zipcode %></td>
       <td><%= rows[i].name %></td>
+      <td><%= rows[i].company %></td>
         <td><a href="/Addresses/delete/<%= rows[i].id %>">delete</a></td>
         <td><a href="/Addresses/edit/<%= rows[i].id %>">edit</a></td>
     </tr>

@@ -5,26 +5,39 @@
     <title>Profile page</title>
   </head>
   <body>
+    <%= message%>
     <table>
       <tr>
         <form action="/Profile" method="post">
           <td><input type="text" name = "username" placeholder="ADD USERNAME"></td>
           <td><input type="text" name = "password"placeholder="ADD PASSWORD"></td>
+          <td>
+            <select name="contactName">
+              <option>--SELECT--</option>
+            <%for(let j = 0;j< dataCon.length;j++){%>
+
+                <option value="<%=dataCon[j].id%>"><%=dataCon[j].name%></option>
+                <%}%>
+            </select>
+          </td>
           <td><button type="submit">SAVE</button></td>
         </form>
       </tr>
+
     </table>
     <table border="1">
       <tr>
         <th>ID</th>
         <th>USERNAME</th>
         <th>PASSWORD</th>
+        <th>NAMA CONTACT</th>
       </tr>
       <% for(let i = 0;i<rows.length;i++){%>
         <tr>
           <td><%=rows[i].id%></td>
           <td><%=rows[i].username%></td>
           <td><%=rows[i].password%></td>
+          <td><%=rows[i].name%></td>
           <td><a href="/Profile/delete/<%= rows[i].id %>">delete</a></td>
           <td><a href="/Profile/edit/<%= rows[i].id %>">edit</a></td>
         </tr>

@@ -4,6 +4,7 @@ const sqlite3 = require('sqlite3').verbose();
 const app = express()
 const db = new sqlite3.Database('./db/data.db')
 //router
+const addwithcon = require('./router/addwithcon')
 const contacts = require('./router/contacts')
 const addresses = require('./router/addresses')
 const profile = require('./router/profile')
@@ -21,6 +22,7 @@ app.use('/',contacts)
 app.use('/',profile)
 app.use('/',groups)
 app.use('/',addresses)
+app.use('/',addwithcon)
 app.listen(3000,function() {
   console.log('masuk port 3000');
 })

@@ -7,15 +7,22 @@ const contact = require('../models/contacts');
 router.get('/contacts',function(req,res){
 contact.findAll(function(err,rows) {
   console.log(rows);
-  res.render('contacts',{rows})
+  res.render('contacts',{rows:rows,error:null})
   })
 })
 
 //add
 router.post('/contacts',function(req,res) {
-contact.create(req.body,function(err,rows) {
-  res.redirect('/contacts')
-  })
+  if (req.body.name.length == 0 && req.body.company.length == 0 && req.body.telp_number.length == 0 && req.body.email.length == 0) {
+      contact.findAll(function(err,rows) {
+          res.render('contacts', {error: "masukin data name nya !",rows:rows})
+      })
+    }
+  else {
+      contact.create(req.body,function(err,rows) {
+        res.redirect('/contacts')
+      })
+    }
 })
 
 //delete

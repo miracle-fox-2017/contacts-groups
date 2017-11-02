@@ -5,10 +5,20 @@
     <title></title>
   </head>
   <body>
-
     <form action="/profile/edit/<%= rows[0].id %>" method="post">
       <td><input type="text" name ="username" value="<%= rows[0].username %>" placeholder="USERNAME"></td>
       <td><input type="text" name ="password" value="<%= rows[0].password %>" placeholder="PASSWORD"></td>
+      <td>
+        <select name="contactName">
+          <% for(let j = 0;j< dataCon.length;j++){ %>
+            <% if(dataCon[j].id == rows[0].contacts_id){ %>
+              <option value="<%=dataCon[j].id%>" selected><%=dataCon[j].name%></option>
+            <% } else{ %>
+              <option value="<%=dataCon[j].id%>"><%=dataCon[j].name%></option>
+            <%}%>
+          <%}%>
+        </select>
+      </td>
       <td><button type="submit">SAVE</button></td>
     </form>
   </body>

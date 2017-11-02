@@ -15,6 +15,19 @@ class Profile{
     })
   }
 
+  static findAllWithContact(cb){
+    let query = `SELECT Profile.id,Profile.username,Profile.password,Profile.contacts_id, Contacts.name
+    FROM Profile
+    LEFT JOIN Contacts ON Profile.contacts_id = Contacts.id`;
+    db.all(query,function(err,rows) {
+      if(!err){
+        cb(null,rows)
+      }else {
+        console.log(err);
+      }
+    })
+  }
+
   static findById(id,cb){
     let query = `SELECT * FROM Profile WHERE id = '${id}'`;
     db.all(query,function(err,rows) {
@@ -34,14 +47,16 @@ class Profile{
 
 
   static create(obj,cb){
-    let query = `INSERT INTO Profile(username,password) VALUES(
+    // console.log(obj);
+    let query = `INSERT INTO Profile(username,password,contacts_id) VALUES(
       '${obj.username}',
-      '${obj.password}')`;
-      db.all(query,function(err,rows) {
-        if(!err){
-          cb(null,rows)
-        }else {
-          console.log(err);
+      '${obj.password}',
+      '${obj.contactName}')`;
+      db.run(query,function(err) {
+        if(err){
+          cb(err)
+        }else{
+          cb()
         }
       })
   }

@@ -1,13 +1,16 @@
 const express = require('express');
 const router = express.Router();
 const addresses = require('../models/addresses');
+const contact = require('../models/contacts')
 
 
 //Addresses
 router.get('/addresses',function(req,res){
-  addresses.findAll(function(err,rows) {
-    console.log(rows);
-    res.render('addresses',{rows})
+  addresses.findAllWithContact(function(err,rows) {
+    contact.findAll(function(req,dataCon) {
+      console.log(rows)
+      res.render('addresses',{rows :rows,dataCon:dataCon})
+      })
     })
   })
 
@@ -21,14 +24,17 @@ router.post('/addresses',function(req,res) {
 //delete
 router.get('/addresses/delete/:id',function(req,res) {
    addresses.remove(req.params.id,function(err,rows) {
-     res.redirect('/addresses')
+     res.send('ooooooo')
+    //  res.redirect('/addresses')
    })
 })
 
 //edit
 router.get('/addresses/edit/:id',function(req,res) {
-addresses.findById(req.params.id,function(err,rows) {
-  res.render('editaddresses',{rows})
+  addresses.findById(req.params.id,function(err,rows) {
+    contact.findAll(function(err,dataCon) {
+      res.render('editaddresses',{rows: rows,dataCon:dataCon})
+    })
   })
 })
 

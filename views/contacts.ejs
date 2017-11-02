@@ -5,6 +5,9 @@
     <title>Contacts page</title>
   </head>
   <body>
+    <% if(error){%>
+      <%=error%>
+    <%}%>
     <table>
       <tr>
         <form action="/Contacts" method="post">

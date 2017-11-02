@@ -34,8 +34,11 @@ db.serialize(function () {
         )`);
 
         //relasi
-      //  db.run(`ALTER TABLE Profile ADD COLUMN contacts_id INTEGER REFERENCES Contacts(id)`);
+      // db.run(`ALTER TABLE Profile ADD COLUMN contacts_id INTEGER REFERENCES Contacts(id)`);
         db.run(`CREATE UNIQUE INDEX IF NOT EXISTS contacts_id ON Profile(contacts_id)`)
+
+          db.run(`ALTER TABLE Addresses ADD COLUMN contacts_id INTEGER REFERENCES Contacts(id)`);
+
 
 
 })

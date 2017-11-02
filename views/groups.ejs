@@ -1,0 +1,59 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+    table {
+      font-family: arial, sans-serif;
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    td, th {
+      border: 1px solid #dddddd;
+      text-align: left;
+      padding: 5px;
+    }
+
+    th {
+      background-color: lightseagreen;
+    }
+    
+    </style>
+    <meta charset="utf-8">
+    <title>Groups</title>
+  </head>
+  <body>
+    <table>
+      <tr>
+        <th>No</th>
+        <th>Name Group</th>
+        <th>Action</th>
+      </tr>
+        <% let i = 1 %>
+      <% dataGroup.forEach(function(rows){%>
+          <tr>
+            <td> <%= i %> </td>
+            <td> <%= rows.name_of_group %> </td>
+            <td><a href="/groups/edit/<%=rows.id%>">edit</a>
+                <a href="/groups/delete/<%=rows.id%>">delete</a>
+            </td>
+          </tr>
+        <% i++ })%>
+      </tr>
+    </table>
+    <br>
+      <% if (isEdit === false) {%>
+        <form action="/groups" method="post">      
+          <td><input type="text" name="name_of_group" required size="23" placeholder="name"></td> &nbsp;
+          <input type="submit" value="ADD" align="right">
+        </form>
+      <%}%>
+      <% if (isEdit === true) {%>
+        <form action="/groups/edit/<%=dataGroup[0].id%>" method="post">
+          <td><input type="text" name="name_of_group" value="<%=dataGroup[0].name_of_group%>" required size="23" placeholder="name"></td>
+          <input type="submit" value="EDIT" align="right">
+        </form>
+        <%}%>
+  </body>
+</html>

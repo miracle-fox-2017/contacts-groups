@@ -1,0 +1,49 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+    table {
+      font-family: arial, sans-serif;
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    td, th {
+      border: 1px solid #dddddd;
+      text-align: left;
+      padding: 5px;
+    }
+
+    th {
+      background-color: lightseagreen;
+    }
+
+    </style>
+    <meta charset="utf-8">
+    <title>address with contacts</title>
+  </head>
+  <body>
+    <table>
+      <tr>
+        <th>No</th>
+        <th>Street</th>
+        <th>City</th>
+        <th>Zipcode</th>
+        <th>Name</th>
+        <th>Company</th>
+      </tr>
+        <% let i = 1 %>
+      <% dataAddress.forEach(function(rows){%>
+          <tr>
+            <td> <%= i %> </td>
+            <td> <%= rows.street %> </td>
+            <td> <%= rows.city %> </td>
+            <td> <%= rows.zipcode %> </td>
+            <td> <%= rows.name %> </td>
+            <td> <%= rows.company %> </td>
+          </tr>
+        <% i++ })%>
+      </tr>
+  </body>
+</html>

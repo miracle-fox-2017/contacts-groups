@@ -1,0 +1,79 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+    table {
+      font-family: arial, sans-serif;
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    td, th {
+      border: 1px solid #dddddd;
+      text-align: left;
+      padding: 5px;
+    }
+
+    th {
+      background-color: lightseagreen;
+    }
+
+    </style>
+    <meta charset="utf-8">
+    <title>contacts</title>
+  </head>
+  <body>
+    <table>
+      <tr>
+        <th>No</th>
+        <th>Nama</th>
+        <th>Company</th>
+        <th>Phone Number</th>
+        <th>Email</th>
+        <th>Address</th>
+        <th>Action</th>
+      </tr>
+        <% let i = 1 %>
+      <% dataContact.forEach(function(rows){%>
+          <tr>
+            <td> <%= i %> </td>
+            <td> <%= rows.name %> </td>
+            <td> <%= rows.company %> </td>
+            <td> <%= rows.telp_number %> </td>
+            <td> <%= rows.email %> </td>
+            <td><a href="/addresses_with_contact">view</a>
+            <td><a href="/contacts/edit/<%=rows.id%>">edit</a>
+                <a href="/contacts/delete/<%=rows.id%>">delete</a>
+            </td>
+          </tr>
+        <% i++ })%>
+      </tr>
+    </table>
+
+
+    <!-- RELEASE 5 -->
+    <!-- - Tambahkan validasi pada halaman Contact, saat melakukan add field name tidak boleh kosong. Munculkan pesan error pada frontend (ejs)
+    - Tambahkan validasi pada halaman Profile, saat melakukan add profile dan memilih contact yang sudah memiliki profile munculkan pesan error "Your contact already have profile" pada frontend (ejs) -->
+    
+    <br>
+      <% if (isEdit === false) {%>
+        <form action="/contacts" method="post">      
+          <td><input type="text" name="name" required size="23" placeholder="name"></td> &nbsp;
+          <td><input type="text" name="company" required size="23" placeholder="company"></td> &nbsp;        
+          <td><input type="text" name="telp_number" required size="23" placeholder="telp_number"></td> &nbsp;       
+          <td><input type="text" name="email" required size="23" placeholder="email"></td>
+          <input type="submit" value="ADD" align="right">
+        </form>
+      <%}%>
+      <% if (isEdit === true) {%>
+        <form action="/contacts/edit/<%=dataContact[0].id%>" method="post">
+          <td><input type="text" name="name" value="<%=dataContact[0].name%>" required size="23" placeholder="name"></td> &nbsp;
+          <td><input type="text" name="company" value="<%=dataContact[0].company%>" required size="23" placeholder="name"></td> &nbsp;
+          <td><input type="text" name="telp_number" value="<%=dataContact[0].telp_number%>" required size="23" placeholder="name"></td> &nbsp;
+          <td><input type="text" name="email" value="<%=dataContact[0].email%>" required size="23" placeholder="name"></td> &nbsp;
+          <input type="submit" value="EDIT" align="right">
+        </form>
+        <%}%>
+  </body>
+</html>

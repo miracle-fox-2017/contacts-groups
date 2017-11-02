@@ -1,0 +1,99 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+    table {
+      font-family: arial, sans-serif;
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    td, th {
+      border: 1px solid #dddddd;
+      text-align: left;
+      padding: 5px;
+    }
+
+    th {
+      background-color: lightseagreen;
+    }
+
+    </style>
+    <meta charset="utf-8">
+    <title>Address</title>
+  </head>
+  <body>
+    <table>
+      <tr>
+        <th>No</th>
+        <th>Street</th>
+        <th>City</th>
+        <th>Zipcode</th>
+        <th>Name<th>
+        <th>Action</th>
+      </tr>
+        <% let i = 1 %>
+      <% dataAddress.forEach(function(rows){%>
+          <tr>
+            <td> <%= i %> </td>
+            <td> <%= rows.street %> </td>
+            <td> <%= rows.city %> </td>
+            <td> <%= rows.zipcode %> </td>
+            <td> <%= rows.name %> </td>
+            <td><a href="/addresses/edit/<%=rows.id%>">edit</a>
+                <a href="/addresses/delete/<%=rows.id%>">delete</a>
+            </td>
+          </tr>
+        <% i++ })%>
+      </tr>
+    </table>
+    <br>
+      <% if (isEdit === false) {%>
+      <form action="/addresses" method="post">
+        Street:<br>
+        <input type="text" name="street" required/>
+        <br><br>
+        City:<br>
+        <input type="text" name="city" required=true/>
+        <br><br>
+        Zipcode:<br>
+        <input type="text" name="zipcode" required=true/>
+        <br><br>
+        <select name="contact" required=true>
+          <option value="">--select contact--</option>
+          <% dataContact.forEach(function(rows){%>
+              <option value="<%=rows.id%>"><%=rows.name %></option>
+            <%})%>
+        </select>
+        <br><br>
+        <input type="submit" value="ADD">
+      </form>
+      <%}%>
+      <% if (isEdit === true) {%>
+        <form action="/addresses/edit/<%=dataAddress[0].id%>" method="post">
+          Street:<br>
+          <input type="text" name="street" value="<%=dataAddress[0].street%>" required/>
+          <br><br>
+          City:<br>
+          <input type="text" name="city" value="<%=dataAddress[0].city%>" required/>
+          <br><br>
+          Zipcode:<br>
+          <input type="text" name="zipcode" value="<%=dataAddress[0].zipcode%>" required/>
+          <br><br>
+          <select name="contact" required=true>
+            <option value="">--select contact--</option>
+            <% dataContact.forEach(function(rows){
+              if(rows.id===dataAddress[0].contacts_id){%>
+                <option value="<%=rows.id%>" selected><%=rows.name %></option>
+              <%}else{%>
+                <option value="<%=rows.id%>"><%=rows.name %></option>
+              <%}%>
+            <% }) %>
+          </select>
+          <br><br>
+          <input type="submit" value="EDIT">
+        </form>
+        <%}%>
+  </body>
+</html>

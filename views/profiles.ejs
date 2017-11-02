@@ -1,0 +1,91 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+    table {
+      font-family: arial, sans-serif;
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    td, th {
+      border: 1px solid #dddddd;
+      text-align: left;
+      padding: 5px;
+    }
+
+    th {
+      background-color: lightseagreen;
+    }
+
+    </style>
+    <meta charset="utf-8">
+    <title>Profiles</title>
+  </head>
+  <body>
+    <table>
+      <tr>
+        <th>No</th>
+        <th>Username</th>
+        <th>Password</th>
+        <th>Contact Name</th>
+        <th>Action</th>
+      </tr>
+        <% let i = 1 %>
+      <% dataProfile.forEach(function(rows){%>
+          <tr>
+            <td> <%= i %> </td>
+            <td> <%= rows.username %> </td>
+            <td> <%= rows.password %> </td>
+            <td> <%= rows.name%> </td>
+            <td><a href="/profiles/edit/<%=rows.id%>">edit</a>
+                <a href="/profiles/delete/<%=rows.id%>">delete</a>
+            </td>
+          </tr>
+        <% i++ })%>
+      </tr>
+    </table>
+    <br>
+      <% if (isEdit === false) {%>
+      <form action="/profiles" method="post">
+        Username:<br>
+        <input type="text" name="username" required/>
+        <br><br>
+        Password:<br>
+        <input type="text" name="password" required=true/>
+        <br><br>
+        <select name="contact" required=true>
+          <option value="">--select contact--</option>
+          <% dataContact.forEach(function(rows){%>
+              <option value="<%=rows.id%>"><%=rows.name %></option>
+            <%})%>
+        </select>
+        <br><br>
+        <input type="submit" value="ADD">
+      </form>
+      <%}%>
+      <% if (isEdit === true) {%>
+        <form action="/profiles/edit/<%=dataProfile[0].id%>" method="post">
+          Username:<br>
+          <input type="text" name="username" value="<%=dataProfile[0].username%>" required/>
+          <br><br>
+          Password:<br>
+          <input type="text" name="password" value="<%=dataProfile[0].password%>" required=true/>
+          <br><br>
+          <select name="contact" required=true>
+            <option value="">--select contact--</option>
+            <% dataContact.forEach(function(rows){
+              if(rows.id===dataProfile[0].contacts_id){%>
+                <option value="<%=rows.id%>" selected><%=rows.name %></option>
+              <%}else{%>
+                <option value="<%=rows.id%>"><%=rows.name %></option>
+              <%}%>
+            <% }) %>
+          </select>
+          <br><br>
+          <input type="submit" value="EDIT">
+        </form>
+        <%}%>
+  </body>
+</html>

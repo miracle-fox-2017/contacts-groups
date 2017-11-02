@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>HALAMAN EDIT GROUPS</title>
+  </head>
+  <body>
+      <fieldset>
+        <legend><b>Silahkan Edit Data GROUP</b></legend>
+          <form action="/groups/edit/<%= rowGroups[0].id %>" method="post">
+            <table border = "1">
+              <tr>
+                <td><input type="text" name = "name_of_group" value="<%= rowGroups[0].name_of_group %>"></td>
+                <td><button><a href = "/groups" %>>EDIT</a></button</td>
+              </tr>
+            </table>
+          </form>
+      </fieldset>
+  </body>
+</html>

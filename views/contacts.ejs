@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>HALAMAN CONTACT</title>
+
+    <style type = "text/css">
+      button {
+        text-decoration: none;
+      }
+
+      a {
+        text-decoration: none;
+        color: black;
+      }
+
+      a:hover {
+        color : chocolate;
+      }
+    </style>
+  </head>
+  <body style = "background-color : aquamarine">
+    <div>
+      <table border = "1" style = "padding: 5px 10px; font-family : sans-serif; font-size : 13px;">
+        <thead>
+          <th><b>Id</b></th>
+          <th><b>Name</b></th>
+          <th><b>Company</b></th>
+          <th><b>Telephone</b></th>
+          <th><b>E-mail</b></th>
+        </thead>
+
+        <tbody>
+        <% for (var i = 0 ; i < rowContacts.length ; i++) { %>
+          <tr>
+              <td><%= rowContacts[i].id %></td>
+              <td><%= rowContacts[i].name %></td>
+              <td><%= rowContacts[i].company %></td>
+              <td><%= rowContacts[i].telp %></td>
+              <td><%= rowContacts[i].email %></td>
+              <td><a href = "/contacts/edit/<%= rowContacts[i].id %>">EDIT</a></td>
+              <td><a href = "/contacts/delete/<%= rowContacts[i].id %>">DELETE</a></td>
+          </tr>
+          </tr>
+        <%}%>
+        </tbody>
+      </table>
+  </div>
+
+  <div>
+    <fieldset>
+      <legend><h5>Masukkan Identitas Diri</h5></legend>
+      <form action="/contacts" method="post">
+      <table border = "0">
+        <tr>
+          <td width = "200px" style = "font-size : 10pt"><b>Name</b></td> <td width = "10px">:</td> <td><input type= "text" name= "name"></td>
+        </tr>
+
+        <tr>
+          <td width = "200px" style = "font-size : 10pt"><b>Company</b></td> <td width = "10px">:</td> <td><input type= "text" name= "company"></td>
+        </tr>
+
+        <tr>
+          <td width = "200px" style = "font-size : 10pt"><b>Telephone</b></td> <td width = "10px">:</td> <td><input type= "text" name= "telp"></td>
+        </tr>
+
+        <tr>
+          <td width = "200px" style = "font-size : 10pt"><b>Email</b></td> <td width = "10px">:</td> <td><input type= "text" name= "email"></td>
+        </tr>
+      </table>
+
+      <table border = "0">
+        <tr>
+          <td width = "200px" style = "font-size : 10pt"></td><td></td><td><input type= "submit" value = "Submit"></td>
+          <td><a href = "/addresses_with_contact">ADDRESSES WITH CONTACT</a></td>
+        </tr>
+      </table>
+      </form>
+  </fieldset>
+  </div>
+
+  </body>
+</html>

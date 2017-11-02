@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>HALAMAN EDIT CONTACT</title>
+  </head>
+  <body>
+      <fieldset>
+        <legend><b>Silahkan Edit Data</b></legend>
+          <form action="/contacts/edit/<%= rowContacts[0].id %>" method="post">
+            <table border = "1">
+              <tr>
+                <td><input type="text" name="name" value="<%= rowContacts[0].name %>"></td>
+                <td><input type="text" name="company" value="<%= rowContacts[0].company %>"></td>
+                <td><input type="text" name="telp" value="<%= rowContacts[0].telp %>"></td>
+                <td><input type="text" name="email" value="<%= rowContacts[0].email %>"></td>
+                <td><button><a href = "/contacts" %>>EDIT</a></button</td>
+              </tr>
+            </table>
+          </form>
+      </fieldset>
+  </body>
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>HALAMAN ADDRESSES</title>
+
+  </head>
+      <body style = "background-color : aquamarine">
+        <div>
+          <table border = "1" style = "padding: 5px 10px; font-family : sans-serif">
+            <thead>
+              <th><b>Id</b></th>
+              <th><b>Street</b></th>
+              <th><b>City</b></th>
+              <th><b>Zip Code</b></th>
+              <th><b>Name</b></th>
+            </thead>
+
+            <tbody style = "font-size : 10pt">
+            <% for (var i = 0 ; i < rowAddresses.length ; i++) { %>
+              <tr>
+                  <td><%= rowAddresses[i].id %></td>
+                  <td><%= rowAddresses[i].street %></td>
+                  <td><%= rowAddresses[i].city %></td>
+                  <td><%= rowAddresses[i].zipcode %></td>
+                  <td><%= rowAddresses[i].name %></td>
+                  <td><a href = "/addresses/edit/<%= rowAddresses[i].id %>">EDIT</a></td>
+                  <td><a href = "/addresses/delete/<%= rowAddresses[i].id %>">DELETE</a></td>
+              </tr>
+            <%}%>
+            </tbody>
+          </table>
+      </div>
+
+      <div>
+        <fieldset>
+          <legend><h5>Masukkan Identitas Diri</h5></legend>
+          <form action="/addresses" method="post">
+          <table border = "0">
+            <tr>
+              <td width = "200px" style = "font-size : 10pt"><b>Street</b></td> <td width = "10px">:</td> <td><input type= "text" name= "street"></td>
+            </tr>
+
+            <tr>
+              <td width = "200px" style = "font-size : 10pt"><b>City</b></td> <td width = "10px">:</td> <td><input type= "text" name= "city"></td>
+            </tr>
+
+            <tr>
+              <td width = "200px" style = "font-size : 10pt"><b>Zip Code</b></td> <td width = "10px">:</td> <td><input type= "text" name= "zipcode"></td>
+            </tr>
+          </table>
+
+          <table border = "0">
+            <tr>
+              <td width = "200px" style = "font-size : 10pt"></td><td></td><td><input type= "submit" value = "Submit"></td>
+
+              <td width = "200px" style = "font-size : 10pt">
+                <select name ="contact">
+                  <option>-----------SELECT-----------</option>
+                <% for (var i = 0 ; i < rowContacts.length ; i++) { %>
+                  <option value ="<%= rowContacts[i].id %>"><%= rowContacts[i].name %></option>
+                <%}%>
+                </select>
+              </td>
+            </tr>
+          </table>
+          </form>
+      </fieldset>
+      </div>
+  </body>
+</html>

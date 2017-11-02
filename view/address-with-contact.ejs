@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Address</title>
+  </head>
+  <body>
+      <h2>Contact With Address</h2>
+      <table style="width: 100%">
+        <thead>
+          <tr>
+            <th>ID Address</th>
+            <th>Name</th>
+            <th>Street</th>
+            <th>City</th>
+            <th>Zip Code</th>
+            <th>Company</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% contactAddresses.forEach(contactAddress => { %>
+            <tr>
+              <td align="center"><%= contactAddress.id %></td>
+              <td align="center"><%= contactAddress.name %></td>
+              <td align="center"><%= contactAddress.street %></td>
+              <td align="center"><%= contactAddress.city %></td>
+              <td align="center"><%= contactAddress.zipcode %></td>
+              <td align="center"><%= contactAddress.company %></td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+  </body>
+</html>

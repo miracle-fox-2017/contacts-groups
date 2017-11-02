@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Profiles Edit</title>
+  </head>
+  <body>
+    <h2>Edit Profiles</h2>
+    <form action="/profiles/edit/<%= id %>" method="post">
+      <p>Username: <input type="text" name="username" value="<%= username %>" required/></p>
+      <p>Password: <input type="text" name="password" value="<%= password %>" required></p>
+      <button>SUBMIT EDIT</button>
+    </form>
+  </body>
+</html>

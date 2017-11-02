@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Groups Edit</title>
+  </head>
+  <body>
+    <h2>Edit Groups</h2>
+    <form action="/groups/edit/<%= id %>" method="post">
+      <p>Group Name: <input type="text" name="name" value="<%= name_of_group %>" required/></p>
+      <button>SUBMIT EDIT</button>
+    </form>
+  </body>
+</html>

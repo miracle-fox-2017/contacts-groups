@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Address</title>
+  </head>
+  <body>
+      <h2>Add Address</h2>
+      <form action="/address" method="post">
+        <p>Street Name: <input type="text" name="street" required/></p>
+        <p>City Name: <input type="text" name="city" required/></p>
+        <p>ZIP Code: <input type="text" name="zipcode"></p>
+        <select name="id">
+          <% contacts.forEach(contact => { %>
+            <option value="<%= contact.id %>"><%= contact.name %></option>
+          <% }) %>
+        </select>
+        <button>SUBMIT ADDRESS</button>
+      </form>
+
+      <table style="width: 100%">
+        <thead>
+          <tr>
+            <th>ID Address</th>
+            <th>Street</th>
+            <th>City</th>
+            <th>Zip Code</th>
+            <th>Contact</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% addresses.forEach(address => { %>
+            <tr>
+              <td align="center"><%= address.id %></td>
+              <td align="center"><%= address.street %></td>
+              <td align="center"><%= address.city %></td>
+              <td align="center"><%= address.zipcode %></td>
+              <td align="center"><%= address.name %></td>
+              <td align="center">
+                <a href="/address/edit/<%= address.id %>">edit</a>
+                <a href="/address/delete/<%= address.id %>">delete</a>
+              </td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+  </body>
+</html>

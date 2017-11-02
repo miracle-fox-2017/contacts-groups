@@ -1,0 +1,19 @@
+{
+  "name": "contacts-groups",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:miracle-fox-2017/contacts-groups.git",
+  "author": "Yofriadi Yahya <yofriadiyahya@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "start": "nodemon app"
+  },
+  "dependencies": {
+    "ejs": "^2.5.7",
+    "express": "^4.16.2",
+    "sqlite3": "^3.1.13"
+  },
+  "devDependencies": {
+    "nodemon": "^1.12.1"
+  }
+}

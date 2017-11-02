@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Contacts</title>
+  </head>
+  <body>
+    <h2>Add Contacts</h2>
+    <form action="/contacts" method="post">
+      <p>Name: <input type="text" name="name" required/></p>
+      <p>Phone: <input type="number" name="phone" required/></p>
+      <p>Email: <input type="email" name="email"/></p>
+      <p>Company: <input type="text" name="company"/></p>
+      <button>SUBMIT CONTACTS</button>
+    </form>
+
+    <a href="/address/with-contact">address with contact</a>
+
+    <table style="width: 100%">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Phone</th>
+          <th>Email</th>
+          <th>Company</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% contacts.forEach(contact => { %>
+          <tr>
+            <td align="center"><%= contact.id %></td>
+            <td align="center"><%= contact.name %></td>
+            <td align="center"><%= contact.telp_number %></td>
+            <td align="center"><%= contact.email %></td>
+            <td align="center"><%= contact.company %></td>
+            <td align="center">
+              <a href="/contacts/edit/<%= contact.id %>">edit</a>
+              <a href="/contacts/delete/<%= contact.id %>">delete</a>
+            </td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </body>
+</html>

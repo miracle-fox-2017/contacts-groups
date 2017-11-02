@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Groups</title>
+  </head>
+  <body>
+      <h2>Add Groups</h2>
+      <form action="/groups" method="post">
+        <p>Name of Group: <input type="text" name="name" required/></p>
+        <button>SUBMIT GROUPS</button>
+      </form>
+
+      <table style="width: 100%">
+        <thead>
+          <tr>
+            <th>ID Group</th>
+            <th>Group Name</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% groups.forEach(group => { %>
+            <tr>
+              <td align="center"><%= group.id %></td>
+              <td align="center"><%= group.name_of_group %></td>
+              <td align="center">
+                <a href="/groups/edit/<%= group.id %>">edit</a>
+                <a href="/groups/delete/<%= group.id %>">delete</a>
+              </td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+  </body>
+</html>

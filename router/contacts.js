@@ -13,6 +13,7 @@ router.get('/contacts',function(req,res){
     console.log(err)
   })
 })
+
 //menambahkan contact
 router.post('/contacts',function(req,res){
   let isEdit = false;
@@ -26,6 +27,7 @@ router.post('/contacts',function(req,res){
     console.log(err)
   })
 })
+
 //delete contact
 router.get('/contacts/delete/:id',function(req,res){
   let id = req.params.id
@@ -35,6 +37,7 @@ router.get('/contacts/delete/:id',function(req,res){
     console.log(err)
   })
  })
+
 //edit contact get
 router.get('/contacts/edit/:id',function(req,res){
   let isEdit = true;
@@ -45,6 +48,7 @@ router.get('/contacts/edit/:id',function(req,res){
     console.log(err)
   })
 })
+
 //edit contact post
 router.post('/contacts/edit/:id',function(req,res){
   let isEdit = true;

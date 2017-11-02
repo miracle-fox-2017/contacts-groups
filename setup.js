@@ -10,6 +10,9 @@ db.serialize(function(){
 	db.run("CREATE TABLE IF NOT EXISTS Addresses (id INTEGER PRIMARY KEY AUTOINCREMENT, street varchar(30), city varchar(10), zipcode INTEGER)");
 	db.run(`ALTER TABLE Profile ADD COLUMN contacts_id INTEGER REFERENCES Contacts (id)`)
 	db.run(`CREATE UNIQUE INDEX IF NOT EXISTS idContact ON Profile (contacts_id)`)
+	// Release 6
+	// Tabel Contacts dan Table Address memiliki relasi dimana satu data contact boleh memiliki lebih dari satu data address 
+	// Pada file setup.js tambahkan column relasi foreign key dan tentukan di tabel mana foreign key tersebut ditambahkan (hint: gunakan alter table)
 	db.run(`ALTER TABLE Addresses add COLUMN contacts_id INTEGER REFERENCES Contacts (id)`)
   })
   

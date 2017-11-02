@@ -31,7 +31,7 @@ class Profile{
     })
   }
 
-  static delete(id){
+  static remove(id){
     let query = `DELETE FROM Profile
                  WHERE id = ${id}`;
     return new Promise((resolve,reject)=>{

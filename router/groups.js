@@ -11,6 +11,7 @@ router.get('/groups',function(req,res){
     console.log(err)
   })
 })
+
 //menambahkan groups
 router.post('/groups',function(req,res){
   let isEdit = false;
@@ -21,15 +22,17 @@ router.post('/groups',function(req,res){
     console.log(err)
   })
 })
+
 //delete groups
 router.get('/groups/delete/:id',function(req,res){
   let id = req.params.id
-  Group.delete(id).then((dataGroup)=>{
+  Group.remove(id).then((dataGroup)=>{
     res.redirect('/groups')
   }).catch((err)=>{
     console.log(err)
   })
  })
+
 //edit groups get
 router.get('/groups/edit/:id',function(req,res){
   let isEdit = true;
@@ -40,6 +43,7 @@ router.get('/groups/edit/:id',function(req,res){
     console.log(err)
   })
 })
+
 //edit groups post
 router.post('/groups/edit/:id',function(req,res){
   let isEdit = true;

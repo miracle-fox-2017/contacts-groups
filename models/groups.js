@@ -29,7 +29,7 @@ class Groups{
     })
   }
 
-  static delete(id){
+  static remove(id){
     let query = `DELETE FROM Groups
                  WHERE id = ${id}`;
     return new Promise((resolve,reject)=>{

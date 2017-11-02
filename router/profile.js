@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
 
-const Profile = require('../models/profile')
-const Contact = require('../models/contact')
+const profile = require('../models/profile')
+const contact = require('../models/contact')
 
 // router.get('/profiles', function (req, res) {
 //   Profile.findAll(function(rows)
@@ -19,11 +19,11 @@ const Contact = require('../models/contact')
 // })
 
 router.get('/profiles', function (req, res) {
-  Profile.findAllWithContact(function(profilesdata)
+  profile.findAllWithContact(function(profilesdata)
   {
-    Contact.findAll(function(contactsdata){
+    contact.findAll(function(contactsdata){
       // console.log(row);
-        res.render('profiles', {profilesdata,contactsdata})
+        res.render('profiles', {profilesdata:profilesdata ,contactsdata:contactsdata, dataerror: null})
     })
     // console.log(rows);
     // res.render('profiles', {rows})
@@ -31,15 +31,33 @@ router.get('/profiles', function (req, res) {
 })
 
 router.post('/profiles', function (req, res) {
-  // console.log(req.body);
-  Profile.create(req.body);
-  res.redirect('/profiles');
+  profile.findByContactID(req.body.contactsid, function(dataProfile, err){
+    // console.log(dataProfile);
+    if(dataProfile.length > 0){
+      profile.findAllWithContact(function(profilesdata)
+      {
+        contact.findAll(function(contactsdata){
+          // console.log(row);
+            res.render('profiles', {profilesdata: profilesdata, contactsdata: contactsdata, dataerror: "Your contact already have profile"})
+        })
+        // console.log(rows);
+        // res.render('profiles', {rows})
+      })
+      
+    } else {
+      profile.create(req.body);
+      res.redirect('/profiles');
+    }
+  })
+  // // console.log(req.body);
+  // Profile.create(req.body);
+  // res.redirect('/profiles');
 })
 
 router.get('/profiles/edit/:id', function (req, res) {
   // console.log(req.params);
-  Profile.findID(req.params.id, function(profilesdata){
-    Contact.findAll(function(contactsdata){
+  profile.findID(req.params.id, function(profilesdata){
+    contact.findAll(function(contactsdata){
         res.render('profileedit', {profilesdata, contactsdata})
     })
   })
@@ -47,13 +65,13 @@ router.get('/profiles/edit/:id', function (req, res) {
 
 router.post('/profiles/edit/:id', function (req, res){
   // console.log(req.body);
-  Profile.update(req.body,req.params.id)
+  profile.update(req.body,req.params.id)
   res.redirect('/profiles');
 })
 
 router.get('/profiles/delete/:id', function (req, res) {
   // console.log('masuk DELETE');
-  Profile.remove(req.params.id);
+  profile.remove(req.params.id);
   res.redirect('/profiles');
 })
 

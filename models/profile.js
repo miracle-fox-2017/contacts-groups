@@ -22,6 +22,16 @@ class Profile {
       });
   }
   
+  static findByContactID(contactsid,cb){
+    db.all(`SELECT * FROM Profiles WHERE id_contacts = ${contactsid}`,function(err, hasil){
+      if(!err){
+        cb(hasil, null)
+      } else {
+        cb(null, err);
+      }
+    })
+  }
+  
   static create(body){
     console.log(body);
     db.run(`INSERT INTO Profiles (username, password, id_contacts) VALUES ('${body.username}','${body.password}','${body.contactsid}')` );

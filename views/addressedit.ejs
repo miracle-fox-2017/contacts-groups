@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<% console.log(rows) %>
 <html>
   <head>
     <meta charset="utf-8">
@@ -8,10 +7,19 @@
   <body>
     <table>
       <tr>
-      <form class="" action="/addresses/edit/ <%= rows.id %>" method="post">
-        <td>Street <input type="text" name="street" value="<%= rows.street %>"></td>
-        <td>City <input type="text" name="city" value="<%= rows.city %>"></td>
-        <td>Zipcode <input type="text" name="zipcode" value="<%= rows.zipcode %>"></td>
+      <form class="" action="/addresses/edit/ <%= addressdata.id %>" method="post">
+        <td>Street <input type="text" name="street" value="<%= addressdata.street %>"></td>
+        <td>City <input type="text" name="city" value="<%= addressdata.city %>"></td>
+        <td>Zipcode <input type="text" name="zipcode" value="<%= addressdata.zipcode %>"></td>
+        <td><select name="contactsid">
+          <% for(let i = 0; i < contactsdata.length; i++){ %>
+            <% if (contactsdata[i].id == addressdata.id_contacts){ %>
+            <option selected value="<%= contactsdata[i].id%>"><%= contactsdata[i].name %></option>
+            <% } else {%>
+            <option value="<%= contactsdata[i].id%>"><%= contactsdata[i].name %></option>
+            <% } %>
+          <% } %>
+        </select></td>
         <td><input type="submit" value="Submit"></td>
       </form>
       </tr>

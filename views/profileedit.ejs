@@ -12,7 +12,11 @@
         <td>Password <input type="password" name="password" value="<%= profilesdata.password %>"></td>
         <td><select name="contactsid">
           <% for(let i = 0; i < contactsdata.length; i++){ %>
+            <% if (contactsdata[i].id == profilesdata.id_contacts){ %>
+            <option selected value="<%= contactsdata[i].id%>"><%= contactsdata[i].name %></option>
+            <% } else {%>
             <option value="<%= contactsdata[i].id%>"><%= contactsdata[i].name %></option>
+            <% } %>
           <% } %>
         </select></td>
         <td><input type="submit" value="Submit"></td>

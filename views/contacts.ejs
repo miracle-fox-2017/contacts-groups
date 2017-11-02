@@ -3,8 +3,17 @@
   <head>
     <meta charset="utf-8">
     <title>Contacts</title>
+    <script>
+    function validateForm() {
+      var x = document.forms["submitForm"]["name"].value;
+      if (x == "") {
+          alert("NAMA HARUS DIISI!!");
+          return false;
+        }
+      }
+    </script>
   </head>
-  <body>
+    <body>
     <table>
   <tr>
     <th>ID</th>
@@ -26,7 +35,7 @@
     </tr>
   <% } %>
   <tr>
-  <form class="" action="/contacts" method="post">
+  <form name="submitForm" class="" action="/contacts" onsubmit="return validateForm()" method="post">
     <td></td>
     <td><input type="text" name="name"></td>
     <td><input type="text" name="company"></td>
@@ -36,5 +45,6 @@
   </form>
   </tr>
 </table>
+  <a href="/addresses_with_contact"> Addresses with Contact</a>
   </body>
 </html>

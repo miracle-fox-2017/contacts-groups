@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Address with Contact</title>
+  </head>
+  <body>
+    <table>
+      <tr>
+        <th>Street</th>
+        <th>City</th>
+        <th>Zipcode</th>
+        <th>Name</th>
+        <th>Company</th>
+      </tr>
+      <% for(let i = 0; i < addressdata.length; i++){ %>
+        <tr>
+          <td><%= addressdata[i].street %></td>
+          <td><%= addressdata[i].city %></td>
+          <td><%= addressdata[i].zipcode %></td>
+          <td><%= addressdata[i].name %></td>
+          <td><%= addressdata[i].company %></td>
+        </tr>
+      <% } %>
+    </table>
+  </body>
+</html>

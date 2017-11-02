@@ -12,8 +12,19 @@ class Address {
     })
   }
   
+  static findAllWithContact(cb){
+    db.all('SELECT Addresses.id, Addresses.street, Addresses.city, Addresses.zipcode, Contacts.name, Contacts.company FROM Addresses JOIN Contacts ON Addresses.id_contacts = Contacts.id', function(err,rows){
+      if(!err){
+        cb(rows)
+      } else {
+        console.log(err);
+      }
+    })
+  }
+  
   static create(body){
-    db.run(`INSERT INTO Addresses (street, city, zipcode) VALUES ('${body.street}','${body.city}','${body.zipcode}')` );
+    console.log(body);
+    db.run(`INSERT INTO Addresses (street, city, zipcode, id_contacts) VALUES ('${body.street}','${body.city}','${body.zipcode}','${body.contactsid}')` );
   }
   
   static findID(params,cb){

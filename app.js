@@ -3,10 +3,10 @@ const bodyParser = require('body-parser')
 const app = express()
 
 //Router
-const Contact = require('./router/contact')
-const Group = require('./router/group')
-const Address = require('./router/address')
-const Profile = require('./router/profile')
+const contact = require('./router/contact')
+const group = require('./router/group')
+const address = require('./router/address')
+const profile = require('./router/profile')
 
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -19,16 +19,16 @@ app.set('view engine', 'ejs');
 
 
 // Contacts
-app.use(Contact);
+app.use(contact);
 
 // Groups
-app.use(Group)
+app.use(group)
 
 // Addresses
-app.use(Address)
+app.use(address)
 
 // Profiles
-app.use(Profile)
+app.use(profile)
 
 
 app.listen(3000, function () {

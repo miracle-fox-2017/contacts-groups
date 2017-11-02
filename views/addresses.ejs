@@ -6,32 +6,39 @@
   </head>
   <body>
     <table>
-  <tr>
-    <th>ID</th>
-    <th>Street</th>
-    <th>City</th>
-    <th>Zipcode</th>
-  </tr>
-  <% console.log(rows) %>
-  <% for(let i = 0; i < rows.length; i++){ %>
+      <tr>
+        <th>ID</th>
+        <th>Street</th>
+        <th>City</th>
+        <th>Zipcode</th>
+        <th>Contacts</th>
+      </tr>
+  <% console.log(addressdata.id) %>
+  <% for(let i = 0; i < addressdata.length; i++){ %>
     <tr>
-      <td><%= rows[i].id %></td>
-      <td><%= rows[i].street %></td>
-      <td><%= rows[i].city %></td>
-      <td><%= rows[i].zipcode %></td>
-      <td><a href="/addresses/edit/<%= rows[i].id %>"> Edit </td>
-      <td><a href="/addresses/delete/<%= rows[i].id %>"> Delete </td>
+      <td><%= addressdata[i].id %></td>
+      <td><%= addressdata[i].street %></td>
+      <td><%= addressdata[i].city %></td>
+      <td><%= addressdata[i].zipcode %></td>
+      <td><%= addressdata[i].name %></td>
+      <td><a href="/addresses/edit/<%= addressdata[i].id %>"> Edit </td>
+      <td><a href="/addresses/delete/<%= addressdata[i].id %>"> Delete </td>
     </tr>
   <% } %>
-  <tr>
-  <form class="" action="/addresses" method="post">
-    <td></td>
-    <td><input type="text" name="street"></td>
-    <td><input type="text" name="city"></td>
-    <td><input type="text" name="zipcode"></td>
-    <td><input type="submit" value="Submit"></td>
-  </form>
-  </tr>
+    <tr>
+      <form class="" action="/addresses" method="post">
+        <td></td>
+        <td><input type="text" name="street"></td>
+        <td><input type="text" name="city"></td>
+        <td><input type="text" name="zipcode"></td>
+        <td><select name="contactsid">
+          <% for(let i = 0; i < contactsdata.length; i++){%>
+            <option value="<%= contactsdata[i].id%>"><%= contactsdata[i].name %></option>
+          <% } %>
+        </select></td>
+        <td><input type="submit" value="Submit"></td>
+      </form>
+    </tr>
 </table>
   </body>
 </html>

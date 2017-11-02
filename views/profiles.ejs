@@ -5,14 +5,19 @@
     <title>Profiles</title>
   </head>
   <body>
+    <% if(dataerror){%>
+      <%= dataerror %>
+    <%} else {%>
+      <% console.log('') %>
+    <%}%>
     <table>
-  <tr>
-    <th>ID</th>
-    <th>Username</th>
-    <th>Password</th>
-    <th>Name</th>
-  </tr>
-  <% for(let i = 0; i < profilesdata.length; i++){ %>
+      <tr>
+        <th>ID</th>
+        <th>Username</th>
+        <th>Password</th>
+        <th>Name</th>
+      </tr>
+      <% for(let i = 0; i < profilesdata.length; i++){ %>
     <tr>
       <td><%= profilesdata[i].id %></td>
       <td><%= profilesdata[i].username %></td>
@@ -23,7 +28,7 @@
     </tr>
   <% } %>
   <tr>
-  <form class="" action="/profiles" method="post">
+  <form name= "submitForm" class="" action="/profiles" onsubmit="return validateForm()" method="post">
     <td></td>
     <td><input type="text" name="username"></td>
     <td><input type="password" name="password"></td>

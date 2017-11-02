@@ -1,39 +1,53 @@
 const express = require('express');
 const router = express.Router();
 
-const Address = require('../models/address')
+const address = require('../models/address')
+const contact = require('../models/contact')
 
 router.get('/addresses', function (req, res) {
-  Address.findAll(function(rows)
+  address.findAllWithContact(function(addressdata)
   {
+    console.log(addressdata)
+    contact.findAll(function(contactsdata){
+      res.render('addresses', {addressdata:addressdata, contactsdata:contactsdata})
+    })
     // console.log(rows);
-    res.render('addresses', {rows})
   })
 })
 
 router.post('/addresses', function (req, res) {
   // console.log(req.body);
-  Address.create(req.body);
+  address.create(req.body);
   res.redirect('/addresses');
 })
 
 router.get('/addresses/edit/:id', function (req, res) {
   // console.log(req.params);
-  Address.findID(req.params.id, function(rows){
-    res.render('addressedit', {rows})
+  address.findID(req.params.id, function(addressdata){
+    contact.findAll(function(contactsdata){
+      res.render('addressedit', {addressdata:addressdata, contactsdata:contactsdata})
+    })
   })
 })
 
 router.post('/addresses/edit/:id', function (req, res){
   // console.log('masuk UPDATE');
-  Address.update(req.body, req.params.id)
+  address.update(req.body, req.params.id)
   res.redirect('/addresses');
 })
 
 router.get('/addresses/delete/:id', function (req, res) {
   // console.log('masuk DELETE');
-  Address.remove(req.params.id);
+  address.remove(req.params.id);
   res.redirect('/addresses');
+})
+
+router.get('/addresses_with_contact', function (req, res){
+  address.findAllWithContact(function(addressdata){
+    contact.findAll(function(contactsdata){
+      res.render('addresses_with_contact', {addressdata:addressdata, contactsdata:contactsdata})
+    })
+  })
 })
 
 module.exports = router

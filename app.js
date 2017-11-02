@@ -3,14 +3,12 @@ const app = express()
 
 var sqlite3 = require('sqlite3').verbose();
 var db = new sqlite3.Database('./database.db');
-
 var bodyParser = require('body-parser')
 
-// parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }))
-
-// parse application/json
 app.use(bodyParser.json())
+
+//================================================//
 
 app.set('views', './views');
 app.set('view engine', 'ejs');
@@ -131,11 +129,42 @@ app.get('/addresses/delete/:id', function (req, res) {
    res.redirect('/addresses')
 })
 
-app.post('/contacts', function (req, res) {
-  let queryContact = ` * FROM Contacts`
-  db.all(queryContact, function(err, rowContacts){
-    res.render('contacts',{rowContacts})
+// PROFILE
+
+app.get('/profiles', function (req, res) {
+  let queryProfile = `SELECT * FROM Profile`
+  db.all(queryProfile, function(err, rowProfiles) {
+    res.render('profiles', {rowProfiles})
   })
+})
+
+app.post('/profiles', function (req, res) {
+  let profileUsername = req.body.username;
+  let profilePassword = req.body.password;
+  db.run(`INSERT INTO Profile (username,password) VALUES('${profileUsername}','${profilePassword}')`);
+  res.redirect('/profiles');
+})
+
+app.get('/profiles/edit/:id', function (req, res) {
+  let getEdit = `SELECT * FROM Profile WHERE id = ${req.params.id}`
+  db.all(getEdit, function(err, rowProfiles) {
+    res.render('editProfiles',{rowProfiles})
+  })
+})
+
+app.post('/profiles/edit/:id', function (req, res) {
+  let id = req.params.id;
+  let profileUsername = req.body.username;
+  let profilePassword = req.body.password;
+  db.run(`UPDATE Profile
+    SET username = '${profileUsername}', password = '${profilePassword}' WHERE id = "${id}"`)
+    res.redirect('/profiles')
+})
+
+app.get('/profiles/delete/:id', function (req, res) {
+  db.run(`DELETE FROM Profile
+   WHERE id = ${req.params.id}`);
+   res.redirect('/profiles')
 })
 
 app.listen(3000, function () {

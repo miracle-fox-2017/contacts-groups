@@ -66,4 +66,3 @@ Buatlah sejumlah route berikut dan tampilkan melalui view engine ejs<br />
 |GET    | /profiles/edit/:id      | Menampilkan data profile spesifik untuk diubah      |
 |POST   | /profiles/edit/:id      | Menerima data form untuk update profile             |
 |GET    | /profiles/delete/:id    | Menghapus data profile berdasarkan id               |
-

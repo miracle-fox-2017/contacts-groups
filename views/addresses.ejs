@@ -22,8 +22,8 @@
                   <td><%= rowAddresses[i].street %></td>
                   <td><%= rowAddresses[i].city %></td>
                   <td><%= rowAddresses[i].zipcode %></td>
-                  <td><a href = "/addresses<%= rowAddresses[i].id %>">EDIT</a></td>
-                  <td><a href = "/addresses<%= rowAddresses[i].id %>">DELETE</a></td>
+                  <td><a href = "/addresses/edit/<%= rowAddresses[i].id %>">EDIT</a></td>
+                  <td><a href = "/addresses/delete/<%= rowAddresses[i].id %>">DELETE</a></td>
               </tr>
             <%}%>
             </tbody>

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>HALAMAN EDIT Profiles</title>
+  </head>
+  <body>
+      <fieldset>
+        <legend><b>Silahkan Edit Data Profiles</b></legend>
+          <form action="/profiles/edit/<%= rowProfiles[0].id %>" method="post">
+            <table border = "1">
+              <tr>
+                <td><input type="text" name = "username" value="<%= rowProfiles[0].username %>"></td>
+                <td><input type="text" name = "password" value="<%= rowProfiles[0].password %>"></td>
+                <td><button><a href = "/profiles" %>>EDIT</a></button</td>
+              </tr>
+            </table>
+          </form>
+      </fieldset>
+  </body>
+</html>

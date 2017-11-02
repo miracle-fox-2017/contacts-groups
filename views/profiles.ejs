@@ -30,6 +30,7 @@
       Username <br> <input type="text" name="username"> <br>
       Password <br> <input type="password" name="password"><br>
       <select name="contact">
+        <option> ---- SELECT----</option>
         <% dataContact.forEach(function(listContact){ %>
           <option value="<%= listContact.id%>"> <%= listContact.name %> </option>
         <%})%>

@@ -7,10 +7,6 @@ const Contact = require('../models/contacts');
 
 
 router.get('/', function(req, res){
-  // Profile.findAll(function(err, rowsProfiles) {
-  //   console.log(rowsProfiles);
-  // res.render('profiles', {rowsProfiles})
-  // })
   Profile.findAllWithContact(function(err, rowsProfiles) {
     Contact.findAll(function(err, rowsContacts){
       res.render('profiles', {dataProfile: rowsProfiles, dataContact: rowsContacts})

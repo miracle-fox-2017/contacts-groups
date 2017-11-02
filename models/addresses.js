@@ -8,11 +8,20 @@ class Address{
     })
   }
 
+  static findAllWithContact(callBack){
+    db.all(`SELECT Addresses.*, Contacts.name FROM Addresses LEFT JOIN
+            Contacts ON Contacts.id = Addresses.contactsId`, function(err, rowsAddress){
+      callBack(err, rowsAddress)
+    })
+  }
+
   static addAddress(body){
     let street = body.street
     let city = body.city
     let zipcode = body.zipcode
-    let queryAddress = `INSERT INTO addresses (street, city, zipcode) VALUES ('${street}', '${city}', '${zipcode}')`
+    let contactId = body.contact
+    let queryAddress = `INSERT INTO addresses (street, city, zipcode, contactsId)
+                        VALUES ('${street}', '${city}', ${zipcode}, ${contactId})`
     db.run(queryAddress)
   }
 
@@ -27,14 +36,22 @@ class Address{
     let street = body.street
     let city = body.city
     let zipcode = body.zipcode
+    let contactId = body.contact
     let updateAddress = `UPDATE Addresses SET street = "${street}", city = "${city}",
-                          zipcode = "${zipcode}" WHERE id = "${params}"`
+                          zipcode = ${zipcode}, contactsId = "${contactId}"  WHERE id = "${params}"`
     db.all(updateAddress)
   }
 
   static hapusAddress(params){
     let deleteAddress = `DELETE FROM Addresses WHERE id = "${params}"`
     db.all(deleteAddress)
+  }
+
+  static AddressWithContact(callBack){
+    db.all(`SELECT Addresses.*, Contacts.name, Contacts.company FROM Addresses LEFT JOIN
+            Contacts ON Contacts.id = Addresses.contactsId`, function(err, rowsAddress){
+      callBack(err, rowsAddress)
+    })
   }
 }
 

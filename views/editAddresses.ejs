@@ -11,6 +11,15 @@
         <td> Street <br> <input type="text" name="street" value="<%= rowsEditAddress.street %>"> </td>
         <td>City <br> <input type="text" name="city" value="<%= rowsEditAddress.city %>"></td>
         <td>Zipcode <br> <input type="text" name="zipcode" value="<%= rowsEditAddress.zipcode %>"></td>
+        <td> <select name="contact">
+          <% dataContact.forEach(function(listContact){ %>
+            <% if(listContact.id === rowsEditAddress.contactsId){ %>
+              <option value="<%= listContact.id%>" selected> <%= listContact.name %> </option>
+            <%} else {%>
+              <option value="<%= listContact.id%>"> <%= listContact.name %> </option>
+            <% } %>
+          <%})%>
+        </select> </td>
         <td><input type="submit" value="Submit"></td>
       </form>
     </tr>

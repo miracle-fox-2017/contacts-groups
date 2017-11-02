@@ -23,5 +23,7 @@ db.serialize( () => {
   // db.run(`ALTER TABLE Profiles ADD COLUMN Contacts_id INTEGER REFERENCES Contacts(id)`)
   db.run(`CREATE UNIQUE INDEX IF NOT EXISTS idContacts ON profiles(Contacts_id)`)
 
+  // db.run(`ALTER TABLE Addresses ADD COLUMN contactsId INTEGER REFERENCES Contacts(id)`)
+
 });
   db.close();

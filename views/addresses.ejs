@@ -11,13 +11,15 @@
         <td> <strong> Street </strong> </td>
         <td> <strong> City </strong> </td>
         <td> <strong> Zipcode </strong> </td>
+        <td> <strong> Name </strong> </td>
       </tr>
-    <%rowsAddress.forEach(function(list){%>
+    <%dataAddress.forEach(function(list){%>
       <tr>
         <td> <%= list.id %> </td>
         <td> <%= list.street %> </td>
         <td> <%= list.city %> </td>
         <td> <%= list.zipcode %> </td>
+        <td> <%= list.name %> </td>
         <td> <a href="/addresses/edit/<%= list.id %>" > Edit </td>
         <td> <a href="/addresses/delete/<%= list.id %>" > Delete </td>
       </tr>
@@ -28,6 +30,12 @@
       Street <br> <input type="text" name="street"> <br>
       City <br> <input type="text" name="city"><br>
       Zipcode <br> <input type="text" name="zipcode"><br>
+        <select name="contact">
+          <option> ---- SELECT----</option>
+          <% dataContact.forEach(function(listContact){ %>
+            <option value="<%= listContact.id%>"> <%= listContact.name %> </option>
+          <%})%>
+        </select>
       <input type="submit" value="Send"><br>
     </form>
   </body>

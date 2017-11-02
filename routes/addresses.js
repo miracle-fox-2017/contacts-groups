@@ -2,10 +2,13 @@ const express = require('express')
 const router = express.Router();
 
 const Address = require('../models/addresses');
+const Contact = require('../models/contacts');
 
 router.get('/', function(req, res){
-  Address.findAll(function(err, rowsAddress) {
-  res.render('addresses', {rowsAddress})
+  Address.findAllWithContact(function(err, rowsAddress) {
+    Contact.findAll(function(err, rowsContacts){
+      res.render('addresses', {dataAddress: rowsAddress, dataContact: rowsContacts})
+    })
   })
 })
 
@@ -16,7 +19,9 @@ router.post('/', function(req, res){
 
 router.get('/edit/:id', function(req, res){
   Address.formEditAddress(req.params.id, function(err, rowsEditAddress){
-    res.render('editAddresses', {rowsEditAddress})
+    Contact.findAll(function(err, rowsContacts){
+      res.render('editAddresses', {rowsEditAddress: rowsEditAddress, dataContact: rowsContacts})
+    })
   })
 })
 

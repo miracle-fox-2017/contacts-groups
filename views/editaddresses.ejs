@@ -9,6 +9,15 @@
       <td>City <input type="text" name="city" value="<%=rowAddresses.city%>"></td>
       <td>Street <input type="text" name="street" value="<%=rowAddresses.street%>"></td>
       <td>Zipcode <input type="text" name="city" value="<%=rowAddresses.zipcode%>"></td>
+      <td><select name="contactsID">
+        <%for(let i=0;i<rowContacts.length;i++){%>
+          <%if(rowContacts[i].ID == rowAddresses.contact_id){%>
+            <option value="<%=rowContacts[i].ID%>" selected><%=rowContacts[i].Name%></option>
+          <%}else{%>
+            <option value="<%=rowContacts[i].ID%>" ><%=rowContacts[i].Name%></option>
+
+        <%}}%>
+      </select></td>
       <td> <input type="submit" value="Submit Edit!"></td>
     </form>
   </body>

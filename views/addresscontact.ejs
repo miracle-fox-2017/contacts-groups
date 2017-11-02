@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Addresses with Contacts</title>
+  </head>
+  <body>
+    <table>
+      <tr>
+        <th>ID</th>
+        <th>City</th>
+        <th>Street</th>
+        <th>ZIP CODE</th>
+        <th>Nama</th>
+        <th>Company</th>
+
+      </tr>
+      <% for(let i=0;i<rowAddresses.length;i++){ %>
+        <tr>
+        <td><%=rowAddresses[i].ID%></td>
+        <td><%=rowAddresses[i].city%></td>
+        <td><%=rowAddresses[i].street%></td>
+        <td><%=rowAddresses[i].zipcode%></td>
+        <td><%=rowAddresses[i].Name%></td>
+        <td><%=rowAddresses[i].Company%></td>
+        <td><a href="/addresses/edit/<%=rowAddresses[i].ID%>"> Edit </td>
+        <td><a href="/addresses/delete/<%=rowAddresses[i].ID%>"> Delete </td>
+        </tr>
+        <%}%>
+
+    </table>
+
+  </body>
+</html>

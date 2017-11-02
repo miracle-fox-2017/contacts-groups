@@ -3,14 +3,10 @@ const db = new sqlite3.Database('./database/database.db')
 
 class Profile{
 
-  // static findAll(callback){
-  //   db.all(`SELECT * FROM Profiles`,function(err,rowProfiles){
-  //     callback(rowProfiles)
-  //   })
-  // }
+
   static findAllwithContact(callback){
     // console.log(rowProfiles);
-    db.all(`SELECT Profiles.ID,Profiles.username,Profiles.password, Contacts.Name FROM Profiles INNER JOIN Contacts ON Profiles.id_contact = Contacts.ID`, function(err, rowProfiles){
+    db.all(`SELECT Profiles.ID,Profiles.username,Profiles.password, Contacts.Name, Profiles.id_contact  FROM Profiles INNER JOIN Contacts ON Profiles.id_contact = Contacts.ID`, function(err, rowProfiles){
       if(!err){
       callback(rowProfiles)
     }else{
@@ -18,13 +14,17 @@ class Profile{
       }
     } );
   }
-  static inputProfile(request){
+  static inputProfile(request,callback){
     db.run(`INSERT INTO Profiles(username, password, id_contact)
-    VALUES ('${request.username}','${request.password}',${request.contactsID})` );
+    VALUES ('${request.username}','${request.password}',${request.contactsID})`, function(err){
+      if(err){
+        callback(err)
+      }
+    } );
   }
   static findProfile(requestparams,callback){
-    db.each(`SELECT * FROM Profiles WHERE id = ${requestparams}`, function(err,rowProfiles){
-      callback(rowProfiles)
+    db.each(`SELECT * FROM Profiles WHERE ID = ${requestparams}`, function(err,rowProfiles){
+      callback(null, rowProfiles)
     })
   }
   static editProfile(requestparams,requestbody){

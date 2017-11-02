@@ -23,12 +23,20 @@ router.get('/profiles',function(req,res){
 })
 // Menerima data form untuk input profile
 router.post('/profiles',function(req,res){
-  Profile.inputProfile(req.body)
-  res.redirect('/profiles')
+  Profile.inputProfile(req.body,function(err){
+    if(err){
+      res.redirect('/profiles?error=true')
+    }else{
+      res.redirect('/profiles')
+    }
+  })
+
 })
 //Menampilkan data profile spesifik untuk diubah
 router.get('/profiles/edit/:id',function(req,res){
-  Profile.findProfile(req.params.id,function(rowProfiles){
+  // console.log(req.params.id);
+  Profile.findProfile(req.params.id,function(err,rowProfiles){
+    // console.log(rowProfiles);
     Contact.findAll(function(rowContacts){
     res.render('editprofiles',{rowProfiles,rowContacts})
     })

@@ -20,14 +20,18 @@ db.serialize(function() {
   )`)
   db.run(`CREATE TABLE IF NOT EXISTS Addresses(
     ID INTEGER PRIMARY KEY AUTOINCREMENT,
-    street VARCHAR(20),
     city VARCHAR(20),
+    street VARCHAR(20),
     zipcode INTEGER
   )`)
+
+  //ONE TO ONE
   db.run(`ALTER TABLE Profiles ADD id_contact INTEGER(50)
     REFERENCES Contacts(ID) `)
   db.run(`CREATE UNIQUE INDEX IF NOT EXISTS 'id_contact' ON Profiles (id_contact)`)
-  // db.run(`SELECT Profiles.ID,Profiles.username,Profiles.password, Contacts.Name FROM Profiles INNER JOIN Contacts ON Profiles.id_contact=Contacts.ID` );
+  //ONE TO MANY
+  db.run(`ALTER TABLE Addresses ADD contact_id INTEGER(50)
+    REFERENCES Contacts(ID) `)
 })
 
 

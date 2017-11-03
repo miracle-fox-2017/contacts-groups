@@ -1,0 +1,65 @@
+<html>
+
+<head>
+    <title>
+        Data Address
+    </title>
+</head>
+
+<body>
+    <header>
+        <h3>Data Address</h3>
+    </header>
+    <a href="/">
+        Home
+    </a>
+    <div class="main-table">
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Street</th>
+                <th>City</th>
+                <th>Zipcode</th>
+                <th>Contact Name</th>
+                <th colspan="2">Action</th>
+            </tr>
+            <% dataAddress.forEach((address)=>{ %>
+                <tr>
+                    <td>
+                        <%= address.id%>
+                    </td>
+                    <td>
+                        <%= address.street%>
+                    </td>
+                    <td>
+                        <%= address.city%>
+                    </td>
+                    <td>
+                        <%= address.zipcode%>
+                    </td>
+                    <td>
+                        <%= address.name%>
+                    </td>
+
+
+                    <td>
+                        <a href="/addresses/edit/<%=address.id%>">
+                            Edit
+                           </a>
+                    </td>
+                    <td>
+                        <a href="/addresses/delete/<%=address.id%>">
+                                Delete
+                               </a>
+                    </td>
+
+                </tr>
+                <%})%>
+
+        </table>
+    </div>
+
+    <a href="/addresses/add">Add Address </a>
+</body>
+
+</html>

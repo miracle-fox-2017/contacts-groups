@@ -1,0 +1,42 @@
+<html>
+
+<head>
+    <title>
+        Add Address
+    </title>
+
+</head>
+
+<body>
+    <header>
+        <h3>
+            Add Data Address
+        </h3>
+
+    </header>
+
+    <div class="add-data">
+        <form action="/addresses/add" method="POST">
+            Street : <br>
+            <input type="text" name="street" /> <br>City : <br>
+            <input type="text" name="city" /> <br>Zipcode : <br>
+            <input type="text" name="zipcode" /> <br>
+            <br>
+
+            <select name="idContact">
+                        <% dataContact.forEach((contact)=>{ %>
+                <option value="<%= contact.id%>">
+                    <%= contact.name%>
+                </option>
+                <%})%>
+                </select>
+
+
+
+            <input type="submit" value="Save">
+        </form>
+
+    </div>
+</body>
+
+</html>

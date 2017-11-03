@@ -1,0 +1,29 @@
+<html>
+
+<head>
+    <title>
+        Edit Group
+    </title>
+</head>
+
+<body>
+    <header>
+        <h3>
+            Edit Group
+        </h3>
+    </header>
+    <div class="edit-data">
+        <form action="/groups/edit/<%= dataGroup.id%>" method="POST">
+            Name of Group :
+            <br>
+            
+            <input type="text" name="name_of_group" value="<%= dataGroup.name_of_group%>" />
+
+            <br>
+            <input type="submit" value="Save" />
+
+        </form>
+    </div>
+</body>
+
+</html>

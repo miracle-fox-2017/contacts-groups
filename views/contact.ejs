@@ -1,0 +1,89 @@
+<html>
+
+<head>
+    <title>
+        Data Contact
+    </title>
+</head>
+
+<body>
+    <header>
+        <h3>
+            Data Contact
+        </h3>
+    </header>
+    <a href="/">
+        Home
+    </a>
+    <a href="/addresses-with-contact">
+        Address With Contact
+    </a>
+    <div class="data-table">
+        <table>
+            <tr>
+                <th>
+                    ID
+                </th>
+                <th>
+                    Name
+                </th>
+                <th>
+                    Company
+                </th>
+                <th>
+                    Telp Number
+                </th>
+                <th>
+                    Email
+                </th>
+                <th>
+                    Groups
+                </th>
+                <th>
+                    Address
+                </th>
+                <th colspan="2">
+                    Action
+                </th>
+
+            </tr>
+
+            <% dataContact.forEach((contact) =>{ %>
+                <tr>
+
+                    <td>
+                        <%=contact.id%>
+                    </td>
+                    <td>
+                        <%=contact.name%>
+                    </td>
+                    <td>
+                        <%=contact.company %>
+                    </td>
+                    <td>
+                        <%=contact.telp_number %>
+                    </td>
+                    <td>
+                        <%=contact.email %>
+                    </td>
+                    <td>
+                        <%=contact.name_of_group %>
+                    </td>
+
+                    <td>
+                        <a href="/contacts/addresses/<%= contact.id%>"> Address </a>
+                    </td>
+                    <td>
+                        <a href="/contacts/edit/<%= contact.id%>"> Edit</a>
+                    </td>
+                    <td>
+                        <a href="/contacts/delete/<%= contact.id%>"> Delete</a>
+                    </td>
+                </tr>
+                <%})%>
+        </table>
+    </div>
+    <a href="/contacts/add"> Add Contact</a>
+</body>
+
+</html>

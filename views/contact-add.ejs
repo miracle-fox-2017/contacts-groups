@@ -1,0 +1,38 @@
+<html>
+
+<head>
+    <title>
+        Add Contact
+    </title>
+
+</head>
+
+<body>
+    <header>
+        <h3>
+            Add Data Contact
+        </h3>
+
+    </header>
+    <%= message%>
+        <div class="add-data">
+            <form action="/contacts/add" method="POST">
+                Name : <br>
+                <input type="text" name="name" required/> <br> Company : <br>
+                <input type="text" name="company" /> <br> Telp Number : <br>
+                <input type="text" name="telp_number" /> <br> Email : <br>
+                <input type="text" name="email" /> <br>
+                <br>
+
+                <select name="idGroup">
+                    <% dataGroup.forEach((group)=>{%>
+                        <option value="<%= group.id%>"> <%= group.name_of_group%></option>
+                    <%})%>
+                </select>
+                <input type="submit" value="Save">
+            </form>
+
+        </div>
+</body>
+
+</html>

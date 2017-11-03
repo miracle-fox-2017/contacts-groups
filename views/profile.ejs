@@ -1,0 +1,71 @@
+<html>
+
+<head>
+    <title>
+        Data Profile
+    </title>
+</head>
+
+<body>
+    <header>
+        <h3>
+            Data Profile
+        </h3>
+    </header>
+
+    <a href="/">
+                Home
+            </a>
+
+    <div class="data-table">
+        <table>
+            <tr>
+                <th>
+                    ID
+                </th>
+                <th>
+                    Username
+                </th>
+                <th>
+                    Password
+                </th>
+                <th>
+                    Contact Name
+                </th>
+                <th colspan="2">
+                    Action
+                </th>
+            </tr>
+            <% dataProfile.forEach((profile)=>{%>
+                <tr>
+                    <td>
+                        <%= profile.id%>
+                    </td>
+                    <td>
+                        <%= profile.username%>
+                    </td>
+                    <td>
+                        <%= profile.password%>
+                    </td>
+                    <td>
+                        <%= profile.name%>
+                    </td>
+                    <td>
+                        <a href="/profiles/edit/<%=profile.id%>">
+                                    Edit
+                                </a>
+                        <a href="/profiles/delete/<%=profile.id%>">
+                                    Delete
+                                </a>
+                    </td>
+                    <%})%>
+
+                </tr>
+        </table>
+    </div>
+    <a href="/profiles/add">
+                Add Profile
+    </a>
+</body>
+
+</html>

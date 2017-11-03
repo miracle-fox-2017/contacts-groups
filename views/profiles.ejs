@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+    <meta charset="utf-8">
+    <title>Groups</title>
+  </head>
+  <body>
+    <%if (error) {%>
+      <script>
+        alert('Your contact already have profile')
+      </script>
+    <%}%>
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+          
+        </div>
+        <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+          <table>
+            <thead>
+              <tr>
+                <td>Username</td>
+                <td>Password</td>
+                <td>Contact Name</td>
+                <td colspan="2" align = "center">Action</td>
+              </tr>
+            </thead>
+            <tbody>
+              <%profilesData.map( (profile) => { %>
+                <tr>
+                  <td> <%= profile.username %> </td>
+                  <td> <%= profile.password %> </td>
+                  <td> <%= profile.name %> </td>
+                  <td> <a href="/profiles/edit/<%=profile.ID%>">EDID</a></td>
+                  <td> <a href="/profiles/delete/<%=profile.ID%>">DELED</a></td>
+                </tr>
+                <%})%>
+            </tbody>
+          </table>
+          <form action="/profiles" method="post">
+            <table>
+              <thead>
+                <tr>
+                  <td>Add New Profile</td>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Username</td>
+                  <td>:</td>
+                  <td><input type="text" name="username" value=""></td>
+                </tr>
+                <tr>
+                  <td>Password</td>
+                  <td>:</td>
+                  <td><input type="text" name="password" value=""></td>
+                </tr>
+                <tr>
+                  <td>Contact</td>
+                  <td>:</td>
+                  <td><select name="ContactID">
+                    <% contactsData.map( (contact) => { %>
+                        <option value="<%= contact.ID %>"><%= contact.name %></option>
+                      <%})%>
+                  </select></td>
+                </tr>
+                <tr>
+                  <td colspan="3" align="right"><input type="submit" value="Add"></td>
+                </tr>
+              </tbody>
+            </table>
+          </form>
+        </div>
+        <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+          
+        </div>
+      </div>
+    </div>
+    
+  </body>
+</html>

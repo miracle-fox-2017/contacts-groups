@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Edit <%=profileData.name%></title>
+  </head>
+  <body>
+    <form action="/profiles/edit/<%=profileData.ID%>" method="post">
+      <table>
+        <thead>
+          <tr>
+            <td>Username</td>
+            <td>Password</td>
+            <td>Contact</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><input type="hidden" name="ID" value="<%=profileData.ID%>"><input type="text" name="username" value="<%=profileData.username%>"></td>
+            <td><input type="text" name="password" value="<%=profileData.password%>"></td>
+            <td><select name="ContactID">
+              <% contactsData.map( (contact) => { %>
+                <% if (profileData.ContactID === contact.ID) { %>
+                  <option value="<%= contact.ID %>" selected><%= contact.name %></option>
+                <%}else {%>
+                  <option value="<%= contact.ID %>"><%= contact.name %></option>
+                <%}%>
+                <%})%>
+            </select></td>
+            <td><input type="submit" value="Simpan Edit"></td>
+          </tr>
+        </tbody>
+      </table>
+    </form>
+  </body>
+</html>

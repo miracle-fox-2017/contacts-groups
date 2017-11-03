@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Contacts</title>
+  </head>
+  
+  <body>
+    <table>
+      <thead>
+        <tr>
+          <td>ID</td>
+          <td>Name</td>
+          <td>Company</td>
+          <td>Phone</td>
+          <td>Email</td>
+        </tr>
+      </thead>
+      <tbody>
+        <% contactsData.forEach( (contact) => { %>
+          <tr>
+            <td> <%= contact.ID %> </td>
+            <td> <%= contact.name %> </td>
+            <td> <%= contact.company %> </td>
+            <td> <%= contact.telp_number %> </td>
+            <td> <%= contact.email %> </td>
+            <td> <a href="/contacts/edit/<%=contact.ID%>">EDID</a></td>
+            <td> <a href="/contacts/delete/<%=contact.ID%>">DELED</a></td>
+          </tr>
+          <%})%>
+      </tbody>
+    </table>
+    
+    <form action="/contacts" method="post">
+      <table>
+        <thead>
+          <tr>
+            <th colspan="4" align="center">Add New Contact</th>
+          </tr>
+          <tr>
+            <td>Name</td>
+            <td>Company</td>
+            <td>Phone</td>
+            <td>Email</td>
+          </tr>
+        </thead>
+        
+        <tbody>
+          <tr>
+            <td><input type="text" name="name" required></td>
+            <td><input type="text" name="company"></td>
+            <td><input type="text" name="telp_number"></td>
+            <td><input type="text" name="email"></td>
+          </tr>
+          <tr>
+            <td colspan="4" align="right"><input type="submit" name="simpan" value="Add New"></td>
+          </tr>
+        </tbody>
+      </table>
+    </form>
+  </body>
+</html>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Edit <%=groupData.name_of_group%></title>
+  </head>
+  <body>
+    <form action="/groups/edit/<%=groupData.ID%>" method="post">
+      <table>
+        <thead>
+          <tr>
+            <td>Group Name</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><input type="hidden" name="ID" value="<%=groupData.ID%>"><input type="text" name="name_of_group" value="<%=groupData.name_of_group%>"></td>
+            <td><input type="submit" value="Simpan Edit"></td>
+          </tr>
+        </tbody>
+      </table>
+    </form>
+  </body>
+</html>

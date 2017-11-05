@@ -4,10 +4,8 @@ const Contact = require('../models/contactsModel')
 const Address = require('../models/addressesModel')
 
 router.get('/:id', (req, res)=>{
-	// res.send('masuk sini coy')
-	Contact.getContactById(req.params.id, contact=>{
-		// res.send(result)
-		Address.getAllAddress(addresses=>{
+	Contact.getContactById(req.params.id).then(contact=>{
+		Address.getAllAddress().then(addresses=>{
 			// res.send({contact, addresses})
 			let result = []
 			addresses.forEach(address=>{

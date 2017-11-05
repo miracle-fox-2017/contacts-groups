@@ -66,7 +66,7 @@ class Group{
 	}
 
 	static addContactGroup(data, cb){
-		db.run(`insert into ContactGroup (id_contact, id_group) values ("${data.contact}", "${data.id_group}")`, err=>{
+		db.run(`insert into ContactGroup (id_contact, id_group) values (${data.contact}, ${data.id_group})`, err=>{
 			if(err){
 				console.log(err)
 			}else{

@@ -6,7 +6,7 @@ const Contact = require('../models/contactsModel')
 router.get('/', (req, res)=>{
 	Model.getAllAddressContact().then(result=>{
 		// res.send(result)
-		res.render('address', {addresses : result[0], contacts : result[1]})
+		res.render('address', {addresses : result.alladdress, contacts : result.allcontact})
 	})
 })
 

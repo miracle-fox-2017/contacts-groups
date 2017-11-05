@@ -72,18 +72,22 @@ class Address{
 	static getAllAddressContact(){
 
 		return new Promise((resolve, reject) => {
-			let Addresses = this.getAllAddress()
-			let Contacts = Contact.getAllContact()
-
-			Promise.all([Addresses, Contacts]).then(result=>{
-				result[0].forEach(address=>{
-					result[1].forEach(contact=>{
-						if(address.id_contact === contact.id){
-							address.name = contact.name
-						}
+			this.getAllAddress().then(allAddress=> {
+				let addresses = allAddress.map(address=> {
+					return Contact.getContactById(address.id_contact).then(contactById=> {
+						address.name = contactById.name
+						return address
 					})
 				})
-				resolve(result)
+
+				let contacts = Contact.getAllContact()
+
+				Promise.all(addresses).then(alladdress=> {
+					Promise.all([contacts]).then(tempallcontact=> {
+						let allcontact = tempallcontact[0]
+						resolve({alladdress, allcontact})
+					})
+				})
 			})
 		})
 	}

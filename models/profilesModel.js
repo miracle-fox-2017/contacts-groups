@@ -72,18 +72,22 @@ class Profile{
 	static getAllProfileContact(){
 
 		return new Promise((resolve, reject) => {
-			let profiles = this.getAllProfile()
-			let contacts = Contact.getAllContact()
-
-			Promise.all([profiles, contacts]).then(result=>{
-				result[0].forEach(profile=>{
-					result[1].forEach(contact=>{
-						if(profile.id_contact === contact.id){
-						   profile.name = contact.name
-						}
+			this.getAllProfile().then(profiles=>{
+				let hasil = profiles.map(profile=>{
+					return Contact.getContactById(profile.id_contact).then(result=>{
+						profile.name = result.name
+						return profile
 					})
 				})
-				resolve(result)
+
+				let contacts = Contact.getAllContact()
+
+				Promise.all(hasil).then(profileContact=> {
+					Promise.all([contacts]).then(tempallContact=> {
+						let allcontact = tempallContact[0]
+						resolve({profileContact, allcontact})	
+					})
+				})	
 			})
 		})
 	}
@@ -98,10 +102,8 @@ class Profile{
 					resolve(result)
 				})
 			})
-		});
+		})
 	}
-
-	
 }
 
 module.exports = Profile

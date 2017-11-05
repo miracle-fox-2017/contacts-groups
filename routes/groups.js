@@ -36,10 +36,8 @@ router.get('/delete/:id', (req, res)=>{
 })
 
 router.get('/assign_contacts/:id', (req, res)=>{
-	Contact.getAllContactNonGroup(req.params.id, contacts=>{
-		// res.send(contacts)
-		Model.getGroupById(req.params.id, group=>{
-			// res.send({contacts, group})
+	Contact.getAllContact().then(contacts=> {
+		Model.getGroupById(req.params.id).then(group=> {
 			res.render('assignContact', {contacts, group})
 		})		
 	})

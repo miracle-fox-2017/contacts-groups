@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <h1>Contact Name: <%= dataJsonContacts[0].name %></h1>
+  <br>
+  <table>
+    <tr>
+      <th>Address ID</th>
+      <th>Street</th>
+      <th>City</th>
+      <th>Zipcode</th>
+    </tr>
+    <% for(let i = 0; i < dataJsonAddresses.length; i++){ %>
+      <tr>
+        <td><%= dataJsonAddresses[i].id %></td>
+        <td><%= dataJsonAddresses[i].street %></td>
+        <td><%= dataJsonAddresses[i].city %></td>
+        <td><%= dataJsonAddresses[i].zipcode %></td>
+      </tr>
+    <% } %>
+  </table>
+  <br>
+  <form action="/contacts/addresses/<%= dataJsonContacts[0].id %>" method="post">
+    Street:
+    <br>
+    <input type="text" name="street">
+    <br>
+    City:
+    <br>
+    <input type="text" name="city">
+    <br>
+    Zipcode:
+    <br>
+    <input type="text" name="zipcode">
+    <br><br>
+    <input type="submit" value="Submit">
+  </form>
+</body>
+</html>

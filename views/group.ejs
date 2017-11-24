@@ -1,0 +1,39 @@
+<% %>
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Groups</title>
+</head>
+<body>
+	<table>
+		<thead>
+			<tr>
+				<td>Id</td>
+				<td>Name of Groups</td>
+				<td>Contact</td>
+				<td>Action</td>
+			</tr>
+		</thead>
+		<tbody>
+		<%groups.forEach(row=>{%>
+			<tr>
+				<td><%=row.id%>
+				<td><%=row.name_of_group%></td>
+				<td><%=row.name%></td>
+				<td>
+					<a href="/groups/edit/<%=row.id%>">Edit</a>
+					<a href="/groups/delete/<%=row.id%>">Delete</a>
+					<a href="/groups/assign_contacts/<%=row.id%>">Assign Contact</a>
+				</td>		
+			</tr>
+		<%})%>
+		</tbody>
+	</table>
+
+	<form action="/groups" method="post">
+  		<input type="text" name="name" placeholder="Name of group">
+  		<input type="submit" value="Submit">
+	</form>
+
+</body>
+</html>

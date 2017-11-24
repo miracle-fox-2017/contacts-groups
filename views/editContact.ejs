@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Edit Contact</title>
+</head>
+<body>
+	<form action="/contacts/edit/<%=contact.id%>" method="post">
+  		<input type="text" name="name" value="<%=contact.name%>">
+  		<input type="text" name="telp_number" value="<%=contact.telp_number%>">
+  		<input type="text" name="email" value="<%=contact.email%>">
+  		<input type="submit" value="Submit">
+	</form> 
+</body>
+</html>

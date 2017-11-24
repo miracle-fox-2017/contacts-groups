@@ -1,0 +1,23 @@
+<% %>
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Edit Profile</title>
+</head>
+<body>
+	<form action="/profiles/edit/<%=profile.id%>" method="post">
+  		<input type="text" name="username" value="<%=profile.username%>">
+  		<input type="text" name="password" value="<%=profile.password%>">
+  		<select name="contact">
+  		<%contacts.forEach(contact=>{%>
+  			<%if(contact.id === profile.id_contact){%>
+  			<option value="<%=contact.id%>" selected><%=contact.name%></option>
+  			<%}else{%>
+  			<option value="<%=contact.id%>"><%=contact.name%></option>
+  			<%}%>
+  		<%})%>
+		</select>
+  		<input type="submit" value="Submit">
+	</form> 
+</body>
+</html>

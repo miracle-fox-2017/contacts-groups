@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Addresses</title>
+</head>
+<body>	
+	<div class="nav-wrapper">
+		<nav class="nav-menu" style="float: left; width: 100%">
+			<ul class="clearfix">
+				<li style="display: inline-block; font-size: 30px;"><a href="/contacts" style=" text-decoration-line: none;"> Contact </a></li>	
+				<li style="display: inline-block; font-size: 30px;"><a href="/groups" style=" text-decoration-line: none;"> Group </a></li>
+				<li style="display: inline-block; font-size: 30px;"><a href="/addresses" style=" text-decoration-line: none;"> Address </a></li>
+				<li style="display: inline-block; font-size: 30px;"><a href="/profiles" style=" text-decoration-line: none;"> Profile </a></li>
+			</ul>
+		</nav>
+	</div>	
+	<h2> Address with Contact </h2>
+
+	<div class="addresses">
+	<table width="50%" border="1">	
+		<thead align ="center">
+			  <tr>
+    			 <th> STREET </th>
+    			 <th> CITY </th>
+    			 <th> ZIPCODE </th>
+    			 <th> ID </th>  
+				 <th> NAMA CONTACT </th>
+    			 <th> COMPANY </th>
+    			 <th> TELP </th>
+    			 <th> EMAIL </th>	  			 
+  			  </tr>
+		</thead>
+		<tbody align ="center">	
+			<% for (let i = 0 ; i<address.length ; i++ ) {%>
+				<% for (let j = 0 ; j<address[i].contact.length ; j++ ) {%>
+			<tr>
+					<td> <%= address[i].street %></td>
+					<td> <%= address[i].city %></td>
+					<td> <%= address[i].zipcode %></td>
+					<td> <%= address[i].contact[j].id %></td>
+					<td> <%= address[i].contact[j].name %></td>
+					<td> <%= address[i].contact[j].company %></td>
+					<td> <%= address[i].contact[j].telp_number %></td>
+					<td> <%= address[i].contact[j].email %></td>
+			</tr>	
+				<%}%>
+	 		<%}%>
+		</tbody>	
+	</table>
+	</div>	
+</body>
+</html>
+<!DOCTYPE

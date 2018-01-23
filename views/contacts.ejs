@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Contact</title>
+</head>
+<body>	
+	<div class="nav-wrapper">
+		<nav class="nav-menu" style="float: left; width: 100%">
+			<ul class="clearfix">
+				<li style="display: inline-block; font-size: 30px;"><a href="/contacts" style=" text-decoration-line: none;"> Contact </a></li>	
+				<li style="display: inline-block; font-size: 30px;"><a href="/groups" style=" text-decoration-line: none;"> Group </a></li>
+				<li style="display: inline-block; font-size: 30px;"><a href="/addresses" style=" text-decoration-line: none;"> Address </a></li>
+				<li style="display: inline-block; font-size: 30px;"><a href="/profiles" style=" text-decoration-line: none;"> Profile </a></li>
+				<li style="display: inline-block; font-size: 20px;"><a href="/addresses_with_contact" style=" text-decoration-line: none;"> Addresses With Contact </a></li>				
+			</ul>
+		</nav>
+	</div>		
+	<h2> Contacts </h2>
+	<div class="contacts">
+	<table width="100%" border="1">	
+		<thead align ="center">
+			  <tr>
+    			 <th> ID </th>
+    			 <th> NAME </th>
+    			 <th> COMPANY </th>
+    			 <th> TELP_NUMBER </th>
+    			 <th> EMAIL </th>
+    			 <th colspan="2"> ACTION </th>
+  			  </tr>
+		</thead>
+		<tbody align ="center">	
+			<%for (let i = 0 ; i<rowContact.length ;i++ ){%>
+			<tr>
+				<td> <%= rowContact[i].id %> </td>
+				<td> <%= rowContact[i].name %> </td>
+		  		<td> <%= rowContact[i].company %>  </td>
+		  		<td> <%= rowContact[i].telp_number %> </td>
+		  		<td> <%= rowContact[i].email %> </td>
+		  		<td> <a href ="/contacts/edit/<%= rowContact[i].id %>">Edit</a> </td>
+		  		<td> <a href ="/contacts/delete/<%= rowContact[i].id %>">Delete</a> </td>
+			<%}%>
+			</tr>
+		</tbody>	
+	</table>
+	</div>	
+	<table>
+		<thead align ="center">
+			  <tr>
+    			 <th> NAME </th>
+    			 <th> COMPANY </th>
+    			 <th> TELP_NUMBER </th>
+    			 <th> EMAIL </th>
+  			  </tr>
+		</thead>
+
+<% if(edited != undefined) {%>
+	<h2> EDIT </h2>
+	<tbody align ="center">	
+		<tr>
+		<form action="/contacts/edit" method="post">
+			<td><input type="text" name="name" value="<%= edited[0].name %>"></td>
+			<td><input type="text" name="company" value="<%= edited[0].company %>"></td>
+			<td><input type="text" name="telp_number" value="<%= edited[0].telp_number %>"></td>
+			<td><input type="text" name="email" value="<%= edited[0].email %>"></td>
+			<td><input type="submit" value="replace"></td>
+			<input type="hidden" name="id" value="<%= edited[0].id %>">
+		</form>	
+		</tr>
+	</tbody>	
+<%}%>	
+
+<% if(edited == undefined) {%>
+	<h2> ADD </h2>
+	<tbody align ="center">	
+		<tr>
+		<form action="/contacts" method="post" onsubmit="return validasi_input(this)">
+			<td><input type="text" name="name" ></td>
+			<td><input type="text" name="company"></td>
+			<td><input type="text" name="telp_number"></td>
+			<td><input type="text" name="email"></td>
+			<td><input type="submit" value="kirim"></td>
+		</form>		
+		</tr>
+			<script type="text/javascript">
+				function validasi_input(form){
+  				if (form.name.value == ""){
+    			alert("ISI NAMA");
+    			form.name.focus();
+    			return (false);
+  			}
+				return (true);
+			}
+			</script>				
+	</tbody>	
+    </table>	
+<%}%>
+
+</body>
+</html>
+<!DOCTYPE

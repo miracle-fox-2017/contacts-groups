@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Addresses</title>
+</head>
+<body>	
+	<div class="nav-wrapper">
+		<nav class="nav-menu" style="float: left; width: 100%">
+			<ul class="clearfix">
+				<li style="display: inline-block; font-size: 30px;"><a href="/contacts" style=" text-decoration-line: none;"> Contact </a></li>	
+				<li style="display: inline-block; font-size: 30px;"><a href="/groups" style=" text-decoration-line: none;"> Group </a></li>
+				<li style="display: inline-block; font-size: 30px;"><a href="/addresses" style=" text-decoration-line: none;"> Address </a></li>
+				<li style="display: inline-block; font-size: 30px;"><a href="/profiles" style=" text-decoration-line: none;"> Profile </a></li>
+			</ul>
+		</nav>
+	</div>	
+	<h2> Address </h2>
+	<div class="addresses">
+	<table width="50%" border="1">	
+		<thead align ="center">
+			  <tr>
+    			 <th> ID </th>
+    			 <th> STREET </th>
+    			 <th> CITY </th>
+    			 <th> ZIPCODE </th>
+    			 <th> NAMA CONTACT </th>
+    			 <th colspan="2"> ACTION </th>
+  			  </tr>
+		</thead>
+		<tbody align ="center">	
+			<%for (let i = 0 ; i<data.length ;i++ ){%>
+			<tr>
+				<td> <%= data[i].id %> </td>
+				<td> <%= data[i].street %> </td>
+		  		<td> <%= data[i].city %>  </td>
+		  		<td> <%= data[i].zipcode %> </td>
+		  		<td> <%= data[i].name %></td>
+		  		<td> <a href ="/addresses/edit/<%= data[i].id %>">Edit</a> </td>
+		  		<td> <a href ="/addresses/delete/<%= data[i].id %>">Delete</a> </td>
+			<%}%>
+			</tr>
+		</tbody>	
+	</table>
+	</div>	
+	<table>
+		<thead align ="center">
+			  <tr>
+    			 <th> STREET </th>
+    			 <th> CITY </th>
+    			 <th> ZIPCODE </th>
+    			 <th> NAMA CONTACT</th>
+  			  </tr>
+		</thead>
+<% if(edited !== undefined) {%>
+	<h2> EDIT </h2>
+	<tbody align ="center">	
+		<tr>
+		<form action="/addresses/edit" method="post">
+			<td><input type="text" name="street" value="<%= edited.street %>"></td>
+			<td><input type="text" name="city" value="<%= edited.city %>"></td>
+			<td><input type="text" name="zipcode" value="<%= edited.zipcode %>"></td>
+			<td>
+			<select id="contact_id" name="contact_id">
+				<%for (let i = 0 ; i<contacts.length ;i++ ){%>
+				 <% if(edited.contact_id == contacts[i].id ){%>
+					<option value= <%= contacts[i].id %> selected > <%= contacts[i].name %> </option>
+					 <%}else{%>
+						<option value= <%= contacts[i].id %> > <%= contacts[i].name %> </option>
+					 <%}%>
+				<%}%>
+			</select>				
+			</td>
+			<td><input type="submit" value="replace"></td>
+			<input type="hidden" name="id" value="<%= edited.id %>">
+		</form>	
+		</tr>
+	</tbody>	
+<%}%>	
+
+<% if(edited == undefined) {%>
+	<h2> ADD </h2>
+	<tbody align ="center">	
+		<tr>
+		<form action="/addresses" method="post">
+			<td><input type="text" name="street" ></td>
+			<td><input type="text" name="city"></td>
+			<td><input type="text" name="zipcode"></td>
+			<td>
+			<select id="contact_id" name="contact_id">
+				<%for (let i = 0 ; i<contacts.length ;i++ ){%>
+				<option value= <%= contacts[i].id %> > <%= contacts[i].name %> </option>
+				<%}%>
+			</select>	
+			</td>
+			<td><input type="submit" value="kirim"></td>
+		</form>		
+		</tr>
+	</tbody>		
+<%}%>
+    </table>	
+</body>
+</html>
+<!DOCTYPE

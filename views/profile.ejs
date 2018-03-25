@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Profile</title>
+</head>
+<style>
+	.profile-table{
+		width: 100%;
+	}
+</style>
+<body>
+	<nav class="main-menu">
+		<ul>
+			<li><a href="/contacts">Contacts</a></li>
+			<li><a href="/groups">Groups</a></li>
+			<li><a href="/addresses">Addresses</a></li>
+			<li><a href="/profiles">Profiles</a></li>
+		</ul>
+	</nav>
+	<style>
+		.main-menu {
+			text-align: center;
+			background: crimson;
+		}
+
+		.main-menu ul li {
+			display: inline-block;
+			padding: 10px;
+		}
+
+		.main-menu ul li a {
+			text-decoration: none;
+			color: #fff;
+			font-style: bold;
+		}
+
+		.main-menu ul li a:hover {
+			font-style: normal;
+			color: wheat;
+		}
+	</style>
+	<% let currentContactIds = []; %>
+	<% if (typeof data != 'undefined') { %>
+
+		<table class="profile-table" border="1">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>USERNAME</th>
+					<th>PASSWORD</th>
+					<th>Contact Name</th>
+					<!-- <th>Contact ID</th> -->
+					<th>ACTION</th>
+				</tr>
+			</thead>
+			
+			<tbody>
+				
+				<% data.forEach((profile) => {%>
+					<tr>
+						<% currentContactIds.push(profile.contacts_id); %>
+						<td><%= profile.id %></td>
+						<td><%= profile.username %></td>
+						<td><%= profile.password %></td>
+						<td><%= profile.name %></td>
+						<!-- <td><%= profile.contacts_id %></td> -->
+						<td>
+							<a href="/profiles/edit/<%= profile.id %>">Edit</a>
+							<a href="/profiles/delete/<%= profile.id %>">Delete</a>
+						</td>
+					</tr>
+				<% }) %>
+			</tbody>
+		</table>
+	<br>
+	<% } %>
+	
+	<form onsubmit="return validateProfileForm();" method="post" action="<%= (typeof editItem != 'undefined') ? `/profiles/edit/${id}`  : '/profiles' %>">
+		<% if (typeof editItem != 'undefined') { %>
+			<h5>Editing <%= editItem.username %></h5>
+		<% } %>
+		
+		<input type="hidden" id="id" name="id" value="<%= (typeof editItem != 'undefined') ? editItem.id  : '' %>">
+		<input type="text" id="username" name="username" placeholder="Username" value="<%= (typeof editItem != 'undefined') ? editItem.username  : '' %>">
+		<input type="password" id="password" name="password"  placeholder="Password" value="<%= (typeof editItem != 'undefined') ? editItem.password  : '' %>">
+		
+		
+		<select name="contacts_id" id="contacts_id" data-exists-contactid="<%= currentContactIds.toString(); %>" <%= (typeof editItem != 'undefined') ? 'disabled'  : '' %>>
+			<option value=""></option>
+			<% contacts.forEach((contact) => {%>
+				<option value="<%= contact.id %>" <%= (typeof editItem != 'undefined' && contact.id == editItem.contacts_id) ? 'selected' : '' %>><%= contact.name %></option>
+			<% }) %>
+		</select>
+
+		<input type="submit" value="Tambah">
+	</form>
+
+	<script>
+		function validateProfileForm() {
+			let hiddenId = document.getElementById('id').value;
+			let usernameField = document.getElementById('username').value;
+			let contactNameDropdown = document.getElementById('contacts_id');
+			let arrExistingContactId = contactNameDropdown.getAttribute('data-exists-contactid').split(',');
+			let selectedOptions = contactNameDropdown.options[contactNameDropdown.selectedIndex].value;
+			
+			if (hiddenId.length < 1) {
+				if (usernameField.length < 1) {
+					alert('Username harus diisi');
+			
+					return false;
+				}
+
+				if (arrExistingContactId.indexOf(selectedOptions) != -1) {
+					alert('Pilih Contact yang lain');
+
+					return false;
+				}
+
+				return true;
+			} else {
+				if (usernameField.length < 1) {
+					alert('Username harus diisi');
+			
+					return false;
+				}
+
+				return true;
+			}
+			
+		}
+	</script>
+</body>
+</html>

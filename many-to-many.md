@@ -1,4 +1,4 @@
-
+=======
 # express-sqlite3-association-many-to-many
 
 # EXPRESS CONTACTS-GROUPS
@@ -16,4 +16,3 @@ Tabel Contacts dan Table Groups memiliki relasi dimana satu data contact boleh m
 2. Pada halaman list groups, tambahkan link 'assign contact' untuk setiap data group, dimana jika user/client menekan link tersebut maka akan menuju halaman 'assign_contacts' (gunakan route GET yang telah kamu buat diatas). Pada halaman ini tampilkan tulisan "Assign contacts for group: [nama_group]" dan buatlah form yang didalamnya terdapat select-options untuk memilih contact yang ingin di-assign
 3. Pada saat user/client menekan tombol save maka panggilah route POST yang telah kalian buat di-point no.1 dan simpanlah data-data relasi antara contact dan group pada tabel conjunction
 4. Pada halaman list groups tambahkan column contact dimana pada coloum tersebut berisi nama-nama contact yang telah di-assign untuk group tersebut menggunakan callback. Di release ini table Groups tidak boleh di join dengan table manapun, namun table Contacts_Groups boleh join dengan table Contacts. 
-

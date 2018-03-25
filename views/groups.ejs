@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Group</title>
+</head>
+<style>
+	.group-table{
+		width: 100%;
+	}
+</style>
+<body>
+	<nav class="main-menu">
+		<ul>
+			<li><a href="/contacts">Contacts</a></li>
+			<li><a href="/groups">Groups</a></li>
+			<li><a href="/addresses">Addresses</a></li>
+			<li><a href="/profiles">Profiles</a></li>
+		</ul>
+	</nav>
+	<style>
+		.main-menu {
+			text-align: center;
+			background: crimson;
+		}
+
+		.main-menu ul li {
+			display: inline-block;
+			padding: 10px;
+		}
+
+		.main-menu ul li a {
+			text-decoration: none;
+			color: #fff;
+			font-style: bold;
+		}
+
+		.main-menu ul li a:hover {
+			font-style: normal;
+			color: wheat;
+		}
+	</style>
+	<% if (typeof data != 'undefined') { %>
+		<table class="group-table" border="1">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>GROUP NAME</th>
+					<th>CONTACT NAME</th>
+					<th>ACTION</th>
+				</tr>
+			</thead>
+			<tbody>
+				<% joinedGroups.forEach((group) => {%>
+					<tr>
+						<td><%= group.id %></td>
+						<td><%= group.name_of_group %></td>
+						<td><%= group.contacts_name.toString() %></td>
+						<td>
+							<a href="/groups/edit/<%= group.id %>">Edit</a>
+							<a href="/groups/delete/<%= group.id %>">Delete</a>
+							<a href="/groups/assign_contacts/<%= group.id %>">Assign Contact</a>
+						</td>
+					</tr>
+				<% }) %>
+			</tbody>
+		</table>
+	<br>
+	<% } %>
+
+	<form method="post" action="<%= (typeof editItem != 'undefined') ? `/groups/edit/${id}`  : '/groups' %>">
+		<% if (typeof editItem != 'undefined') { %>
+			<h5>Editing <%= editItem.name_of_group %></h5>
+		<% } %>
+		
+		<input type="hidden" id="id" name="id" value="<%= (typeof editItem != 'undefined') ? editItem.id  : '' %>">
+		<input type="text" id="name" name="name_of_group"  placeholder="Nama group" value="<%= (typeof editItem != 'undefined') ? editItem.name_of_group  : '' %>">
+
+		<input type="submit" value="Tambah">
+	</form>
+</body>
+</html>

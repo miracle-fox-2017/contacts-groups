@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Assign Contacts</title>
+</head>
+<body>
+	<nav class="main-menu">
+		<ul>
+			<li><a href="/contacts">Contacts</a></li>
+			<li><a href="/groups">Groups</a></li>
+			<li><a href="/addresses">Addresses</a></li>
+			<li><a href="/profiles">Profiles</a></li>
+		</ul>
+	</nav>
+	<style>
+		.main-menu {
+			text-align: center;
+			background: crimson;
+		}
+
+		.main-menu ul li {
+			display: inline-block;
+			padding: 10px;
+		}
+
+		.main-menu ul li a {
+			text-decoration: none;
+			color: #fff;
+			font-style: bold;
+		}
+
+		.main-menu ul li a:hover {
+			font-style: normal;
+			color: wheat;
+		}
+	</style>
+	
+	<h2>Assign Contacts for group: <%= editedItem.name_of_group %></h2>
+
+	<form action="" method="POST">
+		<input type="text" name="groups_id" id="groups_id" value="<%= (typeof id != 'undefined') ? id : '' %>">
+		<select name="contacts_id" id="contacts_id">
+			<option value=""></option>
+		
+			<% contacts.forEach(function(contact) { %>
+				<option value="<%= contact.id %>"><%= contact.name %></option>
+			<% }); %>
+		</select>
+
+		<input type="submit" value="Assign group">
+	</form>
+</body>
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Profile</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  </head>
+  <body>
+  <% include ../partials/nav.ejs%>
+    <h1>Profile</h1>
+
+  <div class="container">
+    <table class="table">
+
+      <thead>
+        <tr>
+        <th>ID</th>
+        <th>User Name</th>
+        <th>Password</th>
+        <th>ContactsID</th>
+        <th>Name</th>
+        <th>Option</th>
+      </tr>
+      </thead>
+      <tbody>
+        <%dataProfile.forEach((item)=>{%>
+          <tr>
+          <td><%=item.id%></td>
+          <td><%=item.username%></td>
+          <td><%=item.password%></td>
+          <td><%=item.ContactId%></td>
+          <td><%=item.name%></td>
+
+          <td>
+            <a href="/profile/edit/<%=item.id%>">Edit</a>
+            <a href="/profile/delete/<%=item.id%>">Delete</a>
+          </td>
+        </tr>
+        <%})%>
+      </tbody>
+    </table>
+
+
+    <div class="container">
+    <h3>Add</h3>
+      <h4 style="color:red"><%=err%></h4>
+      <form class ="form" action="/profile" method="POST">
+        <input id="username" type="text" name="username" placeholder="username">
+        <br>
+        <input id="password" type="text" name="password" placeholder="password">
+        <br>
+        <select class="box" name="ContactId">
+        <% for(let i = 0; i < dataContacts.length; i++) {%>
+        <option value="<%=dataContacts[i].id%>"><%=dataContacts[i].name%></option>
+        <%}%>
+        </select>
+
+
+
+      </div>
+      <div class="col-xs-4 col-md-2">
+        <br>
+        <input type="submit" value ="Submit">
+        </div>
+    </div>
+  </div>
+
+  </body>
+  <style>
+  table#t01 tr:nth-child(even) {
+  background-color: #eee;
+}
+table#t01 tr:nth-child(odd) {
+  background-color: #fff;
+}
+table#t01 th {
+  color: white;
+  background-color: black;
+}
+  </style>
+</html>

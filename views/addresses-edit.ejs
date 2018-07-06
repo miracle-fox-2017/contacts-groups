@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <link rel="stylesheet" href="../../assets/bulma.min.css" type="text/css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="../../assets/style.css">
+
+  <title>EDIT-CONTACT-GROUPS</title>
+</head>
+<body>
+
+  <% include assets/partials/top-nav %>
+
+  <div class="container" style="text-align:center;">
+    <h4 class="title is-3">- EDIT ADDRESSES -</h4>
+
+    <form action="/addresses/edit/<%=data_Addresses.id%>" method="post">
+      <div class="field">
+        <label class="label" style="text-align:left;">Street</label>
+        <div class="control has-icons-left has-icons-right">
+          <input class="input is-medium" type="text" value="<%=data_Addresses.street%>" name="street">
+          <span class="icon is-small is-left">
+            <i class="fa fa-user"></i>
+          </span>
+        </div>
+      </div>
+      <div class="field">
+        <label class="label" style="text-align:left;">City</label>
+        <div class="control has-icons-left has-icons-right">
+          <input class="input is-medium" type="text" value="<%=data_Addresses.city%>" name="city">
+          <span class="icon is-small is-left">
+            <i class="fa fa-user"></i>
+          </span>
+        </div>
+      </div>
+      <div class="field">
+        <label class="label" style="text-align:left;">Zipcode</label>
+        <div class="control has-icons-left has-icons-right">
+          <input class="input is-medium" type="text" value="<%=data_Addresses.zipcode%>" name="zipcode">
+          <span class="icon is-small is-left">
+            <i class="fa fa-user"></i>
+          </span>
+        </div>
+      </div>
+      <div class="field">
+        <label class="label" style="text-align:left;">Contact</label>
+        <p class="control has-icons-left">
+          <span class="select is-medium is-fullwidth">
+            <select name="name">
+                    <% for(let i=0; i<data_Contacts.length; i++) {%>
+                      <%
+                        let selected = ''
+                        if(data_Addresses.contact_id == data_Contacts[i].id){
+                          selected = "selected"
+                        }
+                      %>
+                    <option  value="<%= data_Contacts[i].id %>" <%=selected%> > <%= data_Contacts[i].name %></option>
+                    <%}%>
+            </select>
+          </span>
+          <span class="icon is-small is-left">
+            <i class="fa fa-user"></i>
+          </span>
+        </p>
+      </div>
+
+
+          <div style="text-align: center; margin-top:33px;" class="control">
+            <input class="button is-success is-outlined is-medium" type="submit" value="Submit input">
+            <input class="button is-success is-outlined is-medium" type="reset" value="Reset input">
+          </div>
+    </form>
+  </div>
+
+</body>
+</html>

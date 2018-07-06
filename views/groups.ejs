@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <link rel="stylesheet" href="assets/bulma.min.css" type="text/css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="assets/style.css">
+
+  <title>CONTACT-GROUPS</title>
+</head>
+<body>
+
+  <% include assets/partials/top-nav %>
+
+  <div class="container" >
+    <h4 class="title is-3" style="text-align:center;">EXPRESS CONTACTS - GROUPS</h4>
+    <p class="subtitle is-4" style="text-align:center;">all <strong>Groups</strong> information</p>
+    <table class="table is-bordered is-striped is-narrow is-fullwidth">
+    <thead>
+
+        <tr>
+          <th><abbr title="id"></abbr>ID</th>
+          <th>NAME OF GROUP</th>
+          <th>CONTACT NAME</th>
+          <th>ASSIGN</th>
+          <th><abbr title="actions">ACTIONS</abbr></th>
+        </tr>
+
+    </thead>
+    <tbody>
+      <%for(let i=0; i<data_Groups.length; i++){%>
+      <tr>
+        <th><%=data_Groups[i].id%></th>
+        <td><strong><%=data_Groups[i].name_of_group%></strong>
+          <td>#</td>
+        </td>
+        <td style="margin-left:-5px;">
+              <a class="button is-outlined is-small" href='/groups/assign_contacts/<%=data_Groups[i].id%>'>
+              <span class="icon is-small">
+                <i class="fa fa-users"></i>
+              </span>
+              <span>Assign Contact</span>
+              </a>
+          </td>
+        <td style="margin-left:-5px;">
+              <a class="button is-outlined is-small" href='/groups/edit/<%=data_Groups[i].id%>'>
+              <span class="icon is-small">
+                <i class="fa fa-pencil"></i>
+              </span>
+              <span>Edit</span>
+              </a>
+              <a onclick="return confirm('are you sure to delete?!');" class="button is-outlined is-small" href="/groups/delete/<%=data_Groups[i].id%>">
+              <span class="icon is-small">
+                <i class="fa fa-times"></i>
+              </span>
+              <span>Delete</span>
+              </a>
+          </td>
+      </tr>
+      <%}%>
+    </tbody>
+  </table>
+  <hr>
+  <form action="/groups" method="post">
+    <div class="field-body">
+      <div class="field">
+        <div class="control">
+          <input class="input" type="text" placeholder="name_of_group" name="name_of_group" required>
+        </div>
+      </div>
+      <div class="control">
+        <button type="submit" class="button is-success">Submit</button>
+      </div>
+    </div>
+  </form>
+
+</div>
+
+  </div>
+
+
+</body>
+</html>

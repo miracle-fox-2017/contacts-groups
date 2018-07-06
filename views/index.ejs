@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <link rel="stylesheet" href="assets/bulma.min.css" type="text/css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="assets/style.css">
+
+  <title>CONTACT-GROUPS</title>
+</head>
+<body>
+
+  <% include assets/partials/top-nav %>
+
+  <div class="container" style="text-align:center;">
+    <h4 class="title is-3">EXPRESS CONTACTS - GROUPS</h4>
+
+
+    <nav class="level">
+      <div class="level-item has-text-centered">
+        <div>
+          <p class="heading">Contacts</p>
+          <p class="title"><%=data_Contacts.length%></p>
+        </div>
+      </div>
+      <div class="level-item has-text-centered">
+        <div>
+          <p class="heading">Groups</p>
+          <p class="title"><%=data_Groups.length%></p>
+        </div>
+      </div>
+      <div class="level-item has-text-centered">
+        <div>
+          <p class="heading">Profile</p>
+          <p class="title"><%=data_Profile.length%></p>
+        </div>
+      </div>
+      <div class="level-item has-text-centered">
+        <div>
+          <p class="heading">Addresses</p>
+          <p class="title"><%=data_Addresses.length%></p>
+        </div>
+      </div>
+    </nav>
+  </div>
+
+</body>
+</html>

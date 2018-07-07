@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Edit Contact</title>
+  </head>
+  <body>
+    <form class="" action="/contacts/edit/<%=rowContacts.ID%>" method="post">
+      <td>Name <input type="text" name="Name" value="<%=rowContacts.Name%>"></td>
+      <td>Company <input type="text" name="Company" value="<%=rowContacts.Company%>"></td>
+      <td>Phone Number <input type="text" name="Telp_number" value="<%=rowContacts.Telp_number%>"></td>
+      <td>Email <input type="text" name="Email" value="<%=rowContacts.Email%>"></td>
+      <td> <input type="submit" value="Submit Edit!"></td>
+    </form>
+  </body>
+</html>

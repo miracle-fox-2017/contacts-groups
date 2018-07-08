@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <style>
+
+    table{
+      border:3;
+
+    }
+    th,td{
+      text-align: left;
+      border: black;
+      padding: 5px;
+    }
+  </style>
+
+  <h2>Address</h2>
+  <body>
+    <form action="/address" method="POST">
+        <th>Street:<br>
+        <input type="text" name="street" placeholder="Street" autofocus required>
+        <br></th>
+        <th>City:<br>
+        <input type="text" name="city" placeholder="City" autofocus required>
+        <br></th>
+        <th>Zipcode:<br>
+        <input type="text" name="zipcode" placeholder="Zipcode" autofocus required>
+        <br></th>
+
+
+        <select name="idContacts">
+          <%for(var i=0;i < dataContacts.length;i++){%>
+            <option value="<%= dataContacts[i].id%>"><%=dataContacts[i].name%></option>
+          <%}%>
+        </select>
+
+
+      <th><br><input type="submit" value="Submit"></th>
+    </form>
+    <br>
+    <br>
+    <a href="/">Back to Home</a><br>
+    <table>
+      <thead>
+        <th>id contact</th>
+        <th>Street</th>
+        <th>City</th>
+        <th>Zipcode</th>
+        <th>Action</th>
+      </thead>
+      <%for(var i = 0; i < dataAddress.length;i++){%>
+        <tbody>
+          <td><%=dataAddress[i].id%></td>
+          <td><%=dataAddress[i].street%></td>
+          <td><%=dataAddress[i].city%></td>
+          <td><%=dataAddress[i].zipcode%></td>
+          <th>
+            <a href="/address/edit/<%=dataAddress[i].id%>">Edit</a>
+            <a href="/address/delete/<%=dataAddress[i].id%>">Delete</a>
+          </th>
+
+          <%}%>
+        </tbody>
+      </table>
+  </body>
+</html>

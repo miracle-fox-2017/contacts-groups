@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Edit data di contacts</title>
+  </head>
+  <body>
+    <a href="/contacts">contacts</a> | <a href="/groups">groups</a> | <a href="/addresses">address</a> | <a href="/profiles">profile</a>
+    <h1>Contact</h1>
+    <div>
+    <table>
+      <tr>
+        <th>id</th>
+        <th>name</th>
+        <th>company</th>
+        <th>telp_number</th>
+        <th>email</th>
+        <th>action</th>
+      </tr>
+      <!-- tampilkan semua data contacts -->
+      <% rows.forEach (contact => { %>
+        <tr>
+          <td><%= contact.id %></td>
+          <td><%= contact.name %></td>
+          <td><%= contact.company %></td>
+          <td><%= contact.telp_number %></td>
+          <td><%= contact.email %></td>
+          <td><a href="/contacts/edit/<%= contact.id %>">edit</a> | <a href="/contacts/delete/<%= contact.id %>">delete</a> </td>
+        </tr>
+      <% }) %>
+      
+    </table>
+  </div>
+  
+  <!-- disini tambah form untuk tambah contacts -->
+  <div>
+    <h2>Edit Contacts</h2>
+    <form class="" action="" method="post">
+      <input type="hidden" name="id" value="<%= rows[0].id %>">
+      Nama:   <input type="text" name="name" value="<%= rows[0].name %>" placeholder="nama"><br>
+      Company: <input type="text" name="company" value="<%= rows[0].company %>" placeholder="company"><br>
+      Telp: <input type="text" name="telp_number" value="<%= rows[0].telp_number %>" placeholder="telp_number"><br>
+      Email: <input type="text" name="email" value="<%= rows[0].email %>" placeholder="email"><br>
+      <input type="submit" name="" value="KIRIM">
+    </form>
+  </div>
+  
+  </body>
+</html>
+

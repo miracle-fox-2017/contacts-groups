@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Contacts</title>
+  </head>
+  <body>
+    <a href="/contacts">contacts</a> | <a href="/groups">groups</a> | <a href="/addresses">address</a> | <a href="/profiles">profile</a>
+    <h1>Contacts</h1>
+    <div>
+    <table>
+      <tr>
+        <th>id</th>
+        <th>name</th>
+        <th>company</th>
+        <th>telp_number</th>
+        <th>email</th>
+        <th>groups</th>
+        <th>action</th>
+      </tr>
+      <!-- tampilkan semua data contacts -->
+      <% rows.forEach (contact => { %>
+        <tr>
+          <td><%= contact.id %></td>
+          <td><%= contact.name %></td>
+          <td><%= contact.company %></td>
+          <td><%= contact.telp_number %></td>
+          <td><%= contact.email %></td>
+          <td>
+            <% let result = [] %>
+            <% for(let i = 0; i<cg.length; i++){ if(cg[i].id_contacts == contact.id){ result.push(cg[i].name_of_group) } }%>
+            <%= result.join(', ')%>
+          </td>
+          <td><a href="/contacts/address/<%= contact.id %>">address</a> | <a href="/contacts/edit/<%= contact.id %>">edit</a> | <a href="/contacts/delete/<%= contact.id %>">delete</a> </td>
+        </tr>
+      <% }) %>
+      
+    </table>
+  </div>
+  
+  <!-- disini tambah form untuk tambah contacts -->
+  <div>
+    <h2>Tambah Contacts</h2>
+    <% if(msg != ''){ %>
+      <%= msg %>
+    <% } %>
+    <form name="add" class="" action="" method="post">
+      name:   <input type="text" name="name" value="" placeholder="name" required><br>
+      company: <input type="text" name="company" value="" placeholder="company"><br>
+      telp_number: <input type="text" name="telp_number" value="" placeholder="telp_number"><br>
+      email: <input type="text" name="email" value="" placeholder="email"><br>
+      groups: 
+      <select name="id_groups">
+      <% groups.forEach (group => { %>
+        <option value="<%= group.id %>"><%= group.name_of_group %></option> 
+      <% }) %>
+      </select>
+      <br><input type="submit" name="" value="KIRIM">
+    </form>
+  </div>
+  
+  </body>
+</html>
+

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Edit Profile</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+  <nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">Hacktiv8</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li><a href="/">HOME</a></li>
+      <li><a href="/contacts">CONTACT</a></li>
+      <li><a href="/groups">GROUPS</a></li>
+      <li><a href="/profiles">PROFILES</a></li>
+      <li><a href="/addresses">ADDRESSES</a></li>
+    </ul>
+  </div>
+</nav>
+<div class="jumbotron text-center">
+  <h1>EDIT PROFILE</h1>
+</div>
+<div class="container">
+<form class="form-inline" role="form" action="/profiles/edit/<%= data.id %>" method="post">
+  <div class="form-group">
+    <label for="username">User Name</label>
+    <input type="TEXT" name="username" value="<%= data.username %>">
+  </div>
+  <div class="form-group">
+    <label for="password">Password</label>
+    <input type="TEXT" name="password" value="<%= data.password %>">
+  </div>
+  <select name="ContactId">
+    <%for(let i=0; i< dataContacts.length; i++){%>
+      <option value="<%=dataContacts[i].id%>"><%=dataContacts[i].name%></option>
+      <%}%>
+    </select>
+    <button type="submit" class="btn btn-default">EDIT</button>
+  </form>
+</div>
+</body>
+</html>

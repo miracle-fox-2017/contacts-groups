@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Address With Contact</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+  <nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="#">Hacktiv8</a>
+      </div>
+      <ul class="nav navbar-nav">
+        <li><a href="/">HOME</a></li>
+        <li><a href="/contacts">CONTACT</a></li>
+        <li><a href="/groups">GROUPS</a></li>
+        <li><a href="/profiles">PROFILES</a></li>
+        <li><a href="/addresses">ADDRESSES</a></li>
+        <li class="active"><a href="#">ADDRESSES WITH CONTACT</a></li>
+      </ul>
+    </div>
+  </nav>
+  <div class="container">
+    <h2>ADDRESS WITH CONTACT</h2>
+    <h3>Name: </h3>
+    <h3><%=dataContacts.name%></h3>
+    <div class="table-responsive">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>STREET</th>
+            <th>CITY</th>
+            <th>ZIPCODE</th>
+          </tr>
+        </thead>
+        <tbody>
+          <%for(var i = 0; i < data.length; i++){%>
+      <tr>
+        <td><%=data[i].street%></td>
+        <td><%=data[i].city%></td>
+        <td><%=data[i].zipcode%></td>
+      </tr>
+      <%}%>
+          </tbody>
+
+        </table>
+      </div>
+
+      <form class="form-inline" role="form" action="/contacts/address/<%= dataContacts.id %>" method="post">
+        <div class="form-group">
+          <label for="street">Street</label>
+          <input type="TEXT" name="street" placeholder="Enter Street">
+        </div>
+        <div class="form-group">
+          <label for="city">City</label>
+          <input type="TEXT" name="city" placeholder="Enter City">
+        </div>
+        <div class="form-group">
+          <label for="zipcode">Zipcode</label>
+          <input type="INTEGER" name="zipcode" placeholder="Enter Zipcode">
+        </div>
+        <div class="form-group">
+          <label for="ContactId">Name</label>
+          <input type="TEXT" name="ContactId" value="<%= dataContacts.name %>" readonly>
+        </div>
+        <button type="submit" class="btn btn-default">ADD</button>
+      </form>
+    </div>
+
+
+  </body>
+  </html>

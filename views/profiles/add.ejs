@@ -1,0 +1,34 @@
+<%- include('../partials/header.ejs')%>
+<%- include('../partials/menu.ejs')%>
+
+<h3>Tambahkan Data Profile</h3>
+  <%if(error.is_error){%>
+    <div class="alert alert-warning">
+      <strong>Warning!</strong> <%=error.status%>
+    </div>
+
+  <%}%>
+
+<form action="/profiles/add" method="POST">
+
+  Username:<br>
+  <input type="text" name="username" >
+  <br>
+  Password:<br>
+  <input type="text" name="password" >
+  <br>
+  <label for="sel1" >Select contact:</label>
+  <select class="form-control" style="width:150px;" name="id_contact">
+  	<%contact.forEach(item=>{%>
+	    <option value="<%=item.id%>">
+	    	<%=item.name%>
+	    </option>
+    <%})%>
+  </select>
+  
+  <br><br>
+  <input type="submit" value="Submit">
+</form> 
+
+
+<%- include('../partials/footer.ejs')%>

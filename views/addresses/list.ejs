@@ -1,0 +1,39 @@
+<%- include('../partials/header.ejs')%>
+<%- include('../partials/menu.ejs')%>
+
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Id</th>
+        <th>Street</th>
+        <th>City</th>
+        <th>Zipcode</th>
+        <th>Contact</th>
+        <th>Options</th>
+      </tr>
+    </thead>
+    <tbody>
+    <%addresses.forEach(item=>{%>
+      <tr>
+        <td><%=item.id%></td>
+        <td><%=item.street%></td>
+        <td><%=item.city%></td>
+        <td><%=item.zipcode%></td>
+
+        <%contacts.forEach(contact=>{%>
+          <%if(contact.id == item.id_contact){%>
+            <td><%=contact.name%></td>
+          <%}%>
+        <%})%>
+
+        <td>
+          <a href="/addresses/add" class="btn btn-primary" role="button">Add</a>
+          <a href="/addresses/edit/<%=item.id%>" class="btn btn-primary" role="button">Edit</a>
+          <a href="/addresses/delete/<%=item.id%>" class="btn btn-primary" role="button">Delete</a>
+        </td>
+      </tr>
+      <%})%>
+    </tbody>
+  </table>
+
+<%- include('../partials/footer.ejs')%>

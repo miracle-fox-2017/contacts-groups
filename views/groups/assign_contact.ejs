@@ -1,0 +1,22 @@
+<%- include('../partials/header.ejs')%>
+<%- include('../partials/menu.ejs')%>
+
+<form action="/groups/assign_contacts/<%=groups.id%>" method="POST">
+
+  <%=groups.name_of_group%> :<br> 
+  <br>
+  <label for="sel1" >Select contact:</label>
+  <select class="form-control" style="width:150px;" name="id_contact">
+  	<%contact.forEach(item=>{%>
+	    <option value="<%=item.id%>">
+	    	<%=item.name%>
+	    </option>
+    <%})%>
+  </select>
+  
+  <br>
+  <input type="submit" value="Submit">
+</form> 
+
+
+<%- include('../partials/footer.ejs')%>

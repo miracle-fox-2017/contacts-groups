@@ -1,0 +1,28 @@
+<%- include('../partials/header.ejs')%>
+<%- include('../partials/menu.ejs')%>
+
+<form action="/addresses/edit/<%=addresses.id%>" method="POST">
+
+  Name:<br>
+  <input type="text" name="street" value="<%=addresses.street%>">
+  <br>
+  Company:<br>
+  <input type="text" name="city" value="<%=addresses.city%>">
+  <br>
+  Telp Number:<br>
+  <input type="text" name="zipcode" value="<%=addresses.zipcode%>">
+  <br>
+  <label for="sel1" >Select contact:</label>
+  <select class="form-control" style="width:150px;" name="id_contact">
+    <%contact.forEach(item=>{%>
+      <option value="<%=item.id%>">
+        <%=item.id%>. <%=item.name%>
+      </option>
+    <%})%>
+  </select>
+  <br><br>
+  <input type="submit" value="Submit">
+</form> 
+
+
+<%- include('../partials/footer.ejs')%>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <%include ./partials/head%>
+    <title>Profiles</title>
+  </head>
+  <body>
+    <%include ./partials/menu%>
+    <%include ./partials/contents%>
+    <!-- ------------START CONTENTS---------------- -->
+
+    <div class="tile is-ancestor">
+          <form action="/profiles/edit/<%=dataProfiles.id%>" method="post">
+            <%if(msgError){%>
+              <div class="notification is-danger">
+                <strong><%=msgError%></strong>
+              </div>
+            <%}%>
+            <br/>
+            Username:<br>
+            <input class="input is-light" type="text" name="username" value="<%=dataProfiles.username%>" required>
+            <br>
+            Password:<br>
+            <input class="input is-light" type="text" name="password" value="<%=dataProfiles.password%>" required>
+            <br/><br/>
+            <div class="control">
+              <div class="select">
+                <select name="ContactsId">
+                    <%dataContacts.forEach(Contacts=>{%>
+                      <option value="<%=Contacts.id%>"
+                        <%if(dataProfiles.ContactsId === Contacts.id){ %>
+                            <%='selected'%>
+                        <%}%>
+                      ><%=Contacts.name%></option>
+                    <%})%>
+                </select>
+              </div>
+            </div>
+            <br><br>
+            <div class="field is-grouped">
+              <p class="control">
+                <input class="button is-primary" type="submit" value="Edit">
+              </p>
+              <p class="control">
+                <a href="/profiles" class="button is-light">
+                  Batal
+                </a>
+              </p>
+            </div>
+
+          </form>
+        </div>
+
+    <!-- ------------END CONTENTS---------------- -->
+    <%include ./partials/footers%>
+  </body>
+</html>

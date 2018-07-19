@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <%include ./partials/head%>
+    <title>Addresses</title>
+  </head>
+  <body>
+    <%include ./partials/menu%>
+    <%include ./partials/contents%>
+    <!-- ------------START CONTENTS---------------- -->
+
+    <div class="tile is-ancestor">
+      <div class="tile is-vertical is-8">
+        <div class="tile is-parent">
+          <!-- <article class="tile is-child notification is-primary"> -->
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Id</th>
+                  <th>Name</th>
+                  <th>Company</th>
+                  <th>Street</th>
+                  <th>City</th>
+                  <th>Zip Code</th>
+                </tr>
+              </thead>
+              <tbody>
+                <%rowsAddressesContacts.forEach(Addresses =>{%>
+                  <tr>
+                    <th><%=Addresses.id%></th>
+                    <td><%=Addresses.name%></td>
+                    <td><%=Addresses.company%></td>
+                    <td><%=Addresses.street%></td>
+                    <td><%=Addresses.city%></td>
+                    <td><%=Addresses.zipcode%></td>
+                  </tr>
+                <%})%>
+              </tbody>
+              </table>
+          <!-- </article> -->
+        </div>
+      </div>
+        </div>
+
+    <!-- ------------END CONTENTS---------------- -->
+    <%include ./partials/footers%>
+  </body>
+</html>

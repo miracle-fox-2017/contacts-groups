@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <%include ./partials/head%>
+    <title>Assign Contacts</title>
+  </head>
+  <body>
+    <%include ./partials/menu%>
+    <!-- ------------START CONTENTS---------------- -->
+    <div class="hero-body has-text-centered">
+       <div class="container has-text-centered">
+         <h1 class="title">
+             <%=dataGroup.name_of_group%>
+           </h1>
+         <!-- <div class="tile is-ancestor has-text-centered"> -->
+           <form action="/groups/assign_contacts/<%=dataGroup.id%>" method="post">
+
+             <h2 class="subtitle">
+           Choose Contact to Assign:<br>
+           </h2>
+               <div class="control has-text-centered">
+                 <div class="select">
+                   <select name="ContactsId">
+                       <%dataContacts.forEach(Contacts=>{%>
+                         <option value="<%=Contacts.id%>"
+                         ><%=Contacts.name%></option>
+                       <%})%>
+                   </select>
+                 </div>
+               </div>
+               <br><br>
+               <div class=" ">
+                 <p class="control has-text-centered">
+                   <input class="button is-info" type="submit" value="Choose">
+                 </p>
+                 <br/>
+                 <p class="control has-text-centered">
+                   <a href="/groups" class="button is-light has-text-centered">
+                     Batal
+                   </a>
+                 </p>
+               </div>
+             </form>
+         </div>
+       </div>
+     </div>
+
+    <!-- ------------END CONTENTS---------------- -->
+    <%include ./partials/footers%>
+  </body>
+</html>

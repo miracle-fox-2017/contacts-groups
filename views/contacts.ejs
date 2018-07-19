@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <%include ./partials/head%>
+    <title>Contacts</title>
+  </head>
+  <body>
+    <%include ./partials/menu%>
+    <%include ./partials/contents%>
+    <!-- ------------START CONTENTS---------------- -->
+
+    <div class="tile is-ancestor">
+      <div class="tile is-vertical is-8">
+        <div class="tile is-parent">
+          <!-- <article class="tile is-child notification is-primary"> -->
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Id</th>
+                  <th>Name</th>
+                  <th>Company</th>
+                  <th>Telepon</th>
+                  <th>Email</th>
+                  <th>Groups</th>
+                  <th colspan="3">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <%rowsContacts.forEach(Contacts =>{%>
+                  <tr>
+                    <th><%=Contacts.id%></th>
+                    <td><%=Contacts.name%></td>
+                    <td><%=Contacts.company%></td>
+                    <td><%=Contacts.telp_number%></td>
+                    <td><%=Contacts.email%></td>
+                    <td><%=Contacts.name_of_groups%></td>
+                    <td><a onclick="return confirm('Delete this contact?');" href="contacts/delete/<%=Contacts.id%>">
+                      <span class="icon has-text-success">
+                        <i class="fa fa-trash"></i>
+                      </span>
+                    </a></td>
+                    <td><a href="/contacts">Address</a></td>
+                  </tr>
+                <%})%>
+              </tbody>
+              </table>
+          <!-- </article> -->
+        </div>
+      </div>
+          <form action="/contacts" method="post">
+            <%if(msgError){%>
+              <div class="notification is-danger">
+                <strong><%=msgError%></strong>
+              </div>
+            <%}%>
+            <br/>
+            Name:<br>
+            <input class="input is-light" type="text" name="name" required>
+            <br>
+            Company:<br>
+            <input class="input is-light" type="text" name="company" required>
+            <br>
+            Telepon:<br>
+            <input class="input is-light" type="text" name="telp_number" required>
+            <br>
+            Email:<br>
+            <input class="input is-light" type="text" name="email" required>
+            <br/><br/>
+            <div class="control">
+              <div class="select">
+                <select name="GroupsId">
+                    <%dataGroups.forEach(Groups=>{%>
+                      <option value="<%=Groups.id%>"><%=Groups.name_of_group%></option>
+                    <%})%>
+                </select>
+              </div>
+            </div>
+            <br><br>
+            <div class="field is-grouped">
+              <input class="button is-primary" type="submit" value="Simpan">
+            </div>
+          </form>
+    </div>
+
+    <!-- ------------END CONTENTS---------------- -->
+    <%include ./partials/footers%>
+  </body>
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <%include ./partials/head%>
+    <title>Addresses</title>
+  </head>
+  <body>
+    <%include ./partials/menu%>
+    <%include ./partials/contents%>
+    <!-- ------------START CONTENTS---------------- -->
+
+    <div class="tile is-ancestor">
+      <div class="tile is-vertical is-8">
+        <div class="tile is-parent">
+          <!-- <article class="tile is-child notification is-primary"> -->
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Id</th>
+                  <th>Name</th>
+                  <th>Street</th>
+                  <th>City</th>
+                  <th>Zip Code</th>
+                  <th colspan="2">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <%rowsAddresses.forEach(Addresses =>{%>
+                  <tr>
+                    <th><%=Addresses.id%></th>
+                    <td><%=Addresses.name%></td>
+                    <td><%=Addresses.street%></td>
+                    <td><%=Addresses.city%></td>
+                    <td><%=Addresses.zipcode%></td>
+                    <td><a href="addresses/edit/<%=Addresses.id%>">
+                      <span class="icon has-text-success">
+                        <i class="fa fa-pencil-square-o"></i>
+                      </span>
+                    </a></td>
+                    <td><a onclick="return confirm('Delete this address?');" href="addresses/delete/<%=Addresses.id%>">
+                      <span class="icon has-text-success">
+                        <i class="fa fa-trash"></i>
+                      </span>
+                    </a></td>
+                  </tr>
+                <%})%>
+              </tbody>
+              </table>
+          <!-- </article> -->
+        </div>
+      </div>
+          <form action="/addresses" method="post">
+            Street:<br>
+            <input class="input is-light" type="text" name="street" required>
+            <br>
+            City:<br>
+            <input class="input is-light" type="text" name="city" required>
+            <br>
+            Zip Code:<br>
+            <input class="input is-light" type="text" name="zipcode" required>
+            <br/><br/>
+            <div class="control">
+              <div class="select">
+                <select name="ContactsId">
+                    <%dataContacts.forEach(Contacts=>{%>
+                      <option value="<%=Contacts.id%>"><%=Contacts.name%></option>
+                    <%})%>
+                </select>
+              </div>
+            </div>
+            <br><br>
+            <div class="field is-grouped">
+              <input class="button is-primary" type="submit" value="Simpan">
+            </div>
+          </form>
+        </div>
+
+    <!-- ------------END CONTENTS---------------- -->
+    <%include ./partials/footers%>
+  </body>
+</html>

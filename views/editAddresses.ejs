@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <%include ./partials/head%>
+    <title>Addresses</title>
+  </head>
+  <body>
+    <%include ./partials/menu%>
+    <%include ./partials/contents%>
+    <!-- ------------START CONTENTS---------------- -->
+
+    <div class="tile is-ancestor">
+          <form action="/addresses/edit/<%=dataAddresses.id%>" method="post">
+            Street:<br>
+            <input class="input is-light" type="text" name="street" value="<%=dataAddresses.street%>" required>
+            <br>
+            City:<br>
+            <input class="input is-light" type="text" name="city" value="<%=dataAddresses.city%>" required>
+            <br>
+            Zip Code:<br>
+            <input class="input is-light" type="text" name="zipcode" value="<%=dataAddresses.zipcode%>" required>
+            <br/><br/>
+            <div class="control">
+              <div class="select">
+                <select name="ContactsId">
+                    <%dataContacts.forEach(Contacts=>{%>
+                      <option value="<%=Contacts.id%>"
+                        <%if(dataAddresses.ContactsId === Contacts.id){ %>
+                            <%='selected'%>
+                        <%}%>
+                      ><%=Contacts.name%></option>
+                    <%})%>
+                </select>
+              </div>
+            </div>
+            <br><br>
+            <div class="field is-grouped">
+              <p class="control">
+                <input class="button is-primary" type="submit" value="Edit">
+              </p>
+              <p class="control">
+                <a href="/addresses" class="button is-light">
+                  Batal
+                </a>
+              </p>
+            </div>
+          </form>
+        </div>
+
+    <!-- ------------END CONTENTS---------------- -->
+    <%include ./partials/footers%>
+  </body>
+</html>

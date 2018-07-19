@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="stylesheet" href="/style/css/common.css">
+    <title>Address Page</title>
+</head>
+<body>
+    <section class="other-page">
+        <div class="header">
+            <span>Daftar Alamat</span>
+            <ul class="link-list">
+                <li><a href="/addresses/with-contact">Address & Owner</a></li>
+            </ul>
+        </div>
+        <div class="content">
+            <%if(address.length === 0){%>
+                <div class="empty">Data Kosong!</div>
+            <%}else{%>
+                <table border="1">
+                    <tr>
+                        <td>No</td>
+                        <td>Jalan</td>
+                        <td>Kota</td>
+                        <td>Kodepos</td>
+                        <td>Owner</td>
+                        <td>Action</td>
+                    </tr>
+                    <%address.map((value,i)=>{%>
+                    <tr>
+                        <td><%=i + 1%></td>
+                        <td><%=value.street%></td>
+                        <td><%=value.city%></td>
+                        <td><%=value.zipcode%></td>
+                        <td><%=value.name === null ? 'Kosong' : value.name%></td>
+                        <td>
+                            <a href="/addresses/edit/<%=value.id%>"><button type="button">Edit</button></a>
+                            <a href="/addresses/delete/<%=value.id%>"><button type="button">Hapus</button></a>
+                        </td>
+                    </tr>
+                    <%})%>
+                </table>
+            <%}%>
+        </div>
+    </section>
+    <section class="other-page">
+        <div class="header">
+            <span>Alamat Baru</span>
+        </div>
+        <div class="content">
+            <form action="/addresses" method="post">
+                <table border="1">
+                    <tr>
+                        <td>Jalan</td>
+                        <td><input type="text" name="street" placeholder="Type your street name"></td>
+                    </tr>
+                    <tr>
+                        <td>Kota</td>
+                        <td><input type="text" name="city" placeholder="Type your city name"></td>
+                    </tr>
+                    <tr>
+                        <td>Kodepos</td>
+                        <td><input type="text" name="zipcode" placeholder="Type your zipcode"></td>
+                    </tr>
+                    <tr>
+                        <td>Contact Name</td>
+                        <td>
+                            <select name="contact">
+                            <%if(contact.length === 0){%>
+                                <option value="">Tidak ada data contact</option>
+                            <%}else{
+                                contact.map((value)=>{%>
+                                <option value="<%=value.id%>"><%=value.name%></option>
+                                <%});
+                            }%>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"><input type="submit" value="Tambah"></td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+    </section>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="stylesheet" href="/style/css/common.css">
+    <title>Address with Contact</title>
+</head>
+<body>
+    <section class="other-page">
+        <div class="header">
+            <span>Daftar Alamat & Owner</span>
+        </div>
+        <div class="content">
+            <%if(data.length === 0){%>
+            <div class="empty">Data Kosong!</div>
+            <%}else{%>
+            <table border="1">
+                <tr>
+                    <td>No</td>
+                    <td>Jalan</td>
+                    <td>Kota</td>
+                    <td>Kodepos</td>
+                    <td>Pemilik</td>
+                </tr>
+                <%data.map((value,i)=>{%>
+                <tr>
+                    <td><%=i + 1%></td>
+                    <td><%=value.street%></td>
+                    <td><%=value.city%></td>
+                    <td><%=value.zipcode%></td>
+                    <td><%=value.contact%></td>
+                </tr>
+                <%})%>
+            </table>
+            <%}%>
+        </div>
+    </section>
+</body>
+</html>

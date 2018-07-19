@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="stylesheet" href="/style/css/common.css">
+    <title>Groups Page</title>
+</head>
+<body>
+    <section class="other-page">
+        <div class="header">
+            <span>Daftar Group</span>
+        </div>
+        <div class="content">
+            <%if(data.length === 0){%>
+                <div class="empty">
+                    <span>Data Kosong!</span>
+                </div>
+            <%}else{%>
+                <table border="1">
+                    <tr>
+                        <td>No</td>
+                        <td>Nama Group</td>
+                        <td>Action</td>
+                    </tr>
+                    <%data.map((value,i)=>{%>
+                    <tr>
+                        <td><%=i + 1%></td>
+                        <td><%=value.name_of_group%></td>
+                        <td>
+                            <a href="/groups/edit/<%=value.id%>"><button type="button">Edit</button></a>
+                            <a href="/groups/delete/<%=value.id%>"><button type="button">Hapus</button></a>
+                        </td>
+                    </tr>
+                    <%})%>
+                </table>
+            <%}%>
+        </div>
+    </section>
+    <section class="other-page">
+        <div class="header">
+            <span>Group Baru</span>
+        </div>
+        <div class="content">
+            <form action="/groups" method="post">
+                <table border="1">
+                    <tr>
+                        <td>Name of Group</td>
+                        <td><input type="text" name="group" placeholder="Type your group name"></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"><input type="submit" value="Tambah"></td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+    </section>
+</body>
+</html>

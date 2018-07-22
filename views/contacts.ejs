@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Contacts</title>
+  </head>
+  <body>
+    <h1>Contacts</h1>
+    <table>
+      <tr>
+        <th>id</th>
+        <th>name</th>
+        <th>company</th>
+        <th>Telp Number</th>
+        <th>Email</th>
+        <th>Group Involved</th>
+      </tr>
+      <%for(var i = 0; i < data.length; i++) {%>
+        <tr>
+          <td><%=data[i].id%></td>
+          <td><%=data[i].name%></td>
+          <td><%=data[i].company%></td>
+          <td><%=data[i].telp_number%></td>
+          <td><%=data[i].email%></td>
+          <td><%=data[i].group%></td>
+          <td><a href="/contacts/edit/<%=data[i].id%>">edit</a></td>
+          <td><a href="/contacts/delete/<%=data[i].id%>">delete</a></td>
+          <td><a href="/contacts/addresses/<%=data[i].id%>">addresses</a></td>
+        </tr>
+      <%}%>
+    </table>
+    <form class="" action="/contacts" method="post">
+      <input type="input" name="name" placeholder="name">
+      <input type="input" name="company" placeholder="company">
+      <input type="input" name="telp_number" placeholder="Telp Number">
+      <input type="input" name="email" placeholder="Email">
+      <select name="groupid">
+        <%for(var i = 0; i < groupsname.length; i++) {%>
+          <option value="<%=groupsname[i].id%>"><%=groupsname[i].name_of_group%></option>
+        <%}%>
+      </select>
+      <input type="submit" value="submit">
+    </form>
+    <p><%=error%></p>
+  </body>
+</html>

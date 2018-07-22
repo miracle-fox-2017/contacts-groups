@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <% include ../partials/header %>
+  <body>
+    <div class="container">
+      <div class="">
+        <h1>Groups Page</h1>
+
+        <table>
+          <thead>
+            <tr>
+              <th><a href="/">Home</a></th>
+              <th><a href="/contacts">Contacts</a></th>
+              <th><a href="/groups">Groups</a></th>
+              <th><a href="/profiles">Profile</a></th>
+              <th><a href="/addresses">Addresses</a></th>
+            </tr>
+          </thead>
+        </table><br>
+
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Group Members</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% dataGroupWithContact.forEach((data) => { %>
+              <tr>
+                <td><%= data.id %></td>
+                <td><%= data.name_of_group %></td>
+                <td><%= data.name.join(', ') %></td>
+                <td>
+                  <a class="button" href="/groups/assign_contacts/<%= data.id %>">Assign Contacts</a>
+                  <a class="button button-outline" href="/groups/edit/<%= data.id %>">Edit</a>
+                  <a class="button" href="/groups/delete/<%= data.id %>">Delete</a>
+                </td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+
+        <a class="button" href="/groups/add">Add Group</a>
+      </div>
+    </div>
+  </body>
+</html>

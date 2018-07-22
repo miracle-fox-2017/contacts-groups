@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <% include ../partials/header %>
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="column column-50">
+          <h1>Assign Contacts</h1>
+
+          <table>
+            <thead>
+              <tr>
+                <th><a href="/">Home</a></th>
+                <th><a href="/contacts">Contacts</a></th>
+                <th><a href="/groups">Groups</a></th>
+                <th><a href="/profiles">Profile</a></th>
+                <th><a href="/addresses">Addresses</a></th>
+              </tr>
+            </thead>
+          </table>
+
+          <form class="" action="/groups/assign_contacts/<%= dataGroup.id %>" method="post">
+            <h4>Assign contacts for group: <%= dataGroup.name_of_group %></h4>
+            <select name="contactId">
+              <% dataContacts.forEach((data) => { %>
+                <option value="<%= data.id %>"><%= data.name %></option>
+              <% }) %>
+            </select>
+            <input type="submit" value="Submit">
+          </form>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

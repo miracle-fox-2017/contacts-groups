@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <% include ../partials/header %>
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="column column-50">
+          <h1>Edit Contact</h1>
+
+          <table>
+            <thead>
+              <tr>
+                <th><a href="/">Home</a></th>
+                <th><a href="/contacts">Contacts</a></th>
+                <th><a href="/groups">Groups</a></th>
+                <th><a href="/profiles">Profile</a></th>
+                <th><a href="/addresses">Addresses</a></th>
+              </tr>
+            </thead>
+          </table><br>
+
+
+          <form class="" action="/contacts/edit/<%= dataContact.id %>" method="post">
+            <fieldset>
+              <label for="nameField">Name</label>
+              <input type="text" name="name" value="<%= dataContact.name %>">
+              <label for="nameField">Company</label>
+              <input type="text" name="company" value="<%= dataContact.company %>">
+              <label for="nameField">Telp</label>
+              <input type="text" name="telp_number" value="<%= dataContact.telp_number %>">
+              <label for="nameField">Email</label>
+              <input type="text" name="email" value="<%= dataContact.email %>">
+              <input class="button-primary" type="submit" value="Submit">
+            </fieldset>
+          </form>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

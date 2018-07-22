@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <% include ../partials/header %>
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="column column-50">
+          <h1>Add Contact</h1>
+
+          <table>
+            <thead>
+              <tr>
+                <th><a href="/">Home</a></th>
+                <th><a href="/contacts">Contacts</a></th>
+                <th><a href="/groups">Groups</a></th>
+                <th><a href="/profiles">Profile</a></th>
+                <th><a href="/addresses">Addresses</a></th>
+              </tr>
+            </thead>
+          </table><br>
+
+
+          <form class="" action="/contacts/add" method="post">
+            <fieldset>
+              <label for="nameField">Name</label>
+              <input type="text" name="name" placeholder="input your name">
+              <label for="nameField">Company</label>
+              <input type="text" name="company" placeholder="input your company">
+              <label for="nameField">Telp</label>
+              <input type="text" name="telp_number" placeholder="input your phone number">
+              <label for="nameField">Email</label>
+              <input type="text" name="email" placeholder="input your email address">
+              <label for="nameField">Group</label>
+              <select name="groupId">
+                <% dataGroups.forEach((data) => { %>
+                  <option value="<%= data.id %>"><%= data.name_of_group %></option>
+                <% }) %>
+              </select>
+              <input class="button-primary" type="submit" value="Submit">
+            </fieldset>
+          </form>
+        </div>
+      </div>
+    </div>
+  </body>
+
+  <script type="text/javascript">
+    <% if(error) { %>
+      alert('Name can not be empty!')
+    <% } %>
+  </script>
+</html>

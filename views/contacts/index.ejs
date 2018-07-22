@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <% include ../partials/header %>
+  <body>
+    <div class="container">
+      <div class="">
+        <h1>Contacts Page</h1>
+
+        <table>
+          <thead>
+            <tr>
+              <th><a href="/">Home</a></th>
+              <th><a href="/contacts">Contacts</a></th>
+              <th><a href="/groups">Groups</a></th>
+              <th><a href="/profiles">Profile</a></th>
+              <th><a href="/addresses">Addresses</a></th>
+            </tr>
+          </thead>
+        </table><br>
+
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Company</th>
+              <th>Telp</th>
+              <th>Email</th>
+              <th>Group</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% dataContactWithGroup.forEach((data) => { %>
+              <tr>
+                <td><%= data.id %></td>
+                <td><%= data.name %></td>
+                <td><%= data.company %></td>
+                <td><%= data.telp_number %></td>
+                <td><%= data.email %></td>
+                <td><%= data.name_of_group.join(', ') %></td>
+                <td>
+                  <a class="button button-outline" href="/contacts/edit/<%= data.id %>">Edit</a>
+                  <a class="button" href="/contacts/delete/<%= data.id %>">Delete</a>
+                </td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+
+        <a class="button button-outline" href="/contacts/add">Add Contact</a>
+        <a class="button" href="/addresses_with_contact">Addresses With Contact</a>
+      </div>
+    </div>
+  </body>
+</html>
